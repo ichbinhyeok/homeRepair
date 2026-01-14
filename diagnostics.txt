@@ -1,0 +1,5 @@
+=== DIAGNOSTIC INFO ===
+Current Working Directory: C:\Development\Owner\home-repair
+check src/main/jte: EXISTS
+check src/main/jte/pages/index.jte: EXISTS
+Check JteAutoConfiguration class: 

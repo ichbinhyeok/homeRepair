@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/homerepair
+      - SPRING_DATASOURCE_USERNAME=myuser
+      - SPRING_DATASOURCE_PASSWORD=mypassword
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - GG_JTE_TEMPLATE_LOCATION=/jte
+    depends_on:
+      - db
+    networks:
+      - homerepair-net
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mypassword
+      - POSTGRES_DB=homerepair
+    ports:
+      - "5433:5432" # Mapped to 5433 to avoid conflict with local DB on 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - homerepair-net
+
+networks:
+  homerepair-net:
+    driver: bridge
+
+volumes:
+  postgres_data:

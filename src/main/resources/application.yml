@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: home-repair
+  datasource:
+    url: jdbc:postgresql://localhost:5433/homerepair
+    username: myuser
+    password: mypassword
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 8081
+
+gg:
+  jte:
+    template-location: src/main/jte
+    development-mode: true
+
+logging:
+  level:
+    gg.jte: DEBUG
+    org.springframework.web: DEBUG
