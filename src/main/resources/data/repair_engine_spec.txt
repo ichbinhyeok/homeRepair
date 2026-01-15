@@ -1,0 +1,79 @@
+AI 모델이 즉시 학습하고 처리할 수 있도록 최적화된 .txt 형식의 명세서입니다. 아래 내용을 복사하여 repair_engine_spec.txt 파일로 저장하세요.
+
+2026 HOME REPAIR VERDICT ENGINE: TECHNICAL SPECIFICATION (VER 2026.01)
+
+[1] DATA SOURCE MAPPING
+
+LCI (Location Cost Index): 2026 US Metro Master Data.json
+
+Fields: labor_mult, mat_logistics, mob_fee, disp_tax
+
+UCL (Unit Cost Library): 2026 Integrated Construction & Renovation Cost Library.json
+
+Fields: material_cost_range, labor_hours_per_unit, base_labor_rate_national
+
+PSZ (Property Standards): 2026 US Metro Master Data.json
+
+Fields: avg_house, avg_lot, foundation
+
+RFY (Risk Factors by Year): risk_factors_by_year.json
+
+Fields: eras, critical_risks, remedy_cost_factor
+
+[2] SCALE AUTO-ESTIMATION LOGIC If user input is null, use the following formulas:
+
+Roofing (SQUARE): (avg_house * 1.15) / 100
+
+Interior Floor/Paint (SQFT): avg_house / 1.5
+
+Exterior/Yard (SQFT): avg_lot - avg_house
+
+HVAC (UNIT): avg_house / 500 (1 Ton per 500sqft)
+
+[3] MASTER CALCULATION FORMULA Total_Cost = Mob_Final + sum(Item_Cost * Qty) + RFY_Premium
+
+A. Item_Cost Calculation:
+
+Material: avg(UCL.low, UCL.high) * LCI.mat_logistics
+
+Labor: (UCL.labor_hours * UCL.base_rate * LCI.labor_mult)
+
+Era Adjustment: Labor * RFY.remedy_cost_factor (if applicable)
+
+B. RFY_Premium (Risk Add-ons):
+
+Severity "CRITICAL": Multiply Item_Total by 1.3 (+30%)
+
+Removal Cost "HIGH": Add flat $2,800
+
+Inspection Mandatory: Add flat $650
+
+C. Mob_Final (Mobilization):
+
+Max(UCL.mobilization_base_fee, LCI.mob_fee)
+
+[4] VERDICT & PRIORITY RULES A. Priority Order:
+
+SAFETY: Items with severity "CRITICAL" (e.g., Knob & Tube, Lead Paint)
+
+STRUCTURAL: Roofing, Sewer Lines (Note: Cast Iron lifespan ends 2025)
+
+MECHANICAL: HVAC, Electrical Panel
+
+COSMETIC: Flooring, Painting, Cabinets
+
+B. Verdict Tiers:
+
+APPROVED: Budget >= Total_Cost. Message: "Healthy budget reflecting 2026 rates and risks."
+
+WARNING: Total_Cost * 0.9 <= Budget < Total_Cost. Message: "Risk of low-quality materials or missing abatement fees."
+
+DENIED: Budget < Total_Cost * 0.9. Message: "Insufficient budget for standard local scale."
+
+[5] KEYWORD MAPPING FOR AI CODING
+
+"avg_house_sqft" -> use "avg_house" from Master Data
+
+"labor_multiplier" -> use "labor_mult" from Master Data
+
+"material_logistics" -> use "mat_logistics" from Master Data

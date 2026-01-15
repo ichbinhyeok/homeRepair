@@ -1,0 +1,57 @@
+{
+  "meta": {
+    "category": "HISTORICAL_BUILDING_RISKS",
+    "version": "2026.1.1",
+    "last_updated": "2026-01-14",
+    "note": "Based on EPA, HUD, and CPSC historical safety recalls."
+  },
+  "eras": {
+    "PRE_1950": {
+      "era_name": "Early Century / Post-War",
+      "critical_risks": [
+        { "item": "KNOB_AND_TUBE_WIRING", "severity": "CRITICAL", "remedy_cost_factor": 2.5 },
+        { "item": "LEAD_PAINT_INTERIOR", "probability": 0.87, "inspection_mandatory": true },
+        { "item": "GALVANIZED_PIPE_CORROSION", "issue": "Low water pressure/Rust", "priority": "HIGH" }
+      ],
+      "structural_notes": "Balloon framing common; fire-blocking often missing."
+    },
+    "1950_1970": {
+      "era_name": "Mid-Century Expansion",
+      "critical_risks": [
+        { "item": "ASBESTOS_INSULATION", "location": "Attic/Pipes", "removal_cost": "HIGH" },
+        { "item": "CAST_IRON_SEWER_LINES", "issue": "Tree root intrusion/Collapse", "lifespan_end": 2025 },
+        { "item": "UNGROUNDED_OUTLETS", "issue": "Two-prong outlets common", "safety_rating": "LOW" }
+      ]
+    },
+    "1970_1980": {
+      "era_name": "Energy Crisis Era",
+      "critical_risks": [
+        { "item": "ALUMINUM_WIRING", "period": "1965-1973", "fire_risk_multiplier": 55.0 },
+        { "item": "POPCORN_CEILING_ASBESTOS", "check_year_cutoff": 1978, "abatement_required": true },
+        { "item": "FEDERAL_PACIFIC_PANELS", "issue": "Stab-Lok breakers fail to trip", "replacement": "MANDATORY" }
+      ]
+    },
+    "1980_1995": {
+      "era_name": "Modern Material Testing",
+      "critical_risks": [
+        { "item": "POLYBUTYLENE_PLUMBING", "brand": "Quest", "issue": "Sudden catastrophic leaks", "probability": 0.35 },
+        { "item": "LP_INNER_SEAL_SIDING", "issue": "Composite wood rot/Swelling", "legal_settlement_history": true },
+        { "item": "SYNTHETIC_STUCCO_EIFS", "issue": "Moisture trapping/Internal rot", "risk_area": "High_Humidity" }
+      ]
+    },
+    "1995_2010": {
+      "era_name": "Pre-Recession Boom",
+      "critical_risks": [
+        { "item": "CHINESE_DRYWALL", "period": "2001-2008", "issue": "Sulfur gas/Corroded wiring", "smell_test": "Rotten_Egg" },
+        { "item": "PEX_A_FITTING_RECALLS", "issue": "Zinc leaching/Dezincification", "brand": "Zurn/Kitec" }
+      ]
+    },
+    "2010_PRESENT": {
+      "era_name": "High-Efficiency Era",
+      "critical_risks": [
+        { "item": "HVAC_REFRIGERANT_PHASE_OUT", "issue": "R-22 replacement cost", "solution": "Full system upgrade" },
+        { "item": "SMART_HOME_OBSOLESCENCE", "issue": "End-of-life for early IoT hubs" }
+      ]
+    }
+  }
+}
