@@ -14,7 +14,7 @@
           "severity": "CRITICAL",
           "remedy_cost_factor": 2.5,
           "definition": "Knob-and-tube wiring is an early electrical system using separate wires for hot and neutral, suspended on ceramic insulators. It was standard in homes built before 1950 but lacks the grounding wire required by modern safety codes.",
-          "damage_scenario": "Insulation deterioration can expose live wires, increasing fire risk. Overheating occurs when insulation is added to attics, as the system was designed to dissipate heat in open air.",
+          "damage_scenario": "Insulation deterioration can expose live wires, increasing fire risk. Overheating occurs when insulation is added to attics, as the system was designed to dissipate heat in open air. This condition is commonly flagged during inspections and may require remediation before insurance renewal or financing approval.",
           "remedy_multiplier": 2.5
         },
         {
@@ -22,7 +22,7 @@
           "probability": 0.87,
           "inspection_mandatory": true,
           "definition": "Lead-based paint was widely used until 1978 for its durability and vivid colors. Lead dust from deteriorating paint poses serious health risks, particularly to children.",
-          "damage_scenario": "Paint chips and dust accumulate over time. Renovation work can release lead particles into the air, requiring specialized containment and cleanup.",
+          "damage_scenario": "Paint chips and dust accumulate over time. Renovation work can release lead particles into the air, requiring specialized containment and cleanup. Mortgage lenders typically require lead-safe certification for FHA/VA financing on homes of this vintage.",
           "remedy_multiplier": 2.0
         },
         {
@@ -44,7 +44,7 @@
           "location": "Attic/Pipes",
           "removal_cost": "HIGH",
           "definition": "Asbestos was used extensively in insulation and pipe wrapping from the 1950s-1970s due to its fire resistance and insulating properties. Asbestos fibers become hazardous when disturbed or deteriorated.",
-          "damage_scenario": "Disturbing asbestos materials releases microscopic fibers into the air. Professional abatement is required before any renovation or demolition work affecting these areas.",
+          "damage_scenario": "Disturbing asbestos materials releases microscopic fibers into the air. Professional abatement is required before any renovation or demolition work affecting these areas. Detection during inspection often mandates specialized removal protocols prior to closing.",
           "remedy_multiplier": 3.5
         },
         {
@@ -60,7 +60,7 @@
           "issue": "Two-prong outlets common",
           "safety_rating": "LOW",
           "definition": "Two-prong outlets lack the ground wire introduced in the 1960s for electrical safety. Modern appliances and electronics require grounded outlets for proper surge protection.",
-          "damage_scenario": "Without grounding, electrical faults can energize metal appliance casings, creating shock hazards. Sensitive electronics may be damaged during power surges.",
+          "damage_scenario": "Without grounding, electrical faults can energize metal appliance casings, creating shock hazards. Sensitive electronics may be damaged during power surges. Modern insurance carriers may request updates to grounded circuits to reduce liability risk.",
           "remedy_multiplier": 1.5
         }
       ]
@@ -73,7 +73,7 @@
           "period": "1965-1973",
           "fire_risk_multiplier": 55.0,
           "definition": "Aluminum wiring was used during the 1965-1973 copper shortage as a cost-effective alternative. Aluminum expands and contracts more than copper, causing connections to loosen over time at outlets and switches.",
-          "damage_scenario": "Loose connections generate heat at termination points. This thermal cycling can lead to arcing, which ignites surrounding materials and causes electrical fires.",
+          "damage_scenario": "Loose connections generate heat at termination points. This thermal cycling can lead to arcing, which ignites surrounding materials and causes electrical fires. Insurers often require pig-tailing amelioration or complete rewiring for coverage eligibility.",
           "remedy_multiplier": 2.2
         },
         {
@@ -89,7 +89,7 @@
           "issue": "Stab-Lok breakers fail to trip",
           "replacement": "MANDATORY",
           "definition": "Federal Pacific Electric (FPE) panels with Stab-Lok breakers were installed in millions of homes from the 1950s-1980s. Independent testing revealed these breakers frequently fail to trip during overload conditions.",
-          "damage_scenario": "Breaker failure allows electrical overloads to continue unchecked, overheating wires inside walls. This creates fire risk without the homeowner's knowledge until smoke or flames appear.",
+          "damage_scenario": "Breaker failure allows electrical overloads to continue unchecked, overheating wires inside walls. This creates fire risk without the homeowner's knowledge. Because of known failure rates, many insurance carriers will not write new policies until the panel is replaced.",
           "remedy_multiplier": 2.0
         }
       ]
@@ -103,7 +103,7 @@
           "issue": "Sudden catastrophic leaks",
           "probability": 0.35,
           "definition": "Polybutylene is a gray plastic pipe material widely used in homes built between 1978-1995 because it was inexpensive and easy to install. It was later found to degrade when exposed to chlorine in treated tap water.",
-          "damage_scenario": "Pipe failure releases water inside walls, damaging drywall and insulation. Water spreads to flooring and lower levels, potentially leading to mold growth and structural damage.",
+          "damage_scenario": "Pipe failure releases water inside walls, damaging drywall and insulation. Water spreads to flooring and lower levels, potentially leading to mold growth and structural damage. This system is a primary target during inspections and often excludes properties from standard insurance water damage coverage.",
           "remedy_multiplier": 3.0
         },
         {
@@ -133,7 +133,7 @@
           "issue": "Sulfur gas/Corroded wiring",
           "smell_test": "Rotten_Egg",
           "definition": "Defective drywall imported from China between 2001-2008 contains elevated sulfur compounds. These materials release hydrogen sulfide gas, particularly in humid conditions.",
-          "damage_scenario": "Sulfur gases corrode copper wiring, HVAC coils, and appliance components. Metal corrosion leads to electrical failures, appliance breakdowns, and potential fire hazards from damaged wiring.",
+          "damage_scenario": "Sulfur gases corrode copper wiring, HVAC coils, and appliance components. Metal corrosion leads to electrical failures, appliance breakdowns, and potential fire hazards. Presence of this material typically precludes standard financing and requires full remediation for insurability.",
           "remedy_multiplier": 4.0
         },
         {
@@ -141,7 +141,7 @@
           "issue": "Zinc leaching/Dezincification",
           "brand": "Zurn/Kitec",
           "definition": "Certain PEX plumbing systems (notably Kitec brand, 1995-2007) used brass fittings that undergo dezincification when exposed to water chemistry. The zinc layer corrodes, weakening the fitting structure.",
-          "damage_scenario": "Weakened fittings develop pinhole leaks or catastrophic failures, releasing water under pressure inside walls. Multiple fittings throughout the home can fail simultaneously.",
+          "damage_scenario": "Weakened fittings develop pinhole leaks or catastrophic failures, releasing water under pressure inside walls. Multiple fittings throughout the home can fail simultaneously. Identification during inspection is a common deal-contingency requiring full plumbing replacement.",
           "remedy_multiplier": 2.7
         }
       ]

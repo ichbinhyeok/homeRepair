@@ -7,6 +7,7 @@ import com.livingcostcheck.home_repair.repository.HomeRepairRepository;
 import com.livingcostcheck.home_repair.service.VerdictEngineService;
 import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.UUID;
 
+@Slf4j
 @Controller
 @RequestMapping("/home-repair")
 @RequiredArgsConstructor
@@ -41,39 +43,39 @@ public class HomeRepairController {
 
     @PostMapping("/verdict")
     public String generateVerdict(@ModelAttribute UserContext context,
-            @RequestParam(value = "userEmail", defaultValue = "anonymous") String userEmail) {
+            @RequestParam(value = "userEmail", defaultValue = "anonymous") String userEmail,
+            Model model) {
 
-        // 1. Generate Verdict
-        Verdict verdict = verdictEngineService.generateVerdict(context);
+        try {
+            // 1. Generate Verdict
+            Verdict verdict = verdictEngineService.generateVerdict(context);
 
-        // 2. Persistence (History)
-        VerdictHistory history = new VerdictHistory(
-                context.getMetroCode(),
-                String.valueOf(context.getBudget()),
-                context.getPurpose(),
-                context.getEra(),
-                verdict.getTier(), // Code/Result
-                "v2026.01",
-                String.valueOf(context.hashCode()) // Simple hash for context
-        );
-        if (!"anonymous".equals(userEmail)) {
-            history.setUserEmail(userEmail);
+            // 2. Persistence (History)
+            VerdictHistory history = new VerdictHistory(
+                    context.getMetroCode(),
+                    String.valueOf(context.getBudget()),
+                    context.getPurpose(),
+                    context.getEra(),
+                    verdict.getTier(), // Code/Result
+                    "v2026.01",
+                    String.valueOf(context.hashCode()) // Simple hash for context
+            );
+            if (!"anonymous".equals(userEmail)) {
+                history.setUserEmail(userEmail);
+            }
+
+            // Save detailed context for re-generation
+            String historyStr = context.getHistory() != null ? String.join(",", context.getHistory()) : "";
+            history.setRepairContext(historyStr, context.getCondition());
+
+            repository.save(history);
+
+            return "redirect:/home-repair/result/" + history.getId();
+        } catch (Exception e) {
+            log.error("Error generating verdict", e);
+            model.addAttribute("errorMessage", "Error generating verdict. Please try again or contact support.");
+            return "error";
         }
-
-        // Save detailed context for re-generation
-        String historyStr = context.getHistory() != null ? String.join(",", context.getHistory()) : "";
-        history.setRepairContext(historyStr, context.getCondition());
-        // Store the detailed plan/verdict as JSON or re-generate on view?
-        // For MVP, we'll re-generate on view or store transiently.
-        // Standard pattern: Save simplified history, re-run engine on viewing result if
-        // stateless.
-        // Or serialize Verdict to JSON in history?
-        // Current VerdictHistory entity might be simple. Let's assume re-calculation
-        // for now or simplistic mapping.
-
-        repository.save(history);
-
-        return "redirect:/home-repair/result/" + history.getId();
     }
 
     @GetMapping("/result/{uuid}")
@@ -82,20 +84,25 @@ public class HomeRepairController {
             VerdictHistory history = repository.findById(uuid)
                     .orElseThrow(() -> new IllegalArgumentException("Invalid Verdict ID"));
 
-            // Log the history data for debugging
-            System.out.println("=== DEBUG: VerdictHistory Data ===");
-            System.out.println("ZipCode (MetroCode): " + history.getZipCode());
-            System.out.println("Decade (Era): " + history.getDecade());
-            System.out.println("Budget: " + history.getBudget());
-            System.out.println("Purpose: " + history.getPurpose());
-            System.out.println("RepairHistory: " + history.getRepairHistory());
-            System.out.println("HouseCondition: " + history.getHouseCondition());
+            if (log.isDebugEnabled()) {
+                log.debug("Loading result for ID: {}", uuid);
+            }
+
+            // Safe Double Parsing
+            double parsedBudget = 0.0;
+            try {
+                if (history.getBudget() != null && !history.getBudget().equalsIgnoreCase("null")) {
+                    parsedBudget = Double.parseDouble(history.getBudget());
+                }
+            } catch (NumberFormatException e) {
+                log.warn("Failed to parse budget: {}", history.getBudget());
+            }
 
             // Re-construct Context from History
             UserContext context = UserContext.builder()
                     .metroCode(history.getZipCode()) // Storing MetroCode in ZipCode field for now
                     .era(history.getDecade())
-                    .budget(Double.parseDouble(history.getBudget()))
+                    .budget(parsedBudget)
                     .purpose(history.getPurpose())
                     // Load persisted context
                     .history(history.getRepairHistory() != null && !history.getRepairHistory().isEmpty()
@@ -104,25 +111,15 @@ public class HomeRepairController {
                     .condition(history.getHouseCondition() != null ? history.getHouseCondition() : "UNKNOWN")
                     .build();
 
-            System.out.println("=== DEBUG: UserContext Reconstructed ===");
-            System.out.println("MetroCode: " + context.getMetroCode());
-            System.out.println("Era: " + context.getEra());
-            System.out.println("Budget: " + context.getBudget());
-
             Verdict verdict = verdictEngineService.generateVerdict(context);
-
-            System.out.println("=== DEBUG: Verdict Generated Successfully ===");
-            System.out.println("Tier: " + verdict.getTier());
-            System.out.println(
-                    "Must-Do Items: " + (verdict.getPlan() != null ? verdict.getPlan().getMustDo().size() : "null"));
 
             model.addAttribute("verdict", verdict);
             model.addAttribute("history", history);
             return "pages/result";
         } catch (Exception e) {
-            System.err.println("=== ERROR in result endpoint ===");
-            e.printStackTrace();
-            throw e;
+            log.error("Error displaying result page", e);
+            model.addAttribute("errorMessage", "Unable to load result. Please try again.");
+            return "error";
         }
     }
 
@@ -160,8 +157,7 @@ public class HomeRepairController {
         try {
             eventLogRepository.save(new EventLog(verdictId, eventType, target));
         } catch (Exception e) {
-            // Log error but ensure redirect happens
-            e.printStackTrace();
+            log.error("Error logging tracking event", e);
         }
 
         return new RedirectView(target);

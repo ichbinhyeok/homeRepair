@@ -230,16 +230,15 @@
         @endif
     
         <!-- Call to Action -->
-        <section id="cta" class="card" style="text-align: center; border-color: var(--color-primary); background-color: #F0FDF4;">
-            <h2 class="section-title" style="justify-content: center; margin-bottom: 16px;">
-                Get Your Custom Analysis
+        <section id="cta" class="card" style="text-align: center; border-top: 4px solid var(--color-primary); background-color: #F8FAFC; margin-top: 40px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+            <h2 class="section-title" style="justify-content: center; margin-bottom: 16px; border: none; color: #1e293b;">
+                Need a Custom Analysis?
             </h2>
-            <p class="explanation-text" style="margin-bottom: 32px;">
-                This page shows costs for a typical $15,000 budget scenario. 
-                <br>Get a personalized verdict for your <strong>exact budget and property condition</strong>.
+            <p class="explanation-text" style="margin-bottom: 32px; font-size: 1.05em;">
+                This verdict is based on a standard budget. Your actual costs may vary based on specific conditions found during inspection.
             </p>
-            <a href="/" class="header-cta" style="font-size: 1.1em; padding: 16px 32px;">
-                📊 Calculate Your Custom Verdict
+            <a href="/" class="header-cta" style="font-size: 1.1em; padding: 16px 32px; background-color: var(--color-primary); color: white; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-block;">
+                Recalculate with your own budget
             </a>
         </section>
     
