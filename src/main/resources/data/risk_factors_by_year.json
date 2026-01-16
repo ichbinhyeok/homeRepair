@@ -2,55 +2,168 @@
   "meta": {
     "category": "HISTORICAL_BUILDING_RISKS",
     "version": "2026.1.1",
-    "last_updated": "2026-01-14",
-    "note": "Based on EPA, HUD, and CPSC historical safety recalls."
+    "last_updated": "2026-01-16",
+    "note": "Based on EPA, HUD, and CPSC historical safety recalls. Enhanced with homeowner-friendly definitions and damage scenarios."
   },
   "eras": {
     "PRE_1950": {
       "era_name": "Early Century / Post-War",
       "critical_risks": [
-        { "item": "KNOB_AND_TUBE_WIRING", "severity": "CRITICAL", "remedy_cost_factor": 2.5 },
-        { "item": "LEAD_PAINT_INTERIOR", "probability": 0.87, "inspection_mandatory": true },
-        { "item": "GALVANIZED_PIPE_CORROSION", "issue": "Low water pressure/Rust", "priority": "HIGH" }
+        {
+          "item": "KNOB_AND_TUBE_WIRING",
+          "severity": "CRITICAL",
+          "remedy_cost_factor": 2.5,
+          "definition": "Knob-and-tube wiring is an early electrical system using separate wires for hot and neutral, suspended on ceramic insulators. It was standard in homes built before 1950 but lacks the grounding wire required by modern safety codes.",
+          "damage_scenario": "Insulation deterioration can expose live wires, increasing fire risk. Overheating occurs when insulation is added to attics, as the system was designed to dissipate heat in open air.",
+          "remedy_multiplier": 2.5
+        },
+        {
+          "item": "LEAD_PAINT_INTERIOR",
+          "probability": 0.87,
+          "inspection_mandatory": true,
+          "definition": "Lead-based paint was widely used until 1978 for its durability and vivid colors. Lead dust from deteriorating paint poses serious health risks, particularly to children.",
+          "damage_scenario": "Paint chips and dust accumulate over time. Renovation work can release lead particles into the air, requiring specialized containment and cleanup.",
+          "remedy_multiplier": 2.0
+        },
+        {
+          "item": "GALVANIZED_PIPE_CORROSION",
+          "issue": "Low water pressure/Rust",
+          "priority": "HIGH",
+          "definition": "Galvanized steel pipes were coated with zinc to prevent rust, commonly used from the 1930s through 1960s. The zinc coating degrades over 40-70 years, leading to internal corrosion.",
+          "damage_scenario": "Internal rust buildup restricts water flow, reducing pressure at fixtures. Eventually, pipes can develop pinhole leaks inside walls, damaging surrounding materials.",
+          "remedy_multiplier": 1.8
+        }
       ],
       "structural_notes": "Balloon framing common; fire-blocking often missing."
     },
     "1950_1970": {
       "era_name": "Mid-Century Expansion",
       "critical_risks": [
-        { "item": "ASBESTOS_INSULATION", "location": "Attic/Pipes", "removal_cost": "HIGH" },
-        { "item": "CAST_IRON_SEWER_LINES", "issue": "Tree root intrusion/Collapse", "lifespan_end": 2025 },
-        { "item": "UNGROUNDED_OUTLETS", "issue": "Two-prong outlets common", "safety_rating": "LOW" }
+        {
+          "item": "ASBESTOS_INSULATION",
+          "location": "Attic/Pipes",
+          "removal_cost": "HIGH",
+          "definition": "Asbestos was used extensively in insulation and pipe wrapping from the 1950s-1970s due to its fire resistance and insulating properties. Asbestos fibers become hazardous when disturbed or deteriorated.",
+          "damage_scenario": "Disturbing asbestos materials releases microscopic fibers into the air. Professional abatement is required before any renovation or demolition work affecting these areas.",
+          "remedy_multiplier": 3.5
+        },
+        {
+          "item": "CAST_IRON_SEWER_LINES",
+          "issue": "Tree root intrusion/Collapse",
+          "lifespan_end": 2025,
+          "definition": "Cast iron sewer pipes were standard from the 1950s-1970s with a typical lifespan of 50-75 years. Internal corrosion and external root intrusion accelerate failure over time.",
+          "damage_scenario": "Pipe joints separate as iron corrodes, allowing tree roots to penetrate. Complete blockages lead to sewage backups into the home, requiring emergency cleanup and pipe replacement.",
+          "remedy_multiplier": 2.8
+        },
+        {
+          "item": "UNGROUNDED_OUTLETS",
+          "issue": "Two-prong outlets common",
+          "safety_rating": "LOW",
+          "definition": "Two-prong outlets lack the ground wire introduced in the 1960s for electrical safety. Modern appliances and electronics require grounded outlets for proper surge protection.",
+          "damage_scenario": "Without grounding, electrical faults can energize metal appliance casings, creating shock hazards. Sensitive electronics may be damaged during power surges.",
+          "remedy_multiplier": 1.5
+        }
       ]
     },
     "1970_1980": {
       "era_name": "Energy Crisis Era",
       "critical_risks": [
-        { "item": "ALUMINUM_WIRING", "period": "1965-1973", "fire_risk_multiplier": 55.0 },
-        { "item": "POPCORN_CEILING_ASBESTOS", "check_year_cutoff": 1978, "abatement_required": true },
-        { "item": "FEDERAL_PACIFIC_PANELS", "issue": "Stab-Lok breakers fail to trip", "replacement": "MANDATORY" }
+        {
+          "item": "ALUMINUM_WIRING",
+          "period": "1965-1973",
+          "fire_risk_multiplier": 55.0,
+          "definition": "Aluminum wiring was used during the 1965-1973 copper shortage as a cost-effective alternative. Aluminum expands and contracts more than copper, causing connections to loosen over time at outlets and switches.",
+          "damage_scenario": "Loose connections generate heat at termination points. This thermal cycling can lead to arcing, which ignites surrounding materials and causes electrical fires.",
+          "remedy_multiplier": 2.2
+        },
+        {
+          "item": "POPCORN_CEILING_ASBESTOS",
+          "check_year_cutoff": 1978,
+          "abatement_required": true,
+          "definition": "Textured ceiling coatings (popcorn ceilings) installed before 1978 often contain asbestos fibers for fire resistance and texture. The EPA banned asbestos in these materials in 1978.",
+          "damage_scenario": "Ceiling damage or water leaks cause the material to crumble, releasing asbestos fibers. Professional testing and abatement are required before any ceiling work or removal.",
+          "remedy_multiplier": 3.0
+        },
+        {
+          "item": "FEDERAL_PACIFIC_PANELS",
+          "issue": "Stab-Lok breakers fail to trip",
+          "replacement": "MANDATORY",
+          "definition": "Federal Pacific Electric (FPE) panels with Stab-Lok breakers were installed in millions of homes from the 1950s-1980s. Independent testing revealed these breakers frequently fail to trip during overload conditions.",
+          "damage_scenario": "Breaker failure allows electrical overloads to continue unchecked, overheating wires inside walls. This creates fire risk without the homeowner's knowledge until smoke or flames appear.",
+          "remedy_multiplier": 2.0
+        }
       ]
     },
     "1980_1995": {
       "era_name": "Modern Material Testing",
       "critical_risks": [
-        { "item": "POLYBUTYLENE_PLUMBING", "brand": "Quest", "issue": "Sudden catastrophic leaks", "probability": 0.35 },
-        { "item": "LP_INNER_SEAL_SIDING", "issue": "Composite wood rot/Swelling", "legal_settlement_history": true },
-        { "item": "SYNTHETIC_STUCCO_EIFS", "issue": "Moisture trapping/Internal rot", "risk_area": "High_Humidity" }
+        {
+          "item": "POLYBUTYLENE_PLUMBING",
+          "brand": "Quest",
+          "issue": "Sudden catastrophic leaks",
+          "probability": 0.35,
+          "definition": "Polybutylene is a gray plastic pipe material widely used in homes built between 1978-1995 because it was inexpensive and easy to install. It was later found to degrade when exposed to chlorine in treated tap water.",
+          "damage_scenario": "Pipe failure releases water inside walls, damaging drywall and insulation. Water spreads to flooring and lower levels, potentially leading to mold growth and structural damage.",
+          "remedy_multiplier": 3.0
+        },
+        {
+          "item": "LP_INNER_SEAL_SIDING",
+          "issue": "Composite wood rot/Swelling",
+          "legal_settlement_history": true,
+          "definition": "Louisiana-Pacific Inner-Seal siding was a wood composite product installed during the 1980s-1990s. Manufacturing defects allowed water penetration, causing the material to swell, rot, and delaminate prematurely.",
+          "damage_scenario": "Water infiltration behind failed siding rots the underlying wall structure and insulation. Extensive damage often goes unnoticed until siding falls away from the building.",
+          "remedy_multiplier": 2.5
+        },
+        {
+          "item": "SYNTHETIC_STUCCO_EIFS",
+          "issue": "Moisture trapping/Internal rot",
+          "risk_area": "High_Humidity",
+          "definition": "Exterior Insulation and Finish System (EIFS) is a synthetic stucco applied over foam insulation. Early installations lacked proper moisture barriers, trapping water against wood framing.",
+          "damage_scenario": "Water enters through cracks or improper flashing around windows. Trapped moisture rots wall framing from the inside, often undetected until structural failure occurs.",
+          "remedy_multiplier": 3.2
+        }
       ]
     },
     "1995_2010": {
       "era_name": "Pre-Recession Boom",
       "critical_risks": [
-        { "item": "CHINESE_DRYWALL", "period": "2001-2008", "issue": "Sulfur gas/Corroded wiring", "smell_test": "Rotten_Egg" },
-        { "item": "PEX_A_FITTING_RECALLS", "issue": "Zinc leaching/Dezincification", "brand": "Zurn/Kitec" }
+        {
+          "item": "CHINESE_DRYWALL",
+          "period": "2001-2008",
+          "issue": "Sulfur gas/Corroded wiring",
+          "smell_test": "Rotten_Egg",
+          "definition": "Defective drywall imported from China between 2001-2008 contains elevated sulfur compounds. These materials release hydrogen sulfide gas, particularly in humid conditions.",
+          "damage_scenario": "Sulfur gases corrode copper wiring, HVAC coils, and appliance components. Metal corrosion leads to electrical failures, appliance breakdowns, and potential fire hazards from damaged wiring.",
+          "remedy_multiplier": 4.0
+        },
+        {
+          "item": "PEX_A_FITTING_RECALLS",
+          "issue": "Zinc leaching/Dezincification",
+          "brand": "Zurn/Kitec",
+          "definition": "Certain PEX plumbing systems (notably Kitec brand, 1995-2007) used brass fittings that undergo dezincification when exposed to water chemistry. The zinc layer corrodes, weakening the fitting structure.",
+          "damage_scenario": "Weakened fittings develop pinhole leaks or catastrophic failures, releasing water under pressure inside walls. Multiple fittings throughout the home can fail simultaneously.",
+          "remedy_multiplier": 2.7
+        }
       ]
     },
     "2010_PRESENT": {
       "era_name": "High-Efficiency Era",
       "critical_risks": [
-        { "item": "HVAC_REFRIGERANT_PHASE_OUT", "issue": "R-22 replacement cost", "solution": "Full system upgrade" },
-        { "item": "SMART_HOME_OBSOLESCENCE", "issue": "End-of-life for early IoT hubs" }
+        {
+          "item": "HVAC_REFRIGERANT_PHASE_OUT",
+          "issue": "R-22 replacement cost",
+          "solution": "Full system upgrade",
+          "definition": "R-22 refrigerant (Freon) was phased out in 2020 due to environmental concerns. Existing systems using R-22 face limited and increasingly expensive repair options.",
+          "damage_scenario": "Refrigerant leaks in R-22 systems cannot be economically repaired due to scarce supply. System failure during extreme temperatures creates health risks and requires emergency replacement at peak pricing.",
+          "remedy_multiplier": 1.8
+        },
+        {
+          "item": "SMART_HOME_OBSOLESCENCE",
+          "issue": "End-of-life for early IoT hubs",
+          "definition": "First-generation smart home hubs and connected devices (2010-2015) are reaching manufacturer end-of-support. Security vulnerabilities and compatibility issues arise when software updates cease.",
+          "damage_scenario": "Unsupported devices become security entry points for network intrusions. Failed automation systems controlling locks, thermostats, or fire detection require full replacement for continued functionality.",
+          "remedy_multiplier": 1.5
+        }
       ]
     }
   }

@@ -1,0 +1,9 @@
+User-agent: *
+
+Allow: /home-repair/
+
+Disallow: /api/
+Disallow: /admin/
+
+Sitemap: https://livingcostcheck.com/sitemap-home-repair.xml
+

@@ -14,6 +14,11 @@ public class DataMapping {
     public static class MetroMasterData {
         private Map<String, Object> meta;
         private Map<String, MetroCityData> data;
+
+        // Helper method to extract data_authority from meta
+        public String getDataAuthority() {
+            return meta != null ? (String) meta.get("data_authority") : null;
+        }
     }
 
     @Data
@@ -65,6 +70,13 @@ public class DataMapping {
         private Boolean inspectionMandatory;
         @JsonProperty("removal_cost")
         private String removalCost; // "HIGH"
+
+        // Enhanced fields for evidence-based explanations
+        private String definition;
+        @JsonProperty("damage_scenario")
+        private String damageScenario;
+        @JsonProperty("remedy_multiplier")
+        private Double remedyMultiplier;
         // other fields like priority, probability
     }
 

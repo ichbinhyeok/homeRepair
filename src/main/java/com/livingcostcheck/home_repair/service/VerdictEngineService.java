@@ -208,6 +208,7 @@ public class VerdictEngineService {
             String category = "COSMETIC"; // Default
 
             // 1. Risk Overlay (MUST BE DONE FIRST)
+            RiskItem matchedRisk = null; // Store matched risk for explanation building
             for (RiskItem risk : eraRisks) {
                 boolean isRiskMatch = false;
 
@@ -226,8 +227,24 @@ public class VerdictEngineService {
                     isRiskMatch = true;
 
                 if (isRiskMatch) {
+                    matchedRisk = risk; // Store for explanation building
                     riskFlags.add("ERA_RISK: " + risk.getItem());
-                    explanation += " High risk detected for " + risk.getItem() + ".";
+
+                    // Build evidence-based explanation: [Definition] → [Damage Scenario] → [Cost
+                    // Comparison]
+                    StringBuilder evidenceExplanation = new StringBuilder();
+
+                    // Step 1: Definition (if available)
+                    if (risk.getDefinition() != null && !risk.getDefinition().isEmpty()) {
+                        evidenceExplanation.append(risk.getDefinition()).append(" ");
+                    }
+
+                    // Step 2: Damage Scenario (if available)
+                    if (risk.getDamageScenario() != null && !risk.getDamageScenario().isEmpty()) {
+                        evidenceExplanation.append(risk.getDamageScenario()).append(" ");
+                    }
+
+                    explanation = evidenceExplanation.toString();
 
                     if ("CRITICAL".equals(risk.getSeverity())) {
                         finalCost *= 1.3;
@@ -359,19 +376,17 @@ public class VerdictEngineService {
                 .build();
     }
 
-    // --- STEP 6: Verdict & Strategic Advice ---
+    // --- STEP 6: Verdict & Strategic Advice (STRING GENERATION ONLY - NO
+    // CALCULATION CHANGES) ---
     private Verdict step6_verdictGeneration(SortedPlan plan, UserContext context) {
-        // New Metric: Total Required Cost (Must-Do Only)
+        // CALCULATIONS UNCHANGED - These are existing logic
         double totalRequired = plan.getMustDo().stream().mapToDouble(RiskAdjustedItem::getAdjustedCost).sum();
-
-        // Optional items are summed for info, but don't block verdict
         double totalOptional = plan.getShouldDo().stream().mapToDouble(RiskAdjustedItem::getAdjustedCost).sum();
-
         double budget = context.getBudget();
         String tier = "DENIED";
         String headline = "";
 
-        // Verdict Rule: Checked against REQUIRED cost only
+        // VERDICT LOGIC UNCHANGED - Existing thresholds
         if (budget >= totalRequired) {
             tier = "APPROVED";
             headline = "Your budget safely covers required repairs at local 2026 rates.";
@@ -383,22 +398,94 @@ public class VerdictEngineService {
             headline = "Budget is insufficient for local standards. Focus on safety-critical items only.";
         }
 
-        List<String> futureCostWarning = new ArrayList<>();
-        plan.getMustDo().forEach(item -> {
-            if (item.getRiskFlags().size() > 0) {
-                futureCostWarning.add("Deferring " + item.getPrettyName() + " (" + item.getCategory()
-                        + ") may increase cost by 30-50% due to collateral damage risk.");
+        // NEW: Enhanced explanation generation with evidence-based approach
+        List<String> mustDoExplanations = new ArrayList<>();
+        EraData eraData = riskFactorsData.getEras().getOrDefault(context.getEra(), new EraData());
+        List<RiskItem> eraRisks = eraData.getCriticalRisks() != null ? eraData.getCriticalRisks()
+                : Collections.emptyList();
+        String dataAuthority = metroMasterData.getDataAuthority();
+
+        for (RiskAdjustedItem item : plan.getMustDo()) {
+            StringBuilder fullExplanation = new StringBuilder();
+
+            // Start with existing explanation (already contains definition + damage
+            // scenario from step4)
+            if (item.getExplanation() != null && !item.getExplanation().isEmpty()) {
+                fullExplanation.append(item.getExplanation());
             }
-        });
+
+            // Add cost range disclosure (±5%)
+            double costLow = item.getAdjustedCost() * 0.95;
+            double costHigh = item.getAdjustedCost() * 1.05;
+
+            // Find matched risk for remedy_multiplier (if applicable)
+            RiskItem matchedRisk = null;
+            for (RiskItem risk : eraRisks) {
+                boolean isMatch = false;
+                if ("POLYBUTYLENE_PLUMBING".equals(risk.getItem()) && item.getItemCode().contains("PLUMBING"))
+                    isMatch = true;
+                if ("KNOB_AND_TUBE_WIRING".equals(risk.getItem()) && item.getItemCode().contains("ELECTRICAL"))
+                    isMatch = true;
+                if ("ALUMINUM_WIRING".equals(risk.getItem()) && item.getItemCode().contains("ELECTRICAL"))
+                    isMatch = true;
+                if ("LP_INNER_SEAL_SIDING".equals(risk.getItem()) && item.getItemCode().contains("SIDING"))
+                    isMatch = true;
+                if ("SYNTHETIC_STUCCO_EIFS".equals(risk.getItem()) && item.getItemCode().contains("STUCCO"))
+                    isMatch = true;
+                if ("FEDERAL_PACIFIC_PANELS".equals(risk.getItem()) && item.getItemCode().contains("ELECTRICAL_PANEL"))
+                    isMatch = true;
+
+                if (isMatch) {
+                    matchedRisk = risk;
+                    break;
+                }
+            }
+
+            // Add quantified opportunity cost comparison (if remedy_multiplier available)
+            if (matchedRisk != null && matchedRisk.getRemedyMultiplier() != null
+                    && matchedRisk.getRemedyMultiplier() > 0) {
+                double incidentLow = item.getAdjustedCost() * matchedRisk.getRemedyMultiplier() * 0.95;
+                double incidentHigh = item.getAdjustedCost() * matchedRisk.getRemedyMultiplier() * 1.05;
+
+                fullExplanation.append(String.format(
+                        "Planned repair typically costs $%,.0f–$%,.0f. " +
+                                "A single failure often results in $%,.0f–$%,.0f in combined damage and interior repairs. ",
+                        costLow, costHigh, incidentLow, incidentHigh));
+            } else {
+                // No multiplier available, just show cost range
+                fullExplanation.append(String.format(
+                        "Estimated cost: $%,.0f–$%,.0f. ",
+                        costLow, costHigh));
+            }
+
+            // Add regional credibility (if era-based risk)
+            if (item.getRiskFlags() != null && item.getRiskFlags().stream().anyMatch(f -> f.contains("ERA_RISK"))) {
+                if (dataAuthority != null && !dataAuthority.isEmpty()) {
+                    fullExplanation.append(String.format(
+                            "In homes of this era, according to %s, these systems have typically reached the end of their service life window. ",
+                            dataAuthority));
+                }
+            }
+
+            // Add disclaimer
+            fullExplanation.append("(Actual contractor quotes may vary based on layout and access.)");
+
+            // Format: "ItemName: Explanation"
+            mustDoExplanations.add(item.getPrettyName() + ": " + fullExplanation.toString());
+        }
+
+        // FORBIDDEN LANGUAGE REMOVED: Old vague "may increase by 30-50%" replaced with
+        // evidence-based approach above
+        // No longer creating generic futureCostWarning - specific costs are now
+        // integrated into each item's explanation
 
         return Verdict.builder()
                 .tier(tier)
                 .headline(headline)
-                .mustDoExplanation(plan.getMustDo().stream().map(i -> i.getPrettyName() + ": " + i.getExplanation())
-                        .collect(Collectors.toList()))
+                .mustDoExplanation(mustDoExplanations)
                 .optionalActions(
                         plan.getShouldDo().stream().map(RiskAdjustedItem::getPrettyName).collect(Collectors.toList()))
-                .futureCostWarning(futureCostWarning)
+                .futureCostWarning(Collections.emptyList()) // Replaced with inline cost comparisons
                 .upgradeScenario(
                         Collections.singletonList("If budget allows, upgrade HVAC to Heat Pump for tax credits."))
                 .plan(plan)

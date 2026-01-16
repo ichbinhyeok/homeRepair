@@ -45,3 +45,19 @@ tasks.named('test') {
 tasks.withType(JavaCompile) {
 	options.compilerArgs << "-parameters"
 }
+
+// pSEO Static Page Generation Task
+task generateStaticPages(type: JavaExec) {
+	group = 'pSEO'
+	description = 'Generate all 702 static verdict pages for programmatic SEO'
+	classpath = sourceSets.main.runtimeClasspath
+	mainClass = 'com.livingcostcheck.home_repair.StaticPageGenerator'
+	
+	// Ensure classes are compiled first
+	dependsOn classes
+}
+
+// Optional: Auto-generate before building JAR
+// Uncomment if you want pages generated on every build
+// bootJar.dependsOn generateStaticPages
+
