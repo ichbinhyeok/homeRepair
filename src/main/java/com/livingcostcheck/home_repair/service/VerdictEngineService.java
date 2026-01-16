@@ -57,27 +57,30 @@ public class VerdictEngineService {
         List<BaseCostItem> candidates = step0_candidateGenerator(context);
         EstimatedScale scale = step2_autoScale(context);
 
+        // Optimization: Step 3 & 4 are strategy-agnostic (Logic is S-Class, based on
+        // JSON/Era)
+        // Run them ONCE instead of 3x
+        List<BaseCostItem> costedItems = step3_preliminaryCosting(candidates, scale);
+        List<RiskAdjustedItem> baseRiskAdjustedItems = step4_riskFilter(costedItems, context);
+
         // TIER 1: Safety/Flip Baseline
         StrategyOption safetyOption = generateStrategyOption(
                 StrategyType.SAFETY_FLIP,
-                candidates,
-                scale,
+                baseRiskAdjustedItems,
                 context);
         strategyOptions.add(safetyOption);
 
         // TIER 2: Standard Living (Default)
         StrategyOption standardOption = generateStrategyOption(
                 StrategyType.STANDARD_LIVING,
-                candidates,
-                scale,
+                baseRiskAdjustedItems,
                 context);
         strategyOptions.add(standardOption);
 
         // TIER 3: Forever Home (Premium)
         StrategyOption foreverOption = generateStrategyOption(
                 StrategyType.FOREVER_HOME,
-                candidates,
-                scale,
+                baseRiskAdjustedItems,
                 context);
         strategyOptions.add(foreverOption);
 
@@ -118,15 +121,8 @@ public class VerdictEngineService {
      */
     private StrategyOption generateStrategyOption(
             StrategyType strategyType,
-            List<BaseCostItem> candidates,
-            EstimatedScale scale,
+            List<RiskAdjustedItem> riskAdjustedItems,
             UserContext context) {
-        // Step 3: Preliminary Costing (with strategy-specific material grades)
-        List<BaseCostItem> costedItems = step3_preliminaryCosting(candidates, scale, strategyType);
-
-        // Step 4: Risk & History Filter
-        List<RiskAdjustedItem> riskAdjustedItems = step4_riskFilter(costedItems, context);
-
         // Step 5: Strategic Filtering (replaces priority ranking)
         SortedPlan plan = step5_strategicFiltering(riskAdjustedItems, context, strategyType);
 
@@ -259,8 +255,7 @@ public class VerdictEngineService {
     }
 
     // --- STEP 3: Preliminary Costing ---
-    private List<BaseCostItem> step3_preliminaryCosting(List<BaseCostItem> candidates, EstimatedScale scale,
-            StrategyType strategyType) {
+    private List<BaseCostItem> step3_preliminaryCosting(List<BaseCostItem> candidates, EstimatedScale scale) {
         List<BaseCostItem> results = new ArrayList<>();
 
         for (BaseCostItem candidate : candidates) {

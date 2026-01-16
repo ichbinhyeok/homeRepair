@@ -67,6 +67,11 @@ public class HomeRepairController {
             // Save detailed context for re-generation
             String historyStr = context.getHistory() != null ? String.join(",", context.getHistory()) : "";
             history.setRepairContext(historyStr, context.getCondition());
+            history.setForensicClues(
+                    context.getIsFpePanel(),
+                    context.getIsPolyB(),
+                    context.getIsAluminum(),
+                    context.getIsChineseDrywall());
 
             repository.save(history);
 
@@ -109,6 +114,10 @@ public class HomeRepairController {
                             ? java.util.Arrays.asList(history.getRepairHistory().split(","))
                             : java.util.Collections.emptyList())
                     .condition(history.getHouseCondition() != null ? history.getHouseCondition() : "UNKNOWN")
+                    .isFpePanel(history.getIsFpePanel())
+                    .isPolyB(history.getIsPolyB())
+                    .isAluminum(history.getIsAluminum())
+                    .isChineseDrywall(history.getIsChineseDrywall())
                     .build();
 
             Verdict verdict = verdictEngineService.generateVerdict(context);

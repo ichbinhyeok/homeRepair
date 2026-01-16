@@ -50,6 +50,19 @@ public class VerdictHistory {
     @Column(name = "house_condition")
     private String houseCondition;
 
+    // Phase 4: Forensic Persistance
+    @Column(name = "is_fpe_panel")
+    private Boolean isFpePanel;
+
+    @Column(name = "is_poly_b")
+    private Boolean isPolyB;
+
+    @Column(name = "is_aluminum")
+    private Boolean isAluminum;
+
+    @Column(name = "is_chinese_drywall")
+    private Boolean isChineseDrywall;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -69,6 +82,13 @@ public class VerdictHistory {
     public void setRepairContext(String repairHistory, String houseCondition) {
         this.repairHistory = repairHistory;
         this.houseCondition = houseCondition;
+    }
+
+    public void setForensicClues(Boolean isFpePanel, Boolean isPolyB, Boolean isAluminum, Boolean isChineseDrywall) {
+        this.isFpePanel = isFpePanel;
+        this.isPolyB = isPolyB;
+        this.isAluminum = isAluminum;
+        this.isChineseDrywall = isChineseDrywall;
     }
 
 }
