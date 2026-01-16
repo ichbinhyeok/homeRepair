@@ -156,18 +156,18 @@ public class VerdictEngineService {
                 name = "The Safety/Flip Baseline";
                 description = "Minimum cost to pass inspection";
                 goal = "Safe to sell or rent quickly";
-                materialGrade = "Budget (Asphalt Shingles, Vinyl Siding)";
+                materialGrade = "Essential Only (Code-Required Repairs)";
                 includedCategories = Arrays.asList("SAFETY", "CRITICAL", "MANDATORY");
                 keyHighlights = Arrays.asList(
                         "Only inspection-mandatory items",
-                        "Lowest material grades",
+                        "Standard materials, code-compliant",
                         "Minimum to avoid buyer walkaway");
                 break;
             case STANDARD_LIVING:
                 name = "The Standard Living";
                 description = "Comfortable living for 5-7 years";
                 goal = "Safe and functional home";
-                materialGrade = "Standard (Architectural Shingles, Fiber Cement)";
+                materialGrade = "All Essential Systems (Safety + Mechanical + Structural)";
                 includedCategories = Arrays.asList("SAFETY", "STRUCTURAL", "MECHANICAL", "FUNCTIONAL");
                 keyHighlights = Arrays.asList(
                         "All safety + essential systems",
@@ -178,11 +178,11 @@ public class VerdictEngineService {
                 name = "The Forever Home";
                 description = "Maximum asset value appreciation";
                 goal = "Premium durability and resale value";
-                materialGrade = "Premium (Metal Roof, Hardie Board, High-SEER HVAC)";
+                materialGrade = "Everything Including Upgrades (All Categories + Cosmetic)";
                 includedCategories = Arrays.asList("ALL");
                 keyHighlights = Arrays.asList(
                         "Everything including cosmetic upgrades",
-                        "Premium materials with longest warranty",
+                        "Premium-tier items where applicable",
                         "Maximize home value and appeal");
                 break;
         }
@@ -301,7 +301,7 @@ public class VerdictEngineService {
                     if (candidate.getItemCode().contains("EXTERIOR")) {
                         quantity = scale.getInteriorSqft() * 1.2; // Exterior wall approx
                     } else {
-                        quantity = scale.getInteriorSqft() * 2.5; // Interior wall approx
+                        quantity = scale.getInteriorSqft() * 3.5; // Interior wall + ceiling (more accurate)
                     }
                     break;
                 case "LF":
@@ -309,8 +309,6 @@ public class VerdictEngineService {
                         quantity = 35.0; // Avg kitchen cabinet run
                     } else if (candidate.getItemCode().contains("GUTTER")) {
                         quantity = Math.sqrt(scale.getInteriorSqft()) * 4.0 * 1.15; // Perimeter + waste
-                    } else if (candidate.getItemCode().contains("REPIPE")) {
-                        quantity = scale.getInteriorSqft() * 0.8; // Rough pipe length estimate
                     } else {
                         quantity = scale.getExteriorSqft() * 0.1;
                     }
@@ -334,11 +332,11 @@ public class VerdictEngineService {
 
             // Special overrides for known items
             if ("HVAC_HEAT_PUMP_CENTRAL".equals(candidate.getItemCode()))
-                quantity = Math.ceil(scale.getHvacTons() / 2.0); // Num units
+                quantity = 1.0; // SPEC Line 30: HVAC is ONE system (tonnage is capacity, not units)
             if ("ROOFING_ASPHALT_ARCHITECTURAL".equals(candidate.getItemCode()))
                 quantity = scale.getRoofingSquares();
             if ("PLUMBING_WHOLE_HOUSE_REPIPE".equals(candidate.getItemCode()))
-                quantity = scale.getInteriorSqft() * 0.04; // Approx linear feet based on floor area
+                quantity = Math.max(150, scale.getInteriorSqft() * 0.15); // Min 150 LF per JSON min_project_size
 
             // --- 1. Small Job Penalty Logic (JSON Compliance) ---
             double penaltyMult = 1.0;
@@ -348,38 +346,51 @@ public class VerdictEngineService {
                 penaltyMult = shortMult;
             }
 
-            // Material Cost - STRATEGY-DEPENDENT
-            double matBase = 0.0;
-            switch (strategyType) {
-                case SAFETY_FLIP:
-                    // Use LOW end of material cost range
-                    matBase = itemDef.getMaterialCostRange().getLow();
-                    break;
-                case STANDARD_LIVING:
-                    // Use AVERAGE (existing logic)
-                    matBase = (itemDef.getMaterialCostRange().getLow() + itemDef.getMaterialCostRange().getHigh())
-                            / 2.0;
-                    break;
-                case FOREVER_HOME:
-                    // Use HIGH end of material cost range
-                    matBase = itemDef.getMaterialCostRange().getHigh();
-                    break;
-            }
+            // Material Cost - SPEC Line 36: ALWAYS avg(low, high)
+            // Strategy = Scope (what work), NOT Grade (material quality)
+            // Material quality differences = different items in JSON (Asphalt vs Metal)
+            double matBase = (itemDef.getMaterialCostRange().getLow() +
+                    itemDef.getMaterialCostRange().getHigh()) / 2.0;
             double matCost = matBase * scale.getMatLogistics() * quantity;
 
-            // Labor Cost (Apply Penalty Here to capture efficiency loss)
+            // Labor Cost (penalty will be applied to total subtotal, not here)
             double laborRate = itemDef.getBaseLaborRateNational() * scale.getLaborMult();
-            double laborCost = itemDef.getLaborHoursPerUnit() * laborRate * quantity * penaltyMult;
+            double laborCost = itemDef.getLaborHoursPerUnit() * laborRate * quantity;
 
-            // Mobilization
+            // Mobilization - JSON business_logic:
+            // PRIMARY: Item_Fee * City_Labor_Mult
+            // SECONDARY: City_Base_Fee + (Item_Fee * 0.5)
             double itemMob = itemDef.getMobilizationBaseFee() != null ? itemDef.getMobilizationBaseFee() : 0.0;
-            double mobilization = Math.max(itemMob, scale.getMobFee());
+            double mobilization = 0.0;
+            String mobPriority = itemDef.getMobilizationPriority();
 
-            // Disposal (Fix Formula: Removed erroneous * 100.0)
+            if ("PRIMARY".equalsIgnoreCase(mobPriority)) {
+                // Large jobs (roofing, siding): scale with city labor rates
+                mobilization = itemMob * scale.getLaborMult();
+            } else {
+                // Small jobs (windows, panels): city base + 50% item fee
+                mobilization = scale.getMobFee() + (itemMob * 0.5);
+            }
+
+            // Disposal - JSON business_logic: "Units * waste_tons_per_unit *
+            // (City_Disposal_Tax_Rate * 100)"
+            // disp_tax = 0.04 means $4 per ton (needs × 100 to get dollar amount)
             double wasteTons = itemDef.getWasteTonsPerUnit() != null ? itemDef.getWasteTonsPerUnit() : 0.0;
-            double disposal = quantity * wasteTons * scale.getDispTax();
+            double disposal = quantity * wasteTons * (scale.getDispTax() * 100.0);
 
+            // Calculate initial subtotal
             double subtotal = matCost + laborCost + mobilization + disposal;
+
+            // --- Apply Small Job Penalty to ALL FIELDS (JSON business_logic) ---
+            // JSON: "If Units < min_project_size, Total_Cost * short_order_multiplier"
+            // Sync all component fields with the penalty so step4 stays accurate
+            if (minSize != null && quantity < minSize && shortMult != null) {
+                matCost *= penaltyMult;
+                laborCost *= penaltyMult;
+                mobilization *= penaltyMult;
+                disposal *= penaltyMult;
+                subtotal *= penaltyMult;
+            }
 
             results.add(BaseCostItem.builder()
                     .itemCode(candidate.getItemCode())
@@ -396,47 +407,48 @@ public class VerdictEngineService {
                     .build());
         }
 
-        // Apply Mobilization Optimization (Discount shared trips)
-        optimizeMobilizationCosts(results);
+        // --- Mobilization Grouping (Audit: Charge City_Base_Fee only ONCE per trade)
+        // ---
+        applyTradeMobilizationDiscounts(results, scale);
 
         return results;
     }
 
-    private void optimizeMobilizationCosts(List<BaseCostItem> items) {
-        // Group by Trade Prefix (e.g. ROOFING, HVAC, ELECTRICAL) to prevent invalid
-        // cross-trade discounts
+    private void applyTradeMobilizationDiscounts(List<BaseCostItem> items, EstimatedScale scale) {
+        // Group by trade (ROOFING, ELECTRICAL, etc.)
         Map<String, List<BaseCostItem>> byTrade = items.stream()
-                .collect(Collectors.groupingBy(item -> {
-                    String code = item.getItemCode();
+                .collect(Collectors.groupingBy(i -> {
+                    String code = i.getItemCode();
                     int idx = code.indexOf('_');
                     return (idx > 0) ? code.substring(0, idx) : code;
                 }));
 
         for (List<BaseCostItem> group : byTrade.values()) {
-            if (group.isEmpty())
+            if (group.size() <= 1)
                 continue;
 
-            // Find max mob fee item (Primary), prioritizing "PRIMARY" tag from JSON
-            BaseCostItem primary = group.stream()
-                    .max(Comparator.comparingDouble((BaseCostItem i) -> {
+            // Find the anchor (Primary item or highest mobilization)
+            BaseCostItem anchor = group.stream()
+                    .max(Comparator.comparingDouble(i -> {
                         double score = i.getMobilization();
-                        // Huge boost for explicit PRIMARY items so they always become the anchor
-                        if ("PRIMARY".equalsIgnoreCase(i.getMobilizationPriority())) {
-                            score += 100000.0;
-                        }
+                        if ("PRIMARY".equalsIgnoreCase(i.getMobilizationPriority()))
+                            score += 1000000;
                         return score;
                     }))
                     .orElse(group.get(0));
 
+            // For all OTHER items in this trade, remove the redundant scale.getMobFee()
             for (BaseCostItem item : group) {
-                if (item != primary && item.getMobilization() > 0) { // Only discount if not primary
-                    double originalMob = item.getMobilization();
-                    double discountedMob = originalMob * 0.5; // 50% discount for secondary items
-                    item.setMobilization(discountedMob);
+                if (item == anchor)
+                    continue;
 
-                    // Re-sum subtotal
-                    double newSub = item.getMaterialCost() + item.getLaborCost() + discountedMob + item.getDisposal();
-                    item.setSubtotal(newSub);
+                // Only remove if it's a secondary item that actually contains the fee
+                if (item.getMobilization() >= scale.getMobFee()) {
+                    double newMob = Math.max(0, item.getMobilization() - scale.getMobFee());
+                    item.setMobilization(newMob);
+                    // Recalculate subtotal
+                    item.setSubtotal(
+                            item.getMaterialCost() + item.getLaborCost() + item.getMobilization() + item.getDisposal());
                 }
             }
         }
@@ -521,27 +533,46 @@ public class VerdictEngineService {
                     matchedRisk = risk; // Store for explanation building
                     riskFlags.add("ERA_RISK: " + risk.getItem());
 
-                    // Build evidence-based explanation: [Definition] → [Damage Scenario] → [Cost
-                    // Comparison]
+                    // Build evidence-based explanation
                     StringBuilder evidenceExplanation = new StringBuilder();
 
-                    // Step 1: Definition (if available)
                     if (risk.getDefinition() != null && !risk.getDefinition().isEmpty()) {
                         evidenceExplanation.append(risk.getDefinition()).append(" ");
                     }
 
-                    // Step 2: Damage Scenario (if available)
                     if (risk.getDamageScenario() != null && !risk.getDamageScenario().isEmpty()) {
                         evidenceExplanation.append(risk.getDamageScenario()).append(" ");
                     }
 
                     explanation = evidenceExplanation.toString();
 
+                    // SPEC Line 40: "Era Adjustment: Labor * RFY.remedy_cost_factor"
+                    // CRITICAL: item.getSubtotal() already includes Short Order Penalty!
+                    // We must preserve it, not recalculate from components
+                    if (risk.getRemedyMultiplier() != null && risk.getRemedyMultiplier() > 0) {
+                        // Calculate labor proportion of the ORIGINAL subtotal
+                        double totalComponents = item.getMaterialCost() + item.getLaborCost()
+                                + item.getMobilization() + item.getDisposal();
+                        double laborProportion = totalComponents > 0
+                                ? item.getLaborCost() / totalComponents
+                                : 0.0;
+
+                        // Apply remedy multiplier to labor portion
+                        // finalCost = subtotal + (labor_portion × subtotal × (multiplier - 1))
+                        // This preserves any penalty already in subtotal
+                        double laborImpact = item.getSubtotal() * laborProportion * (risk.getRemedyMultiplier() - 1.0);
+                        finalCost = item.getSubtotal() + laborImpact;
+
+                        riskFlags.add("ERA_LABOR_ADJUSTMENT: " + risk.getRemedyMultiplier() + "x");
+                    }
+
+                    // THEN apply CRITICAL severity multiplier to TOTAL
                     if ("CRITICAL".equals(risk.getSeverity())) {
                         finalCost *= 1.3;
                         riskFlags.add("CRITICAL_SEVERITY_SURCHARGE");
                         compoundingBadge = "HISTORICAL RISK COMPOUNDING APPLIED (1.3x)";
                     }
+
                     if (Boolean.TRUE.equals(risk.getInspectionMandatory())) {
                         finalCost += 650.0;
                         riskFlags.add("MANDATORY_INSPECTION");
@@ -596,13 +627,17 @@ public class VerdictEngineService {
                         continue; // REMOVE
                     }
                 } else {
-                    // RECHECK MODE
-                    riskFlags.add("HISTORY_RECHECK");
-                    double labor = item.getLaborCost() * 0.25;
-                    double material = 150.0; // Diagnostic Min Cost
+                    // Condition is "AVERAGE" or "POOR" - downgrade item to "Diagnostic" mode
+                    // Audit: Recalculate based on proportional logic to preserve penalty
+                    double totalComponents = item.getMaterialCost() + item.getLaborCost()
+                            + item.getMobilization() + item.getDisposal();
+                    double nonMatProportion = totalComponents > 0
+                            ? (item.getLaborCost() + item.getMobilization() + item.getDisposal()) / totalComponents
+                            : 0.0;
 
-                    // Mobilization stays full
-                    finalCost = labor + material + item.getMobilization() + item.getDisposal();
+                    double diagnosticMat = 150.0;
+                    // Preserve penalty by using subtotal instead of raw components
+                    finalCost = diagnosticMat + (item.getSubtotal() * nonMatProportion);
                     explanation += " Recheck required due to history condition: " + context.getCondition();
                 }
             }
@@ -618,55 +653,8 @@ public class VerdictEngineService {
                     .compoundingBadge(compoundingBadge)
                     .build());
         }
+
         return adjustedItems;
-    }
-
-    // --- STEP 5: Priority Ranking ---
-    private SortedPlan step5_priorityRanking(List<RiskAdjustedItem> items, UserContext context) {
-        List<RiskAdjustedItem> mustDo = new ArrayList<>();
-        List<RiskAdjustedItem> shouldDo = new ArrayList<>();
-        List<RiskAdjustedItem> skip = new ArrayList<>();
-
-        for (RiskAdjustedItem item : items) {
-            String cat = item.getCategory();
-            boolean isSafety = "SAFETY".equals(cat);
-            boolean isStructural = "STRUCTURAL".equals(cat);
-            boolean isMechanical = "MECHANICAL".equals(cat);
-
-            if (isSafety) {
-                mustDo.add(item);
-            } else if (isStructural) {
-                mustDo.add(item);
-            } else if (isMechanical) {
-                if (item.getRiskFlags().size() > 0)
-                    mustDo.add(item); // Risk detected -> Must Do
-                else {
-                    if ("LIVING".equals(context.getPurpose()))
-                        shouldDo.add(item);
-                    else
-                        shouldDo.add(item);
-                }
-            } else {
-                // Cosmetic
-                if ("RESALE".equals(context.getPurpose()))
-                    shouldDo.add(item);
-                else if ("LIVING".equals(context.getPurpose()))
-                    shouldDo.add(item);
-                else
-                    skip.add(item);
-            }
-        }
-
-        Comparator<RiskAdjustedItem> costDesc = (a, b) -> Double.compare(b.getAdjustedCost(), a.getAdjustedCost());
-        mustDo.sort(costDesc);
-        shouldDo.sort(costDesc);
-        skip.sort(costDesc);
-
-        return SortedPlan.builder()
-                .mustDo(mustDo)
-                .shouldDo(shouldDo)
-                .skipForNow(skip)
-                .build();
     }
 
     // --- STEP 5 (NEW): Strategic Filtering ---
@@ -676,7 +664,47 @@ public class VerdictEngineService {
         List<RiskAdjustedItem> shouldDo = new ArrayList<>();
         List<RiskAdjustedItem> skip = new ArrayList<>();
 
+        // --- Item-Level Deduplication (Strategy = Scope, choose ONE item per category)
+        // ---
+        // Remove premium alternatives for budget strategies
+        List<RiskAdjustedItem> filteredItems = new ArrayList<>();
+
         for (RiskAdjustedItem item : items) {
+            boolean shouldInclude = true;
+
+            // Strategy-based item exclusions (not grade adjustments!)
+            switch (strategyType) {
+                case SAFETY_FLIP:
+                    // Exclude premium items (Metal Roof, High-SEER HVAC, premium materials)
+                    if (item.getItemCode().contains("METAL") && item.getItemCode().contains("ROOF")) {
+                        shouldInclude = false; // Use Asphalt instead
+                    }
+                    if (item.getItemCode().contains("DECK") || item.getItemCode().contains("CABINET")) {
+                        shouldInclude = false; // No cosmetic/upgrade items
+                    }
+                    break;
+
+                case STANDARD_LIVING:
+                    // Exclude only extreme premium items
+                    if (item.getItemCode().contains("METAL") && item.getItemCode().contains("ROOF")) {
+                        shouldInclude = false; // Asphalt is standard
+                    }
+                    break;
+
+                case FOREVER_HOME:
+                    // Prefer premium when available (exclude budget alternatives)
+                    // This is inverse: if Metal Roof exists, skip Asphalt
+                    // Handled by priority in presentation, not filtering
+                    break;
+            }
+
+            if (shouldInclude) {
+                filteredItems.add(item);
+            }
+        }
+
+        // --- Category-Based Filtering (existing logic) ---
+        for (RiskAdjustedItem item : filteredItems) {
             String cat = item.getCategory();
             boolean isSafety = "SAFETY".equals(cat);
             boolean isStructural = "STRUCTURAL".equals(cat);
