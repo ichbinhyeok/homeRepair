@@ -1,132 +1,142 @@
+@import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.Verdict
 @import com.livingcostcheck.home_repair.domain.VerdictHistory
-@import com.livingcostcheck.home_repair.service.dto.VerdictResult
-@import com.livingcostcheck.home_repair.service.VerdictService
-
+@param Verdict verdict
 @param VerdictHistory history
-@param VerdictResult verdict
-@param VerdictService helper
 
 @template.layout(content = @`
-    <div class="bg-gray-50 min-h-screen pb-12">
-        <!-- HEADER / VERDICT BOX -->
-        <div class="bg-gray-900 pt-8 pb-12 px-4 shadow-xl">
-            <div class="max-w-3xl mx-auto text-center space-y-4">
-                <span class="inline-block px-4 py-1 bg-red-600 text-white text-xs font-black uppercase tracking-widest rounded animate-pulse">
-                    Binding Verdict
-                </span>
-                <h1 class="text-4xl md:text-5xl font-black text-white uppercase leading-tight tracking-tight">
-                    ${verdict.getTitle()}
-                </h1>
-                <p class="text-gray-400 font-mono text-sm">Case ID: ${history.getId().toString().substring(0,8)} | Context: ${history.getDecade()} Build</p>
-                
-                <div class="mt-8 p-6 bg-white rounded-lg shadow-lg border-l-8 border-black text-left">
-                     <p class="text-xl font-bold text-gray-900 mb-2">Conclusion:</p>
-                     <p class="text-gray-800 leading-relaxed font-medium">
-                        ${verdict.getCode().replace("_", " ")} is your ONLY logical path.
-                        ${verdict.getRecommendedAction()} is the required action.
-                     </p>
+    <div class="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        
+        <!-- Header / Verdict Tier -->
+        <div class="text-center mb-10">
+            @if("APPROVED".equals(verdict.getTier()))
+                <div class="inline-block bg-green-100 text-green-800 font-black text-xs px-3 py-1 rounded-full mb-4 tracking-widest border border-green-200">VERDICT: APPROVED</div>
+                <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-2">Green Light</h1>
+                <p class="text-lg text-green-700 font-medium">${verdict.getHeadline()}</p>
+            @elseif("WARNING".equals(verdict.getTier()))
+                 <div class="inline-block bg-yellow-100 text-yellow-800 font-black text-xs px-3 py-1 rounded-full mb-4 tracking-widest border border-yellow-200">VERDICT: WARNING</div>
+                <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-2">Caution Required</h1>
+                <p class="text-lg text-yellow-700 font-medium">${verdict.getHeadline()}</p>
+            @else
+                 <div class="inline-block bg-red-100 text-red-800 font-black text-xs px-3 py-1 rounded-full mb-4 tracking-widest border border-red-200">VERDICT: DENIED</div>
+                <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-2">Insufficient Budget</h1>
+                <p class="text-lg text-red-700 font-medium">${verdict.getHeadline()}</p>
+            @endif
+        </div>
+
+        <!-- MUST DO Section (High Priority) -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold text-slate-900 border-b-2 border-slate-200 pb-3 mb-6 flex items-center">
+                <svg class="w-6 h-6 text-red-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                CRITICAL / MUST DO
+            </h2>
+            
+            <div class="grid gap-6 md:grid-cols-2">
+                @for(var item : verdict.getPlan().getMustDo())
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border-l-4 ${item.isMandatory() ? "border-red-600" : "border-slate-800"}">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="bg-slate-100 text-slate-600 text-xs font-bold px-2 py-1 rounded uppercase tracking-wider">${item.getCategory()}</span>
+                                <span class="text-lg font-bold text-slate-900">$${String.format("%,.0f", item.getAdjustedCost())}</span>
+                            </div>
+                            <h3 class="font-bold text-lg text-slate-800 mb-2 leading-snug">${item.getPrettyName()}</h3>
+                            @if(item.getRiskFlags() != null && !item.getRiskFlags().isEmpty())
+                                <div class="space-y-1 mb-3">
+                                    @for(var flag : item.getRiskFlags())
+                                        <div class="text-xs text-red-600 font-semibold flex items-center">
+                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                                            ${flag}
+                                        </div>
+                                    @endfor
+                                    @if(item.getRiskFlags().contains("HISTORY_RECHECK"))
+                                        <p class="text-xs text-blue-600 italic mt-1">
+                                            * Diagnostic check only based on provided repair history.
+                                        </p>
+                                    @endif
+                                </div>
+                            @endif
+                            <p class="text-sm text-slate-500">${item.getExplanation()}</p>
+                        </div>
+                    </div>
+                @endfor
+                @if(verdict.getPlan().getMustDo().isEmpty())
+                    <div class="md:col-span-2 bg-green-50 p-6 rounded-lg text-center border border-green-100">
+                        <p class="text-green-700 font-medium">No critical safety items detected based on your inputs.</p>
+                    </div>
+                @endif
+            </div>
+        </div>
+
+        <!-- EXPERT STRATEGIC ADVICE -->
+        <div class="bg-slate-900 rounded-xl shadow-xl overflow-hidden mb-12">
+            <div class="px-6 py-4 border-b border-slate-700 flex items-center bg-slate-800">
+                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                <h2 class="text-white font-bold tracking-wide uppercase text-sm">Expert Strategic Advice</h2>
+            </div>
+            <div class="p-6 text-slate-300">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-blue-400 font-bold text-xs uppercase mb-3 tracking-wider">Future Cost Advisory</h4>
+                        @if(!verdict.getFutureCostWarning().isEmpty())
+                            <ul class="space-y-3">
+                                @for(var warning : verdict.getFutureCostWarning())
+                                    <li class="flex items-start text-sm">
+                                        <span class="text-yellow-500 mr-2">⚠</span>
+                                        ${warning}
+                                    </li>
+                                @endfor
+                            </ul>
+                        @else
+                            <p class="text-sm text-slate-500 italic">No immediate deferred maintenance risks detected.</p>
+                        @endif
+                    </div>
+                    <div>
+                        <h4 class="text-blue-400 font-bold text-xs uppercase mb-3 tracking-wider">Upgrade Opportunities</h4>
+                         @if(verdict.getUpgradeScenario() != null && !verdict.getUpgradeScenario().isEmpty())
+                             <ul class="space-y-3">
+                                @for(var opp : verdict.getUpgradeScenario())
+                                    <li class="flex items-start text-sm">
+                                        <span class="text-green-500 mr-2">↗</span>
+                                        ${opp}
+                                    </li>
+                                @endfor
+                            </ul>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="max-w-3xl mx-auto px-4 -mt-6">
-            <!-- AD_SLOT_MIDDLE -->
-            <div class="w-full bg-gray-200 h-20 mb-8 rounded flex items-center justify-center text-gray-400 text-xs border border-dashed border-gray-300">
-                AD_SLOT_MIDDLE (High CPM)
-            </div>
-
-            <!-- DEFENSE SECTION (LOSS AVERSION) -->
-            <section class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 mb-8 relative overflow-hidden">
-                <div class="absolute top-0 right-0 bg-gray-100 text-gray-500 text-xs font-bold px-3 py-1 rounded-bl">DEFENSE</div>
-                <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-                    <span class="text-red-600 mr-2">☠️</span> The Cost of Inaction
-                </h2>
-                <p class="text-gray-600 leading-relaxed mb-6">
-                    ${verdict.getDefenseText()}
-                </p>
-                <div class="bg-red-50 p-4 rounded border border-red-100 text-sm text-red-800 font-medium">
-                    Warning: Failing to address this could compound costs by 300% within 18 months.
-                </div>
-                
-                <!-- CTA: Expert Lead -->
-                <a href="/home-repair/track?verdictId=${history.getId()}&type=AFFILIATE&target=https://example.com/contractors" 
-                   target="_blank"
-                   class="block w-full mt-6 bg-white border-2 border-red-600 text-red-600 font-bold py-3 px-6 rounded hover:bg-red-50 text-center transition">
-                    Find Certified Experts (Prevent Loss) &rarr;
-                </a>
-            </section>
-
-            <!-- OFFENSE SECTION (ROI) -->
-            <section class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 mb-8 relative overflow-hidden">
-                <div class="absolute top-0 right-0 bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-bl">OFFENSE</div>
-                <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-                    <span class="text-blue-600 mr-2">💎</span> Maximizing Value
-                </h2>
-                <p class="text-gray-600 leading-relaxed mb-6">
-                    ${verdict.getOffenseText()}
-                </p>
-                
-                <!-- CTA: Affiliate Materials -->
-                <a href="/home-repair/track?verdictId=${history.getId()}&type=AFFILIATE&target=https://example.com/materials" 
-                   target="_blank"
-                   class="block w-full mt-6 bg-blue-600 text-white font-bold py-3 px-6 rounded hover:bg-blue-700 shadow-lg text-center transition transform hover:-translate-y-1">
-                    Get ${verdict.getRecommendedAction()} Materials &rarr;
-                </a>
-            </section>
-
-             <!-- EMAIL CAPTURE (ASSET) -->
-            <section class="bg-gray-800 rounded-xl shadow-lg p-8 mb-12 text-center text-white">
-                <h3 class="text-xl font-bold mb-2">Get Your Local Cost Breakdown</h3>
-                <p class="text-gray-400 text-sm mb-6">We have compiled a PDF report for Zip Code <span class="text-white font-mono">${history.getZipCode()}</span>.</p>
-                
-                <form id="emailForm" class="flex flex-col sm:flex-row gap-3">
-                    <input type="email" name="email" required placeholder="Enter your email" 
-                           class="flex-1 px-4 py-3 rounded text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-6 rounded transition">
-                        Send Report
-                    </button>
-                </form>
-                <div id="emailSuccess" class="hidden mt-4 text-green-400 font-bold text-sm">
-                    ✓ Report Sent! Check your inbox.
-                </div>
-            </section>
-
-            <!-- PV BOOSTERS (RE-CALCULATE) -->
-            <div class="text-center space-y-4">
-                <p class="text-gray-500 text-xs uppercase tracking-widest font-bold">Simulate Other Scenarios</p>
-                <div class="flex flex-col gap-3">
-                     <a href="${helper.getCalculationRedirectUrl(history.getZipCode(), history.getBudget(), history.getDecade(), history.getPurpose(), "boost_budget")}"
-                       class="w-full bg-white border border-gray-300 text-gray-600 font-medium py-3 rounded hover:bg-gray-50 text-sm transition">
-                        What if I add $5,000 to budget?
-                    </a>
-                    
-                    @if(!"Flip/Sell".equals(history.getPurpose()))
-                    <a href="${helper.getCalculationRedirectUrl(history.getZipCode(), history.getBudget(), history.getDecade(), history.getPurpose(), "sell_mode")}"
-                       class="w-full bg-white border border-gray-300 text-gray-600 font-medium py-3 rounded hover:bg-gray-50 text-sm transition">
-                        What if I sell immediately?
-                    </a>
+        <!-- SHOULD DO / OPTIONAL -->
+        <h2 class="text-xl font-bold text-slate-800 border-b border-slate-200 pb-2 mb-6">Recommended (If Budget Allows)</h2>
+        <div class="bg-white shadow rounded-lg overflow-hidden border border-slate-200 mb-12">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Est. Cost</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    @for(var item : verdict.getPlan().getShouldDo())
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${item.getPrettyName()}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.getCategory()}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right">$${String.format("%,.0f", item.getAdjustedCost())}</td>
+                        </tr>
+                    @endfor
+                     @if(verdict.getPlan().getShouldDo().isEmpty())
+                        <tr>
+                            <td colspan="3" class="px-6 py-4 text-center text-sm text-gray-500 italic">No optional items suggested.</td>
+                        </tr>
                     @endif
-                </div>
-            </div>
+                </tbody>
+            </table>
         </div>
 
-        <!-- Script for AJAX Lead Capture -->
-        <script>
-            document.getElementById('emailForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const email = this.email.value;
-                const verdictId = '${history.getId().toString()}';
-                
-                fetch('/home-repair/api/lead?verdictId=' + verdictId + '&email=' + encodeURIComponent(email), {
-                    method: 'POST'
-                })
-                .then(response => {
-                    if (response.ok) {
-                        document.getElementById('emailForm').classList.add('hidden');
-                        document.getElementById('emailSuccess').classList.remove('hidden');
-                    }
-                });
-            });
-        </script>
+        <div class="text-center">
+            <a href="/home-repair" class="text-blue-600 hover:text-blue-800 font-medium text-sm">Start New Calculation &rarr;</a>
+        </div>
+
     </div>
 `)

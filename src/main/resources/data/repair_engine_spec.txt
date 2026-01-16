@@ -1,4 +1,3 @@
-AI 모델이 즉시 학습하고 처리할 수 있도록 최적화된 .txt 형식의 명세서입니다. 아래 내용을 복사하여 repair_engine_spec.txt 파일로 저장하세요.
 
 2026 HOME REPAIR VERDICT ENGINE: TECHNICAL SPECIFICATION (VER 2026.01)
 

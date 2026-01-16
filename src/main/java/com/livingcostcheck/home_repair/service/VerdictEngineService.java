@@ -26,6 +26,10 @@ public class VerdictEngineService {
     private RiskFactorsData riskFactorsData;
     private CostLibraryData costLibraryData;
 
+    public MetroMasterData getMetroMasterData() {
+        return metroMasterData;
+    }
+
     @PostConstruct
     public void loadData() {
         try {
