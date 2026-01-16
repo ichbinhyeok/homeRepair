@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Emerald Green Rounded Square Background -->
+  <rect x="0" y="0" width="64" height="64" rx="16" fill="#10B981"/>
+  
+  <!-- House Silhouette (White) -->
+  <path d="M32 12 L10 30 L14 30 L14 54 L50 54 L50 30 L54 30 Z" fill="#ffffff"/>
+  
+  <!-- Checkmark Cutout (Transparent/Green logic via path structure or overlay) -->
+  <!-- Actually effectively drawing a green checkmark on top of the white house to look like a cutout -->
+  <path d="M26 44 L20 38 L23 35 L26 38 L38 26 L41 29 Z" fill="#10B981" transform="translate(0, 4)"/>
+</svg>

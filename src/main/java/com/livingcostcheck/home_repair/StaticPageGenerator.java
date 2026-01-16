@@ -39,8 +39,16 @@ public class StaticPageGenerator {
             System.out.println("✓ Verdict engine data loaded");
 
             // Initialize JTE template engine
-            Path templatePath = Paths.get("src/main/resources/jte");
-            DirectoryCodeResolver codeResolver = new DirectoryCodeResolver(templatePath);
+            // Check if running from source (dev/build) or JAR (classloader)
+            Path templateDir = Paths.get("src/main/jte");
+            gg.jte.CodeResolver codeResolver;
+            if (java.nio.file.Files.exists(templateDir)) {
+                codeResolver = new DirectoryCodeResolver(templateDir);
+                System.out.println("✓ Using file system templates: " + templateDir.toAbsolutePath());
+            } else {
+                codeResolver = new gg.jte.resolve.ResourceCodeResolver("");
+                System.out.println("✓ Using classpath templates (JAR mode)");
+            }
             TemplateEngine templateEngine = TemplateEngine.create(codeResolver, ContentType.Html);
             System.out.println("✓ Template engine initialized");
 

@@ -20,6 +20,14 @@ configurations {
 	}
 }
 
+sourceSets {
+	main {
+		resources {
+			srcDirs 'src/main/jte'
+		}
+	}
+}
+
 repositories {
 	mavenCentral()
 }
