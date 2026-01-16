@@ -79,6 +79,7 @@ public class VerdictDTOs {
         private List<String> riskFlags; // "CRITICAL_RISK", "HISTORY_RECHECK"
         private boolean mandatory;
         private String explanation; // Why is this here? (e.g. "Era Risk: Polybutylene")
+        private String compoundingBadge; // e.g., "RISK COMPOUNDING APPLIED (1.3x)"
     }
 
     @Data
@@ -107,6 +108,7 @@ public class VerdictDTOs {
         private String materialGrade; // e.g., "Budget (Asphalt Shingles)"
         private List<String> keyHighlights; // e.g., ["Only mandatory repairs", "Budget materials"]
         private String negotiationCopy; // Copy-pasteable text for real estate agents
+        private double negotiationLeverage; // 1.5x of critical cost
     }
 
     @Data

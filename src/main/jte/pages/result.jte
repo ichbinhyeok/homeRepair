@@ -156,7 +156,16 @@
                 <div class="bg-gradient-to-r from-green-600 to-emerald-700 rounded-2xl shadow-2xl overflow-hidden mb-12">
                     <div class="px-6 py-4 border-b border-green-500 flex items-center">
                         <svg class="w-6 h-6 text-green-200 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                        <h2 class="text-white font-bold tracking-wide uppercase text-lg">Negotiation Leverage Copy</h2>
+                        <h2 class="text-white font-bold tracking-wide uppercase text-lg flex items-center flex-wrap gap-2">
+                            Negotiation Leverage Copy
+                            @for(var option : verdict.getStrategyOptions())
+                                @if(option.getStrategyType() == StrategyType.SAFETY_FLIP && option.getNegotiationLeverage() > 0)
+                                    <span class="ml-2 bg-yellow-400 text-yellow-900 text-xs font-black px-2 py-1 rounded shadow-sm border border-yellow-500">
+                                        LEVERAGE VALUE: $${String.format("%,.0f", option.getNegotiationLeverage())}
+                                    </span>
+                                @endif
+                            @endfor
+                        </h2>
                     </div>
                     <div class="p-6">
                         @for(var option : verdict.getStrategyOptions())
@@ -196,7 +205,14 @@
                                         </div>
                                         <h4 class="font-bold text-slate-800 mb-1">${item.getPrettyName()}</h4>
                                         @if(item.getExplanation() != null && !item.getExplanation().isEmpty())
-                                            <p class="text-xs text-slate-600">${item.getExplanation()}</p>
+                                            <p class="text-xs text-slate-600 mb-1">${item.getExplanation()}</p>
+                                        @endif
+                                        @if(item.getCompoundingBadge() != null)
+                                            <div class="mt-1">
+                                                <span class="inline-flex items-center px-2 py-1 rounded text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200 tracking-wide">
+                                                    ⚠️ ${item.getCompoundingBadge()}
+                                                </span>
+                                            </div>
                                         @endif
                                     </div>
                                 @endfor

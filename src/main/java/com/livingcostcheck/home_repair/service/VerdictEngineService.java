@@ -188,7 +188,15 @@ public class VerdictEngineService {
         }
 
         // Generate negotiation copy for CRITICAL items
-        String negotiationCopy = generateNegotiationCopy(plan, context);
+        String negotiationCopy = generateNegotiationCopy(plan, context); // Context passes leverage implicitly via logic
+                                                                         // inside or we calc here
+
+        // Calculate Negotiation Leverage (1.5x of Critical/Risk Items)
+        double leverageBase = plan.getMustDo().stream()
+                .filter(i -> i.getRiskFlags().stream().anyMatch(f -> f.contains("CRITICAL") || f.contains("ERA_RISK")))
+                .mapToDouble(RiskAdjustedItem::getAdjustedCost)
+                .sum();
+        double leverage = leverageBase * 1.5;
 
         return StrategyOption.builder()
                 .strategyType(strategyType)
@@ -201,6 +209,7 @@ public class VerdictEngineService {
                 .materialGrade(materialGrade)
                 .keyHighlights(keyHighlights)
                 .negotiationCopy(negotiationCopy)
+                .negotiationLeverage(leverage)
                 .build();
     }
 
@@ -446,6 +455,7 @@ public class VerdictEngineService {
             List<String> riskFlags = new ArrayList<>();
             boolean mandatory = false;
             String explanation = "";
+            String compoundingBadge = null;
             String category = "COSMETIC"; // Default
 
             // 1. Risk Overlay (MUST BE DONE FIRST)
@@ -490,6 +500,7 @@ public class VerdictEngineService {
                     if ("CRITICAL".equals(risk.getSeverity())) {
                         finalCost *= 1.3;
                         riskFlags.add("CRITICAL_SEVERITY_SURCHARGE");
+                        compoundingBadge = "HISTORICAL RISK COMPOUNDING APPLIED (1.3x)";
                     }
                     if (Boolean.TRUE.equals(risk.getInspectionMandatory())) {
                         finalCost += 650.0;
@@ -564,6 +575,7 @@ public class VerdictEngineService {
                     .riskFlags(riskFlags)
                     .mandatory(mandatory)
                     .explanation(explanation)
+                    .compoundingBadge(compoundingBadge)
                     .build());
         }
         return adjustedItems;
