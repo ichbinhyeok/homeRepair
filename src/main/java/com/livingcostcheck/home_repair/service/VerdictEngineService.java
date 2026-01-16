@@ -50,23 +50,158 @@ public class VerdictEngineService {
     }
 
     public Verdict generateVerdict(UserContext context) {
-        // Step 0: Candidate Generator
-        List<BaseCostItem> candidates = step0_candidateGenerator(context);
+        // Generate THREE strategic options instead of one
+        List<StrategyOption> strategyOptions = new ArrayList<>();
 
-        // Step 1 & 2: Scale & Localization
+        // Common Steps (0-2)
+        List<BaseCostItem> candidates = step0_candidateGenerator(context);
         EstimatedScale scale = step2_autoScale(context);
 
-        // Step 3: Preliminary Costing
-        List<BaseCostItem> costedItems = step3_preliminaryCosting(candidates, scale);
+        // TIER 1: Safety/Flip Baseline
+        StrategyOption safetyOption = generateStrategyOption(
+                StrategyType.SAFETY_FLIP,
+                candidates,
+                scale,
+                context);
+        strategyOptions.add(safetyOption);
+
+        // TIER 2: Standard Living (Default)
+        StrategyOption standardOption = generateStrategyOption(
+                StrategyType.STANDARD_LIVING,
+                candidates,
+                scale,
+                context);
+        strategyOptions.add(standardOption);
+
+        // TIER 3: Forever Home (Premium)
+        StrategyOption foreverOption = generateStrategyOption(
+                StrategyType.FOREVER_HOME,
+                candidates,
+                scale,
+                context);
+        strategyOptions.add(foreverOption);
+
+        // Determine overall verdict based on Tier 1 (minimum required)
+        double minRequired = safetyOption.getTotalCost();
+        double budget = context.getBudget();
+        String tier = "DENIED";
+        String headline = "";
+
+        if (budget >= minRequired) {
+            tier = "APPROVED";
+            headline = String.format(
+                    "You can fix this house for $%,.0f (minimum), $%,.0f (standard), or $%,.0f (premium). Choose your strategy.",
+                    safetyOption.getTotalCost(), standardOption.getTotalCost(), foreverOption.getTotalCost());
+        } else if (budget >= (minRequired * 0.9)) {
+            tier = "WARNING";
+            headline = "Budget is tight for even minimum safety repairs. Risk of incomplete work.";
+        } else {
+            tier = "DENIED";
+            headline = "Budget insufficient for required safety repairs at local 2026 rates.";
+        }
+
+        // Build final verdict with backward compatibility
+        return Verdict.builder()
+                .tier(tier)
+                .headline(headline)
+                .strategyOptions(strategyOptions)
+                .plan(standardOption.getPlan()) // Default to standard for backward compatibility
+                .mustDoExplanation(Collections.emptyList()) // Will be in each strategy option
+                .optionalActions(Collections.emptyList())
+                .futureCostWarning(Collections.emptyList())
+                .upgradeScenario(Collections.emptyList())
+                .build();
+    }
+
+    /**
+     * Generate a single strategic option based on strategy type
+     */
+    private StrategyOption generateStrategyOption(
+            StrategyType strategyType,
+            List<BaseCostItem> candidates,
+            EstimatedScale scale,
+            UserContext context) {
+        // Step 3: Preliminary Costing (with strategy-specific material grades)
+        List<BaseCostItem> costedItems = step3_preliminaryCosting(candidates, scale, strategyType);
 
         // Step 4: Risk & History Filter
         List<RiskAdjustedItem> riskAdjustedItems = step4_riskFilter(costedItems, context);
 
-        // Step 5: Priority Ranking
-        SortedPlan sortedPlan = step5_priorityRanking(riskAdjustedItems, context);
+        // Step 5: Strategic Filtering (replaces priority ranking)
+        SortedPlan plan = step5_strategicFiltering(riskAdjustedItems, context, strategyType);
 
-        // Step 6: Verdict Generation
-        return step6_verdictGeneration(sortedPlan, context);
+        // Calculate total cost
+        double totalCost = plan.getMustDo().stream()
+                .mapToDouble(RiskAdjustedItem::getAdjustedCost)
+                .sum();
+
+        // For FOREVER_HOME (and others if applicable), 'Should Do' items are part of
+        // the investment plan
+        if (!plan.getShouldDo().isEmpty()) {
+            totalCost += plan.getShouldDo().stream()
+                    .mapToDouble(RiskAdjustedItem::getAdjustedCost)
+                    .sum();
+        }
+
+        // Build strategy-specific metadata
+        String name = "";
+        String description = "";
+        String goal = "";
+        String materialGrade = "";
+        List<String> includedCategories = new ArrayList<>();
+        List<String> keyHighlights = new ArrayList<>();
+
+        switch (strategyType) {
+            case SAFETY_FLIP:
+                name = "The Safety/Flip Baseline";
+                description = "Minimum cost to pass inspection";
+                goal = "Safe to sell or rent quickly";
+                materialGrade = "Budget (Asphalt Shingles, Vinyl Siding)";
+                includedCategories = Arrays.asList("SAFETY", "CRITICAL", "MANDATORY");
+                keyHighlights = Arrays.asList(
+                        "Only inspection-mandatory items",
+                        "Lowest material grades",
+                        "Minimum to avoid buyer walkaway");
+                break;
+            case STANDARD_LIVING:
+                name = "The Standard Living";
+                description = "Comfortable living for 5-7 years";
+                goal = "Safe and functional home";
+                materialGrade = "Standard (Architectural Shingles, Fiber Cement)";
+                includedCategories = Arrays.asList("SAFETY", "STRUCTURAL", "MECHANICAL", "FUNCTIONAL");
+                keyHighlights = Arrays.asList(
+                        "All safety + essential systems",
+                        "Standard contractor materials",
+                        "Balanced cost-to-quality ratio");
+                break;
+            case FOREVER_HOME:
+                name = "The Forever Home";
+                description = "Maximum asset value appreciation";
+                goal = "Premium durability and resale value";
+                materialGrade = "Premium (Metal Roof, Hardie Board, High-SEER HVAC)";
+                includedCategories = Arrays.asList("ALL");
+                keyHighlights = Arrays.asList(
+                        "Everything including cosmetic upgrades",
+                        "Premium materials with longest warranty",
+                        "Maximize home value and appeal");
+                break;
+        }
+
+        // Generate negotiation copy for CRITICAL items
+        String negotiationCopy = generateNegotiationCopy(plan, context);
+
+        return StrategyOption.builder()
+                .strategyType(strategyType)
+                .name(name)
+                .description(description)
+                .goal(goal)
+                .totalCost(totalCost)
+                .plan(plan)
+                .includedCategories(includedCategories)
+                .materialGrade(materialGrade)
+                .keyHighlights(keyHighlights)
+                .negotiationCopy(negotiationCopy)
+                .build();
     }
 
     // --- STEP 0: Candidate Generator ---
@@ -115,7 +250,8 @@ public class VerdictEngineService {
     }
 
     // --- STEP 3: Preliminary Costing ---
-    private List<BaseCostItem> step3_preliminaryCosting(List<BaseCostItem> candidates, EstimatedScale scale) {
+    private List<BaseCostItem> step3_preliminaryCosting(List<BaseCostItem> candidates, EstimatedScale scale,
+            StrategyType strategyType) {
         List<BaseCostItem> results = new ArrayList<>();
 
         for (BaseCostItem candidate : candidates) {
@@ -125,27 +261,64 @@ public class VerdictEngineService {
             double quantity = 0.0;
             switch (itemDef.getMeasureUnit()) {
                 case "SQUARE":
-                    quantity = scale.getRoofingSquares();
-                    break; // Approximation
+                    if (candidate.getItemCode().contains("ROOF")) {
+                        quantity = scale.getRoofingSquares();
+                    } else if (candidate.getItemCode().contains("SIDING")) {
+                        // Wall Area Approx = Floor Sqft * 1.2 (assuming single story box) / 100
+                        quantity = (scale.getInteriorSqft() * 1.2) / 100.0;
+                    } else {
+                        quantity = scale.getInteriorSqft() / 100.0;
+                    }
+                    break; // Roofing/Siding 100 sqft unit
                 case "UNIT":
                     quantity = 1.0;
                     break; // Default unit
                 case "SQFT":
                     // Guessing logic based on category
-                    if (candidate.getCategory().contains("INTERIOR"))
-                        quantity = scale.getInteriorSqft();
-                    else
-                        quantity = scale.getExteriorSqft();
+                    if (candidate.getCategory().contains("INTERIOR") && candidate.getItemCode().contains("FLOOR")) {
+                        quantity = scale.getInteriorSqft() * 0.85; // 85% coverage
+                    } else if (candidate.getItemCode().contains("DECK")) {
+                        quantity = 400.0; // Reasonable fixed size for deck (not whole lot!)
+                    } else if (candidate.getCategory().contains("LANDSCAPING")) {
+                        quantity = scale.getExteriorSqft(); // Yard work uses lot size
+                    } else {
+                        quantity = scale.getInteriorSqft(); // Fallback
+                    }
+                    break;
+                case "ACRE":
+                    quantity = Math.max(0.1, scale.getExteriorSqft() / 43560.0); // Convert sqft to acres, min 0.1
                     break;
                 case "SQFT_WALL":
-                    quantity = scale.getInteriorSqft() * 2.5;
-                    break; // Rough wall estimate
+                    if (candidate.getItemCode().contains("EXTERIOR")) {
+                        quantity = scale.getInteriorSqft() * 1.2; // Exterior wall approx
+                    } else {
+                        quantity = scale.getInteriorSqft() * 2.5; // Interior wall approx
+                    }
+                    break;
                 case "LF":
-                    quantity = scale.getExteriorSqft() * 0.1;
+                    if (candidate.getItemCode().contains("CABINET")) {
+                        quantity = 35.0; // Avg kitchen cabinet run
+                    } else if (candidate.getItemCode().contains("GUTTER")) {
+                        quantity = Math.sqrt(scale.getInteriorSqft()) * 4.0 * 1.15; // Perimeter + waste
+                    } else if (candidate.getItemCode().contains("REPIPE")) {
+                        quantity = scale.getInteriorSqft() * 0.8; // Rough pipe length estimate
+                    } else {
+                        quantity = scale.getExteriorSqft() * 0.1;
+                    }
                     break; // Very rough
                 case "EACH":
-                    quantity = 10.0;
-                    break; // Windows etc default
+                    if (candidate.getItemCode().contains("WINDOW")) {
+                        quantity = 12.0;
+                    } else if (candidate.getItemCode().contains("DOOR")) {
+                        quantity = 8.0;
+                    } else if (candidate.getItemCode().contains("BATH")) {
+                        quantity = 2.0; // 2.0 bathrooms average
+                    } else if (candidate.getItemCode().contains("PANEL")) {
+                        quantity = 1.0;
+                    } else {
+                        quantity = 1.0; // Safety default
+                    }
+                    break;
                 default:
                     quantity = 1.0;
             }
@@ -158,21 +331,44 @@ public class VerdictEngineService {
             if ("PLUMBING_WHOLE_HOUSE_REPIPE".equals(candidate.getItemCode()))
                 quantity = scale.getInteriorSqft() * 0.04; // Approx linear feet based on floor area
 
-            // Material Cost
-            double matBase = (itemDef.getMaterialCostRange().getLow() + itemDef.getMaterialCostRange().getHigh()) / 2.0;
+            // --- 1. Small Job Penalty Logic (JSON Compliance) ---
+            double penaltyMult = 1.0;
+            Double minSize = itemDef.getMinProjectSize();
+            Double shortMult = itemDef.getShortOrderMultiplier();
+            if (minSize != null && quantity < minSize && shortMult != null) {
+                penaltyMult = shortMult;
+            }
+
+            // Material Cost - STRATEGY-DEPENDENT
+            double matBase = 0.0;
+            switch (strategyType) {
+                case SAFETY_FLIP:
+                    // Use LOW end of material cost range
+                    matBase = itemDef.getMaterialCostRange().getLow();
+                    break;
+                case STANDARD_LIVING:
+                    // Use AVERAGE (existing logic)
+                    matBase = (itemDef.getMaterialCostRange().getLow() + itemDef.getMaterialCostRange().getHigh())
+                            / 2.0;
+                    break;
+                case FOREVER_HOME:
+                    // Use HIGH end of material cost range
+                    matBase = itemDef.getMaterialCostRange().getHigh();
+                    break;
+            }
             double matCost = matBase * scale.getMatLogistics() * quantity;
 
-            // Labor Cost
+            // Labor Cost (Apply Penalty Here to capture efficiency loss)
             double laborRate = itemDef.getBaseLaborRateNational() * scale.getLaborMult();
-            double laborCost = itemDef.getLaborHoursPerUnit() * laborRate * quantity;
+            double laborCost = itemDef.getLaborHoursPerUnit() * laborRate * quantity * penaltyMult;
 
             // Mobilization
             double itemMob = itemDef.getMobilizationBaseFee() != null ? itemDef.getMobilizationBaseFee() : 0.0;
             double mobilization = Math.max(itemMob, scale.getMobFee());
 
-            // Disposal
+            // Disposal (Fix Formula: Removed erroneous * 100.0)
             double wasteTons = itemDef.getWasteTonsPerUnit() != null ? itemDef.getWasteTonsPerUnit() : 0.0;
-            double disposal = quantity * wasteTons * (scale.getDispTax() * 100.0);
+            double disposal = quantity * wasteTons * scale.getDispTax();
 
             double subtotal = matCost + laborCost + mobilization + disposal;
 
@@ -186,10 +382,55 @@ public class VerdictEngineService {
                     .disposal(disposal)
                     .subtotal(subtotal)
                     .wasteTons(wasteTons)
+                    .mobilizationPriority(itemDef.getMobilizationPriority())
                     .rawData(candidate.getRawData())
                     .build());
         }
+
+        // Apply Mobilization Optimization (Discount shared trips)
+        optimizeMobilizationCosts(results);
+
         return results;
+    }
+
+    private void optimizeMobilizationCosts(List<BaseCostItem> items) {
+        // Group by Trade Prefix (e.g. ROOFING, HVAC, ELECTRICAL) to prevent invalid
+        // cross-trade discounts
+        Map<String, List<BaseCostItem>> byTrade = items.stream()
+                .collect(Collectors.groupingBy(item -> {
+                    String code = item.getItemCode();
+                    int idx = code.indexOf('_');
+                    return (idx > 0) ? code.substring(0, idx) : code;
+                }));
+
+        for (List<BaseCostItem> group : byTrade.values()) {
+            if (group.isEmpty())
+                continue;
+
+            // Find max mob fee item (Primary), prioritizing "PRIMARY" tag from JSON
+            BaseCostItem primary = group.stream()
+                    .max(Comparator.comparingDouble((BaseCostItem i) -> {
+                        double score = i.getMobilization();
+                        // Huge boost for explicit PRIMARY items so they always become the anchor
+                        if ("PRIMARY".equalsIgnoreCase(i.getMobilizationPriority())) {
+                            score += 100000.0;
+                        }
+                        return score;
+                    }))
+                    .orElse(group.get(0));
+
+            for (BaseCostItem item : group) {
+                if (item != primary && item.getMobilization() > 0) { // Only discount if not primary
+                    double originalMob = item.getMobilization();
+                    double discountedMob = originalMob * 0.5; // 50% discount for secondary items
+                    item.setMobilization(discountedMob);
+
+                    // Re-sum subtotal
+                    double newSub = item.getMaterialCost() + item.getLaborCost() + discountedMob + item.getDisposal();
+                    item.setSubtotal(newSub);
+                }
+            }
+        }
     }
 
     // --- STEP 4: Risk & History Filter ---
@@ -374,6 +615,107 @@ public class VerdictEngineService {
                 .shouldDo(shouldDo)
                 .skipForNow(skip)
                 .build();
+    }
+
+    // --- STEP 5 (NEW): Strategic Filtering ---
+    private SortedPlan step5_strategicFiltering(List<RiskAdjustedItem> items, UserContext context,
+            StrategyType strategyType) {
+        List<RiskAdjustedItem> mustDo = new ArrayList<>();
+        List<RiskAdjustedItem> shouldDo = new ArrayList<>();
+        List<RiskAdjustedItem> skip = new ArrayList<>();
+
+        for (RiskAdjustedItem item : items) {
+            String cat = item.getCategory();
+            boolean isSafety = "SAFETY".equals(cat);
+            boolean isStructural = "STRUCTURAL".equals(cat);
+            boolean isMechanical = "MECHANICAL".equals(cat);
+            boolean isCritical = item.isMandatory()
+                    || item.getRiskFlags().stream().anyMatch(f -> f.contains("CRITICAL"));
+
+            switch (strategyType) {
+                case SAFETY_FLIP:
+                    // Only SAFETY, CRITICAL, and MANDATORY items
+                    if (isSafety || isCritical) {
+                        mustDo.add(item);
+                    } else {
+                        skip.add(item);
+                    }
+                    break;
+
+                case STANDARD_LIVING:
+                    // SAFETY + STRUCTURAL + MECHANICAL (functional systems)
+                    if (isSafety || isCritical) {
+                        mustDo.add(item);
+                    } else if (isStructural || isMechanical) {
+                        mustDo.add(item);
+                    } else {
+                        // Cosmetic - depends on purpose
+                        if ("RESALE".equals(context.getPurpose()) || "LIVING".equals(context.getPurpose())) {
+                            shouldDo.add(item);
+                        } else {
+                            skip.add(item);
+                        }
+                    }
+                    break;
+
+                case FOREVER_HOME:
+                    // EVERYTHING - all items are included
+                    if (isSafety || isCritical || isStructural) {
+                        mustDo.add(item);
+                    } else {
+                        // Even cosmetic items are "should do" for premium tier
+                        shouldDo.add(item);
+                    }
+                    break;
+            }
+        }
+
+        // Sort by cost descending
+        Comparator<RiskAdjustedItem> costDesc = (a, b) -> Double.compare(b.getAdjustedCost(), a.getAdjustedCost());
+        mustDo.sort(costDesc);
+        shouldDo.sort(costDesc);
+        skip.sort(costDesc);
+
+        return SortedPlan.builder()
+                .mustDo(mustDo)
+                .shouldDo(shouldDo)
+                .skipForNow(skip)
+                .build();
+    }
+
+    // --- NEGOTIATION COPY GENERATOR (PHASE 3) ---
+    private String generateNegotiationCopy(SortedPlan plan, UserContext context) {
+        StringBuilder copy = new StringBuilder();
+        List<RiskAdjustedItem> criticalItems = plan.getMustDo().stream()
+                .filter(item -> "SAFETY".equals(item.getCategory()) || item.isMandatory())
+                .collect(Collectors.toList());
+
+        if (criticalItems.isEmpty()) {
+            return "No critical mandatory repairs detected for this property age and location. Negotiation leverage based on condition is neutral.";
+        }
+
+        double totalCriticalCost = criticalItems.stream()
+                .mapToDouble(RiskAdjustedItem::getAdjustedCost)
+                .sum();
+
+        // Apply 1.5x leverage multiplier (Cost + Hassle Factor)
+        double leverageValue = totalCriticalCost * 1.5;
+
+        copy.append("NEGOTIATION COPY (Copy & Paste for your agent):\n\n");
+        copy.append(String.format(
+                "Based on the 2026 RSMeans Cost Index for %s, this property requires $%,.0f in immediate Code-Mandatory repairs:\n\n",
+                context.getMetroCode(), totalCriticalCost));
+
+        for (RiskAdjustedItem item : criticalItems) {
+            copy.append(String.format("• %s: $%,.0f\n", item.getPrettyName(), item.getAdjustedCost()));
+        }
+
+        copy.append(
+                String.format("\nWe request a price reduction of $%,.0f to cover remediation costs and project risk.\n",
+                        leverageValue));
+        copy.append("This valuation is based on licensed contractor estimates and local material/labor indices.");
+
+        return copy.toString();
     }
 
     // --- STEP 6: Verdict & Strategic Advice (STRING GENERATION ONLY - NO

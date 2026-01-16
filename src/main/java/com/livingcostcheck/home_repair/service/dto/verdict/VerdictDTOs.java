@@ -9,6 +9,13 @@ import java.util.Map;
 
 public class VerdictDTOs {
 
+    // Strategy Type for Three-Tier Scenario Engine
+    public enum StrategyType {
+        SAFETY_FLIP, // Tier 1: Minimum cost to pass inspection
+        STANDARD_LIVING, // Tier 2: Comfortable living for 5-7 years
+        FOREVER_HOME // Tier 3: Maximum asset value appreciation
+    }
+
     @Data
     @Builder
     @NoArgsConstructor
@@ -56,6 +63,7 @@ public class VerdictDTOs {
 
         // Metadata passed through
         private double wasteTons;
+        private String mobilizationPriority; // PRIMARY, SECONDARY
         private Map<String, Object> rawData;
     }
 
@@ -83,17 +91,36 @@ public class VerdictDTOs {
         private List<RiskAdjustedItem> skipForNow;
     }
 
+    // Strategic Option representing one of three tiers
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class StrategyOption {
+        private StrategyType strategyType;
+        private String name; // e.g., "The Safety/Flip Baseline"
+        private String description; // e.g., "Minimum cost to pass inspection"
+        private String goal; // e.g., "Safe to sell or rent quickly"
+        private double totalCost;
+        private SortedPlan plan;
+        private List<String> includedCategories; // e.g., ["SAFETY", "CRITICAL"]
+        private String materialGrade; // e.g., "Budget (Asphalt Shingles)"
+        private List<String> keyHighlights; // e.g., ["Only mandatory repairs", "Budget materials"]
+        private String negotiationCopy; // Copy-pasteable text for real estate agents
+    }
+
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Verdict {
-        private String tier; // APPROVED, WARNING, DENIED
+        private String tier; // APPROVED, WARNING, DENIED (based on budget vs minimum cost)
         private String headline;
-        private List<String> mustDoExplanation;
+        private List<StrategyOption> strategyOptions; // The 3 tiers
+        private List<String> mustDoExplanation; // Kept for backward compatibility
         private List<String> optionalActions;
         private List<String> futureCostWarning;
         private List<String> upgradeScenario;
-        private SortedPlan plan;
+        private SortedPlan plan; // Kept for backward compatibility (defaults to STANDARD_LIVING)
     }
 }

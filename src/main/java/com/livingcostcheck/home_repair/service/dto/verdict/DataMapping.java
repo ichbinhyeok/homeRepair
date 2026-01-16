@@ -111,6 +111,12 @@ public class DataMapping {
         private Double wasteTonsPerUnit;
         @JsonProperty("mobilization_priority")
         private String mobilizationPriority;
+        @JsonProperty("min_project_size")
+        private Double minProjectSize;
+        @JsonProperty("short_order_multiplier")
+        private Double shortOrderMultiplier;
+        @JsonProperty("tax_credit_eligible")
+        private Boolean taxCreditEligible;
     }
 
     @Data

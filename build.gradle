@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.5.9'
 	id 'io.spring.dependency-management' version '1.1.7'
+    id 'gg.jte.gradle' version '3.1.12'
 }
 
 group = 'com.livingcostcheck'
@@ -21,12 +22,23 @@ configurations {
 }
 
 sourceSets {
-	main {
-		resources {
-			srcDirs 'src/main/jte'
-		}
-	}
+    main {
+        java {
+            srcDirs 'build/generated/jte' 
+        }
+        resources {
+            srcDirs 'src/main/jte'
+        }
+    }
 }
+
+jte {
+    sourceDirectory = file('src/main/jte').toPath()
+    contentType = gg.jte.ContentType.Html
+    binaryStaticContent = true
+    generate()
+}
+
 
 repositories {
 	mavenCentral()
