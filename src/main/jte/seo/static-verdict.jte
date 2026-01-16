@@ -193,12 +193,33 @@
             @else
                 <div class="data-list">
                     @for(var item : verdict.getPlan().getMustDo())
-                        <div class="data-item">
+                        <div class="data-item" style="position: relative;">
                             <h3>${item.getPrettyName()}</h3>
                             @if(item.getExplanation() != null && !item.getExplanation().isEmpty())
-                                <p class="explanation-text">${item.getExplanation()}</p>
+                                <p class="explanation-text" style="font-size: 0.9em; margin-bottom: 12px;">${item.getExplanation()}</p>
                             @endif
-                            <div class="data-cost">
+                            
+                            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;">
+                                @if(item.isMandatory())
+                                    <span style="background: #fee2e2; color: #991b1b; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase;">Code Mandatory</span>
+                                @endif
+                                
+                                @if(item.getRiskFlags() != null)
+                                    @for(var flag : item.getRiskFlags())
+                                        @if(flag.contains("ERA_RISK"))
+                                            <span style="background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold;">HISTORICAL RISK</span>
+                                        @endif
+                                    @endfor
+                                @endif
+
+                                @if(item.getCompoundingBadge() != null)
+                                    <span style="background: #eff6ff; color: #1e40af; border: 1px solid #dbeafe; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold;">
+                                        MULT: ${item.getCompoundingBadge()}
+                                    </span>
+                                @endif
+                            </div>
+
+                            <div class="data-cost" style="font-weight: 800; color: #1e293b;">
                                 Estimated Cost: $${String.format("%,.0f", item.getAdjustedCost())}
                             </div>
                         </div>
