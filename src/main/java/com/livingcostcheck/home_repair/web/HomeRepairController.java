@@ -78,27 +78,52 @@ public class HomeRepairController {
 
     @GetMapping("/result/{uuid}")
     public String result(@PathVariable UUID uuid, Model model) {
-        VerdictHistory history = repository.findById(uuid)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid Verdict ID"));
+        try {
+            VerdictHistory history = repository.findById(uuid)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid Verdict ID"));
 
-        // Re-construct Context from History
-        UserContext context = UserContext.builder()
-                .metroCode(history.getZipCode()) // Storing MetroCode in ZipCode field for now
-                .era(history.getDecade())
-                .budget(Double.parseDouble(history.getBudget()))
-                .purpose(history.getPurpose())
-                // Load persisted context
-                .history(history.getRepairHistory() != null && !history.getRepairHistory().isEmpty()
-                        ? java.util.Arrays.asList(history.getRepairHistory().split(","))
-                        : java.util.Collections.emptyList())
-                .condition(history.getHouseCondition() != null ? history.getHouseCondition() : "UNKNOWN")
-                .build();
+            // Log the history data for debugging
+            System.out.println("=== DEBUG: VerdictHistory Data ===");
+            System.out.println("ZipCode (MetroCode): " + history.getZipCode());
+            System.out.println("Decade (Era): " + history.getDecade());
+            System.out.println("Budget: " + history.getBudget());
+            System.out.println("Purpose: " + history.getPurpose());
+            System.out.println("RepairHistory: " + history.getRepairHistory());
+            System.out.println("HouseCondition: " + history.getHouseCondition());
 
-        Verdict verdict = verdictEngineService.generateVerdict(context);
+            // Re-construct Context from History
+            UserContext context = UserContext.builder()
+                    .metroCode(history.getZipCode()) // Storing MetroCode in ZipCode field for now
+                    .era(history.getDecade())
+                    .budget(Double.parseDouble(history.getBudget()))
+                    .purpose(history.getPurpose())
+                    // Load persisted context
+                    .history(history.getRepairHistory() != null && !history.getRepairHistory().isEmpty()
+                            ? java.util.Arrays.asList(history.getRepairHistory().split(","))
+                            : java.util.Collections.emptyList())
+                    .condition(history.getHouseCondition() != null ? history.getHouseCondition() : "UNKNOWN")
+                    .build();
 
-        model.addAttribute("verdict", verdict);
-        model.addAttribute("history", history);
-        return "pages/result";
+            System.out.println("=== DEBUG: UserContext Reconstructed ===");
+            System.out.println("MetroCode: " + context.getMetroCode());
+            System.out.println("Era: " + context.getEra());
+            System.out.println("Budget: " + context.getBudget());
+
+            Verdict verdict = verdictEngineService.generateVerdict(context);
+
+            System.out.println("=== DEBUG: Verdict Generated Successfully ===");
+            System.out.println("Tier: " + verdict.getTier());
+            System.out.println(
+                    "Must-Do Items: " + (verdict.getPlan() != null ? verdict.getPlan().getMustDo().size() : "null"));
+
+            model.addAttribute("verdict", verdict);
+            model.addAttribute("history", history);
+            return "pages/result";
+        } catch (Exception e) {
+            System.err.println("=== ERROR in result endpoint ===");
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     // -------------------------------------------------------------------------
