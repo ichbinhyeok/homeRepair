@@ -1,5 +1,5 @@
-@import com.livingcostcheck.home_repair.service.dto.verdict.DataMapping.MetroMasterData
-@param MetroMasterData metroData
+@import java.util.Map
+@param com.livingcostcheck.home_repair.service.dto.verdict.DataMapping.MetroMasterData metroData
 
 @template.layout(content = @`
     <div class="max-w-xl mx-auto py-12 px-4 sm:px-6 lg:px-8">

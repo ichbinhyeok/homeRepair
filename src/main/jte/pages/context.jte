@@ -1,4 +1,5 @@
 @param String metroCode
+<%-- Trigger Recompile --%>
 @param String era
 
 @template.layout(content = @`
@@ -39,7 +40,7 @@
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <span class="text-slate-500 sm:text-sm">$</span>
                         </div>
-                        <input type="number" name="budget" required min="1000" step="100"
+                        <input type="number" name="budget" required min="1000"
                                class="w-full pl-8 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
                                placeholder="e.g. 10000">
                     </div>
@@ -70,8 +71,8 @@
                                 <span class="text-xs text-slate-500">Critical only</span>
                             </div>
                         </label>
-                    </div>
-                </div
+                </div>
+            </div>
 
                 <!-- History (Multi-Select) -->
                 <div>

@@ -1,0 +1,179 @@
+> Task :compileJava UP-TO-DATE
+> Task :processResources
+> Task :classes
+> Task :resolveMainClassName
+
+> Task :bootRun
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.9)
+
+2026-01-16T14:30:32.376+09:00  INFO 32488 --- [home-repair] [           main] c.l.home_repair.HomeRepairApplication    : Starting HomeRepairApplication using Java 17.0.17 with PID 32488 (C:\Development\Owner\home-repair\build\classes\java\main started by tlsgu in C:\Development\Owner\home-repair)
+2026-01-16T14:30:32.379+09:00  INFO 32488 --- [home-repair] [           main] c.l.home_repair.HomeRepairApplication    : No active profile set, falling back to 1 default profile: "default"
+2026-01-16T14:30:32.942+09:00  INFO 32488 --- [home-repair] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-16T14:30:33.000+09:00  INFO 32488 --- [home-repair] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 50 ms. Found 2 JPA repository interfaces.
+2026-01-16T14:30:33.491+09:00  INFO 32488 --- [home-repair] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8082 (http)
+2026-01-16T14:30:33.503+09:00  INFO 32488 --- [home-repair] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-16T14:30:33.503+09:00  INFO 32488 --- [home-repair] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-16T14:30:33.566+09:00  INFO 32488 --- [home-repair] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-16T14:30:33.567+09:00  INFO 32488 --- [home-repair] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1145 ms
+2026-01-16T14:30:33.742+09:00  INFO 32488 --- [home-repair] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-16T14:30:33.802+09:00  INFO 32488 --- [home-repair] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
+2026-01-16T14:30:33.837+09:00  INFO 32488 --- [home-repair] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-16T14:30:34.137+09:00  INFO 32488 --- [home-repair] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-16T14:30:34.172+09:00  INFO 32488 --- [home-repair] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-16T14:30:34.354+09:00  INFO 32488 --- [home-repair] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026-01-16T14:30:34.356+09:00  INFO 32488 --- [home-repair] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-16T14:30:34.381+09:00  WARN 32488 --- [home-repair] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-16T14:30:34.403+09:00  INFO 32488 --- [home-repair] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-16T14:30:35.230+09:00  INFO 32488 --- [home-repair] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-16T14:30:35.294+09:00  INFO 32488 --- [home-repair] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-16T14:30:35.439+09:00  INFO 32488 --- [home-repair] [           main] c.l.h.service.VerdictEngineService       : VerdictEngine Data Loaded Successfully.
+2026-01-16T14:30:35.630+09:00  WARN 32488 --- [home-repair] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-16T14:30:35.712+09:00 DEBUG 32488 --- [home-repair] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 9 mappings in 'requestMappingHandlerMapping'
+2026-01-16T14:30:35.751+09:00 DEBUG 32488 --- [home-repair] [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2026-01-16T14:30:35.777+09:00 DEBUG 32488 --- [home-repair] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-01-16T14:30:35.837+09:00 DEBUG 32488 --- [home-repair] [           main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-01-16T14:30:35.957+09:00  INFO 32488 --- [home-repair] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8082 (http) with context path '/'
+2026-01-16T14:30:35.966+09:00  INFO 32488 --- [home-repair] [           main] c.l.home_repair.HomeRepairApplication    : Started HomeRepairApplication in 4.026 seconds (process running for 4.316)
+2026-01-16T14:31:03.682+09:00  INFO 32488 --- [home-repair] [nio-8082-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-16T14:31:03.682+09:00  INFO 32488 --- [home-repair] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-16T14:31:03.682+09:00 DEBUG 32488 --- [home-repair] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2026-01-16T14:31:03.682+09:00 DEBUG 32488 --- [home-repair] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2026-01-16T14:31:03.682+09:00 DEBUG 32488 --- [home-repair] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2026-01-16T14:31:03.683+09:00 DEBUG 32488 --- [home-repair] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@23eb6d13
+2026-01-16T14:31:03.683+09:00 DEBUG 32488 --- [home-repair] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@1802f60c
+2026-01-16T14:31:03.683+09:00 DEBUG 32488 --- [home-repair] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2026-01-16T14:31:03.684+09:00  INFO 32488 --- [home-repair] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-01-16T14:31:03.691+09:00 DEBUG 32488 --- [home-repair] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/home-repair/step-2", parameters={masked}
+2026-01-16T14:31:03.706+09:00 DEBUG 32488 --- [home-repair] [nio-8082-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.livingcostcheck.home_repair.web.HomeRepairController#step2(String, String, Model)
+2026-01-16T14:31:03.800+09:00 DEBUG 32488 --- [home-repair] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Failed to complete request: gg.jte.TemplateException: Failed to compile pages/context.jte, error at line 119: Unclosed tag <div>, expected </div>, got </form>.
+2026-01-16T14:31:03.802+09:00 ERROR 32488 --- [home-repair] [nio-8082-exec-1] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: gg.jte.TemplateException: Failed to compile pages/context.jte, error at line 119: Unclosed tag <div>, expected </div>, got </form>.] with root cause
+
+gg.jte.TemplateException: Failed to compile pages/context.jte, error at line 119: Unclosed tag <div>, expected </div>, got </form>.
+	at gg.jte.compiler.java.JavaCodeGenerator.onError(JavaCodeGenerator.java:227) ~[jte-3.1.12.jar:na]
+	at gg.jte.compiler.TemplateParser.interceptHtmlTags(TemplateParser.java:754) ~[jte-3.1.12.jar:na]
+	at gg.jte.compiler.TemplateParser.doParse(TemplateParser.java:340) ~[jte-3.1.12.jar:na]
+	at gg.jte.compiler.TemplateParser.parse(TemplateParser.java:85) ~[jte-3.1.12.jar:na]
+	at gg.jte.compiler.java.JavaCodeGenerator$JavaContentProcessor.onContentBlock(JavaCodeGenerator.java:609) ~[jte-3.1.12.jar:na]
+	at gg.jte.compiler.ContentProcessor.handleContentBlock(ContentProcessor.java:69) ~[jte-3.1.12.jar:na]
+	at gg.jte.compiler.ContentProcessor.process(ContentProcessor.java:40) ~[jte-3.1.12.jar:na]
+	at gg.jte.compiler.java.JavaCodeGenerator.writeJavaCodeWithContentSupport(JavaCodeGenerator.java:485) ~[jte-3.1.12.jar:na]
+	at gg.jte.compiler.java.JavaCodeGenerator.appendParam(JavaCodeGenerator.java:548) ~[jte-3.1.12.jar:na]
+	at gg.jte.compiler.java.JavaCodeGenerator.appendParams(JavaCodeGenerator.java:536) ~[jte-3.1.12.jar:na]
+	at gg.jte.compiler.java.JavaCodeGenerator.onTemplateCall(JavaCodeGenerator.java:430) ~[jte-3.1.12.jar:na]
+	at gg.jte.compiler.TemplateParser.lambda$doParse$3(TemplateParser.java:251) ~[jte-3.1.12.jar:na]
+	at gg.jte.compiler.TemplateParser.extract(TemplateParser.java:967) ~[jte-3.1.12.jar:na]
+	at gg.jte.compiler.TemplateParser.doParse(TemplateParser.java:251) ~[jte-3.1.12.jar:na]
+	at gg.jte.compiler.TemplateParser.parse(TemplateParser.java:85) ~[jte-3.1.12.jar:na]
+	at gg.jte.compiler.TemplateParser.parse(TemplateParser.java:80) ~[jte-3.1.12.jar:na]
+	at gg.jte.compiler.TemplateCompiler.generateTemplateCall(TemplateCompiler.java:265) ~[jte-3.1.12.jar:na]
+	at gg.jte.compiler.TemplateCompiler.generate(TemplateCompiler.java:169) ~[jte-3.1.12.jar:na]
+	at gg.jte.compiler.TemplateCompiler.precompile(TemplateCompiler.java:93) ~[jte-3.1.12.jar:na]
+	at gg.jte.compiler.TemplateCompiler.load(TemplateCompiler.java:50) ~[jte-3.1.12.jar:na]
+	at gg.jte.TemplateEngine.lambda$resolveTemplateOnDemand$0(TemplateEngine.java:354) ~[jte-runtime-3.1.12.jar:na]
+	at java.base/java.util.concurrent.ConcurrentHashMap.compute(ConcurrentHashMap.java:1916) ~[na:na]
+	at gg.jte.TemplateEngine.resolveTemplateOnDemand(TemplateEngine.java:347) ~[jte-runtime-3.1.12.jar:na]
+	at gg.jte.TemplateEngine.resolveTemplate(TemplateEngine.java:337) ~[jte-runtime-3.1.12.jar:na]
+	at gg.jte.TemplateEngine.hasTemplate(TemplateEngine.java:264) ~[jte-runtime-3.1.12.jar:na]
+	at gg.jte.springframework.boot.autoconfigure.JteView.checkResource(JteView.java:22) ~[jte-spring-boot-starter-3-3.1.12.jar:na]
+	at org.springframework.web.servlet.view.UrlBasedViewResolver.loadView(UrlBasedViewResolver.java:554) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.view.AbstractCachingViewResolver.createView(AbstractCachingViewResolver.java:275) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.view.UrlBasedViewResolver.createView(UrlBasedViewResolver.java:493) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.view.AbstractCachingViewResolver.resolveViewName(AbstractCachingViewResolver.java:184) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.view.ContentNegotiatingViewResolver.getCandidateViews(ContentNegotiatingViewResolver.java:316) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.view.ContentNegotiatingViewResolver.resolveViewName(ContentNegotiatingViewResolver.java:229) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.resolveViewNameInternal(DispatcherServlet.java:1484) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.resolveViewName(DispatcherServlet.java:1477) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.render(DispatcherServlet.java:1410) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.processDispatchResult(DispatcherServlet.java:1168) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1106) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.50.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.50.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1774) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2026-01-16T14:31:03.810+09:00 DEBUG 32488 --- [home-repair] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for POST "/error", parameters={masked}
+2026-01-16T14:31:03.811+09:00 DEBUG 32488 --- [home-repair] [nio-8082-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2026-01-16T14:31:03.824+09:00 DEBUG 32488 --- [home-repair] [nio-8082-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-01-16T14:31:03.827+09:00 DEBUG 32488 --- [home-repair] [nio-8082-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Fri Jan 16 14:31:03 KST 2026, status=500, error=Internal Server Error, path=/home-repair/ (truncated)...]
+2026-01-16T14:31:03.843+09:00 DEBUG 32488 --- [home-repair] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 500
+2026-01-16T14:31:58.661+09:00 DEBUG 32488 --- [home-repair] [nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/home-repair/step-2", parameters={masked}
+2026-01-16T14:31:58.662+09:00 DEBUG 32488 --- [home-repair] [nio-8082-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.livingcostcheck.home_repair.web.HomeRepairController#step2(String, String, Model)
+2026-01-16T14:31:59.427+09:00 DEBUG 32488 --- [home-repair] [nio-8082-exec-2] o.s.w.s.v.ContentNegotiatingViewResolver : Selected '*/*' given [*/*]
+2026-01-16T14:31:59.428+09:00 DEBUG 32488 --- [home-repair] [nio-8082-exec-2] g.j.s.boot.autoconfigure.JteView         : View name [pages/context], model {metroCode=AUSTIN_ROUND_ROCK_TX, era=1980_1995}
+2026-01-16T14:31:59.428+09:00 DEBUG 32488 --- [home-repair] [nio-8082-exec-2] g.j.s.boot.autoconfigure.JteView         : Rendering [pages/context.jte]
+2026-01-16T14:31:59.464+09:00 DEBUG 32488 --- [home-repair] [nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+
+> Task :bootRun FAILED
+
+[Incubating] Problems report is available at: file:///C:/Development/Owner/home-repair/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':bootRun'.
+> Process 'command 'C:\Users\tlsgu\.gradle\jdks\eclipse_adoptium-17-amd64-windows.2\bin\java.exe'' finished with non-zero exit value 1
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 2m 18s
+4 actionable tasks: 3 executed, 1 up-to-date

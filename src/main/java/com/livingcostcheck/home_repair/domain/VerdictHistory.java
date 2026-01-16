@@ -44,6 +44,12 @@ public class VerdictHistory {
     @Column(name = "decision_context_hash", nullable = false)
     private String decisionContextHash;
 
+    @Column(name = "repair_history", columnDefinition = "TEXT")
+    private String repairHistory;
+
+    @Column(name = "house_condition")
+    private String houseCondition;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -59,4 +65,10 @@ public class VerdictHistory {
         this.verdictVersion = verdictVersion;
         this.decisionContextHash = decisionContextHash;
     }
+
+    public void setRepairContext(String repairHistory, String houseCondition) {
+        this.repairHistory = repairHistory;
+        this.houseCondition = houseCondition;
+    }
+
 }

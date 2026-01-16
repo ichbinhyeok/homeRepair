@@ -1,0 +1,93 @@
+Initialized native services in: C:\Users\tlsgu\.gradle\native
+Initialized jansi services in: C:\Users\tlsgu\.gradle\native
+Found daemon DaemonInfo{pid=1748, address=[3a27ec32-1cd0-4d70-95f0-2f98680bae1f port:53924, addresses:[/127.0.0.1]], state=Idle, lastBusy=1768536637219, context=DefaultDaemonContext[uid=fd0dd6b3-e624-496e-a060-7d366418f184,javaHome=C:\Program Files\Java\jdk-17,javaVersion=17,javaVendor=Oracle Corporation,daemonRegistryDir=C:\Users\tlsgu\.gradle\daemon,pid=1748,idleTimeout=10800000,priority=NORMAL,applyInstrumentationAgent=true,nativeServicesMode=ENABLED,daemonOpts=-XX:MaxMetaspaceSize=384m,-XX:+HeapDumpOnOutOfMemoryError,-Xms256m,-Xmx512m,-Dfile.encoding=UTF-8,-Duser.country=KR,-Duser.language=ko,-Duser.variant]} however its context does not match the desired criteria.
+JVM is incompatible.
+Wanted: DaemonRequestContext{jvmCriteria=C:\Program Files\Java\jdk-23 (no JDK specified, using current Java home), daemonOpts=[-XX:MaxMetaspaceSize=384m, -XX:+HeapDumpOnOutOfMemoryError, -Xms256m, -Xmx512m, -Dfile.encoding=UTF-8, -Duser.country=KR, -Duser.language=ko, -Duser.variant], applyInstrumentationAgent=true, nativeServicesMode=ENABLED, priority=NORMAL}
+Actual: DefaultDaemonContext[uid=fd0dd6b3-e624-496e-a060-7d366418f184,javaHome=C:\Program Files\Java\jdk-17,javaVersion=17,javaVendor=Oracle Corporation,daemonRegistryDir=C:\Users\tlsgu\.gradle\daemon,pid=1748,idleTimeout=10800000,priority=NORMAL,applyInstrumentationAgent=true,nativeServicesMode=ENABLED,daemonOpts=-XX:MaxMetaspaceSize=384m,-XX:+HeapDumpOnOutOfMemoryError,-Xms256m,-Xmx512m,-Dfile.encoding=UTF-8,-Duser.country=KR,-Duser.language=ko,-Duser.variant]
+
+  Looking for a different daemon...
+Found daemon DaemonInfo{pid=33560, address=[a58f43be-4e3c-4e27-8897-3e319c5e8fe7 port:62508, addresses:[/127.0.0.1]], state=Idle, lastBusy=1768538612550, context=DefaultDaemonContext[uid=913cb88e-c4f8-443d-b755-be9c84d2a209,javaHome=C:\Users\tlsgu\.antigravity\extensions\redhat.java-1.51.0-win32-x64\jre\21.0.9-win32-x86_64,javaVersion=21,javaVendor=Eclipse Adoptium,daemonRegistryDir=C:\Users\tlsgu\.gradle\daemon,pid=33560,idleTimeout=10800000,priority=NORMAL,applyInstrumentationAgent=true,nativeServicesMode=ENABLED,daemonOpts=-XX:MaxMetaspaceSize=384m,-XX:+HeapDumpOnOutOfMemoryError,-Xms256m,-Xmx512m,-Dfile.encoding=UTF-8,-Duser.country=KR,-Duser.language=ko,-Duser.variant]} however its context does not match the desired criteria.
+JVM is incompatible.
+Wanted: DaemonRequestContext{jvmCriteria=C:\Program Files\Java\jdk-23 (no JDK specified, using current Java home), daemonOpts=[-XX:MaxMetaspaceSize=384m, -XX:+HeapDumpOnOutOfMemoryError, -Xms256m, -Xmx512m, -Dfile.encoding=UTF-8, -Duser.country=KR, -Duser.language=ko, -Duser.variant], applyInstrumentationAgent=true, nativeServicesMode=ENABLED, priority=NORMAL}
+Actual: DefaultDaemonContext[uid=913cb88e-c4f8-443d-b755-be9c84d2a209,javaHome=C:\Users\tlsgu\.antigravity\extensions\redhat.java-1.51.0-win32-x64\jre\21.0.9-win32-x86_64,javaVersion=21,javaVendor=Eclipse Adoptium,daemonRegistryDir=C:\Users\tlsgu\.gradle\daemon,pid=33560,idleTimeout=10800000,priority=NORMAL,applyInstrumentationAgent=true,nativeServicesMode=ENABLED,daemonOpts=-XX:MaxMetaspaceSize=384m,-XX:+HeapDumpOnOutOfMemoryError,-Xms256m,-Xmx512m,-Dfile.encoding=UTF-8,-Duser.country=KR,-Duser.language=ko,-Duser.variant]
+
+  Looking for a different daemon...
+The client will now receive all logging from the daemon (pid: 13864). The daemon log file: C:\Users\tlsgu\.gradle\daemon\8.14.3\daemon-13864.out.log
+Starting 6th build in daemon [uptime: 4 mins 25.509 secs, performance: 100%, GC rate: 0.00/s, heap usage: 0% of 512 MiB, non-heap usage: 17% of 384 MiB]
+Using 16 worker leases.
+Now considering [C:\Development\Owner\home-repair] as hierarchies to watch
+Watching the file system is configured to be enabled if available
+File system watching is active
+Starting Build
+Settings evaluated using settings file 'C:\Development\Owner\home-repair\settings.gradle'.
+Projects loaded. Root project using build file 'C:\Development\Owner\home-repair\build.gradle'.
+Included projects: [root project 'home-repair']
+
+> Configure project :
+Evaluating root project 'home-repair' using build file 'C:\Development\Owner\home-repair\build.gradle'.
+Resolved plugin [id: 'java']
+Resolved plugin [id: 'org.springframework.boot', version: '3.5.9']
+Resolved plugin [id: 'io.spring.dependency-management', version: '1.1.7']
+Applying dependency management to configuration 'annotationProcessor' in project 'home-repair'
+Applying dependency management to configuration 'apiElements' in project 'home-repair'
+Applying dependency management to configuration 'archives' in project 'home-repair'
+Applying dependency management to configuration 'bootArchives' in project 'home-repair'
+Applying dependency management to configuration 'compileClasspath' in project 'home-repair'
+Applying dependency management to configuration 'compileOnly' in project 'home-repair'
+Applying dependency management to configuration 'default' in project 'home-repair'
+Applying dependency management to configuration 'developmentOnly' in project 'home-repair'
+Applying dependency management to configuration 'implementation' in project 'home-repair'
+Applying dependency management to configuration 'mainSourceElements' in project 'home-repair'
+Applying dependency management to configuration 'productionRuntimeClasspath' in project 'home-repair'
+Applying dependency management to configuration 'runtimeClasspath' in project 'home-repair'
+Applying dependency management to configuration 'runtimeElements' in project 'home-repair'
+Applying dependency management to configuration 'runtimeOnly' in project 'home-repair'
+Applying dependency management to configuration 'testAndDevelopmentOnly' in project 'home-repair'
+Applying dependency management to configuration 'testAnnotationProcessor' in project 'home-repair'
+Applying dependency management to configuration 'testCompileClasspath' in project 'home-repair'
+Applying dependency management to configuration 'testCompileOnly' in project 'home-repair'
+Applying dependency management to configuration 'testImplementation' in project 'home-repair'
+Applying dependency management to configuration 'testResultsElementsForTest' in project 'home-repair'
+Applying dependency management to configuration 'testRuntimeClasspath' in project 'home-repair'
+Applying dependency management to configuration 'testRuntimeOnly' in project 'home-repair'
+All projects evaluated.
+Task name matched 'classes'
+Selected primary task 'classes' from project :
+Resolving global dependency management for project 'home-repair'
+Excluding []
+Excluding []
+Tasks to be executed: [task ':compileJava', task ':processResources', task ':classes']
+Tasks that were excluded: []
+Resolve mutations for :compileJava (Thread[#1339,Execution worker,5,main]) started.
+:compileJava (Thread[#1339,Execution worker,5,main]) started.
+
+> Task :compileJava UP-TO-DATE
+Custom actions are attached to task ':compileJava'.
+Caching disabled for task ':compileJava' because:
+  Build cache is disabled
+Skipping task ':compileJava' as it is up-to-date.
+Resolve mutations for :processResources (Thread[#1339,Execution worker,5,main]) started.
+:processResources (Thread[#1339,Execution worker,5,main]) started.
+
+> Task :processResources UP-TO-DATE
+Caching disabled for task ':processResources' because:
+  Build cache is disabled
+  Not worth caching
+Skipping task ':processResources' as it is up-to-date.
+Resolve mutations for :classes (Thread[#1339,Execution worker,5,main]) started.
+:classes (Thread[#1339,Execution worker,5,main]) started.
+
+> Task :classes UP-TO-DATE
+Skipping task ':classes' as it has no actions.
+
+[Incubating] Problems report is available at: file:///C:/Development/Owner/home-repair/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 2 up-to-date
+Watched directory hierarchies: [C:\Development\Owner\home-repair]

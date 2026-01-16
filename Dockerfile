@@ -5,7 +5,7 @@ WORKDIR /home/gradle/src
 RUN gradle build --no-daemon -x test
 
 FROM eclipse-temurin:17-jre-alpine
-EXPOSE 8080
+EXPOSE 8081
 COPY --from=build /home/gradle/src/build/libs/*.jar app.jar
 COPY --from=build /home/gradle/src/src/main/jte /jte
 ENTRYPOINT ["java","-jar","/app.jar"]

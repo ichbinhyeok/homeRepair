@@ -32,7 +32,7 @@ public class HomeRepairController {
     }
 
     @PostMapping("/step-2")
-    public String step2(@RequestParam String metroCode, @RequestParam String era, Model model) {
+    public String step2(@RequestParam("metroCode") String metroCode, @RequestParam("era") String era, Model model) {
         // Step 2: Context Form
         model.addAttribute("metroCode", metroCode);
         model.addAttribute("era", era);
@@ -41,7 +41,7 @@ public class HomeRepairController {
 
     @PostMapping("/verdict")
     public String generateVerdict(@ModelAttribute UserContext context,
-            @RequestParam(defaultValue = "anonymous") String userEmail) {
+            @RequestParam(value = "userEmail", defaultValue = "anonymous") String userEmail) {
 
         // 1. Generate Verdict
         Verdict verdict = verdictEngineService.generateVerdict(context);
@@ -59,6 +59,10 @@ public class HomeRepairController {
         if (!"anonymous".equals(userEmail)) {
             history.setUserEmail(userEmail);
         }
+
+        // Save detailed context for re-generation
+        String historyStr = context.getHistory() != null ? String.join(",", context.getHistory()) : "";
+        history.setRepairContext(historyStr, context.getCondition());
         // Store the detailed plan/verdict as JSON or re-generate on view?
         // For MVP, we'll re-generate on view or store transiently.
         // Standard pattern: Save simplified history, re-run engine on viewing result if
@@ -83,25 +87,11 @@ public class HomeRepairController {
                 .era(history.getDecade())
                 .budget(Double.parseDouble(history.getBudget()))
                 .purpose(history.getPurpose())
-                // History items and condition are missing in basic VerdictHistory entity?
-                // For MVP, we might lose detailed inputs if VerdictHistory isn't updated.
-                // assuming defaults or separate storage if needed.
-                // CRITICAL: We need 'History' list and 'Condition' to reproduce verdict
-                // accurately.
-                // Let's pass them as query params or update entity.
-                // For this Task, I will update VerdictHistory to store JSON context or just
-                // re-generate best-effort.
-                // actually, let's fix this properly:
-                // The Controller should just render "pages/result" directly on POST for MVP?
-                // No, User wants "redirect:/home-repair/result/{id}".
-                // Okay, I will fallback to default History/Condition if not stored,
-                // OR (Better) I will update the VerdictHistory entity in a separate step if
-                // strict persistence is needed.
-                // FOR NOW: I will re-instantiate context with defaults for missing fields to
-                // strictly prevent errors,
-                // acknowledging this limitation in comments.
-                .history(java.util.Collections.emptyList())
-                .condition("UNKNOWN")
+                // Load persisted context
+                .history(history.getRepairHistory() != null && !history.getRepairHistory().isEmpty()
+                        ? java.util.Arrays.asList(history.getRepairHistory().split(","))
+                        : java.util.Collections.emptyList())
+                .condition(history.getHouseCondition() != null ? history.getHouseCondition() : "UNKNOWN")
                 .build();
 
         Verdict verdict = verdictEngineService.generateVerdict(context);
@@ -117,7 +107,8 @@ public class HomeRepairController {
 
     @PostMapping("/api/lead")
     @ResponseBody
-    public ResponseEntity<String> captureLead(@RequestParam UUID verdictId, @RequestParam String email) {
+    public ResponseEntity<String> captureLead(@RequestParam("verdictId") UUID verdictId,
+            @RequestParam("email") String email) {
         VerdictHistory history = repository.findById(verdictId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid ID"));
 
@@ -130,9 +121,9 @@ public class HomeRepairController {
     }
 
     @GetMapping("/track")
-    public RedirectView trackClick(@RequestParam UUID verdictId,
-            @RequestParam String type,
-            @RequestParam String target) {
+    public RedirectView trackClick(@RequestParam("verdictId") UUID verdictId,
+            @RequestParam("type") String type,
+            @RequestParam("target") String target) {
 
         // OPEN REDIRECT FIX: Validate target against whitelist
         if (!isValidTarget(target)) {

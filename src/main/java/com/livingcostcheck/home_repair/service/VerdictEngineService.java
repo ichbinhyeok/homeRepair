@@ -33,9 +33,9 @@ public class VerdictEngineService {
     @PostConstruct
     public void loadData() {
         try {
-            metroMasterData = loadJson("classpath:data/2026 US Metro Master Data.json", MetroMasterData.class);
+            metroMasterData = loadJson("classpath:data/2026_US_Metro_Master_Data.json", MetroMasterData.class);
             riskFactorsData = loadJson("classpath:data/risk_factors_by_year.json", RiskFactorsData.class);
-            costLibraryData = loadJson("classpath:data/2026 Integrated Construction & Renovation Cost Library.json",
+            costLibraryData = loadJson("classpath:data/2026_Integrated_Construction_Cost_Library.json",
                     CostLibraryData.class);
             log.info("VerdictEngine Data Loaded Successfully.");
         } catch (Exception e) {
@@ -86,21 +86,6 @@ public class VerdictEngineService {
                             .build());
                 });
             });
-        }
-
-        // 2. Add Era-Specific Risk Items (if they map to known items or are generic)
-        if (context.getEra() != null && riskFactorsData.getEras().containsKey(context.getEra())) {
-            EraData eraData = riskFactorsData.getEras().get(context.getEra());
-            if (eraData.getCriticalRisks() != null) {
-                // For now, these are used as flags in Step 4, but we ensure they are
-                // considered.
-                // If the risk item is synonymous with a library item (e.g. plumbing), it
-                // enhances that item.
-                // If it is standalone, it might need special handling.
-                // Simpler approach: We attach Risk Data to context or lookup in Step 4.
-                // However, "Candidate Generator" implies selecting WHAT to check.
-                // We blindly check everything in the library + specific risks.
-            }
         }
 
         return candidates;
@@ -171,7 +156,7 @@ public class VerdictEngineService {
             if ("ROOFING_ASPHALT_ARCHITECTURAL".equals(candidate.getItemCode()))
                 quantity = scale.getRoofingSquares();
             if ("PLUMBING_WHOLE_HOUSE_REPIPE".equals(candidate.getItemCode()))
-                quantity = scale.getInteriorSqft() * 0.05; // Approx linear feet based on floor area
+                quantity = scale.getInteriorSqft() * 0.04; // Approx linear feet based on floor area
 
             // Material Cost
             double matBase = (itemDef.getMaterialCostRange().getLow() + itemDef.getMaterialCostRange().getHigh()) / 2.0;
@@ -187,16 +172,7 @@ public class VerdictEngineService {
 
             // Disposal
             double wasteTons = itemDef.getWasteTonsPerUnit() != null ? itemDef.getWasteTonsPerUnit() : 0.0;
-            double disposal = quantity * wasteTons * (scale.getDispTax() * 100.0); // Assuming tax rate * $100 base dump
-                                                                                   // fee? Or maybe logic in library:
-                                                                                   // "City_Disposal_Tax_Rate * 100"
-                                                                                   // implies rate * 100 is price per
-                                                                                   // ton?
-            // "Units * waste_tons_per_unit * (City_Disposal_Tax_Rate * 100)" -> seems to
-            // imply tax rate is used directly as price factor?
-            // Let's assume (Tax Rate * 100) is the cost per ton impact.
-            // Actually, usually it's Base Tipping Fee * Tax. But sticking to prompt "Units
-            // * waste_tons * (disp_tax * 100)"
+            double disposal = quantity * wasteTons * (scale.getDispTax() * 100.0);
 
             double subtotal = matCost + laborCost + mobilization + disposal;
 
@@ -229,60 +205,24 @@ public class VerdictEngineService {
             List<String> riskFlags = new ArrayList<>();
             boolean mandatory = false;
             String explanation = "";
+            String category = "COSMETIC"; // Default
 
-            // 1. History Handling
-            boolean inHistory = context.getHistory() != null && context.getHistory().contains(item.getItemCode()); // Simple
-                                                                                                                   // match?
-                                                                                                                   // Or
-                                                                                                                   // partial?
-                                                                                                                   // Assuming
-                                                                                                                   // exact
-                                                                                                                   // code
-                                                                                                                   // match
-                                                                                                                   // or
-                                                                                                                   // mapped.
-            // Simplified: Assuming exact match for now. In reality, needs map.
-            // User prompt example: "History: [ROOFING]" matches
-            // "ROOFING_ASPHALT_ARCHITECTURAL" maybe?
-            // Let's check for substring for robustness if exact fail
-            boolean historyMatch = inHistory;
-            if (!inHistory && context.getHistory() != null) {
-                for (String h : context.getHistory()) {
-                    if (item.getItemCode().contains(h)) {
-                        historyMatch = true;
-                        break;
-                    }
-                }
-            }
-
-            if (historyMatch) {
-                if ("NONE".equals(context.getCondition())) {
-                    continue; // REMOVE item entirely
-                } else {
-                    // RECHECK MODE
-                    riskFlags.add("HISTORY_RECHECK");
-                    double labor = item.getLaborCost() * 0.25;
-                    double material = 150.0; // Diagnostic Min Cost (Hardcoded assumption or param?)
-                    finalCost = labor + material + (item.getMobilization() * 0.5); // reduced mob?
-                    explanation = "Recheck required due to history condition: " + context.getCondition();
-                }
-            }
-
-            // 2. Risk Overlay
-            // Check if this item relates to any Era Risk
-            // Mapping Logic: Does RiskItem.item match ItemCode?
-            // Example: "POLYBUTYLENE_PLUMBING" vs "PLUMBING_WHOLE_HOUSE_REPIPE"
-            // We need a mapping or fuzzy match.
-            for (RiskItem risk : eraRisks) { // RiskItem from JSON
-                // Logic: If Risk Item matches cost item Category or Code
+            // 1. Risk Overlay (MUST BE DONE FIRST)
+            for (RiskItem risk : eraRisks) {
                 boolean isRiskMatch = false;
 
-                // Hardcoded Mapping for MVP (Critical for dry run)
+                // Hardcoded Mapping for MVP
                 if ("POLYBUTYLENE_PLUMBING".equals(risk.getItem()) && item.getItemCode().contains("PLUMBING"))
                     isRiskMatch = true;
                 if ("KNOB_AND_TUBE_WIRING".equals(risk.getItem()) && item.getItemCode().contains("ELECTRICAL"))
                     isRiskMatch = true;
                 if ("ALUMINUM_WIRING".equals(risk.getItem()) && item.getItemCode().contains("ELECTRICAL"))
+                    isRiskMatch = true;
+                if ("LP_INNER_SEAL_SIDING".equals(risk.getItem()) && item.getItemCode().contains("SIDING"))
+                    isRiskMatch = true;
+                if ("SYNTHETIC_STUCCO_EIFS".equals(risk.getItem()) && item.getItemCode().contains("STUCCO"))
+                    isRiskMatch = true;
+                if ("FEDERAL_PACIFIC_PANELS".equals(risk.getItem()) && item.getItemCode().contains("ELECTRICAL_PANEL"))
                     isRiskMatch = true;
 
                 if (isRiskMatch) {
@@ -301,25 +241,67 @@ public class VerdictEngineService {
                         finalCost += 2800.0;
                         riskFlags.add("HAZMAT_REMOVAL");
                     }
-                    mandatory = true; // Safety overrides ??
+                    if ("CRITICAL".equals(risk.getSeverity()) || Boolean.TRUE.equals(risk.getInspectionMandatory())) {
+                        mandatory = true;
+                    }
                 }
             }
 
-            // Assign Category mapping
-            String finalCat = "COSMETIC";
+            // Determine Category
+            // STRUCTURAL: Strict Core Integrity (Roof, Foundation, Sewer ONLY)
             if (item.getItemCode().contains("ROOF") || item.getItemCode().contains("FOUNDATION")
-                    || item.getCategory().contains("STRUCTURAL"))
-                finalCat = "STRUCTURAL";
-            if (item.getItemCode().contains("HVAC") || item.getItemCode().contains("PLUMBING")
-                    || item.getItemCode().contains("ELECTRICAL"))
-                finalCat = "MECHANICAL";
-            if (mandatory || riskFlags.stream().anyMatch(f -> f.contains("CRITICAL")))
-                finalCat = "SAFETY";
+                    || item.getItemCode().contains("SEWER")) {
+                category = "STRUCTURAL";
+            }
+            // MECHANICAL: Essential Systems
+            else if (item.getItemCode().contains("HVAC") || item.getItemCode().contains("PLUMBING")
+                    || item.getItemCode().contains("ELECTRICAL")) {
+                category = "MECHANICAL";
+            }
+            // COSMETIC is default (Includes SIDING, WINDOWS unless mapped otherwise or
+            // Critical)
+
+            // Safety Override (Dynamic Promotion)
+            if (mandatory || riskFlags.stream().anyMatch(f -> f.contains("CRITICAL"))) {
+                category = "SAFETY";
+                mandatory = true;
+            }
+
+            // 2. History Handling
+            boolean inHistory = false;
+            if (context.getHistory() != null) {
+                for (String h : context.getHistory()) {
+                    if (item.getItemCode().contains(h)) {
+                        inHistory = true;
+                        break;
+                    }
+                }
+            }
+
+            if (inHistory) {
+                if ("NONE".equals(context.getCondition())) {
+                    // Logic: REMOVE item entirely ONLY if not SAFETY
+                    if ("SAFETY".equals(category)) {
+                        explanation += " [SAFETY OVERRIDE]: History claim ignored due to critical safety risk.";
+                    } else {
+                        continue; // REMOVE
+                    }
+                } else {
+                    // RECHECK MODE
+                    riskFlags.add("HISTORY_RECHECK");
+                    double labor = item.getLaborCost() * 0.25;
+                    double material = 150.0; // Diagnostic Min Cost
+
+                    // Mobilization stays full
+                    finalCost = labor + material + item.getMobilization() + item.getDisposal();
+                    explanation += " Recheck required due to history condition: " + context.getCondition();
+                }
+            }
 
             adjustedItems.add(RiskAdjustedItem.builder()
                     .itemCode(item.getItemCode())
                     .prettyName(item.getDescription())
-                    .category(finalCat)
+                    .category(category)
                     .adjustedCost(finalCost)
                     .riskFlags(riskFlags)
                     .mandatory(mandatory)
@@ -335,53 +317,40 @@ public class VerdictEngineService {
         List<RiskAdjustedItem> shouldDo = new ArrayList<>();
         List<RiskAdjustedItem> skip = new ArrayList<>();
 
-        // Base Sorting: SAFETY > STRUCTURAL > MECHANICAL > COSMETIC
-        // Modifiers based on Purpose
-
-        Comparator<RiskAdjustedItem> comparator = (a, b) -> {
-            int scoreA = getCategoryScore(a.getCategory());
-            int scoreB = getCategoryScore(b.getCategory());
-            return Integer.compare(scoreB, scoreA); // Descending score
-        };
-
-        // Determine Cutoff based on "Purpose" and "Budget"?
-        // Or just buckets? User prompt says "SortedPlan { must_do, should_do,
-        // skip_for_now }"
-        // Logic: SAFETY is ALWAYS Must Do.
-        // STRUCTURAL is Must Do if Purpose != RESALE? Or always?
-        // Let's use simple Logic:
-        // SAFETY -> Must Do
-        // STRUCTURAL -> Must Do
-        // MECHANICAL -> Should Do (unless Critical)
-        // COSMETIC -> Skip (unless Budget permits, or Purpose is RESALE)
-
         for (RiskAdjustedItem item : items) {
             String cat = item.getCategory();
-            if ("SAFETY".equals(cat)) {
+            boolean isSafety = "SAFETY".equals(cat);
+            boolean isStructural = "STRUCTURAL".equals(cat);
+            boolean isMechanical = "MECHANICAL".equals(cat);
+
+            if (isSafety) {
                 mustDo.add(item);
-            } else if ("STRUCTURAL".equals(cat)) {
-                if ("LIVING".equals(context.getPurpose()))
-                    shouldDo.add(item);
-                else
-                    mustDo.add(item); // Resale/Safety
-            } else if ("MECHANICAL".equals(cat)) {
+            } else if (isStructural) {
+                mustDo.add(item);
+            } else if (isMechanical) {
                 if (item.getRiskFlags().size() > 0)
-                    mustDo.add(item);
-                else
-                    shouldDo.add(item);
+                    mustDo.add(item); // Risk detected -> Must Do
+                else {
+                    if ("LIVING".equals(context.getPurpose()))
+                        shouldDo.add(item);
+                    else
+                        shouldDo.add(item);
+                }
             } else {
                 // Cosmetic
                 if ("RESALE".equals(context.getPurpose()))
+                    shouldDo.add(item);
+                else if ("LIVING".equals(context.getPurpose()))
                     shouldDo.add(item);
                 else
                     skip.add(item);
             }
         }
 
-        // Apply sorting within buckets
-        // Actually, Step 6 does the budget cutoff. Step 5 is just ranking?
-        // Let's return them loosely bucketed but sorted by Cost descending?
-        // No, user output is SortedPlan.
+        Comparator<RiskAdjustedItem> costDesc = (a, b) -> Double.compare(b.getAdjustedCost(), a.getAdjustedCost());
+        mustDo.sort(costDesc);
+        shouldDo.sort(costDesc);
+        skip.sort(costDesc);
 
         return SortedPlan.builder()
                 .mustDo(mustDo)
@@ -390,29 +359,23 @@ public class VerdictEngineService {
                 .build();
     }
 
-    private int getCategoryScore(String cat) {
-        if ("SAFETY".equals(cat))
-            return 100;
-        if ("STRUCTURAL".equals(cat))
-            return 80;
-        if ("MECHANICAL".equals(cat))
-            return 60;
-        return 20;
-    }
-
     // --- STEP 6: Verdict & Strategic Advice ---
     private Verdict step6_verdictGeneration(SortedPlan plan, UserContext context) {
+        // New Metric: Total Required Cost (Must-Do Only)
         double totalRequired = plan.getMustDo().stream().mapToDouble(RiskAdjustedItem::getAdjustedCost).sum();
+
+        // Optional items are summed for info, but don't block verdict
         double totalOptional = plan.getShouldDo().stream().mapToDouble(RiskAdjustedItem::getAdjustedCost).sum();
 
         double budget = context.getBudget();
         String tier = "DENIED";
         String headline = "";
 
-        if (budget >= (totalRequired + totalOptional)) {
+        // Verdict Rule: Checked against REQUIRED cost only
+        if (budget >= totalRequired) {
             tier = "APPROVED";
             headline = "Your budget safely covers required repairs at local 2026 rates.";
-        } else if (budget >= totalRequired * 0.9) {
+        } else if (budget >= (totalRequired * 0.9)) {
             tier = "WARNING";
             headline = "Budget is tight. Risk of downgraded materials or missing abatement.";
         } else {
@@ -421,13 +384,6 @@ public class VerdictEngineService {
         }
 
         List<String> futureCostWarning = new ArrayList<>();
-        // Generate advice based on Era Risks
-        if (context.getEra() != null && riskFactorsData.getEras().containsKey(context.getEra())) {
-            EraData era = riskFactorsData.getEras().get(context.getEra());
-            // Accessing plain risks to find remedy cost factor not easy with simple list.
-            // But we can iterate the items in the plan.
-        }
-
         plan.getMustDo().forEach(item -> {
             if (item.getRiskFlags().size() > 0) {
                 futureCostWarning.add("Deferring " + item.getPrettyName() + " (" + item.getCategory()
