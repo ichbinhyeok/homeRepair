@@ -458,6 +458,46 @@ public class VerdictEngineService {
             String compoundingBadge = null;
             String category = "COSMETIC"; // Default
 
+            // 0. FORENSIC CONFIRMATION (Phase 4 - User Visual Observations)
+            // These override statistical guessing with explicit user confirmation
+            boolean forensicMatch = false;
+
+            if (Boolean.TRUE.equals(context.getIsFpePanel()) && item.getItemCode().contains("ELECTRICAL_PANEL")) {
+                riskFlags.add("FORENSIC_CONFIRMATION: FEDERAL_PACIFIC_PANEL");
+                finalCost *= 2.0; // High failure rate, insurance risk
+                mandatory = true;
+                explanation = "Federal Pacific Electric panels have a documented failure rate. Insurance companies often require replacement. ";
+                compoundingBadge = "FORENSIC CONFIRMATION (2.0x)";
+                forensicMatch = true;
+            }
+
+            if (Boolean.TRUE.equals(context.getIsPolyB()) && item.getItemCode().contains("PLUMBING")) {
+                riskFlags.add("FORENSIC_CONFIRMATION: POLYBUTYLENE");
+                finalCost *= 1.5; // Known for brittle failure
+                mandatory = true;
+                explanation = "Polybutylene pipes are banned in new construction due to brittle failure. ";
+                compoundingBadge = "FORENSIC CONFIRMATION (1.5x)";
+                forensicMatch = true;
+            }
+
+            if (Boolean.TRUE.equals(context.getIsAluminum()) && item.getItemCode().contains("ELECTRICAL")) {
+                riskFlags.add("FORENSIC_CONFIRMATION: ALUMINUM_WIRING");
+                finalCost *= 1.8; // Fire hazard
+                mandatory = true;
+                explanation = "Aluminum wiring requires specialized connectors and is a known fire hazard. ";
+                compoundingBadge = "FORENSIC CONFIRMATION (1.8x)";
+                forensicMatch = true;
+            }
+
+            if (Boolean.TRUE.equals(context.getIsChineseDrywall()) && item.getItemCode().contains("DRYWALL")) {
+                riskFlags.add("FORENSIC_CONFIRMATION: CHINESE_DRYWALL");
+                finalCost *= 4.0; // Entire home gut required
+                mandatory = true;
+                explanation = "Defective Chinese drywall (2001-2009) requires full home remediation including electrical and HVAC replacement. ";
+                compoundingBadge = "FORENSIC CONFIRMATION (4.0x HAZMAT)";
+                forensicMatch = true;
+            }
+
             // 1. Risk Overlay (MUST BE DONE FIRST)
             RiskItem matchedRisk = null; // Store matched risk for explanation building
             for (RiskItem risk : eraRisks) {

@@ -27,6 +27,12 @@ public class VerdictDTOs {
         private String purpose; // SAFETY, RESALE, LIVING
         private List<String> history; // Item codes
         private String condition; // NONE, MINOR, SEVERE
+
+        // Phase 4: Forensic Clues (Brand/Era specific observations)
+        private Boolean isFpePanel; // Federal Pacific Electric / Zinsco panel
+        private Boolean isPolyB; // Polybutylene plumbing pipes
+        private Boolean isAluminum; // Aluminum wiring
+        private Boolean isChineseDrywall; // Sulfur-emitting defective drywall (2001-2009)
     }
 
     @Data

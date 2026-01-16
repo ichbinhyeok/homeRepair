@@ -108,6 +108,55 @@
                     </select>
                 </div>
 
+                <!-- FORENSIC QUESTIONS (Phase 4 - Era-Specific Visual Observations) -->
+                <div id="forensicSection" class="hidden bg-amber-50 border-2 border-amber-200 rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <svg class="w-6 h-6 text-amber-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <label class="text-sm font-bold text-amber-900">Quick Visual Check (Optional)</label>
+                    </div>
+                    <p class="text-xs text-amber-700 mb-4">Answer YES only if you can visually confirm these items. This drastically improves accuracy.</p>
+                    
+                    <div class="space-y-3">
+                        <!-- Federal Pacific Panel (1950-1990) -->
+                        <label id="fpeQuestion" class="hidden flex items-start space-x-3 p-3 bg-white border border-amber-200 rounded-lg cursor-pointer hover:bg-amber-50 transition">
+                            <input type="checkbox" name="isFpePanel" value="true" class="mt-0.5 h-5 w-5 text-red-600 rounded border-gray-300 focus:ring-red-500">
+                            <div class="flex-1">
+                                <span class="block text-sm font-semibold text-slate-800">🔴 Electrical Panel Brand</span>
+                                <span class="text-xs text-slate-600">Check your breaker box. Do breakers have <strong>red tips</strong> or say "Federal Pacific" / "Stab-Lok"?</span>
+                            </div>
+                        </label>
+
+                        <!-- Polybutylene (1978-1995) -->
+                        <label id="polyQuestion" class="hidden flex items-start space-x-3 p-3 bg-white border border-amber-200 rounded-lg cursor-pointer hover:bg-amber-50 transition">
+                            <input type="checkbox" name="isPolyB" value="true" class="mt-0.5 h-5 w-5 text-red-600 rounded border-gray-300 focus:ring-red-500">
+                            <div class="flex-1">
+                                <span class="block text-sm font-semibold text-slate-800">🔴 Plumbing Pipe Material</span>
+                                <span class="text-xs text-slate-600">Look under sinks. Are the water supply pipes <strong>grey plastic</strong> (not white PVC)?</span>
+                            </div>
+                        </label>
+
+                        <!-- Aluminum Wiring (1965-1975) -->
+                        <label id="aluminumQuestion" class="hidden flex items-start space-x-3 p-3 bg-white border border-amber-200 rounded-lg cursor-pointer hover:bg-amber-50 transition">
+                            <input type="checkbox" name="isAluminum" value="true" class="mt-0.5 h-5 w-5 text-red-600 rounded border-gray-300 focus:ring-red-500">
+                            <div class="flex-1">
+                                <span class="block text-sm font-semibold text-slate-800">🔴 Outlet Wiring</span>
+                                <span class="text-xs text-slate-600">Remove an outlet cover. Are wire ends <strong>silver/grey</strong> instead of copper?</span>
+                            </div>
+                        </label>
+
+                        <!-- Chinese Drywall (2001-2009) -->
+                        <label id="drywallQuestion" class="hidden flex items-start space-x-3 p-3 bg-white border border-amber-200 rounded-lg cursor-pointer hover:bg-amber-50 transition">
+                            <input type="checkbox" name="isChineseDrywall" value="true" class="mt-0.5 h-5 w-5 text-red-600 rounded border-gray-300 focus:ring-red-500">
+                            <div class="flex-1">
+                                <span class="block text-sm font-semibold text-slate-800">🔴 Sulfur Odor</span>
+                                <span class="text-xs text-slate-600">Do you smell <strong>rotten eggs / sulfur</strong> when humid, especially near AC vents?</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
                 <div class="pt-4">
                     <button type="submit" 
                             class="w-full bg-slate-900 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-slate-800 transition transform active:scale-95 duration-150">
@@ -144,5 +193,46 @@
                 }
             }, 800); // Change text every 800ms
         });
+
+        // Phase 4: Show Forensic Questions based on Era
+        (function() {
+            const era = document.querySelector('input[name="era"]').value;
+            const forensicSection = document.getElementById('forensicSection');
+            const fpeQ = document.getElementById('fpeQuestion');
+            const polyQ = document.getElementById('polyQuestion');
+            const alQ = document.getElementById('aluminumQuestion');
+            const drywallQ = document.getElementById('drywallQuestion');
+            
+            let showSection = false;
+            
+            // Federal Pacific Panels (1950-1990)
+            if (era === '1950_1970' || era === '1970_1980' || era === '1980_1995') {
+                fpeQ.classList.remove('hidden');
+                showSection = true;
+            }
+            
+            // Polybutylene Plumbing (1978-1995)
+            if (era === '1970_1980' || era === '1980_1995') {
+                polyQ.classList.remove('hidden');
+                showSection = true;
+            }
+            
+            // Aluminum Wiring (1965-1975)
+            if (era === '1950_1970' || era === '1970_1980') {
+                alQ.classList.remove('hidden');
+                showSection = true;
+            }
+            
+            // Chinese Drywall (2001-2009)
+            if (era === '1995_2010') {
+                drywallQ.classList.remove('hidden');
+                showSection = true;
+            }
+            
+            // Show section if any questions are applicable
+            if (showSection) {
+                forensicSection.classList.remove('hidden');
+            }
+        })();
     </script>
 `)
