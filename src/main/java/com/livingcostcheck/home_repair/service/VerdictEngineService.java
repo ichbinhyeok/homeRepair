@@ -57,31 +57,25 @@ public class VerdictEngineService {
         List<BaseCostItem> candidates = step0_candidateGenerator(context);
         EstimatedScale scale = step2_autoScale(context);
 
-        // Optimization: Step 3 & 4 are strategy-agnostic (Logic is S-Class, based on
-        // JSON/Era)
-        // Run them ONCE instead of 3x
+        // Optimization: Step 3 & 4 are strategy-agnostic
+        // Run them ONCE
         List<BaseCostItem> costedItems = step3_preliminaryCosting(candidates, scale);
-        List<RiskAdjustedItem> baseRiskAdjustedItems = step4_riskFilter(costedItems, context);
+
+        // Pass exclusionNotes list to be populated during filtering
+        List<String> exclusionNotes = new ArrayList<>();
+        List<RiskAdjustedItem> baseRiskAdjustedItems = step4_riskFilter(costedItems, context, exclusionNotes);
 
         // Context-Aware Strategy Generation (Money-First Efficiency)
         StrategyOption safetyOption = generateStrategyOption(StrategyType.SAFETY_FLIP, baseRiskAdjustedItems, context);
-        strategyOptions.add(safetyOption); // Always add Safety (Baseline for risk calc)
+        // strategyOptions.add(safetyOption); // Internal calculation only
 
         StrategyOption standardOption = null;
-
         if (context.getRelationship() == RelationshipToHouse.INVESTING
                 || context.getRelationship() == RelationshipToHouse.LIVING) {
-            // INVESTING/LIVING get Standard Option
             standardOption = generateStrategyOption(StrategyType.STANDARD_LIVING, baseRiskAdjustedItems, context);
-            strategyOptions.add(standardOption);
         }
 
-        if (context.getRelationship() == RelationshipToHouse.LIVING) {
-            // Only LIVING gets Forever Home (Upgrades)
-            strategyOptions.add(generateStrategyOption(StrategyType.FOREVER_HOME, baseRiskAdjustedItems, context));
-        }
-
-        // Determine overall verdict based on Tier 1 (minimum required)
+        // Determine overall verdict based on Tier 1 (minimum required - Safety Option)
         double minRequired = safetyOption.getTotalCost();
         double budget = context.getBudget();
         String tier = "DENIED";
@@ -100,25 +94,23 @@ public class VerdictEngineService {
             headline = "Budget insufficient for required safety repairs at 2026 rates. Significant financial exposure.";
         }
 
-        // Select Plan for Display (Buying -> Safety, Others -> Standard)
-        // Generate Exclusion Notes for Transparency
-        List<String> exclusionNotes = new ArrayList<>();
-        if (context.getLivingSpaceHistory() != null) {
-            for (String h : context.getLivingSpaceHistory()) {
-                String pretty = h.replace("_REMODEL", "").replace("_", " ").toLowerCase();
-                // capitalize first letter
-                pretty = pretty.substring(0, 1).toUpperCase() + pretty.substring(1);
-                exclusionNotes.add(pretty + " upgrades excluded due to recent renovation.");
-            }
+        // Select Plan for Display
+        // LIVING/INVESTING -> Standard (Comfort/Stability)
+        // BUYING -> Safety (Baseline Risk)
+        SortedPlan displayPlan;
+        if (standardOption != null) {
+            displayPlan = standardOption.getPlan();
+        } else {
+            displayPlan = safetyOption.getPlan();
         }
 
-        // Build final verdict with backward compatibility
+        // Build final verdict
         return Verdict.builder()
                 .tier(tier)
                 .headline(headline)
-                .strategyOptions(strategyOptions)
+                .strategyOptions(Collections.emptyList()) // Hide strategies to enforce Single Verdict UI
                 .exclusionNote(exclusionNotes)
-                .plan(displayPlan) // Context-aware plan selection
+                .plan(displayPlan)
                 .mustDoExplanation(Collections.emptyList())
                 .optionalActions(Collections.emptyList())
                 .futureCostWarning(Collections.emptyList())
@@ -460,7 +452,8 @@ public class VerdictEngineService {
     }
 
     // --- STEP 4: Risk & History Filter ---
-    private List<RiskAdjustedItem> step4_riskFilter(List<BaseCostItem> items, UserContext context) {
+    private List<RiskAdjustedItem> step4_riskFilter(List<BaseCostItem> items, UserContext context,
+            List<String> exclusionNotes) {
         List<RiskAdjustedItem> adjustedItems = new ArrayList<>();
 
         EraData eraData = riskFactorsData.getEras().getOrDefault(context.getEra(), new EraData());
@@ -552,19 +545,12 @@ public class VerdictEngineService {
                     explanation = evidenceExplanation.toString();
 
                     // SPEC Line 40: "Era Adjustment: Labor * RFY.remedy_cost_factor"
-                    // CRITICAL: item.getSubtotal() already includes Short Order Penalty!
-                    // We must preserve it, not recalculate from components
                     if (risk.getRemedyMultiplier() != null && risk.getRemedyMultiplier() > 0) {
-                        // Calculate labor proportion of the ORIGINAL subtotal
                         double totalComponents = item.getMaterialCost() + item.getLaborCost()
                                 + item.getMobilization() + item.getDisposal();
                         double laborProportion = totalComponents > 0
                                 ? item.getLaborCost() / totalComponents
                                 : 0.0;
-
-                        // Apply remedy multiplier to labor portion
-                        // finalCost = subtotal + (labor_portion × subtotal × (multiplier - 1))
-                        // This preserves any penalty already in subtotal
                         double laborImpact = item.getSubtotal() * laborProportion * (risk.getRemedyMultiplier() - 1.0);
                         finalCost = item.getSubtotal() + laborImpact;
 
@@ -612,66 +598,75 @@ public class VerdictEngineService {
                 mandatory = true;
             }
 
-            // --- PHASE 6: HISTORY LOGIC (LAYERED) ---
+            // --- PHASE 6: HISTORY LOGIC (REFECTORED) ---
+            // STRICT RULE: History is applied ONLY for LIVING users.
+            // BUYING/INVESTING users see FULL RISK SCOPE.
 
-            // Logic A: Core Systems (Risk Layer)
-            // If checked in history, downgrade UNLESS forensic flags override
-            boolean isCoreUpdated = false;
-            if (context.getCoreSystemHistory() != null) {
-                if (item.getItemCode().contains("ROOF") && context.getCoreSystemHistory().contains("ROOFING"))
-                    isCoreUpdated = true;
-                if (item.getItemCode().contains("HVAC") && context.getCoreSystemHistory().contains("HVAC"))
-                    isCoreUpdated = true;
-                if (item.getItemCode().contains("PLUMBING") && context.getCoreSystemHistory().contains("PLUMBING"))
-                    isCoreUpdated = true;
-                if (item.getItemCode().contains("PANEL") && context.getCoreSystemHistory().contains("ELEC_PANEL"))
-                    isCoreUpdated = true;
-            }
+            if (context.getRelationship() == RelationshipToHouse.LIVING) {
 
-            if (isCoreUpdated) {
-                // RULE: Forensic Flags TRUMP History (e.g. Poly-B even if "updated" claims)
-                boolean forensicOverride = riskFlags.stream().anyMatch(f -> f.contains("FORENSIC_CONFIRMATION")); // Only
-                                                                                                                  // user-confirmed
-                                                                                                                  // flags
-                                                                                                                  // override
+                // Logic A: Core Systems (Risk Layer)
+                // Only downgrade if confirmed updated AND no conflicting forensic flags
+                if (context.getCoreSystemHistory() != null) {
+                    boolean isCoreUpdated = false;
+                    if (item.getItemCode().contains("ROOF") && context.getCoreSystemHistory().contains("ROOFING"))
+                        isCoreUpdated = true;
+                    if (item.getItemCode().contains("HVAC") && context.getCoreSystemHistory().contains("HVAC"))
+                        isCoreUpdated = true;
+                    if (item.getItemCode().contains("PLUMBING") && context.getCoreSystemHistory().contains("PLUMBING"))
+                        isCoreUpdated = true;
+                    if (item.getItemCode().contains("PANEL") && context.getCoreSystemHistory().contains("ELEC_PANEL"))
+                        isCoreUpdated = true;
 
-                if (!forensicOverride) {
-                    // Downgrade to "Monitor" (Skip for now)
-                    // For MVP, we effectively remove it by continuing loop
-                    continue;
-                } else {
-                    // Add flag explaining why it's still here
-                    riskFlags.add("SAFETY_OVERRIDE: FORENSIC_RISK_DETECTED");
-                    explanation += " Despite recent updates, forensic evidence of safety risk (e.g. Poly-B) requires remediation.";
+                    if (isCoreUpdated) {
+                        boolean forensicOverride = riskFlags.stream()
+                                .anyMatch(f -> f.contains("FORENSIC_CONFIRMATION"));
+
+                        if (!forensicOverride) {
+                            // Valid update, no forensic risk -> Exclude
+                            exclusionNotes.add("Recent Major System Update: " + item.getDescription());
+                            continue;
+                        } else {
+                            // Forensic flag overrides history
+                            riskFlags.add("SAFETY_OVERRIDE: FORENSIC_RISK_DETECTED");
+                            explanation += " Despite recent updates, forensic evidence of safety risk (e.g. Poly-B) requires remediation.";
+                        }
+                    }
+                }
+
+                // Logic B: Living Spaces (Comfort Layer)
+                // STRICT CHECK: Category must be COSMETIC, Not Mandatory, No Risk Flags
+                if (context.getLivingSpaceHistory() != null) {
+                    boolean isLivingUpdated = false;
+
+                    if (item.getCategory().contains("INTERIOR") || item.getItemCode().contains("CABINET")
+                            || item.getItemCode().contains("FLOOR")) {
+                        if (item.getItemCode().contains("KITCHEN")
+                                && context.getLivingSpaceHistory().contains("KITCHEN_REMODEL"))
+                            isLivingUpdated = true;
+                        if (item.getItemCode().contains("BATH")
+                                && context.getLivingSpaceHistory().contains("BATH_REMODEL"))
+                            isLivingUpdated = true;
+                        if (item.getItemCode().contains("FLOOR")
+                                && context.getLivingSpaceHistory().contains("FLOORING"))
+                            isLivingUpdated = true;
+                        if (item.getItemCode().contains("WINDOW")
+                                && context.getLivingSpaceHistory().contains("WINDOWS"))
+                            isLivingUpdated = true;
+                    }
+
+                    if (isLivingUpdated) {
+                        // STRICT GATING
+                        boolean isCosmetic = "COSMETIC".equals(category);
+                        boolean hasRisk = !riskFlags.isEmpty();
+
+                        if (isCosmetic && !mandatory && !hasRisk) {
+                            exclusionNotes.add("Cosmetic Excluded: " + item.getDescription() + " (Use Existing)");
+                            continue;
+                        }
+                    }
                 }
             }
-
-            // Logic B: Living Spaces (Comfort Layer)
-            boolean isLivingUpdated = false;
-            if (context.getLivingSpaceHistory() != null) {
-                if (item.getCategory().contains("INTERIOR") || item.getItemCode().contains("CABINET")
-                        || item.getItemCode().contains("FLOOR")) {
-                    if (item.getItemCode().contains("KITCHEN")
-                            && context.getLivingSpaceHistory().contains("KITCHEN_REMODEL"))
-                        isLivingUpdated = true;
-                    if (item.getItemCode().contains("BATH") && context.getLivingSpaceHistory().contains("BATH_REMODEL"))
-                        isLivingUpdated = true;
-                    if (item.getItemCode().contains("FLOOR") && context.getLivingSpaceHistory().contains("FLOORING"))
-                        isLivingUpdated = true;
-                    if (item.getItemCode().contains("WINDOW") && context.getLivingSpaceHistory().contains("WINDOWS"))
-                        isLivingUpdated = true;
-                }
-            }
-
-            if (isLivingUpdated) {
-                // RULE: ONLY Remove if NOT Risk/Structure/Safety
-                boolean hasRisk = !riskFlags.isEmpty() || mandatory;
-
-                if (!hasRisk) {
-                    // It's purely cosmetic/asset, and user said it's done. REMOVE.
-                    continue;
-                }
-            }
+            // IF NOT LIVING, History is ignored (Full Scope).
 
             adjustedItems.add(RiskAdjustedItem.builder()
                     .itemCode(item.getItemCode())
@@ -696,36 +691,31 @@ public class VerdictEngineService {
         List<RiskAdjustedItem> skip = new ArrayList<>();
 
         // --- Item-Level Deduplication (Strategy = Scope, choose ONE item per category)
-        // ---
-        // Remove premium alternatives for budget strategies
         List<RiskAdjustedItem> filteredItems = new ArrayList<>();
 
         for (RiskAdjustedItem item : items) {
             boolean shouldInclude = true;
 
-            // Strategy-based item exclusions (not grade adjustments!)
             switch (strategyType) {
                 case SAFETY_FLIP:
-                    // Exclude premium items (Metal Roof, High-SEER HVAC, premium materials)
+                    // Exclude premium items
                     if (item.getItemCode().contains("METAL") && item.getItemCode().contains("ROOF")) {
-                        shouldInclude = false; // Use Asphalt instead
+                        shouldInclude = false;
                     }
                     if (item.getItemCode().contains("DECK") || item.getItemCode().contains("CABINET")) {
-                        shouldInclude = false; // No cosmetic/upgrade items
+                        shouldInclude = false;
                     }
                     break;
 
                 case STANDARD_LIVING:
                     // Exclude only extreme premium items
                     if (item.getItemCode().contains("METAL") && item.getItemCode().contains("ROOF")) {
-                        shouldInclude = false; // Asphalt is standard
+                        shouldInclude = false;
                     }
                     break;
 
                 case FOREVER_HOME:
-                    // Prefer premium when available (exclude budget alternatives)
-                    // This is inverse: if Metal Roof exists, skip Asphalt
-                    // Handled by priority in presentation, not filtering
+                    // Prefer premium items
                     break;
             }
 
@@ -734,7 +724,7 @@ public class VerdictEngineService {
             }
         }
 
-        // --- Category-Based Filtering (existing logic) ---
+        // --- Category-Based Filtering (cleaned up for Philosophy 1.0) ---
         for (RiskAdjustedItem item : filteredItems) {
             String cat = item.getCategory();
             boolean isSafety = "SAFETY".equals(cat);
@@ -745,7 +735,7 @@ public class VerdictEngineService {
 
             switch (strategyType) {
                 case SAFETY_FLIP:
-                    // Only SAFETY, CRITICAL, and MANDATORY items
+                    // Pure Safety / Code Minimum
                     if (isSafety || isCritical) {
                         mustDo.add(item);
                     } else {
@@ -754,27 +744,27 @@ public class VerdictEngineService {
                     break;
 
                 case STANDARD_LIVING:
-                    // SAFETY + STRUCTURAL + MECHANICAL (functional systems)
+                    // Safety + Functional + Standards
                     if (isSafety || isCritical) {
                         mustDo.add(item);
                     } else if (isStructural || isMechanical) {
                         mustDo.add(item);
                     } else {
-                        // Cosmetic - depends on purpose
-                        if ("RESALE".equals(context.getPurpose()) || "LIVING".equals(context.getPurpose())) {
+                        // Cosmetic: Included unless filtered by Step 4 (History)
+                        if ("COSMETIC".equals(cat)) {
                             shouldDo.add(item);
                         } else {
-                            skip.add(item);
+                            // E.g. other functional but not core
+                            shouldDo.add(item);
                         }
                     }
                     break;
 
                 case FOREVER_HOME:
-                    // EVERYTHING - all items are included
+                    // EVERYTHING
                     if (isSafety || isCritical || isStructural) {
                         mustDo.add(item);
                     } else {
-                        // Even cosmetic items are "should do" for premium tier
                         shouldDo.add(item);
                     }
                     break;
