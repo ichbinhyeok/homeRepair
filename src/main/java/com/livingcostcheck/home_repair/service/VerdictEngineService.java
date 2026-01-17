@@ -104,7 +104,12 @@ public class VerdictEngineService {
         }
 
         // === PHASE 3: VERDICT DETERMINATION ===
-        double minRequired = safetyOption.getTotalCost();
+        // FIX: For LIVING users, use chosenOption to surface catastrophic promoted
+        // costs
+        double minRequired = (context.getRelationship() == RelationshipToHouse.LIVING)
+                ? chosenOption.getTotalCost()
+                : safetyOption.getTotalCost();
+
         double budget = context.getBudget();
         String tier = "DENIED";
         String headline = "";
@@ -123,7 +128,7 @@ public class VerdictEngineService {
             tier = "LOW_RISK";
             headline = String.format(
                     "Sufficient budget to cover critical code-mandatory repairs ($%,.0f). Financial risk is manageable.",
-                    safetyOption.getTotalCost());
+                    minRequired);
         } else if (budget >= (minRequired * 0.9)) {
             tier = "CONDITIONAL";
             headline = "Budget is tight for minimum safety repairs. High risk of incomplete remediation.";
@@ -353,8 +358,9 @@ public class VerdictEngineService {
             return null; // No eligible strategy
         }
 
-        // For BUYING users, prefer SAFETY_FLIP if available
-        if (context.getRelationship() == RelationshipToHouse.BUYING) {
+        // For BUYING or INVESTING users, prefer SAFETY_FLIP if available
+        if (context.getRelationship() == RelationshipToHouse.BUYING
+                || context.getRelationship() == RelationshipToHouse.INVESTING) {
             Optional<StrategyEligibility> safety = eligible.stream()
                     .filter(e -> e.getStrategyType() == StrategyType.SAFETY_FLIP)
                     .findFirst();
@@ -363,12 +369,15 @@ public class VerdictEngineService {
             }
         }
 
-        // For LIVING/INVESTING users, prefer STANDARD_LIVING
-        Optional<StrategyEligibility> standard = eligible.stream()
-                .filter(e -> e.getStrategyType() == StrategyType.STANDARD_LIVING)
-                .findFirst();
-        if (standard.isPresent()) {
-            return standard.get();
+        // For LIVING users, prefer STANDARD_LIVING
+        // INVESTING users should NOT fall back to STANDARD_LIVING
+        if (context.getRelationship() == RelationshipToHouse.LIVING) {
+            Optional<StrategyEligibility> standard = eligible.stream()
+                    .filter(e -> e.getStrategyType() == StrategyType.STANDARD_LIVING)
+                    .findFirst();
+            if (standard.isPresent()) {
+                return standard.get();
+            }
         }
 
         // Fallback to any eligible strategy
@@ -492,15 +501,27 @@ public class VerdictEngineService {
 
         switch (strategyType) {
             case SAFETY_FLIP:
-                name = "Code & Safety Baseline";
-                description = "Minimum cost to pass inspection and remove liability";
-                goal = "Risk Remediation Only";
-                materialGrade = "Code-Minimum (Safety & Legal)";
-                includedCategories = Arrays.asList("SAFETY", "CRITICAL", "MANDATORY");
-                keyHighlights = Arrays.asList(
-                        "Only inspection-mandatory items",
-                        "Standard materials, code-compliant",
-                        "Minimum to avoid buyer walkaway");
+                if (context.getRelationship() == RelationshipToHouse.INVESTING) {
+                    name = "Code & Safety Baseline (Investor/Flip)";
+                    description = "Minimum viable check for resale liability & inspection passes";
+                    goal = "Maximize ROI / Minimize Liability";
+                    materialGrade = "Code-Minimum (Investor Grade)";
+                    includedCategories = Arrays.asList("SAFETY", "CRITICAL", "MANDATORY");
+                    keyHighlights = Arrays.asList(
+                            "Focus on Deal Killers",
+                            "Inspection-Mandatory Items Only",
+                            "Lowest Cost Compliance");
+                } else {
+                    name = "Code & Safety Baseline";
+                    description = "Minimum cost to pass inspection and remove liability";
+                    goal = "Risk Remediation Only";
+                    materialGrade = "Code-Minimum (Safety & Legal)";
+                    includedCategories = Arrays.asList("SAFETY", "CRITICAL", "MANDATORY");
+                    keyHighlights = Arrays.asList(
+                            "Only inspection-mandatory items",
+                            "Standard materials, code-compliant",
+                            "Minimum to avoid buyer walkaway");
+                }
                 break;
             case STANDARD_LIVING:
                 name = "Functional Living Standards";
@@ -557,16 +578,61 @@ public class VerdictEngineService {
         List<BaseCostItem> candidates = new ArrayList<>();
 
         // 1. Add All Standard Library Items
+        // 1. Define Cumulative Exclusion Logic based on Era
+        Set<String> excludedKeywords = new HashSet<>();
+        String era = context.getEra();
+
+        // Accumulate exclusions (Progressive Filtering)
+        if (!"PRE_1950".equals(era)) {
+            // Post 1950: Knob & Tube is generally gone (or should be treated as removal if
+            // found, but not assumed)
+            // Actually, K&T might exist in 1950s, but let's follow the strict plan
+        }
+
+        if ("1950_1970".equals(era)) {
+            excludedKeywords.add("KNOB_AND_TUBE");
+        }
+        if ("1970_1980".equals(era)) {
+            excludedKeywords.add("KNOB_AND_TUBE");
+        }
+        if ("1980_1995".equals(era)) {
+            excludedKeywords.add("KNOB_AND_TUBE");
+            excludedKeywords.add("ALUMINUM_WIRING"); // Late 60s/Early 70s issue
+            excludedKeywords.add("LEAD_PAINT"); // Banned 1978
+        }
+        if ("1995_2010".equals(era)) {
+            excludedKeywords.add("KNOB_AND_TUBE");
+            excludedKeywords.add("ALUMINUM_WIRING");
+            excludedKeywords.add("LEAD_PAINT");
+            excludedKeywords.add("POLYBUTYLENE"); // Banned 1995
+            excludedKeywords.add("GALVANIZED"); // Steel plumbing obsolete
+        }
+        if ("2010_PRESENT".equals(era)) {
+            excludedKeywords.add("KNOB_AND_TUBE");
+            excludedKeywords.add("ALUMINUM_WIRING");
+            excludedKeywords.add("LEAD_PAINT");
+            excludedKeywords.add("POLYBUTYLENE");
+            excludedKeywords.add("GALVANIZED");
+            excludedKeywords.add("FEDERAL_PACIFIC"); // FPE Panels
+            excludedKeywords.add("ZINSCO");
+            excludedKeywords.add("ASBESTOS");
+        }
+
         if (costLibraryData.getConstructionItemLibrary() != null) {
             costLibraryData.getConstructionItemLibrary().forEach((category, items) -> {
                 items.forEach((key, item) -> {
-                    candidates.add(BaseCostItem.builder()
-                            .itemCode(key)
-                            .category(category)
-                            .description(item.getDescription())
-                            // Placeholders for calculation
-                            .rawData(Map.of("itemDef", item))
-                            .build());
+                    // FILTER: Check if itemCode contains any excluded keyword
+                    boolean isExcluded = excludedKeywords.stream().anyMatch(key::contains);
+
+                    if (!isExcluded) {
+                        candidates.add(BaseCostItem.builder()
+                                .itemCode(key)
+                                .category(category)
+                                .description(item.getDescription())
+                                // Placeholders for calculation
+                                .rawData(Map.of("itemDef", item))
+                                .build());
+                    }
                 });
             });
         }
@@ -1131,7 +1197,18 @@ public class VerdictEngineService {
 
                 case STANDARD_LIVING:
                     // Safety + Functional + Standards
+                    boolean isCatastrophic = item.getAdjustedCost() >= 10000.0;
+                    boolean isHighRiskCrash = item.getAdjustedCost() >= 5000.0 &&
+                            item.getRiskFlags().stream().anyMatch(f -> f.contains("CRITICAL") || f.contains("HAZMAT")); // Simplified
+                                                                                                                        // logic
+
                     if (isSafety || isCritical) {
+                        mustDo.add(item);
+                    } else if (isCatastrophic || isHighRiskCrash) {
+                        // PROMOTION RULE: Catastrophic Financial Risk -> Must Do
+                        item.setExplanation("[CRITICAL PROMOTION] High financial liability detected ($"
+                                + String.format("%,.0f", item.getAdjustedCost()) + "). " + item.getExplanation());
+                        item.setMandatory(true);
                         mustDo.add(item);
                     } else if (isStructural || isMechanical) {
                         mustDo.add(item);
