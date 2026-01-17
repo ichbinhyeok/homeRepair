@@ -41,6 +41,9 @@ gg:
     developmentMode: true
 
 logging:
+  file:
+    name: logs/verdict.log
   level:
-    gg.jte: DEBUG
-    org.springframework.web: DEBUG
+    gg.jte: INFO
+    org.springframework.web: INFO
+    com.livingcostcheck: DEBUG

@@ -1,0 +1,247 @@
+2026-01-17T18:12:15.959+09:00  INFO 27760 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Starting HomeRepairApplication using Java 17.0.17 with PID 27760 (C:\Development\Owner\home-repair\build\classes\java\main started by tlsgu in C:\Development\Owner\home-repair)
+2026-01-17T18:12:15.962+09:00 DEBUG 27760 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Running with Spring Boot v3.5.9, Spring v6.2.15
+2026-01-17T18:12:15.963+09:00  INFO 27760 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : No active profile set, falling back to 1 default profile: "default"
+2026-01-17T18:12:17.102+09:00  INFO 27760 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-17T18:12:17.161+09:00  INFO 27760 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 49 ms. Found 2 JPA repository interfaces.
+2026-01-17T18:12:17.701+09:00  INFO 27760 --- [home-repair] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2026-01-17T18:12:17.716+09:00  INFO 27760 --- [home-repair] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-17T18:12:17.716+09:00  INFO 27760 --- [home-repair] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-17T18:12:17.793+09:00  INFO 27760 --- [home-repair] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-17T18:12:17.793+09:00  INFO 27760 --- [home-repair] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1775 ms
+2026-01-17T18:12:17.984+09:00  INFO 27760 --- [home-repair] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-17T18:12:18.052+09:00  INFO 27760 --- [home-repair] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
+2026-01-17T18:12:18.094+09:00  INFO 27760 --- [home-repair] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-17T18:12:18.451+09:00  INFO 27760 --- [home-repair] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-17T18:12:18.499+09:00  INFO 27760 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-17T18:12:18.709+09:00  INFO 27760 --- [home-repair] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026-01-17T18:12:18.711+09:00  INFO 27760 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-17T18:12:18.737+09:00  WARN 27760 --- [home-repair] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-17T18:12:18.762+09:00  INFO 27760 --- [home-repair] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-17T18:12:19.704+09:00  INFO 27760 --- [home-repair] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-17T18:12:19.790+09:00  INFO 27760 --- [home-repair] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-17T18:12:19.952+09:00  INFO 27760 --- [home-repair] [main] c.l.h.service.VerdictEngineService       : VerdictEngine Data Loaded Successfully.
+2026-01-17T18:12:20.400+09:00  INFO 27760 --- [home-repair] [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2026-01-17T18:12:20.464+09:00  WARN 27760 --- [home-repair] [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-01-17T18:12:20.465+09:00  INFO 27760 --- [home-repair] [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-17T18:12:20.466+09:00  INFO 27760 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-01-17T18:12:20.469+09:00  INFO 27760 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-01-17T18:12:20.481+09:00  INFO 27760 --- [home-repair] [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-01-17T18:12:20.498+09:00 ERROR 27760 --- [home-repair] [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8081 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8081 or configure this application to listen on another port.
+
+2026-01-17T18:13:03.256+09:00  INFO 14404 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Starting HomeRepairApplication using Java 17.0.17 with PID 14404 (C:\Development\Owner\home-repair\build\classes\java\main started by tlsgu in C:\Development\Owner\home-repair)
+2026-01-17T18:13:03.256+09:00 DEBUG 14404 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Running with Spring Boot v3.5.9, Spring v6.2.15
+2026-01-17T18:13:03.258+09:00  INFO 14404 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : No active profile set, falling back to 1 default profile: "default"
+2026-01-17T18:13:03.835+09:00  INFO 14404 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-17T18:13:03.893+09:00  INFO 14404 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 49 ms. Found 2 JPA repository interfaces.
+2026-01-17T18:13:04.372+09:00  INFO 14404 --- [home-repair] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2026-01-17T18:13:04.387+09:00  INFO 14404 --- [home-repair] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-17T18:13:04.388+09:00  INFO 14404 --- [home-repair] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-17T18:13:04.449+09:00  INFO 14404 --- [home-repair] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-17T18:13:04.449+09:00  INFO 14404 --- [home-repair] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1148 ms
+2026-01-17T18:13:04.608+09:00  INFO 14404 --- [home-repair] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-17T18:13:04.666+09:00  INFO 14404 --- [home-repair] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
+2026-01-17T18:13:04.701+09:00  INFO 14404 --- [home-repair] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-17T18:13:04.989+09:00  INFO 14404 --- [home-repair] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-17T18:13:05.021+09:00  INFO 14404 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-17T18:13:05.200+09:00  INFO 14404 --- [home-repair] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026-01-17T18:13:05.202+09:00  INFO 14404 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-17T18:13:05.226+09:00  WARN 14404 --- [home-repair] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-17T18:13:05.249+09:00  INFO 14404 --- [home-repair] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-17T18:13:06.057+09:00  INFO 14404 --- [home-repair] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-17T18:13:06.119+09:00  INFO 14404 --- [home-repair] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-17T18:13:06.263+09:00  INFO 14404 --- [home-repair] [main] c.l.h.service.VerdictEngineService       : VerdictEngine Data Loaded Successfully.
+2026-01-17T18:13:06.676+09:00  INFO 14404 --- [home-repair] [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2026-01-17T18:13:06.751+09:00  INFO 14404 --- [home-repair] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2026-01-17T18:13:06.759+09:00  INFO 14404 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Started HomeRepairApplication in 4.002 seconds (process running for 4.322)
+2026-01-17T18:13:41.377+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-17T18:13:41.377+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-17T18:13:41.378+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-01-17T18:13:41.427+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-1] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=ERA_1980_1995 metro=PHILADELPHIA_PA_NJ eligible=false missing=[criticalRisks for era ERA_1980_1995]
+2026-01-17T18:13:41.427+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-1] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=ERA_1980_1995 metro=PHILADELPHIA_PA_NJ relationship=BUYING
+2026-01-17T18:13:41.583+09:00 DEBUG 14404 --- [home-repair] [http-nio-8081-exec-2] c.l.h.web.HomeRepairController           : Loading result for ID: 9a8c2ee6-175b-45d3-b7cd-0df47d1fdba2
+2026-01-17T18:13:41.584+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-2] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=ERA_1980_1995 metro=PHILADELPHIA_PA_NJ eligible=false missing=[criticalRisks for era ERA_1980_1995]
+2026-01-17T18:13:41.584+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-2] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=ERA_1980_1995 metro=PHILADELPHIA_PA_NJ relationship=BUYING
+2026-01-17T18:13:42.669+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-3] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=ERA_1950_1970 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ eligible=false missing=[criticalRisks for era ERA_1950_1970]
+2026-01-17T18:13:42.669+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-3] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=ERA_1950_1970 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ relationship=LIVING
+2026-01-17T18:13:42.675+09:00 DEBUG 14404 --- [home-repair] [http-nio-8081-exec-4] c.l.h.web.HomeRepairController           : Loading result for ID: 7d102909-dc87-47da-9d53-6788bb6d1870
+2026-01-17T18:13:42.675+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-4] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=ERA_1950_1970 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ eligible=false missing=[criticalRisks for era ERA_1950_1970]
+2026-01-17T18:13:42.675+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-4] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=ERA_1950_1970 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ relationship=LIVING
+2026-01-17T18:13:42.697+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-5] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=ERA_POST_2000 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ eligible=false missing=[criticalRisks for era ERA_POST_2000]
+2026-01-17T18:13:42.698+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-5] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=ERA_POST_2000 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ relationship=INVESTING
+2026-01-17T18:13:42.705+09:00 DEBUG 14404 --- [home-repair] [http-nio-8081-exec-6] c.l.h.web.HomeRepairController           : Loading result for ID: 0a791a9c-851c-44ca-882d-f0749aaa0a36
+2026-01-17T18:13:42.705+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-6] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=ERA_POST_2000 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ eligible=false missing=[criticalRisks for era ERA_POST_2000]
+2026-01-17T18:13:42.705+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-6] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=ERA_POST_2000 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ relationship=INVESTING
+2026-01-17T18:13:42.739+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=ERA_1950_1970 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ eligible=false missing=[criticalRisks for era ERA_1950_1970]
+2026-01-17T18:13:42.739+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=ERA_1950_1970 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ relationship=LIVING
+2026-01-17T18:13:42.746+09:00 DEBUG 14404 --- [home-repair] [http-nio-8081-exec-8] c.l.h.web.HomeRepairController           : Loading result for ID: 4821305d-53a0-4929-a750-c587cbfeea55
+2026-01-17T18:13:42.746+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-8] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=ERA_1950_1970 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ eligible=false missing=[criticalRisks for era ERA_1950_1970]
+2026-01-17T18:13:42.746+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-8] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=ERA_1950_1970 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ relationship=LIVING
+2026-01-17T18:13:42.768+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-9] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=ERA_PRE_1950 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ eligible=false missing=[criticalRisks for era ERA_PRE_1950]
+2026-01-17T18:13:42.768+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-9] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=ERA_PRE_1950 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ relationship=BUYING
+2026-01-17T18:13:42.774+09:00 DEBUG 14404 --- [home-repair] [http-nio-8081-exec-10] c.l.h.web.HomeRepairController           : Loading result for ID: d9a568ab-5a80-4d29-af08-6c463e67004f
+2026-01-17T18:13:42.775+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-10] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=ERA_PRE_1950 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ eligible=false missing=[criticalRisks for era ERA_PRE_1950]
+2026-01-17T18:13:42.775+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-10] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=ERA_PRE_1950 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ relationship=BUYING
+2026-01-17T18:13:42.796+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-1] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=ERA_1980_1995 metro=DALLAS_TX eligible=false missing=[criticalRisks for era ERA_1980_1995, metro localization data for DALLAS_TX]
+2026-01-17T18:13:42.797+09:00  WARN 14404 --- [home-repair] [http-nio-8081-exec-1] c.l.h.service.VerdictEngineService       : INSUFFICIENT_DATA verdict | era=ERA_1980_1995 metro=DALLAS_TX allMissing=[metro localization data for DALLAS_TX, criticalRisks for era ERA_1980_1995]
+2026-01-17T18:13:42.803+09:00 DEBUG 14404 --- [home-repair] [http-nio-8081-exec-2] c.l.h.web.HomeRepairController           : Loading result for ID: 5dc091ab-073d-4d73-b45e-5a102b205ae2
+2026-01-17T18:13:42.803+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-2] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=ERA_1980_1995 metro=DALLAS_TX eligible=false missing=[criticalRisks for era ERA_1980_1995, metro localization data for DALLAS_TX]
+2026-01-17T18:13:42.803+09:00  WARN 14404 --- [home-repair] [http-nio-8081-exec-2] c.l.h.service.VerdictEngineService       : INSUFFICIENT_DATA verdict | era=ERA_1980_1995 metro=DALLAS_TX allMissing=[metro localization data for DALLAS_TX, criticalRisks for era ERA_1980_1995]
+2026-01-17T18:14:42.297+09:00 ERROR 14404 --- [home-repair] [http-nio-8081-exec-3] c.l.h.web.HomeRepairController           : Error displaying result page
+
+java.lang.IllegalArgumentException: Invalid Verdict ID
+	at com.livingcostcheck.home_repair.web.HomeRepairController.lambda$result$0(HomeRepairController.java:96) ~[main/:na]
+	at java.base/java.util.Optional.orElseThrow(Optional.java:403) ~[na:na]
+	at com.livingcostcheck.home_repair.web.HomeRepairController.result(HomeRepairController.java:96) ~[main/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564) ~[tomcat-embed-core-10.1.50.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.15.jar:6.2.15]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.50.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1774) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2026-01-17T18:14:53.630+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-9] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1995_2010 metro=BRIDGEPORT_STAMFORD_CT eligible=true missing=[]
+2026-01-17T18:14:53.631+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-9] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1995_2010 metro=BRIDGEPORT_STAMFORD_CT relationship=LIVING
+2026-01-17T18:14:53.632+09:00 ERROR 14404 --- [home-repair] [http-nio-8081-exec-9] c.l.h.service.VerdictEngineService       : BUG: minRequired = 0 despite eligible strategy | strategy=STANDARD_LIVING era=1995_2010 metro=BRIDGEPORT_STAMFORD_CT
+2026-01-17T18:14:53.632+09:00  WARN 14404 --- [home-repair] [http-nio-8081-exec-9] c.l.h.service.VerdictEngineService       : INSUFFICIENT_DATA verdict | era=1995_2010 metro=BRIDGEPORT_STAMFORD_CT allMissing=[]
+2026-01-17T18:14:53.642+09:00 DEBUG 14404 --- [home-repair] [http-nio-8081-exec-10] c.l.h.web.HomeRepairController           : Loading result for ID: b048b253-9b5e-472b-b9ec-213983e45f94
+2026-01-17T18:14:53.643+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-10] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1995_2010 metro=BRIDGEPORT_STAMFORD_CT eligible=true missing=[]
+2026-01-17T18:14:53.643+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-10] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1995_2010 metro=BRIDGEPORT_STAMFORD_CT relationship=LIVING
+2026-01-17T18:14:53.644+09:00 ERROR 14404 --- [home-repair] [http-nio-8081-exec-10] c.l.h.service.VerdictEngineService       : BUG: minRequired = 0 despite eligible strategy | strategy=STANDARD_LIVING era=1995_2010 metro=BRIDGEPORT_STAMFORD_CT
+2026-01-17T18:14:53.644+09:00  WARN 14404 --- [home-repair] [http-nio-8081-exec-10] c.l.h.service.VerdictEngineService       : INSUFFICIENT_DATA verdict | era=1995_2010 metro=BRIDGEPORT_STAMFORD_CT allMissing=[]
+2026-01-17T18:26:36.172+09:00 DEBUG 14404 --- [home-repair] [http-nio-8081-exec-3] c.l.h.web.HomeRepairController           : Loading result for ID: b048b253-9b5e-472b-b9ec-213983e45f94
+2026-01-17T18:26:36.172+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-3] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1995_2010 metro=BRIDGEPORT_STAMFORD_CT eligible=true missing=[]
+2026-01-17T18:26:36.172+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-3] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1995_2010 metro=BRIDGEPORT_STAMFORD_CT relationship=LIVING
+2026-01-17T18:26:36.173+09:00 ERROR 14404 --- [home-repair] [http-nio-8081-exec-3] c.l.h.service.VerdictEngineService       : BUG: minRequired = 0 despite eligible strategy | strategy=STANDARD_LIVING era=1995_2010 metro=BRIDGEPORT_STAMFORD_CT
+2026-01-17T18:26:36.173+09:00  WARN 14404 --- [home-repair] [http-nio-8081-exec-3] c.l.h.service.VerdictEngineService       : INSUFFICIENT_DATA verdict | era=1995_2010 metro=BRIDGEPORT_STAMFORD_CT allMissing=[]
+2026-01-17T18:26:50.537+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-9] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1980_1995 metro=BOSTON_CAMBRIDGE_MA eligible=true missing=[]
+2026-01-17T18:26:50.538+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-9] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1980_1995 metro=BOSTON_CAMBRIDGE_MA relationship=LIVING
+2026-01-17T18:26:50.549+09:00 DEBUG 14404 --- [home-repair] [http-nio-8081-exec-10] c.l.h.web.HomeRepairController           : Loading result for ID: a1ae3159-cade-4cb7-95fc-bc245d9606c9
+2026-01-17T18:26:50.550+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-10] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1980_1995 metro=BOSTON_CAMBRIDGE_MA eligible=true missing=[]
+2026-01-17T18:26:50.550+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-10] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1980_1995 metro=BOSTON_CAMBRIDGE_MA relationship=LIVING
+2026-01-17T18:27:15.732+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-2] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1980_1995 metro=BOSTON_CAMBRIDGE_MA eligible=true missing=[]
+2026-01-17T18:27:15.732+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-2] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=1980_1995 metro=BOSTON_CAMBRIDGE_MA relationship=BUYING
+2026-01-17T18:27:15.744+09:00 DEBUG 14404 --- [home-repair] [http-nio-8081-exec-3] c.l.h.web.HomeRepairController           : Loading result for ID: 74e291ab-53cd-40e9-8a4e-1679f0f76d9e
+2026-01-17T18:27:15.745+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-3] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1980_1995 metro=BOSTON_CAMBRIDGE_MA eligible=true missing=[]
+2026-01-17T18:27:15.745+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-3] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=1980_1995 metro=BOSTON_CAMBRIDGE_MA relationship=BUYING
+2026-01-17T18:27:27.564+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-5] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1980_1995 metro=BOSTON_CAMBRIDGE_MA eligible=true missing=[]
+2026-01-17T18:27:27.565+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-5] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1980_1995 metro=BOSTON_CAMBRIDGE_MA relationship=INVESTING
+2026-01-17T18:27:27.576+09:00 DEBUG 14404 --- [home-repair] [http-nio-8081-exec-7] c.l.h.web.HomeRepairController           : Loading result for ID: 164b4ead-94fe-421d-856c-05d313ae12f9
+2026-01-17T18:27:27.576+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1980_1995 metro=BOSTON_CAMBRIDGE_MA eligible=true missing=[]
+2026-01-17T18:27:27.576+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1980_1995 metro=BOSTON_CAMBRIDGE_MA relationship=INVESTING
+2026-01-17T18:34:59.543+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1980_1995 metro=PHILADELPHIA_PA_NJ eligible=true missing=[]
+2026-01-17T18:34:59.544+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=1980_1995 metro=PHILADELPHIA_PA_NJ relationship=BUYING
+2026-01-17T18:34:59.544+09:00 ERROR 14404 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : BUG: minRequired = 0 despite eligible strategy | strategy=SAFETY_FLIP era=1980_1995 metro=PHILADELPHIA_PA_NJ
+2026-01-17T18:34:59.545+09:00  WARN 14404 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : INSUFFICIENT_DATA verdict | era=1980_1995 metro=PHILADELPHIA_PA_NJ allMissing=[]
+2026-01-17T18:34:59.556+09:00 DEBUG 14404 --- [home-repair] [http-nio-8081-exec-8] c.l.h.web.HomeRepairController           : Loading result for ID: ef7cfee0-60a6-44a5-a7fe-72b84fbe8bed
+2026-01-17T18:34:59.556+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-8] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1980_1995 metro=PHILADELPHIA_PA_NJ eligible=true missing=[]
+2026-01-17T18:34:59.556+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-8] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=1980_1995 metro=PHILADELPHIA_PA_NJ relationship=BUYING
+2026-01-17T18:34:59.557+09:00 ERROR 14404 --- [home-repair] [http-nio-8081-exec-8] c.l.h.service.VerdictEngineService       : BUG: minRequired = 0 despite eligible strategy | strategy=SAFETY_FLIP era=1980_1995 metro=PHILADELPHIA_PA_NJ
+2026-01-17T18:34:59.557+09:00  WARN 14404 --- [home-repair] [http-nio-8081-exec-8] c.l.h.service.VerdictEngineService       : INSUFFICIENT_DATA verdict | era=1980_1995 metro=PHILADELPHIA_PA_NJ allMissing=[]
+2026-01-17T18:37:38.843+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-5] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1980_1995 metro=PHILADELPHIA_PA_NJ eligible=true missing=[]
+2026-01-17T18:37:38.844+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-5] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=1980_1995 metro=PHILADELPHIA_PA_NJ relationship=BUYING
+2026-01-17T18:37:38.845+09:00 ERROR 14404 --- [home-repair] [http-nio-8081-exec-5] c.l.h.service.VerdictEngineService       : BUG: minRequired = 0 despite eligible strategy | strategy=SAFETY_FLIP era=1980_1995 metro=PHILADELPHIA_PA_NJ
+2026-01-17T18:37:38.845+09:00  WARN 14404 --- [home-repair] [http-nio-8081-exec-5] c.l.h.service.VerdictEngineService       : INSUFFICIENT_DATA verdict | era=1980_1995 metro=PHILADELPHIA_PA_NJ allMissing=[]
+2026-01-17T18:37:38.861+09:00 DEBUG 14404 --- [home-repair] [http-nio-8081-exec-7] c.l.h.web.HomeRepairController           : Loading result for ID: 445b49a5-9282-4d3d-9734-f88a57533ef1
+2026-01-17T18:37:38.861+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1980_1995 metro=PHILADELPHIA_PA_NJ eligible=true missing=[]
+2026-01-17T18:37:38.862+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=1980_1995 metro=PHILADELPHIA_PA_NJ relationship=BUYING
+2026-01-17T18:37:38.863+09:00 ERROR 14404 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : BUG: minRequired = 0 despite eligible strategy | strategy=SAFETY_FLIP era=1980_1995 metro=PHILADELPHIA_PA_NJ
+2026-01-17T18:37:38.864+09:00  WARN 14404 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : INSUFFICIENT_DATA verdict | era=1980_1995 metro=PHILADELPHIA_PA_NJ allMissing=[]
+2026-01-17T18:40:02.607+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-6] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=PHILADELPHIA_PA_NJ eligible=true missing=[]
+2026-01-17T18:40:02.608+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-6] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=1950_1970 metro=PHILADELPHIA_PA_NJ relationship=BUYING
+2026-01-17T18:40:02.609+09:00 ERROR 14404 --- [home-repair] [http-nio-8081-exec-6] c.l.h.service.VerdictEngineService       : BUG: minRequired = 0 despite eligible strategy | strategy=SAFETY_FLIP era=1950_1970 metro=PHILADELPHIA_PA_NJ
+2026-01-17T18:40:02.609+09:00  WARN 14404 --- [home-repair] [http-nio-8081-exec-6] c.l.h.service.VerdictEngineService       : INSUFFICIENT_DATA verdict | era=1950_1970 metro=PHILADELPHIA_PA_NJ allMissing=[]
+2026-01-17T18:40:02.634+09:00 DEBUG 14404 --- [home-repair] [http-nio-8081-exec-5] c.l.h.web.HomeRepairController           : Loading result for ID: 4449a111-792a-4f25-b521-ab34362c27bd
+2026-01-17T18:40:02.635+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-5] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=PHILADELPHIA_PA_NJ eligible=true missing=[]
+2026-01-17T18:40:02.635+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-5] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=1950_1970 metro=PHILADELPHIA_PA_NJ relationship=BUYING
+2026-01-17T18:40:02.635+09:00 ERROR 14404 --- [home-repair] [http-nio-8081-exec-5] c.l.h.service.VerdictEngineService       : BUG: minRequired = 0 despite eligible strategy | strategy=SAFETY_FLIP era=1950_1970 metro=PHILADELPHIA_PA_NJ
+2026-01-17T18:40:02.636+09:00  WARN 14404 --- [home-repair] [http-nio-8081-exec-5] c.l.h.service.VerdictEngineService       : INSUFFICIENT_DATA verdict | era=1950_1970 metro=PHILADELPHIA_PA_NJ allMissing=[]
+2026-01-17T18:40:48.363+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-9] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ eligible=true missing=[]
+2026-01-17T18:40:48.364+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-9] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ relationship=LIVING
+2026-01-17T18:40:48.365+09:00 ERROR 14404 --- [home-repair] [http-nio-8081-exec-9] c.l.h.service.VerdictEngineService       : BUG: minRequired = 0 despite eligible strategy | strategy=STANDARD_LIVING era=1950_1970 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ
+2026-01-17T18:40:48.365+09:00  WARN 14404 --- [home-repair] [http-nio-8081-exec-9] c.l.h.service.VerdictEngineService       : INSUFFICIENT_DATA verdict | era=1950_1970 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ allMissing=[]
+2026-01-17T18:40:48.393+09:00 DEBUG 14404 --- [home-repair] [http-nio-8081-exec-1] c.l.h.web.HomeRepairController           : Loading result for ID: 211b5b4a-be6f-45ed-9fa4-1aa0aed223de
+2026-01-17T18:40:48.394+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-1] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ eligible=true missing=[]
+2026-01-17T18:40:48.394+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-1] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ relationship=LIVING
+2026-01-17T18:40:48.395+09:00 ERROR 14404 --- [home-repair] [http-nio-8081-exec-1] c.l.h.service.VerdictEngineService       : BUG: minRequired = 0 despite eligible strategy | strategy=STANDARD_LIVING era=1950_1970 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ
+2026-01-17T18:40:48.395+09:00  WARN 14404 --- [home-repair] [http-nio-8081-exec-1] c.l.h.service.VerdictEngineService       : INSUFFICIENT_DATA verdict | era=1950_1970 metro=NYC_NEWARK_JERSEY_CITY_NY_NJ allMissing=[]
+2026-01-17T18:41:25.608+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-4] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1980_1995 metro=DALLAS_FT_WORTH_ARLINGTON_TX eligible=true missing=[]
+2026-01-17T18:41:25.609+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-4] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=1980_1995 metro=DALLAS_FT_WORTH_ARLINGTON_TX relationship=BUYING
+2026-01-17T18:41:25.610+09:00 ERROR 14404 --- [home-repair] [http-nio-8081-exec-4] c.l.h.service.VerdictEngineService       : BUG: minRequired = 0 despite eligible strategy | strategy=SAFETY_FLIP era=1980_1995 metro=DALLAS_FT_WORTH_ARLINGTON_TX
+2026-01-17T18:41:25.610+09:00  WARN 14404 --- [home-repair] [http-nio-8081-exec-4] c.l.h.service.VerdictEngineService       : INSUFFICIENT_DATA verdict | era=1980_1995 metro=DALLAS_FT_WORTH_ARLINGTON_TX allMissing=[]
+2026-01-17T18:41:25.631+09:00 DEBUG 14404 --- [home-repair] [http-nio-8081-exec-6] c.l.h.web.HomeRepairController           : Loading result for ID: 7db866a9-8b2f-4346-9fad-e895c4a3ebba
+2026-01-17T18:41:25.632+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-6] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1980_1995 metro=DALLAS_FT_WORTH_ARLINGTON_TX eligible=true missing=[]
+2026-01-17T18:41:25.632+09:00  INFO 14404 --- [home-repair] [http-nio-8081-exec-6] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=1980_1995 metro=DALLAS_FT_WORTH_ARLINGTON_TX relationship=BUYING
+2026-01-17T18:41:25.632+09:00 ERROR 14404 --- [home-repair] [http-nio-8081-exec-6] c.l.h.service.VerdictEngineService       : BUG: minRequired = 0 despite eligible strategy | strategy=SAFETY_FLIP era=1980_1995 metro=DALLAS_FT_WORTH_ARLINGTON_TX
+2026-01-17T18:41:25.632+09:00  WARN 14404 --- [home-repair] [http-nio-8081-exec-6] c.l.h.service.VerdictEngineService       : INSUFFICIENT_DATA verdict | era=1980_1995 metro=DALLAS_FT_WORTH_ARLINGTON_TX allMissing=[]

@@ -9,7 +9,57 @@
     <div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto">
             
-            <!-- Header / Verdict Tier -->
+            @if("INSUFFICIENT_DATA".equals(verdict.getTier()))
+                <div class="max-w-3xl mx-auto text-center mt-12 mb-20">
+                    <div class="inline-flex justify-center items-center w-20 h-20 bg-slate-100 rounded-full mb-8 shadow-inner border border-slate-200">
+                        <svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-4">Insufficient Data for Assessment</h1>
+                    <p class="text-xl text-slate-500 mb-10 leading-relaxed font-medium">${verdict.getHeadline()}</p>
+                    
+                    <!-- Explanation Card -->
+                    <div class="bg-amber-50 border border-amber-200 rounded-2xl p-8 text-left mb-10 shadow-sm relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-4 opacity-10">
+                            <svg class="w-24 h-24 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                        </div>
+                        <h3 class="text-amber-900 font-bold mb-4 flex items-center relative z-10">
+                            <span class="bg-amber-100 text-amber-800 rounded px-2 py-0.5 text-xs font-black uppercase tracking-wide mr-3 border border-amber-200">Why?</span>
+                            We couldn't perform a reliable analysis
+                        </h3>
+                        <ul class="space-y-3 relative z-10">
+                            @for(var reason : verdict.getMustDoExplanation())
+                                <li class="flex items-start text-amber-900 text-sm font-medium">
+                                    <svg class="w-5 h-5 text-amber-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    ${reason}
+                                </li>
+                            @endfor
+                        </ul>
+                    </div>
+                    
+                    <!-- Transparency Detail -->
+                    <div class="bg-white rounded-2xl shadow-lg p-8 border border-slate-100 mb-12 text-left">
+                        <h3 class="font-bold text-slate-900 mb-6 text-sm uppercase tracking-widest border-b border-slate-100 pb-2">Analysis Status Diagnostics</h3>
+                            @if(verdict.getSkippedStrategies() != null)
+                            <div class="space-y-4">
+                                @for(var skip : verdict.getSkippedStrategies())
+                                    <div class="flex flex-col sm:flex-row sm:items-start p-3 bg-slate-50 rounded-lg border border-slate-100">
+                                            <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 w-32 flex-shrink-0 pt-0.5 mb-1 sm:mb-0">${skip.split(":")[0]}</span>
+                                            <span class="text-sm text-slate-600 font-mono">${skip.substring(skip.indexOf(":")+1)}</span>
+                                    </div>
+                                @endfor
+                            </div>
+                        @else
+                            <p class="text-sm text-slate-400 italic">No diagnosis details available.</p>
+                        @endif
+                    </div>
+
+                    <a href="/home-repair" class="inline-flex items-center bg-slate-900 hover:bg-black text-white font-bold py-4 px-10 rounded-xl shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1 active:scale-95 text-sm tracking-wide">
+                        <svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/></svg>
+                        Test Another Property
+                    </a>
+                </div>
+            @else
+            <!-- SUCCESS PATH CONTENT -->
             <div class="text-center mb-12">
                 <!-- YMYL DISCLAIMER (MANDATORY) -->
                 <div class="inline-block bg-slate-100 border border-slate-200 text-slate-500 text-[10px] uppercase font-bold px-3 py-1 rounded mb-6 tracking-widest">
@@ -63,6 +113,76 @@
                 </div>
             </div>
 
+            <!-- YMYL-SAFE COST RANGE SUMMARY (PRIMARY DISPLAY) -->
+            <div class="bg-gradient-to-br from-white to-slate-50 rounded-2xl shadow-2xl overflow-hidden mb-12 border-2 border-slate-200">
+                <div class="bg-slate-900 text-white px-8 py-5">
+                    <h2 class="text-lg font-bold tracking-tight">Estimated Budget Planning Range</h2>
+                    <p class="text-sm text-slate-400 mt-1">Based on ${verdict.getItemsAnalyzed()} construction items analyzed</p>
+                </div>
+                <div class="p-8">
+                    <div class="text-center mb-6">
+                        <div class="text-6xl font-black text-slate-900 mb-3 tracking-tight">
+                            ${verdict.getCostRangeLabel() != null ? verdict.getCostRangeLabel() : "Range not available"}
+                        </div>
+                        <p class="text-base text-slate-600 font-medium leading-relaxed max-w-2xl mx-auto">
+                            This range represents typical 2026 construction costs for 
+                            @if("BUYING".equals(history.getPurpose()))
+                                code-mandatory safety repairs
+                            @elseif("INVESTING".equals(history.getPurpose()))
+                                essential loss-prevention work
+                            @else
+                                functional living standards
+                            @endif
+                            in your metro area.
+                        </p>
+                    </div>
+                    
+                    <!-- Expandable Detailed Estimate Section -->
+                    <details class="mt-8 bg-amber-50 border border-amber-200 rounded-xl overflow-hidden">
+                        <summary class="px-6 py-4 cursor-pointer hover:bg-amber-100 transition-colors flex items-center justify-between group">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 text-amber-600 mr-3 group-open:rotate-90 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                                <span class="text-sm font-bold text-amber-900 uppercase tracking-wide">View Detailed Estimate Breakdown</span>
+                            </div>
+                            <span class="text-xs text-amber-700 font-medium">Click to expand</span>
+                        </summary>
+                        <div class="px-6 py-4 bg-white border-t border-amber-200">
+                            <!-- YMYL Disclaimer (MANDATORY) -->
+                            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+                                <div class="flex">
+                                    <svg class="h-5 w-5 text-yellow-400 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                                    <div>
+                                        <p class="text-sm font-bold text-yellow-800">⚠️ Important: This is a Risk Comparison Tool Only</p>
+                                        <p class="text-xs text-yellow-700 mt-1">
+                                            This estimate is for budget planning and risk comparison purposes only. 
+                                            <strong>Actual costs may vary ±50% or more</strong> after professional inspection. 
+                                            Do not make financial decisions based solely on this estimate. 
+                                            Always obtain multiple quotes from licensed contractors.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Detailed Cost Breakdown -->
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-baseline">
+                                    <span class="text-sm font-bold text-slate-700">Estimated Total Cost:</span>
+                                    <span class="text-3xl font-black text-slate-900 tracking-tight">
+                                        $${verdict.getExactCostEstimate() != null ? String.format("%,.0f", verdict.getExactCostEstimate()) : "N/A"}
+                                    </span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1">
+                                    <p>✓ Based on 2026 metro-specific labor rates and material costs</p>
+                                    <p>✓ Includes era-based risk adjustments</p>
+                                    <p>✓ Accounts for ${verdict.getItemsAnalyzed()} construction line items</p>
+                                    <p class="text-amber-600 font-bold">⚠ Subject to site-specific conditions and contractor availability</p>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+
             <!-- SINGLE VERDICT STRATEGY CARD (Relationship Based) -->
             @if(verdict.getStrategyOptions() != null && !verdict.getStrategyOptions().isEmpty())
                 <div class="mb-16">
@@ -90,8 +210,7 @@
                                         <h3 class="text-2xl font-extrabold text-white">${option.getName()}</h3>
                                     </div>
                                     <div class="p-8 flex-grow">
-                                        <div class="text-6xl font-black text-slate-900 mb-2 tracking-tighter">$${String.format("%,.0f", option.getTotalCost())}</div>
-                                        <p class="text-lg text-slate-600 mb-8 leading-relaxed font-medium">${option.getDescription()}</p>
+                                        <p class="text-lg text-slate-600 mb-6 leading-relaxed font-medium">${option.getDescription()}</p>
                                         
                                         <div class="grid grid-cols-2 gap-6 mb-8">
                                             <div>
@@ -351,6 +470,41 @@
                 </div>
             @endif
 
+            <!-- METHODOLOGY & STRATEGY TRANSPARENCY (New Phase 3) -->
+            <div class="max-w-4xl mx-auto mb-16">
+                 <div class="flex items-center justify-center mb-6">
+                    <span class="h-px w-12 bg-slate-200"></span>
+                    <span class="text-xs text-slate-400 font-bold uppercase tracking-widest mx-4">Analysis Methodology</span>
+                    <span class="h-px w-12 bg-slate-200"></span>
+                </div>
+                
+                <div class="bg-white rounded-xl border border-slate-200 p-6 flex flex-col md:flex-row items-start md:items-center justify-between shadow-sm">
+                    <div class="mb-4 md:mb-0">
+                        <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Active Strategy Engine</div>
+                        <div class="font-bold text-slate-800 flex items-center">
+                            @if(verdict.getStrategyUsed() != null)
+                                ${verdict.getStrategyUsed()}
+                            @else
+                                STANDARD_LIVING
+                            @endif
+                            
+                            <!-- Status Badge -->
+                             @if(verdict.getSkippedStrategies() != null && !verdict.getSkippedStrategies().isEmpty())
+                                <span class="ml-3 bg-amber-100 text-amber-800 text-[9px] px-1.5 py-0.5 rounded font-black tracking-tight border border-amber-200">ADAPTIVE MODE</span>
+                             @else
+                                <span class="ml-3 bg-emerald-100 text-emerald-800 text-[9px] px-1.5 py-0.5 rounded font-black tracking-tight border border-emerald-200">OPTIMAL DATA</span>
+                             @endif
+                        </div>
+                    </div>
+                    
+                    @if(verdict.getStrategyExplanation() != null)
+                        <div class="md:max-w-md text-xs text-slate-500 leading-relaxed md:text-right border-l md:border-l-0 border-slate-100 pl-4 md:pl-0">
+                            ${verdict.getStrategyExplanation()}
+                        </div>
+                    @endif
+                </div>
+            </div>
+
             <!-- CTA -->
             <div class="text-center pb-20">
                 <a href="/home-repair" class="inline-flex items-center bg-slate-900 hover:bg-black text-white font-bold py-4 px-12 rounded-2xl shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1 active:scale-95">
@@ -359,6 +513,8 @@
                 </a>
                 <p class="mt-6 text-xs text-slate-400 font-medium">Data authorized by 2026 RSMeans & Integrated Cost Library v2.0</p>
             </div>
+            
+            @endif <!-- End of INSUFFICIENT_DATA check -->
 
         </div>
     </div>

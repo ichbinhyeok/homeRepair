@@ -2,6 +2,7 @@ package com.livingcostcheck.home_repair.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.livingcostcheck.home_repair.service.dto.verdict.DataMapping.*;
+import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs;
 import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.*;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -50,36 +51,72 @@ public class VerdictEngineService {
     }
 
     public Verdict generateVerdict(UserContext context) {
-        // Generate THREE strategic options instead of one
-        List<StrategyOption> strategyOptions = new ArrayList<>();
+        // === PHASE 1: STRATEGY ELIGIBILITY CHECK (NEW) ===
+        // Check eligibility BEFORE cost calculation to prevent $0 verdicts
 
+        List<StrategyEligibility> allEligibilities = Arrays.asList(
+                evaluateEligibility(StrategyType.SAFETY_FLIP, context),
+                evaluateEligibility(StrategyType.STANDARD_LIVING, context),
+                evaluateEligibility(StrategyType.FOREVER_HOME, context));
+
+        // Select best eligible strategy
+        StrategyEligibility chosenEligibility = selectBestEligibleStrategy(allEligibilities, context);
+
+        // If NO strategy is eligible, return INSUFFICIENT_DATA verdict
+        if (chosenEligibility == null) {
+            return buildInsufficientDataVerdict(allEligibilities, context);
+        }
+
+        log.info("Strategy Selected | chosen={} era={} metro={} relationship={}",
+                chosenEligibility.getStrategyType(), context.getEra(),
+                context.getMetroCode(), context.getRelationship());
+
+        // === PHASE 2: COST CALCULATION (Only for eligible strategy) ===
         // Common Steps (0-2)
         List<BaseCostItem> candidates = step0_candidateGenerator(context);
         EstimatedScale scale = step2_autoScale(context);
 
-        // Optimization: Step 3 & 4 are strategy-agnostic
-        // Run them ONCE
+        // Optimization: Step 3 & 4 are strategy-agnostic - run them ONCE
         List<BaseCostItem> costedItems = step3_preliminaryCosting(candidates, scale);
 
         // Pass exclusionNotes list to be populated during filtering
         List<String> exclusionNotes = new ArrayList<>();
         List<RiskAdjustedItem> baseRiskAdjustedItems = step4_riskFilter(costedItems, context, exclusionNotes);
 
-        // Context-Aware Strategy Generation (Money-First Efficiency)
-        StrategyOption safetyOption = generateStrategyOption(StrategyType.SAFETY_FLIP, baseRiskAdjustedItems, context);
-        // strategyOptions.add(safetyOption); // Internal calculation only
+        // Generate ONLY the chosen eligible strategy
+        StrategyOption chosenOption = generateStrategyOption(
+                chosenEligibility.getStrategyType(),
+                baseRiskAdjustedItems,
+                context);
 
-        StrategyOption standardOption = null;
-        if (context.getRelationship() == RelationshipToHouse.INVESTING
-                || context.getRelationship() == RelationshipToHouse.LIVING) {
-            standardOption = generateStrategyOption(StrategyType.STANDARD_LIVING, baseRiskAdjustedItems, context);
+        // Also generate SAFETY_FLIP for minimum cost calculation (if different from
+        // chosen)
+        StrategyOption safetyOption = chosenOption;
+        if (chosenEligibility.getStrategyType() != StrategyType.SAFETY_FLIP) {
+            // Check if SAFETY_FLIP is eligible - if not, use chosen strategy as minimum
+            Optional<StrategyEligibility> safetyEligibility = allEligibilities.stream()
+                    .filter(e -> e.getStrategyType() == StrategyType.SAFETY_FLIP && e.isEligible())
+                    .findFirst();
+
+            if (safetyEligibility.isPresent()) {
+                safetyOption = generateStrategyOption(StrategyType.SAFETY_FLIP, baseRiskAdjustedItems, context);
+            }
         }
 
-        // Determine overall verdict based on Tier 1 (minimum required - Safety Option)
+        // === PHASE 3: VERDICT DETERMINATION ===
         double minRequired = safetyOption.getTotalCost();
         double budget = context.getBudget();
         String tier = "DENIED";
         String headline = "";
+
+        // CRITICAL: minRequired should NEVER be 0 if we reached this point
+        // If it is 0, that's a BUG - eligibility check should have caught it
+        if (minRequired == 0.0) {
+            log.error("BUG: minRequired = 0 despite eligible strategy | strategy={} era={} metro={}",
+                    chosenEligibility.getStrategyType(), context.getEra(), context.getMetroCode());
+            // Defensive: Return INSUFFICIENT_DATA rather than mislead with LOW_RISK
+            return buildInsufficientDataVerdict(allEligibilities, context);
+        }
 
         if (budget >= minRequired) {
             tier = "LOW_RISK";
@@ -95,26 +132,268 @@ public class VerdictEngineService {
         }
 
         // Select Plan for Display
-        // LIVING/INVESTING -> Standard (Comfort/Stability)
-        // BUYING -> Safety (Baseline Risk)
-        SortedPlan displayPlan;
-        if (standardOption != null) {
-            displayPlan = standardOption.getPlan();
-        } else {
-            displayPlan = safetyOption.getPlan();
-        }
+        SortedPlan displayPlan = chosenOption.getPlan();
+
+        // Build strategy explanation for transparency
+        String strategyExplanation = buildStrategyExplanation(allEligibilities, chosenEligibility);
+
+        List<String> skippedStrategies = allEligibilities.stream()
+                .filter(e -> !e.isEligible())
+                .map(e -> e.getStrategyType().name() + ": " + e.getExplanation())
+                .collect(Collectors.toList());
 
         // Build final verdict
         return Verdict.builder()
                 .tier(tier)
                 .headline(headline)
+                .strategyUsed(chosenEligibility.getStrategyType().name())
+                .strategyExplanation(strategyExplanation)
+                .skippedStrategies(skippedStrategies)
                 .strategyOptions(Collections.emptyList()) // Hide strategies to enforce Single Verdict UI
                 .exclusionNote(exclusionNotes)
                 .plan(displayPlan)
+                // YMYL-Safe Cost Presentation
+                .costRange(VerdictDTOs.CostRange.fromCost(minRequired))
+                .costRangeLabel(VerdictDTOs.CostRange.fromCost(minRequired).getLabel() +
+                        " (" + VerdictDTOs.CostRange.fromCost(minRequired).getFormattedRange() + " typical range)")
+                .itemsAnalyzed(candidates.size())
+                .exactCostEstimate(minRequired)
                 .mustDoExplanation(Collections.emptyList())
                 .optionalActions(Collections.emptyList())
                 .futureCostWarning(Collections.emptyList())
                 .upgradeScenario(Collections.emptyList())
+                .build();
+    }
+
+    // === PHASE 1: STRATEGY ELIGIBILITY LAYER ===
+    // NEW: Check eligibility BEFORE cost calculation to prevent $0 verdicts
+
+    /**
+     * Evaluate eligibility for a given strategy based on available data.
+     * This prevents strategies from executing cost calculations when data is
+     * insufficient.
+     */
+    private StrategyEligibility evaluateEligibility(StrategyType strategyType, UserContext context) {
+        switch (strategyType) {
+            case SAFETY_FLIP:
+                return evaluateSafetyEligibility(context);
+            case STANDARD_LIVING:
+                return evaluateStandardEligibility(context);
+            case FOREVER_HOME:
+                return evaluateForeverHomeEligibility(context);
+            default:
+                throw new IllegalArgumentException("Unknown strategy: " + strategyType);
+        }
+    }
+
+    /**
+     * SAFETY_FLIP requires era-specific critical risk data.
+     * This is the most strict strategy as it focuses on code-mandatory repairs.
+     */
+    private StrategyEligibility evaluateSafetyEligibility(UserContext context) {
+        List<String> missing = new ArrayList<>();
+
+        // Check 1: Era risk data exists and has critical risks defined
+        EraData eraData = riskFactorsData.getEras().get(context.getEra());
+        if (eraData == null || eraData.getCriticalRisks() == null || eraData.getCriticalRisks().isEmpty()) {
+            missing.add("criticalRisks for era " + context.getEra());
+        }
+
+        // Check 2: Metro data exists for localization
+        if (!metroMasterData.getData().containsKey(context.getMetroCode())) {
+            missing.add("metro localization data for " + context.getMetroCode());
+        }
+
+        boolean eligible = missing.isEmpty();
+        double coverage = eligible ? 1.0 : 0.0;
+
+        String explanation = eligible
+                ? "Sufficient data for safety-only analysis"
+                : "Safety-only analysis requires " + String.join(", ", missing);
+
+        log.info("SAFETY_FLIP Eligibility | era={} metro={} eligible={} missing={}",
+                context.getEra(), context.getMetroCode(), eligible, missing);
+
+        return StrategyEligibility.builder()
+                .strategyType(StrategyType.SAFETY_FLIP)
+                .eligible(eligible)
+                .coverageScore(coverage)
+                .missingFactors(missing)
+                .explanation(explanation)
+                .build();
+    }
+
+    /**
+     * STANDARD_LIVING is more lenient - only needs cost library and metro data.
+     * It can work without era-specific risk data by using general assumptions.
+     */
+    private StrategyEligibility evaluateStandardEligibility(UserContext context) {
+        List<String> missing = new ArrayList<>();
+
+        // Check 1: Cost library exists
+        if (costLibraryData == null || costLibraryData.getConstructionItemLibrary() == null
+                || costLibraryData.getConstructionItemLibrary().isEmpty()) {
+            missing.add("construction cost library");
+        }
+
+        // Check 2: Metro data exists
+        if (!metroMasterData.getData().containsKey(context.getMetroCode())) {
+            missing.add("metro localization data for " + context.getMetroCode());
+        }
+
+        boolean eligible = missing.isEmpty();
+        double coverage = eligible ? 1.0 : 0.0;
+
+        String explanation = eligible
+                ? "Standard analysis available with general cost estimates"
+                : "Standard analysis requires " + String.join(", ", missing);
+
+        return StrategyEligibility.builder()
+                .strategyType(StrategyType.STANDARD_LIVING)
+                .eligible(eligible)
+                .coverageScore(coverage)
+                .missingFactors(missing)
+                .explanation(explanation)
+                .build();
+    }
+
+    /**
+     * FOREVER_HOME has same requirements as STANDARD_LIVING for now.
+     * Future: May require additional data for premium recommendations.
+     */
+    private StrategyEligibility evaluateForeverHomeEligibility(UserContext context) {
+        // For now, FOREVER_HOME has the same requirements as STANDARD_LIVING
+        StrategyEligibility standardEligibility = evaluateStandardEligibility(context);
+
+        return StrategyEligibility.builder()
+                .strategyType(StrategyType.FOREVER_HOME)
+                .eligible(standardEligibility.isEligible())
+                .coverageScore(standardEligibility.getCoverageScore())
+                .missingFactors(standardEligibility.getMissingFactors())
+                .explanation(standardEligibility.getExplanation().replace("Standard", "Forever Home"))
+                .build();
+    }
+
+    /**
+     * Select the best eligible strategy based on user context.
+     * Preference order: SAFETY_FLIP (if BUYING) > STANDARD_LIVING > FOREVER_HOME
+     */
+    private StrategyEligibility selectBestEligibleStrategy(
+            List<StrategyEligibility> eligibilities,
+            UserContext context) {
+
+        // Filter to only eligible strategies
+        List<StrategyEligibility> eligible = eligibilities.stream()
+                .filter(StrategyEligibility::isEligible)
+                .collect(Collectors.toList());
+
+        if (eligible.isEmpty()) {
+            return null; // No eligible strategy
+        }
+
+        // For BUYING users, prefer SAFETY_FLIP if available
+        if (context.getRelationship() == RelationshipToHouse.BUYING) {
+            Optional<StrategyEligibility> safety = eligible.stream()
+                    .filter(e -> e.getStrategyType() == StrategyType.SAFETY_FLIP)
+                    .findFirst();
+            if (safety.isPresent()) {
+                return safety.get();
+            }
+        }
+
+        // For LIVING/INVESTING users, prefer STANDARD_LIVING
+        Optional<StrategyEligibility> standard = eligible.stream()
+                .filter(e -> e.getStrategyType() == StrategyType.STANDARD_LIVING)
+                .findFirst();
+        if (standard.isPresent()) {
+            return standard.get();
+        }
+
+        // Fallback to any eligible strategy
+        return eligible.get(0);
+    }
+
+    /**
+     * Build explanation for strategy selection to show in verdict.
+     */
+    private String buildStrategyExplanation(
+            List<StrategyEligibility> allEligibilities,
+            StrategyEligibility chosen) {
+
+        StringBuilder explanation = new StringBuilder();
+        explanation.append("Analysis Strategy: ")
+                .append(chosen.getStrategyType().name())
+                .append(". ");
+
+        // Explain why others were skipped
+        List<StrategyEligibility> skipped = allEligibilities.stream()
+                .filter(e -> !e.isEligible())
+                .collect(Collectors.toList());
+
+        if (!skipped.isEmpty()) {
+            explanation.append("Skipped strategies: ");
+            for (StrategyEligibility skip : skipped) {
+                explanation.append(skip.getStrategyType().name())
+                        .append(" (")
+                        .append(skip.getExplanation())
+                        .append("); ");
+            }
+        }
+
+        return explanation.toString();
+    }
+
+    /**
+     * Build verdict when no strategy is eligible due to insufficient data.
+     * This is an HONEST response - we don't guess when we don't have data.
+     */
+    private Verdict buildInsufficientDataVerdict(
+            List<StrategyEligibility> eligibilities,
+            UserContext context) {
+
+        // Collect all missing factors
+        Set<String> allMissing = eligibilities.stream()
+                .flatMap(e -> e.getMissingFactors().stream())
+                .collect(Collectors.toSet());
+
+        String headline = String.format(
+                "Cannot provide reliable cost assessment for %s-era homes in %s at this time.",
+                context.getEra(),
+                context.getMetroCode());
+
+        List<String> explanations = Arrays.asList(
+                "Our assessment requires: " + String.join(", ", allMissing),
+                "This does not mean there are no costs - we simply lack sufficient data to make an accurate estimate.",
+                "We recommend consulting a local licensed contractor for a professional inspection.");
+
+        List<String> skipped = eligibilities.stream()
+                .map(e -> e.getStrategyType().name() + ": " + e.getExplanation())
+                .collect(Collectors.toList());
+
+        log.warn("INSUFFICIENT_DATA verdict | era={} metro={} allMissing={}",
+                context.getEra(), context.getMetroCode(), allMissing);
+
+        return Verdict.builder()
+                .tier("INSUFFICIENT_DATA")
+                .headline(headline)
+                .strategyUsed("NONE")
+                .strategyExplanation("No analysis strategy could be executed with available data")
+                .skippedStrategies(skipped)
+                .plan(SortedPlan.builder()
+                        .mustDo(Collections.emptyList())
+                        .shouldDo(Collections.emptyList())
+                        .skipForNow(Collections.emptyList())
+                        .build())
+                .costRange(null)
+                .costRangeLabel("Unable to estimate")
+                .itemsAnalyzed(0)
+                .exactCostEstimate(0.0)
+                .mustDoExplanation(explanations)
+                .exclusionNote(Collections.emptyList())
+                .optionalActions(Collections.emptyList())
+                .futureCostWarning(Collections.emptyList())
+                .upgradeScenario(Collections.emptyList())
+                .strategyOptions(Collections.emptyList())
                 .build();
     }
 
@@ -623,12 +902,37 @@ public class VerdictEngineService {
 
                         if (!forensicOverride) {
                             // Valid update, no forensic risk -> Exclude
-                            exclusionNotes.add("Recent Major System Update: " + item.getDescription());
+                            // Use generic category name instead of specific item description
+                            String categoryName = item.getItemCode().contains("ROOF") ? "Roofing"
+                                    : item.getItemCode().contains("HVAC") ? "HVAC System"
+                                            : item.getItemCode().contains("PLUMB") ? "Plumbing"
+                                                    : item.getItemCode().contains("PANEL") ? "Electrical Panel"
+                                                            : "System";
+                            exclusionNotes.add("Recent Major System Update: " + categoryName + " (user-confirmed)");
                             continue;
                         } else {
                             // Forensic flag overrides history
                             riskFlags.add("SAFETY_OVERRIDE: FORENSIC_RISK_DETECTED");
-                            explanation += " Despite recent updates, forensic evidence of safety risk (e.g. Poly-B) requires remediation.";
+
+                            // Build specific forensic evidence explanation
+                            String forensicEvidence = "";
+                            if (Boolean.TRUE.equals(context.getIsFpePanel())) {
+                                forensicEvidence = "Federal Pacific Electric panel branding";
+                            } else if (Boolean.TRUE.equals(context.getIsPolyB())) {
+                                forensicEvidence = "Polybutylene (Poly-B) pipe materials";
+                            } else if (Boolean.TRUE.equals(context.getIsAluminum())) {
+                                forensicEvidence = "aluminum wiring";
+                            } else if (Boolean.TRUE.equals(context.getIsChineseDrywall())) {
+                                forensicEvidence = "Chinese drywall sulfur signature";
+                            } else {
+                                forensicEvidence = "hazardous materials";
+                            }
+
+                            explanation += String.format(
+                                    " **IMPORTANT**: You indicated this system was recently updated, but visual inspection confirmed %s. "
+                                            +
+                                            "The original hazardous component remains and must be replaced.",
+                                    forensicEvidence);
                         }
                     }
                 }
@@ -660,7 +964,13 @@ public class VerdictEngineService {
                         boolean hasRisk = !riskFlags.isEmpty();
 
                         if (isCosmetic && !mandatory && !hasRisk) {
-                            exclusionNotes.add("Cosmetic Excluded: " + item.getDescription() + " (Use Existing)");
+                            // Use generic space name instead of specific item description
+                            String spaceName = item.getItemCode().contains("KITCHEN") ? "Kitchen"
+                                    : item.getItemCode().contains("BATH") ? "Bathroom"
+                                            : item.getItemCode().contains("FLOOR") ? "Interior Flooring"
+                                                    : item.getItemCode().contains("WINDOW") ? "Windows"
+                                                            : "Interior Space";
+                            exclusionNotes.add("Cosmetic Excluded: " + spaceName + " (Recently Updated)");
                             continue;
                         }
                     }
@@ -819,119 +1129,7 @@ public class VerdictEngineService {
         return copy.toString();
     }
 
-    // --- STEP 6: Verdict & Strategic Advice (STRING GENERATION ONLY - NO
-    // CALCULATION CHANGES) ---
-    private Verdict step6_verdictGeneration(SortedPlan plan, UserContext context) {
-        // CALCULATIONS UNCHANGED - These are existing logic
-        double totalRequired = plan.getMustDo().stream().mapToDouble(RiskAdjustedItem::getAdjustedCost).sum();
-        double totalOptional = plan.getShouldDo().stream().mapToDouble(RiskAdjustedItem::getAdjustedCost).sum();
-        double budget = context.getBudget();
-        String tier = "DENIED";
-        String headline = "";
-
-        // VERDICT LOGIC UNCHANGED - Existing thresholds
-        if (budget >= totalRequired) {
-            tier = "APPROVED";
-            headline = "Your budget safely covers required repairs at local 2026 rates.";
-        } else if (budget >= (totalRequired * 0.9)) {
-            tier = "WARNING";
-            headline = "Budget is tight. Risk of downgraded materials or missing abatement.";
-        } else {
-            tier = "DENIED";
-            headline = "Budget is insufficient for local standards. Focus on safety-critical items only.";
-        }
-
-        // NEW: Enhanced explanation generation with evidence-based approach
-        List<String> mustDoExplanations = new ArrayList<>();
-        EraData eraData = riskFactorsData.getEras().getOrDefault(context.getEra(), new EraData());
-        List<RiskItem> eraRisks = eraData.getCriticalRisks() != null ? eraData.getCriticalRisks()
-                : Collections.emptyList();
-        String dataAuthority = metroMasterData.getDataAuthority();
-
-        for (RiskAdjustedItem item : plan.getMustDo()) {
-            StringBuilder fullExplanation = new StringBuilder();
-
-            // Start with existing explanation (already contains definition + damage
-            // scenario from step4)
-            if (item.getExplanation() != null && !item.getExplanation().isEmpty()) {
-                fullExplanation.append(item.getExplanation());
-            }
-
-            // Add cost range disclosure (±5%)
-            double costLow = item.getAdjustedCost() * 0.95;
-            double costHigh = item.getAdjustedCost() * 1.05;
-
-            // Find matched risk for remedy_multiplier (if applicable)
-            RiskItem matchedRisk = null;
-            for (RiskItem risk : eraRisks) {
-                boolean isMatch = false;
-                if ("POLYBUTYLENE_PLUMBING".equals(risk.getItem()) && item.getItemCode().contains("PLUMBING"))
-                    isMatch = true;
-                if ("KNOB_AND_TUBE_WIRING".equals(risk.getItem()) && item.getItemCode().contains("ELECTRICAL"))
-                    isMatch = true;
-                if ("ALUMINUM_WIRING".equals(risk.getItem()) && item.getItemCode().contains("ELECTRICAL"))
-                    isMatch = true;
-                if ("LP_INNER_SEAL_SIDING".equals(risk.getItem()) && item.getItemCode().contains("SIDING"))
-                    isMatch = true;
-                if ("SYNTHETIC_STUCCO_EIFS".equals(risk.getItem()) && item.getItemCode().contains("STUCCO"))
-                    isMatch = true;
-                if ("FEDERAL_PACIFIC_PANELS".equals(risk.getItem()) && item.getItemCode().contains("ELECTRICAL_PANEL"))
-                    isMatch = true;
-
-                if (isMatch) {
-                    matchedRisk = risk;
-                    break;
-                }
-            }
-
-            // Add quantified opportunity cost comparison (if remedy_multiplier available)
-            if (matchedRisk != null && matchedRisk.getRemedyMultiplier() != null
-                    && matchedRisk.getRemedyMultiplier() > 0) {
-                double incidentLow = item.getAdjustedCost() * matchedRisk.getRemedyMultiplier() * 0.95;
-                double incidentHigh = item.getAdjustedCost() * matchedRisk.getRemedyMultiplier() * 1.05;
-
-                fullExplanation.append(String.format(
-                        "Planned repair typically costs $%,.0f–$%,.0f. " +
-                                "A single failure often results in $%,.0f–$%,.0f in combined damage and interior repairs. ",
-                        costLow, costHigh, incidentLow, incidentHigh));
-            } else {
-                // No multiplier available, just show cost range
-                fullExplanation.append(String.format(
-                        "Estimated cost: $%,.0f–$%,.0f. ",
-                        costLow, costHigh));
-            }
-
-            // Add regional credibility (if era-based risk)
-            if (item.getRiskFlags() != null && item.getRiskFlags().stream().anyMatch(f -> f.contains("ERA_RISK"))) {
-                if (dataAuthority != null && !dataAuthority.isEmpty()) {
-                    fullExplanation.append(String.format(
-                            "In homes of this era, according to %s, these systems have typically reached the end of their service life window. ",
-                            dataAuthority));
-                }
-            }
-
-            // Add disclaimer
-            fullExplanation.append("(Actual contractor quotes may vary based on layout and access.)");
-
-            // Format: "ItemName: Explanation"
-            mustDoExplanations.add(item.getPrettyName() + ": " + fullExplanation.toString());
-        }
-
-        // FORBIDDEN LANGUAGE REMOVED: Old vague "may increase by 30-50%" replaced with
-        // evidence-based approach above
-        // No longer creating generic futureCostWarning - specific costs are now
-        // integrated into each item's explanation
-
-        return Verdict.builder()
-                .tier(tier)
-                .headline(headline)
-                .mustDoExplanation(mustDoExplanations)
-                .optionalActions(
-                        plan.getShouldDo().stream().map(RiskAdjustedItem::getPrettyName).collect(Collectors.toList()))
-                .futureCostWarning(Collections.emptyList()) // Replaced with inline cost comparisons
-                .upgradeScenario(
-                        Collections.singletonList("If budget allows, upgrade HVAC to Heat Pump for tax credits."))
-                .plan(plan)
-                .build();
-    }
+    // REMOVED: step6_verdictGeneration was never called in generateVerdict (dead
+    // code)
+    // All explanation logic is already handled in step4_riskFilter
 }

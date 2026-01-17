@@ -9,6 +9,52 @@ import java.util.Map;
 
 public class VerdictDTOs {
 
+    // Cost Range for YMYL-compliant presentation
+    public enum CostRange {
+        LOW_FIVE_FIGURES("Low five figures", 10000, 30000),
+        MID_FIVE_FIGURES("Mid-five figures", 30000, 60000),
+        HIGH_FIVE_FIGURES("High five figures", 60000, 100000),
+        SIX_FIGURES("Six figures", 100000, Double.MAX_VALUE);
+
+        private final String label;
+        private final double min;
+        private final double max;
+
+        CostRange(String label, double min, double max) {
+            this.label = label;
+            this.min = min;
+            this.max = max;
+        }
+
+        public String getLabel() {
+            return label;
+        }
+
+        public double getMin() {
+            return min;
+        }
+
+        public double getMax() {
+            return max;
+        }
+
+        public String getFormattedRange() {
+            if (max == Double.MAX_VALUE) {
+                return String.format("$%,.0fk+", min / 1000);
+            }
+            return String.format("$%,.0fk–$%,.0fk", min / 1000, max / 1000);
+        }
+
+        public static CostRange fromCost(double cost) {
+            for (CostRange range : values()) {
+                if (cost >= range.min && cost < range.max) {
+                    return range;
+                }
+            }
+            return SIX_FIGURES;
+        }
+    }
+
     // Strategy Type for Three-Tier Scenario Engine
     public enum StrategyType {
         SAFETY_FLIP, // Tier 1: Minimum cost to pass inspection
@@ -131,6 +177,19 @@ public class VerdictDTOs {
         private double negotiationLeverage; // 1.5x of critical cost
     }
 
+    // Strategy Eligibility - Decision layer BEFORE cost calculation
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class StrategyEligibility {
+        private StrategyType strategyType;
+        private boolean eligible;
+        private double coverageScore; // 0.0 ~ 1.0
+        private List<String> missingFactors;
+        private String explanation;
+    }
+
     @Data
     @Builder
     @NoArgsConstructor
@@ -141,10 +200,23 @@ public class VerdictDTOs {
         private List<StrategyOption> strategyOptions; // The 3 tiers
         private List<String> exclusionNote; // Transparency: Why items are missing (e.g "Kitchen skipped")
 
+        // YMYL-Safe Cost Presentation
+        private CostRange costRange; // Primary UI display (e.g., MID_FIVE_FIGURES)
+        private String costRangeLabel; // "Mid-five figures ($30k–$60k typical range)"
+        private Integer itemsAnalyzed; // Transparency: "Based on 127 items"
+
+        // Internal calculations (opt-in detailed view only)
+        private Double exactCostEstimate; // Hidden by default, shown in "View details"
+
         private List<String> mustDoExplanation; // Kept for backward compatibility
         private List<String> optionalActions;
         private List<String> futureCostWarning;
         private List<String> upgradeScenario;
         private SortedPlan plan; // Kept for backward compatibility (defaults to STANDARD_LIVING)
+
+        // Strategy Transparency (NEW: Phase 1)
+        private String strategyUsed; // e.g., "STANDARD_LIVING"
+        private String strategyExplanation; // Why this strategy was chosen
+        private List<String> skippedStrategies; // e.g., ["SAFETY_FLIP: insufficient era data"]
     }
 }

@@ -49,7 +49,8 @@
 
                 <!-- History Section: Split Core vs Living -->
                 <div>
-                    <!-- Layer 1: Core Systems (Always Visible - Risk Logic) -->
+                    @if("LIVING".equals(relationship) || "INVESTING".equals(relationship))
+                    <!-- Layer 1: Core Systems (Risk Logic) -->
                     <div class="mb-6">
                         <label class="block text-sm font-bold text-slate-700 mb-2">Known History: Core Systems</label>
                         <p class="text-xs text-slate-500 mb-3">Check items that were <strong>fully replaced</strong> in the last 10 years.</p>
@@ -73,8 +74,7 @@
                         </div>
                     </div>
 
-                    <!-- Layer 2: Living Spaces (Visible ONLY for LIVING/INVESTING) -->
-                    @if("LIVING".equals(relationship) || "INVESTING".equals(relationship))
+                    <!-- Layer 2: Living Spaces (Comfort Layer) -->
                     <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100">
                         <label class="block text-sm font-bold text-slate-800 mb-2">Living Spaces: Comfort & Aesthetics</label>
                         <p class="text-xs text-slate-500 mb-3">Check if you did a <strong>major renovation</strong> in the last 5 years. (Skips cosmetic upgrades)</p>
@@ -95,6 +95,19 @@
                                 <input type="checkbox" name="history" value="WINDOWS" class="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
                                 <span class="text-sm font-medium text-slate-700">Windows</span>
                             </label>
+                        </div>
+                    </div>
+                    @else
+                    <!-- BUYING MODE: Full Due Diligence Notice -->
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+                        <div class="flex items-start">
+                            <svg class="w-5 h-5 text-blue-600 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                            </svg>
+                            <div>
+                                <p class="text-sm font-semibold text-blue-900 mb-1">Purchase Assessment Mode</p>
+                                <p class="text-xs text-blue-700">For buyer protection, this assessment evaluates the property's full repair scope regardless of renovation history. All systems are analyzed based on current age and regional risk data.</p>
+                            </div>
                         </div>
                     </div>
                     @endif
