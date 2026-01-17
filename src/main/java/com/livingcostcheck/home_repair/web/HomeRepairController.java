@@ -34,10 +34,14 @@ public class HomeRepairController {
     }
 
     @PostMapping("/step-2")
-    public String step2(@RequestParam("metroCode") String metroCode, @RequestParam("era") String era, Model model) {
+    public String step2(@RequestParam("metroCode") String metroCode,
+            @RequestParam("era") String era,
+            @RequestParam("relationship") String relationship,
+            Model model) {
         // Step 2: Context Form
         model.addAttribute("metroCode", metroCode);
         model.addAttribute("era", era);
+        model.addAttribute("relationship", relationship);
         return "pages/context";
     }
 
@@ -54,7 +58,8 @@ public class HomeRepairController {
             VerdictHistory history = new VerdictHistory(
                     context.getMetroCode(),
                     String.valueOf(context.getBudget()),
-                    context.getPurpose(),
+                    context.getRelationship() != null ? context.getRelationship().name() : "LIVING", // Default to
+                                                                                                     // LIVING if null
                     context.getEra(),
                     verdict.getTier(), // Code/Result
                     "v2026.01",
@@ -84,7 +89,7 @@ public class HomeRepairController {
     }
 
     @GetMapping("/result/{uuid}")
-    public String result(@PathVariable UUID uuid, Model model) {
+    public String result(@PathVariable("uuid") UUID uuid, Model model) {
         try {
             VerdictHistory history = repository.findById(uuid)
                     .orElseThrow(() -> new IllegalArgumentException("Invalid Verdict ID"));
@@ -104,15 +109,39 @@ public class HomeRepairController {
             }
 
             // Re-construct Context from History
+            RelationshipToHouse relationship = RelationshipToHouse.LIVING;
+            try {
+                relationship = RelationshipToHouse.valueOf(history.getPurpose());
+            } catch (Exception e) {
+                log.warn("Failed to parse relationship from history: {}", history.getPurpose());
+            }
+
+            // Split history string back into lists (Simple parsing for MVP)
+            List<String> combinedHistory = history.getRepairHistory() != null && !history.getRepairHistory().isEmpty()
+                    ? java.util.Arrays.asList(history.getRepairHistory().split(","))
+                    : java.util.Collections.emptyList();
+
+            // Distribute based on known prefixes or lists
+            List<String> coreHistory = new java.util.ArrayList<>();
+            List<String> livingHistory = new java.util.ArrayList<>();
+
+            for (String h : combinedHistory) {
+                if (h.contains("ROOF") || h.contains("HVAC") || h.contains("ELEC_PANEL") || h.contains("PLUMBING")) {
+                    coreHistory.add(h);
+                } else {
+                    livingHistory.add(h);
+                }
+            }
+
             UserContext context = UserContext.builder()
                     .metroCode(history.getZipCode()) // Storing MetroCode in ZipCode field for now
                     .era(history.getDecade())
                     .budget(parsedBudget)
-                    .purpose(history.getPurpose())
-                    // Load persisted context
-                    .history(history.getRepairHistory() != null && !history.getRepairHistory().isEmpty()
-                            ? java.util.Arrays.asList(history.getRepairHistory().split(","))
-                            : java.util.Collections.emptyList())
+                    .relationship(relationship)
+                    .purpose(history.getPurpose()) // Deprecated but populated
+                    .history(combinedHistory) // Keep deprecated for compat
+                    .coreSystemHistory(coreHistory)
+                    .livingSpaceHistory(livingHistory)
                     .condition(history.getHouseCondition() != null ? history.getHouseCondition() : "UNKNOWN")
                     .isFpePanel(history.getIsFpePanel())
                     .isPolyB(history.getIsPolyB())

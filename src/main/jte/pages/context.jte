@@ -1,5 +1,5 @@
 @param String metroCode
-<%-- Trigger Recompile --%>
+@param String relationship
 @param String era
 
 @template.layout(content = @`
@@ -32,6 +32,7 @@
                 <!-- Hidden Inputs from Step 1 -->
                 <input type="hidden" name="metroCode" value="${metroCode}">
                 <input type="hidden" name="era" value="${era}">
+                <input type="hidden" name="relationship" value="${relationship}">
                 
                 <!-- Budget -->
                 <div>
@@ -46,66 +47,57 @@
                     </div>
                 </div>
 
-                <!-- Purpose -->
+                <!-- History Section: Split Core vs Living -->
                 <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Primary Goal</label>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <label class="cursor-pointer">
-                            <input type="radio" name="purpose" value="LIVING" class="peer sr-only" required checked>
-                            <div class="p-3 rounded-lg border border-slate-200 bg-slate-50 text-center peer-checked:bg-blue-50 peer-checked:border-blue-500 peer-checked:text-blue-700 transition hover:bg-gray-50">
-                                <span class="block font-bold text-sm">Living</span>
-                                <span class="text-xs text-slate-500">Comfort focus</span>
-                            </div>
-                        </label>
-                        <label class="cursor-pointer">
-                            <input type="radio" name="purpose" value="RESALE" class="peer sr-only">
-                            <div class="p-3 rounded-lg border border-slate-200 bg-slate-50 text-center peer-checked:bg-green-50 peer-checked:border-green-500 peer-checked:text-green-700 transition hover:bg-gray-50">
-                                <span class="block font-bold text-sm">Resale</span>
-                                <span class="text-xs text-slate-500">ROI focus</span>
-                            </div>
-                        </label>
-                        <label class="cursor-pointer">
-                            <input type="radio" name="purpose" value="SAFETY" class="peer sr-only">
-                            <div class="p-3 rounded-lg border border-slate-200 bg-slate-50 text-center peer-checked:bg-red-50 peer-checked:border-red-500 peer-checked:text-red-700 transition hover:bg-gray-50">
-                                <span class="block font-bold text-sm">Safety</span>
-                                <span class="text-xs text-slate-500">Critical only</span>
-                            </div>
-                        </label>
-                </div>
-            </div>
-
-                <!-- History (Multi-Select) -->
-                <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Known History</label>
-                    <p class="text-xs text-slate-500 mb-3">Select items that have been REPLACED in the last 10 years.</p>
-                    <div class="grid grid-cols-2 gap-3">
-                        <label class="flex items-center space-x-3 p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition">
-                            <input type="checkbox" name="history" value="ROOFING" class="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
-                            <span class="text-sm font-medium text-slate-700">Roofing</span>
-                        </label>
-                        <label class="flex items-center space-x-3 p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition">
-                            <input type="checkbox" name="history" value="HVAC" class="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
-                            <span class="text-sm font-medium text-slate-700">HVAC System</span>
-                        </label>
-                        <label class="flex items-center space-x-3 p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition">
-                            <input type="checkbox" name="history" value="PLUMBING" class="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
-                            <span class="text-sm font-medium text-slate-700">Plumbing</span>
-                        </label>
-                        <label class="flex items-center space-x-3 p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition">
-                            <input type="checkbox" name="history" value="ELECTRICAL" class="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
-                            <span class="text-sm font-medium text-slate-700">Electrical Panel</span>
-                        </label>
+                    <!-- Layer 1: Core Systems (Always Visible - Risk Logic) -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Known History: Core Systems</label>
+                        <p class="text-xs text-slate-500 mb-3">Check items that were <strong>fully replaced</strong> in the last 10 years.</p>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="flex items-center space-x-3 p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition">
+                                <input type="checkbox" name="history" value="ROOFING" class="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                <span class="text-sm font-medium text-slate-700">Roofing</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition">
+                                <input type="checkbox" name="history" value="HVAC" class="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                <span class="text-sm font-medium text-slate-700">HVAC System</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition">
+                                <input type="checkbox" name="history" value="PLUMBING" class="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                <span class="text-sm font-medium text-slate-700">Plumbing</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition">
+                                <input type="checkbox" name="history" value="ELEC_PANEL" class="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                <span class="text-sm font-medium text-slate-700">Electrical Panel</span>
+                            </label>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Condition -->
-                <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2">History Condition</label>
-                    <select name="condition" class="w-full pl-4 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
-                        <option value="NONE" selected>Excellent (Replace logic: Remove Item)</option>
-                        <option value="MINOR">Good (Replace logic: Recheck Mode)</option>
-                        <option value="POOR">Poor (Replace logic: Full Replace)</option>
-                    </select>
+                    <!-- Layer 2: Living Spaces (Visible ONLY for LIVING/INVESTING) -->
+                    @if("LIVING".equals(relationship) || "INVESTING".equals(relationship))
+                    <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100">
+                        <label class="block text-sm font-bold text-slate-800 mb-2">Living Spaces: Comfort & Aesthetics</label>
+                        <p class="text-xs text-slate-500 mb-3">Check if you did a <strong>major renovation</strong> in the last 5 years. (Skips cosmetic upgrades)</p>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="flex items-center space-x-3 p-3 bg-white border border-slate-200 rounded-lg cursor-pointer hover:border-blue-300 transition">
+                                <input type="checkbox" name="history" value="KITCHEN_REMODEL" class="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                <span class="text-sm font-medium text-slate-700">Kitchen</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 bg-white border border-slate-200 rounded-lg cursor-pointer hover:border-blue-300 transition">
+                                <input type="checkbox" name="history" value="BATH_REMODEL" class="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                <span class="text-sm font-medium text-slate-700">Bathroom</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 bg-white border border-slate-200 rounded-lg cursor-pointer hover:border-blue-300 transition">
+                                <input type="checkbox" name="history" value="FLOORING" class="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                <span class="text-sm font-medium text-slate-700">Flooring</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 bg-white border border-slate-200 rounded-lg cursor-pointer hover:border-blue-300 transition">
+                                <input type="checkbox" name="history" value="WINDOWS" class="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                <span class="text-sm font-medium text-slate-700">Windows</span>
+                            </label>
+                        </div>
+                    </div>
+                    @endif
                 </div>
 
                 <!-- FORENSIC QUESTIONS (Phase 4 - Era-Specific Visual Observations) -->

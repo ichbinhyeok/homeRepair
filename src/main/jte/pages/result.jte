@@ -11,17 +11,22 @@
             
             <!-- Header / Verdict Tier -->
             <div class="text-center mb-12">
-                @if("APPROVED".equals(verdict.getTier()))
-                    <div class="inline-block bg-green-100 text-green-800 font-black text-xs px-3 py-1 rounded-full mb-4 tracking-widest border border-green-200 uppercase">VERDICT: APPROVED</div>
-                    <h1 class="text-5xl font-extrabold text-slate-900 tracking-tight mb-3">Strategic Investment Options</h1>
-                    <p class="text-xl text-green-700 font-medium">${verdict.getHeadline()}</p>
-                @elseif("WARNING".equals(verdict.getTier()))
-                     <div class="inline-block bg-yellow-100 text-yellow-800 font-black text-xs px-3 py-1 rounded-full mb-4 tracking-widest border border-yellow-200 uppercase">VERDICT: WARNING</div>
-                    <h1 class="text-5xl font-extrabold text-slate-900 tracking-tight mb-3">Budget Caution</h1>
-                    <p class="text-xl text-yellow-700 font-medium">${verdict.getHeadline()}</p>
+                <!-- YMYL DISCLAIMER (MANDATORY) -->
+                <div class="inline-block bg-slate-100 border border-slate-200 text-slate-500 text-[10px] uppercase font-bold px-3 py-1 rounded mb-6 tracking-widest">
+                    This assessment is a financial risk analysis based on construction cost data. <br class="hidden sm:inline"> It is intended to support negotiation, not replace professional inspections.
+                </div>
+                <br>
+                @if("LOW_RISK".equals(verdict.getTier()))
+                    <div class="inline-block bg-emerald-100 text-emerald-800 font-black text-xs px-3 py-1 rounded-full mb-4 tracking-widest border border-emerald-200 uppercase">STATUS: LOW RISK</div>
+                    <h1 class="text-5xl font-extrabold text-slate-900 tracking-tight mb-3">Financial Risk Assessment</h1>
+                    <p class="text-xl text-emerald-700 font-medium">${verdict.getHeadline()}</p>
+                @elseif("CONDITIONAL".equals(verdict.getTier()))
+                     <div class="inline-block bg-amber-100 text-amber-800 font-black text-xs px-3 py-1 rounded-full mb-4 tracking-widest border border-amber-200 uppercase">STATUS: CONDITIONAL</div>
+                    <h1 class="text-5xl font-extrabold text-slate-900 tracking-tight mb-3">Conditional Feasibility</h1>
+                    <p class="text-xl text-amber-700 font-medium">${verdict.getHeadline()}</p>
                 @else
-                     <div class="inline-block bg-red-100 text-red-800 font-black text-xs px-3 py-1 rounded-full mb-4 tracking-widest border border-red-200 uppercase">VERDICT: DENIED</div>
-                    <h1 class="text-5xl font-extrabold text-slate-900 tracking-tight mb-3">Insufficient Budget</h1>
+                     <div class="inline-block bg-red-100 text-red-800 font-black text-xs px-3 py-1 rounded-full mb-4 tracking-widest border border-red-200 uppercase">STATUS: HIGH FINANCIAL RISK</div>
+                    <h1 class="text-5xl font-extrabold text-slate-900 tracking-tight mb-3">Critical Funding Gap</h1>
                     <p class="text-xl text-red-700 font-medium">${verdict.getHeadline()}</p>
                 @endif
             </div>
@@ -58,82 +63,54 @@
                 </div>
             </div>
 
-            <!-- THREE-TIER STRATEGY CARDS -->
+            <!-- SINGLE VERDICT STRATEGY CARD (Relationship Based) -->
             @if(verdict.getStrategyOptions() != null && !verdict.getStrategyOptions().isEmpty())
                 <div class="mb-16">
-                    <h2 class="text-3xl font-bold text-slate-900 text-center mb-8 tracking-tight">Select Investment Strategy</h2>
-                    <div class="grid md:grid-cols-3 gap-8">
+                    <h2 class="text-3xl font-bold text-slate-900 text-center mb-8 tracking-tight">
+                        @if("BUYING".equals(history.getPurpose()))
+                            Deal Killer Analysis (Mandatory Repairs)
+                        @elseif("INVESTING".equals(history.getPurpose()))
+                             Capital Preservation Baseline (Loss Prevention)
+                        @else
+                            Recommended Repair Plan (Functional Stability)
+                        @endif
+                    </h2>
+                    
+                    <div class="max-w-2xl mx-auto">
                         @for(var option : verdict.getStrategyOptions())
-                            @if(option.getStrategyType() == StrategyType.SAFETY_FLIP)
-                                <!-- TIER 1: Safety/Flip -->
-                                <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col">
-                                    <div class="bg-slate-100 border-b border-slate-200 px-6 py-4">
-                                        <div class="text-[10px] font-black tracking-widest uppercase mb-1 text-slate-500">Tier 1: Minimalist</div>
-                                        <h3 class="text-xl font-extrabold text-slate-800">${option.getName()}</h3>
+                            <%-- LOGIC: BUYING -> SAFETY_FLIP, OTHERS -> STANDARD_LIVING (for now) --%>
+                            @if(("BUYING".equals(history.getPurpose()) && option.getStrategyType() == StrategyType.SAFETY_FLIP) || 
+                                (!"BUYING".equals(history.getPurpose()) && option.getStrategyType() == StrategyType.STANDARD_LIVING))
+                                
+                                <div class="bg-white rounded-2xl shadow-xl overflow-hidden border-2 @if("BUYING".equals(history.getPurpose())) border-red-500 @else border-blue-500 @endif hover:shadow-2xl transition-all duration-300 flex flex-col">
+                                    <div class="@if("BUYING".equals(history.getPurpose())) bg-red-600 @else bg-blue-600 @endif px-6 py-4">
+                                        <div class="text-[10px] font-black tracking-widest uppercase mb-1 @if("BUYING".equals(history.getPurpose())) text-red-200 @else text-blue-200 @endif">
+                                            @if("BUYING".equals(history.getPurpose())) DEAL KILLER SCOPE @else PRIMARY STRATEGY @endif
+                                        </div>
+                                        <h3 class="text-2xl font-extrabold text-white">${option.getName()}</h3>
                                     </div>
-                                    <div class="p-6 flex-grow">
-                                        <div class="text-4xl font-black text-slate-900 mb-2 tracking-tighter">$${String.format("%,.0f", option.getTotalCost())}</div>
-                                        <p class="text-sm text-slate-600 mb-6 leading-relaxed">${option.getDescription()}</p>
+                                    <div class="p-8 flex-grow">
+                                        <div class="text-6xl font-black text-slate-900 mb-2 tracking-tighter">$${String.format("%,.0f", option.getTotalCost())}</div>
+                                        <p class="text-lg text-slate-600 mb-8 leading-relaxed font-medium">${option.getDescription()}</p>
                                         
-                                        <div class="space-y-4">
+                                        <div class="grid grid-cols-2 gap-6 mb-8">
                                             <div>
-                                                <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Primary Goal</div>
-                                                <p class="text-sm text-slate-700 font-medium">${option.getGoal()}</p>
+                                                <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Primary Goal</div>
+                                                <p class="text-base text-slate-800 font-bold">${option.getGoal()}</p>
                                             </div>
                                             <div>
-                                                <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Construction Scope</div>
-                                                <p class="text-sm text-slate-700 font-medium">${option.getMaterialGrade()}</p>
+                                                <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Scope</div>
+                                                <p class="text-base text-slate-800 font-bold">${option.getMaterialGrade()}</p>
                                             </div>
                                         </div>
 
                                         @if(option.getKeyHighlights() != null && !option.getKeyHighlights().isEmpty())
-                                            <div class="mt-6 pt-6 border-t border-slate-100">
-                                                <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Included Benchmarks</div>
-                                                <ul class="space-y-2">
+                                            <div class="pt-6 border-t border-slate-100">
+                                                <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">What's Included</div>
+                                                <ul class="space-y-3">
                                                     @for(var highlight : option.getKeyHighlights())
-                                                        <li class="text-xs text-slate-600 flex items-start">
-                                                            <svg class="w-3.5 h-3.5 text-slate-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                                                            <span>${highlight}</span>
-                                                        </li>
-                                                    @endfor
-                                                </ul>
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <div class="px-6 py-4 bg-slate-50 border-t border-slate-100 text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-                                        Includes ${option.getPlan().getMustDo().size()} critical items
-                                    </div>
-                                </div>
-                            @elseif(option.getStrategyType() == StrategyType.STANDARD_LIVING)
-                                <!-- TIER 2: Standard Living (FEATURED) -->
-                                <div class="bg-white rounded-2xl shadow-2xl overflow-hidden border-2 border-blue-500 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 relative flex flex-col z-10">
-                                    <div class="absolute top-0 right-0 bg-blue-500 text-white font-black text-[10px] px-3 py-1 rounded-bl-lg tracking-widest uppercase">Best ROI</div>
-                                    <div class="bg-blue-600 px-6 py-4">
-                                        <div class="text-[10px] font-black tracking-widest uppercase mb-1 text-blue-200">Tier 2: Balanced</div>
-                                        <h3 class="text-xl font-extrabold text-white">${option.getName()}</h3>
-                                    </div>
-                                    <div class="p-6 flex-grow">
-                                        <div class="text-5xl font-black text-slate-900 mb-2 tracking-tighter">$${String.format("%,.0f", option.getTotalCost())}</div>
-                                        <p class="text-sm text-slate-600 mb-6 leading-relaxed font-medium">${option.getDescription()}</p>
-                                        
-                                        <div class="space-y-4">
-                                            <div>
-                                                <div class="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-1">Primary Goal</div>
-                                                <p class="text-sm text-slate-800 font-bold">${option.getGoal()}</p>
-                                            </div>
-                                            <div>
-                                                <div class="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-1">Construction Scope</div>
-                                                <p class="text-sm text-slate-800 font-bold">${option.getMaterialGrade()}</p>
-                                            </div>
-                                        </div>
-
-                                        @if(option.getKeyHighlights() != null && !option.getKeyHighlights().isEmpty())
-                                            <div class="mt-6 pt-6 border-t border-slate-100">
-                                                <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Included Benchmarks</div>
-                                                <ul class="space-y-2">
-                                                    @for(var highlight : option.getKeyHighlights())
-                                                        <li class="text-xs text-slate-700 flex items-start">
-                                                            <svg class="w-4 h-4 text-blue-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                                        <li class="text-sm text-slate-700 flex items-start">
+                                                            <svg class="w-5 h-5 @if("BUYING".equals(history.getPurpose())) text-red-500 @else text-blue-500 @endif mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
                                                             <span class="font-medium">${highlight}</span>
                                                         </li>
                                                     @endfor
@@ -141,48 +118,8 @@
                                             </div>
                                         @endif
                                     </div>
-                                    <div class="px-6 py-4 bg-blue-50 border-t border-blue-100 text-[10px] text-blue-600 font-black uppercase tracking-widest">
-                                        Includes ${option.getPlan().getMustDo().size()} essential items
-                                    </div>
-                                </div>
-                            @elseif(option.getStrategyType() == StrategyType.FOREVER_HOME)
-                                <!-- TIER 3: Forever Home -->
-                                <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-purple-200 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col">
-                                    <div class="bg-purple-50 border-b border-purple-100 px-6 py-4">
-                                        <div class="text-[10px] font-black tracking-widest uppercase mb-1 text-purple-400">Tier 3: Asset Protection</div>
-                                        <h3 class="text-xl font-extrabold text-purple-900">${option.getName()}</h3>
-                                    </div>
-                                    <div class="p-6 flex-grow">
-                                        <div class="text-4xl font-black text-purple-900 mb-2 tracking-tighter">$${String.format("%,.0f", option.getTotalCost())}</div>
-                                        <p class="text-sm text-slate-600 mb-6 leading-relaxed">${option.getDescription()}</p>
-                                        
-                                        <div class="space-y-4">
-                                            <div>
-                                                <div class="text-[10px] font-bold text-purple-400 uppercase tracking-widest mb-1">Primary Goal</div>
-                                                <p class="text-sm text-purple-800 font-medium">${option.getGoal()}</p>
-                                            </div>
-                                            <div>
-                                                <div class="text-[10px] font-bold text-purple-400 uppercase tracking-widest mb-1">Construction Scope</div>
-                                                <p class="text-sm text-purple-800 font-medium">${option.getMaterialGrade()}</p>
-                                            </div>
-                                        </div>
-
-                                        @if(option.getKeyHighlights() != null && !option.getKeyHighlights().isEmpty())
-                                            <div class="mt-6 pt-6 border-t border-slate-100">
-                                                <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Included Benchmarks</div>
-                                                <ul class="space-y-2">
-                                                    @for(var highlight : option.getKeyHighlights())
-                                                        <li class="text-xs text-slate-600 flex items-start">
-                                                            <svg class="w-3.5 h-3.5 text-purple-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                                                            <span>${highlight}</span>
-                                                        </li>
-                                                    @endfor
-                                                </ul>
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <div class="px-6 py-4 bg-purple-50 border-t border-purple-100 text-[10px] text-purple-400 font-black uppercase tracking-widest">
-                                        Includes ${option.getPlan().getMustDo().size() + option.getPlan().getShouldDo().size()} total items
+                                    <div class="px-6 py-4 bg-slate-50 border-t border-slate-100 text-xs text-slate-500 font-bold uppercase tracking-widest text-center">
+                                        Total Items: ${option.getPlan().getMustDo().size()} Critical / ${option.getPlan().getShouldDo().size()} Recommended
                                     </div>
                                 </div>
                             @endif
@@ -225,6 +162,26 @@
                 </div>
             @endif
 
+            <!-- EXCLUSION NOTICES (Transparency) -->
+            @if(verdict.getExclusionNote() != null && !verdict.getExclusionNote().isEmpty())
+                <div class="bg-blue-50 border border-blue-100 rounded-2xl p-6 mb-12 flex items-start">
+                    <div class="bg-blue-100 rounded-full p-2 mr-4 flex-shrink-0">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-blue-900 font-bold text-sm uppercase tracking-wide mb-2">Scope Adjustments based on History</h3>
+                        <ul class="space-y-1">
+                            @for(var note : verdict.getExclusionNote())
+                                <li class="text-blue-700 text-sm font-medium flex items-center">
+                                    <span class="w-1.5 h-1.5 bg-blue-400 rounded-full mr-2"></span>
+                                    ${note}
+                                </li>
+                            @endfor
+                        </ul>
+                    </div>
+                </div>
+            @endif
+
             <!-- DETAILED BREAKDOWN (Expandable/Accordion style) - Using STANDARD tier as default -->
             @if(verdict.getPlan() != null)
                 <div class="bg-white rounded-2xl shadow-xl overflow-hidden mb-12 border border-slate-200">
@@ -233,85 +190,163 @@
                         <div class="text-[10px] font-black tracking-widest text-slate-400 uppercase">Audit Version 2026.1.2</div>
                     </div>
                     
-                    <!-- Must Do Items -->
+                    <!-- Must Do Items (Split for LIVING Phase 1/2, Combined for others) -->
                     @if(verdict.getPlan().getMustDo() != null && !verdict.getPlan().getMustDo().isEmpty())
                         <div class="p-8 border-b border-slate-100">
                             <div class="flex items-center justify-between mb-6">
                                 <h3 class="text-sm font-black text-slate-900 uppercase tracking-widest flex items-center">
                                     <span class="w-2 h-6 bg-red-600 mr-3 rounded-full"></span>
-                                    Critical & Mandatory Repairs
+                                    @if("LIVING".equals(history.getPurpose()) || history.getPurpose() == null)
+                                        Phase 1: Immediate Safety & Critical Repairs (Now)
+                                    @else
+                                        Critical & Mandatory Repairs
+                                    @endif
                                 </h3>
                                 <span class="bg-red-50 text-red-700 text-[10px] font-black px-2 py-1 rounded border border-red-100 uppercase">High Priority</span>
                             </div>
                             
                             <div class="grid lg:grid-cols-2 gap-6">
                                 @for(var item : verdict.getPlan().getMustDo())
-                                    <div class="bg-white rounded-xl p-6 border border-slate-100 shadow-sm hover:border-slate-300 transition-colors relative">
-                                        <div class="flex justify-between items-start mb-3">
-                                            <div class="flex flex-col gap-1">
-                                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">${item.getCategory()}</span>
-                                                <h4 class="font-bold text-slate-900 text-lg leading-tight mt-1">${item.getPrettyName()}</h4>
+                                    <%-- FOR LIVING MODE: Only show Critical/Safety in Phase 1 --%>
+                                    @if(!"LIVING".equals(history.getPurpose()) && history.getPurpose() != null || (item.getCategory().contains("SAFETY") || item.isMandatory() || item.getRiskFlags().stream().anyMatch(f -> f.contains("CRITICAL"))))
+                                        <div class="bg-white rounded-xl p-6 border border-slate-100 shadow-sm hover:border-slate-300 transition-colors relative">
+                                            <div class="flex justify-between items-start mb-3">
+                                                <div class="flex flex-col gap-1">
+                                                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">${item.getCategory()}</span>
+                                                    <h4 class="font-bold text-slate-900 text-lg leading-tight mt-1">${item.getPrettyName()}</h4>
+                                                </div>
+                                                <div class="text-right">
+                                                    <div class="text-xl font-black text-slate-900 tracking-tighter">$${String.format("%,.0f", item.getAdjustedCost())}</div>
+                                                </div>
                                             </div>
-                                            <div class="text-right">
-                                                <div class="text-xl font-black text-slate-900 tracking-tighter">$${String.format("%,.0f", item.getAdjustedCost())}</div>
-                                            </div>
-                                        </div>
-                                        
-                                        @if(item.getExplanation() != null && !item.getExplanation().isEmpty())
-                                            <p class="text-xs text-slate-500 mb-4 leading-relaxed">${item.getExplanation()}</p>
-                                        @endif
-                                        
-                                        <!-- Risk Flags & Badges -->
-                                        <div class="flex flex-wrap gap-2 mt-auto">
-                                            @if(item.isMandatory())
-                                                <span class="bg-red-100 text-red-800 text-[9px] font-bold px-1.5 py-0.5 rounded tracking-tighter uppercase">Code Mandatory</span>
+                                            
+                                            @if(item.getExplanation() != null && !item.getExplanation().isEmpty())
+                                                <p class="text-xs text-slate-500 mb-4 leading-relaxed">${item.getExplanation()}</p>
                                             @endif
                                             
-                                            @if(item.getRiskFlags() != null)
-                                                @for(var flag : item.getRiskFlags())
-                                                    @if(flag.contains("FORENSIC_CONFIRMATION"))
-                                                        <span class="bg-amber-100 text-amber-800 border border-amber-200 text-[9px] font-black px-1.5 py-0.5 rounded tracking-tight shadow-sm">⚠️ FORENSIC CONFIRMED</span>
-                                                    @elseif(flag.contains("ERA_RISK"))
-                                                        <span class="bg-slate-100 text-slate-700 border border-slate-200 text-[9px] font-black px-1.5 py-0.5 rounded tracking-tight">HISTORICAL RISK</span>
-                                                    @endif
-                                                @endfor
-                                            @endif
+                                            <!-- Risk Flags & Badges -->
+                                            <div class="flex flex-wrap gap-2 mt-auto">
+                                                @if(item.isMandatory())
+                                                    <span class="bg-red-100 text-red-800 text-[9px] font-bold px-1.5 py-0.5 rounded tracking-tighter uppercase">Code Mandatory</span>
+                                                @endif
+                                                
+                                                @if(item.getRiskFlags() != null)
+                                                    @for(var flag : item.getRiskFlags())
+                                                        @if(flag.contains("FORENSIC_CONFIRMATION"))
+                                                            <span class="bg-amber-100 text-amber-800 border border-amber-200 text-[9px] font-black px-1.5 py-0.5 rounded tracking-tight shadow-sm">⚠️ FORENSIC CONFIRMED</span>
+                                                        @elseif(flag.contains("ERA_RISK"))
+                                                            <span class="bg-slate-100 text-slate-700 border border-slate-200 text-[9px] font-black px-1.5 py-0.5 rounded tracking-tight">HISTORICAL RISK</span>
+                                                        @endif
+                                                    @endfor
+                                                @endif
 
-                                            @if(item.getCompoundingBadge() != null)
-                                                <span class="bg-blue-50 text-blue-700 border border-blue-100 text-[9px] font-black px-1.5 py-0.5 rounded tracking-tight">
-                                                    🔄 MULTIPLIER: ${item.getCompoundingBadge()}
-                                                </span>
-                                            @endif
+                                                @if(item.getCompoundingBadge() != null)
+                                                    <span class="bg-blue-50 text-blue-700 border border-blue-100 text-[9px] font-black px-1.5 py-0.5 rounded tracking-tight">
+                                                        🔄 MULTIPLIER: ${item.getCompoundingBadge()}
+                                                    </span>
+                                                @endif
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 @endfor
                             </div>
                         </div>
+
+                        <!-- PHASE 2: SYSTEM STABILITY (LIVING ONLY - Non-Critical Must Dos) -->
+                        @if("LIVING".equals(history.getPurpose()) || history.getPurpose() == null)
+                             <div class="p-8 border-b border-slate-100 bg-slate-50/30">
+                                <div class="flex items-center justify-between mb-6">
+                                    <h3 class="text-sm font-black text-slate-800 uppercase tracking-widest flex items-center">
+                                        <span class="w-2 h-6 bg-blue-500 mr-3 rounded-full"></span>
+                                        Phase 2: System Stability & Function (Next)
+                                    </h3>
+                                    <span class="bg-blue-50 text-blue-700 text-[10px] font-black px-2 py-1 rounded border border-blue-100 uppercase">Medium Priority</span>
+                                </div>
+                                <div class="grid lg:grid-cols-2 gap-6">
+                                    @for(var item : verdict.getPlan().getMustDo())
+                                        <%-- LOGIC: Items NOT Safety/Critical --%>
+                                        @if(!(item.getCategory().contains("SAFETY") || item.isMandatory() || item.getRiskFlags().stream().anyMatch(f -> f.contains("CRITICAL"))))
+                                             <div class="bg-white rounded-xl p-6 border border-slate-100 shadow-sm hover:border-slate-300 transition-colors relative">
+                                                <div class="flex justify-between items-start mb-3">
+                                                    <div class="flex flex-col gap-1">
+                                                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">${item.getCategory()}</span>
+                                                        <h4 class="font-bold text-slate-800 text-lg leading-tight mt-1">${item.getPrettyName()}</h4>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <div class="text-xl font-black text-slate-800 tracking-tighter">$${String.format("%,.0f", item.getAdjustedCost())}</div>
+                                                    </div>
+                                                </div>
+                                                @if(item.getExplanation() != null && !item.getExplanation().isEmpty())
+                                                    <p class="text-xs text-slate-500 mb-4 leading-relaxed">${item.getExplanation()}</p>
+                                                @endif
+                                            </div>
+                                        @endif
+                                    @endfor
+                                </div>
+                             </div>
+                        @endif
                     @endif
 
-                    <!-- Should Do Items -->
+                    <!-- Should Do Items (Asset / Cosmetic) -->
                     @if(verdict.getPlan().getShouldDo() != null && !verdict.getPlan().getShouldDo().isEmpty())
-                        <div class="p-8 bg-slate-50/50">
-                            <div class="flex items-center justify-between mb-6">
-                                <h3 class="text-sm font-black text-slate-900 uppercase tracking-widest flex items-center">
-                                    <span class="w-2 h-6 bg-blue-500 mr-3 rounded-full"></span>
-                                    Recommended Asset Improvements
-                                </h3>
-                                <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest italic">Optional but advised</span>
-                            </div>
-                            
-                            <div class="grid lg:grid-cols-2 gap-4">
-                                @for(var item : verdict.getPlan().getShouldDo())
-                                    <div class="bg-white rounded-lg p-5 border border-slate-100 flex items-center justify-between group hover:border-blue-200 transition-colors">
-                                        <div class="flex flex-col">
-                                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">${item.getCategory()}</span>
-                                            <h4 class="font-bold text-slate-700 text-sm mt-0.5 group-hover:text-blue-600 transition-colors">${item.getPrettyName()}</h4>
+                        @if("HIGH_FINANCIAL_RISK".equals(verdict.getTier()) || "CONDITIONAL".equals(verdict.getTier()) || "BUYING".equals(history.getPurpose()))
+                            <!-- BLOCKED VIEW: SAFETY FIRST PROTOCOL -->
+                            <div class="p-8 bg-slate-100 border-t border-slate-200 relative overflow-hidden group select-none grayscale-[0.8]">
+                                <div class="absolute inset-0 bg-slate-200/40 z-10 flex items-center justify-center backdrop-blur-[2px]">
+                                    <div class="bg-white px-6 py-4 rounded-xl shadow-2xl border border-red-200 flex items-center transform group-hover:scale-105 transition-transform z-20">
+                                        <span class="text-3xl mr-4">🔒</span>
+                                        <div>
+                                            <h4 class="font-bold text-slate-900">Optional Upgrades Locked</h4>
+                                            <p class="text-xs text-red-600 font-bold">Resolve Safety Risks to Unlock</p>
                                         </div>
-                                        <div class="text-base font-black text-slate-900 tracking-tight">$${String.format("%,.0f", item.getAdjustedCost())}</div>
                                     </div>
-                                @endfor
+                                </div>
+                                <div class="flex items-center justify-center mb-6 opacity-40 blur-[1px]">
+                                    <h3 class="text-sm font-black text-slate-900 uppercase tracking-widest flex items-center">
+                                        Recommended Asset Improvements
+                                    </h3>
+                                </div>
+                                
+                                <div class="grid lg:grid-cols-2 gap-4 opacity-40 blur-[1px]">
+                                    @for(var item : verdict.getPlan().getShouldDo())
+                                        <div class="bg-white rounded-lg p-5 border border-slate-100 flex items-center justify-between">
+                                            <div class="flex flex-col">
+                                                <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">${item.getCategory()}</span>
+                                                <h4 class="font-bold text-slate-700 text-sm mt-0.5">${item.getPrettyName()}</h4>
+                                            </div>
+                                            <div class="text-base font-black text-slate-900 tracking-tight">$${String.format("%,.0f", item.getAdjustedCost())}</div>
+                                        </div>
+                                    @endfor
+                                </div>
                             </div>
-                        </div>
+                        @else
+                            <!-- NORMAL VIEW: UNLOCKED -->
+                            <div class="p-8 bg-slate-50/50">
+                                <div class="flex items-center justify-between mb-6">
+                                    <h3 class="text-sm font-black text-slate-900 uppercase tracking-widest flex items-center">
+                                        <span class="w-2 h-6 bg-blue-500 mr-3 rounded-full"></span>
+                                        @if("LIVING".equals(history.getPurpose()) || history.getPurpose() == null)
+                                            Phase 3: Future Upgrades (Later)
+                                        @else
+                                            Recommended Asset Improvements
+                                        @endif
+                                    </h3>
+                                    <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest italic">Optional but advised</span>
+                                </div>
+                                
+                                <div class="grid lg:grid-cols-2 gap-4">
+                                    @for(var item : verdict.getPlan().getShouldDo())
+                                        <div class="bg-white rounded-lg p-5 border border-slate-100 flex items-center justify-between group hover:border-blue-200 transition-colors">
+                                            <div class="flex flex-col">
+                                                <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">${item.getCategory()}</span>
+                                                <h4 class="font-bold text-slate-700 text-sm mt-0.5 group-hover:text-blue-600 transition-colors">${item.getPrettyName()}</h4>
+                                            </div>
+                                            <div class="text-base font-black text-slate-900 tracking-tight">$${String.format("%,.0f", item.getAdjustedCost())}</div>
+                                        </div>
+                                    @endfor
+                                </div>
+                            </div>
+                        @endif
                     @endif
                 </div>
             @endif

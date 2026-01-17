@@ -17,9 +17,27 @@
             </div>
             
             <form action="/home-repair/step-2" method="POST" class="p-8 space-y-6">
+                <!-- RELATIONSHIP TO HOUSE (CRITICAL FIRST QUESTION) -->
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Relationship to Property</label>
+                    <p class="text-xs text-slate-500 mb-3">Defines your risk profile (Living vs. Buying vs. Investing).</p>
+                    <div class="relative">
+                        <select name="relationship" required 
+                                class="w-full pl-4 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none text-slate-800 font-medium transition cursor-pointer">
+                            <option value="" disabled selected>Select your situation...</option>
+                            <option value="LIVING">Living Here (Owner-Occupied)</option>
+                            <option value="BUYING">Buying (Under Contract / Inspection)</option>
+                            <option value="INVESTING">Investing (Flip / Rental)</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                             <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Metro Code Selection -->
                 <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Select Metro Area</label>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Metro Area</label>
                     <p class="text-xs text-slate-500 mb-3">Loads 2026 localized labor & material rates.</p>
                     <div class="relative">
                         <select name="metroCode" required 

@@ -16,6 +16,13 @@ public class VerdictDTOs {
         FOREVER_HOME // Tier 3: Maximum asset value appreciation
     }
 
+    // Relationship context for Money-First Decision Engine
+    public enum RelationshipToHouse {
+        LIVING, // Owner-Occupied (Now/Next/Later)
+        BUYING, // Under Contract (Deal Killer)
+        INVESTING // Flip/Rental (ROI/Risk)
+    }
+
     @Data
     @Builder
     @NoArgsConstructor
@@ -24,8 +31,15 @@ public class VerdictDTOs {
         private Double budget;
         private String metroCode;
         private String era; // PRE_1950, 1950_1970, etc.
-        private String purpose; // SAFETY, RESALE, LIVING
-        private List<String> history; // Item codes
+        private RelationshipToHouse relationship; // New Primary Context
+        private String purpose; // DEPRECATED: Kept for backward compat until full refactor
+        // Context-Aware History (Phases 5 & 6)
+        private List<String> coreSystemHistory; // Roof, HVAC, Elec, Plumbing (Safety/Risk)
+        private List<String> livingSpaceHistory; // Kitchen, Bath, Flooring (Comfort/Cosmetic)
+
+        @Deprecated
+        private List<String> history; // Deprecated but kept for backward compatibility
+
         private String condition; // NONE, MINOR, SEVERE
 
         // Phase 4: Forensic Clues (Brand/Era specific observations)
@@ -125,6 +139,8 @@ public class VerdictDTOs {
         private String tier; // APPROVED, WARNING, DENIED (based on budget vs minimum cost)
         private String headline;
         private List<StrategyOption> strategyOptions; // The 3 tiers
+        private List<String> exclusionNote; // Transparency: Why items are missing (e.g "Kitchen skipped")
+
         private List<String> mustDoExplanation; // Kept for backward compatibility
         private List<String> optionalActions;
         private List<String> futureCostWarning;
