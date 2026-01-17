@@ -43,6 +43,10 @@ public class HomeRepairController {
         model.addAttribute("metroCode", metroCode);
         model.addAttribute("era", era);
         model.addAttribute("relationship", relationship);
+
+        // Context Briefing (Trust Anchor)
+        model.addAttribute("contextBriefing", verdictEngineService.getPrecalcBriefing(metroCode, era));
+
         return "pages/context";
     }
 

@@ -66,7 +66,25 @@
                     This assessment is a financial risk analysis based on construction cost data. <br class="hidden sm:inline"> It is intended to support negotiation, not replace professional inspections.
                 </div>
                 <br>
-                @if("LOW_RISK".equals(verdict.getTier()))
+                
+                @if(verdict.isDealKiller())
+                    <!-- DEAL KILLER CRITICAL ALERT -->
+                    <div class="inline-block bg-red-600 text-white font-black text-xs px-4 py-1.5 rounded-full mb-6 tracking-widest border border-red-700 shadow-lg uppercase animate-pulse">
+                        ⛔ CRITICAL TRANSACTION ALERT
+                    </div>
+                    <h1 class="text-5xl font-extrabold text-slate-900 tracking-tight mb-4">Transaction Killer Detected</h1>
+                    <div class="bg-red-50 border-2 border-red-500 rounded-2xl p-6 max-w-2xl mx-auto text-left shadow-xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 -mt-2 -mr-2 w-24 h-24 bg-red-200 rounded-full opacity-50 blur-xl"></div>
+                        <div class="flex items-start relative z-10">
+                            <span class="text-3xl mr-4">🚨</span>
+                            <div>
+                                <h3 class="text-red-900 font-bold text-lg mb-1">Fatal Defect Identified</h3>
+                                <p class="text-red-700 font-bold text-lg">${verdict.getDealKillerMessage()}</p>
+                                <p class="text-red-600 text-sm mt-2 font-medium">This issue typically renders a home uninsurable or requires a full gut renovation. Proceed with extreme caution.</p>
+                            </div>
+                        </div>
+                    </div>
+                @elseif("LOW_RISK".equals(verdict.getTier()))
                     <div class="inline-block bg-emerald-100 text-emerald-800 font-black text-xs px-3 py-1 rounded-full mb-4 tracking-widest border border-emerald-200 uppercase">STATUS: LOW RISK</div>
                     <h1 class="text-5xl font-extrabold text-slate-900 tracking-tight mb-3">Financial Risk Assessment</h1>
                     <p class="text-xl text-emerald-700 font-medium">${verdict.getHeadline()}</p>
@@ -135,6 +153,15 @@
                             @endif
                             in your metro area.
                         </p>
+                        
+                        <!-- DIY TRUST DISCLAIMER -->
+                        <div class="mt-4 flex items-center justify-center space-x-2 text-xs text-slate-400 bg-slate-50 inline-block px-4 py-2 rounded-lg border border-slate-100">
+                             <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                             <span>
+                                <strong>DIY Note:</strong> We use market labor rates because that's how the home's value is assessed. 
+                                Even if you DIY, the market deducts this professional cost from the home's value.
+                             </span>
+                        </div>
                     </div>
                     
                     <!-- Expandable Detailed Estimate Section -->

@@ -75,6 +75,7 @@ public class VerdictDTOs {
     @AllArgsConstructor
     public static class UserContext {
         private Double budget;
+        private Double sqft; // User override for house size
         private String metroCode;
         private String era; // PRE_1950, 1950_1970, etc.
         private RelationshipToHouse relationship; // New Primary Context
@@ -218,5 +219,24 @@ public class VerdictDTOs {
         private String strategyUsed; // e.g., "STANDARD_LIVING"
         private String strategyExplanation; // Why this strategy was chosen
         private List<String> skippedStrategies; // e.g., ["SAFETY_FLIP: insufficient era data"]
+
+        // Deal Killer Protocol (Phase 2)
+        private boolean isDealKiller; // If true, override UI with Red Alert
+        private String dealKillerMessage; // "CRITICAL: Chinese Drywall Detected"
+
+        // Context Briefing (Phase 2)
+        private ContextBriefing contextBriefing;
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ContextBriefing {
+        private String regionalRisk; // e.g., "Chicago: Freeze-Thaw / Union Labor"
+        private String foundationType; // e.g., "Historic Brick/Stone Foundation"
+        private String laborMarketRate; // e.g., "High (145% National Avg)"
+        private String eraFeature; // e.g., "1920s: Likely Knob & Tube Wiring"
+        private String disclaimer; // "This is a contextual signal, not a full inspection"
     }
 }

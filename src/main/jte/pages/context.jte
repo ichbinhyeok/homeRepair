@@ -1,6 +1,8 @@
+@import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.ContextBriefing
 @param String metroCode
 @param String relationship
 @param String era
+@param ContextBriefing contextBriefing
 
 @template.layout(content = @`
     <div class="max-w-xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
@@ -10,6 +12,33 @@
             <div class="h-2 w-12 bg-blue-600 rounded-full"></div>
             <div class="h-2 w-12 bg-blue-600 rounded-full"></div>
             <div class="h-2 w-12 bg-slate-200 rounded-full"></div>
+        </div>
+
+        <!-- CONTEXT BRIEFING CARD (Trust & Expertise) -->
+        <div class="max-w-xl mx-auto mb-6 bg-slate-50 border border-slate-200 rounded-xl p-4 shadow-sm relative overflow-hidden">
+             <!-- Decorative Background -->
+             <div class="absolute top-0 right-0 -mt-2 -mr-2 w-16 h-16 bg-blue-100 rounded-full opacity-50 blur-xl"></div>
+             
+             <div class="flex items-start space-x-3 relative z-10">
+                 <div class="flex-shrink-0 mt-0.5">
+                     <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                     </svg>
+                 </div>
+                 <div class="flex-1">
+                     <h3 class="text-sm font-bold text-slate-800 mb-1">Context Snapshot</h3>
+                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-1 gap-x-4 text-xs text-slate-600">
+                         <p><span class="font-semibold text-slate-700">Risk:</span> ${contextBriefing.getRegionalRisk()}</p>
+                         <p><span class="font-semibold text-slate-700">Labor:</span> ${contextBriefing.getLaborMarketRate()}</p>
+                         <p class="sm:col-span-2"><span class="font-semibold text-slate-700">Era:</span> ${contextBriefing.getEraFeature()}</p>
+                     </div>
+                     <div class="mt-2 pt-2 border-t border-slate-200">
+                         <p class="text-[10px] text-slate-400 font-medium tracking-wide uppercase">
+                             ${contextBriefing.getDisclaimer()}
+                         </p>
+                     </div>
+                 </div>
+             </div>
         </div>
 
         <div class="bg-white shadow-xl rounded-2xl overflow-hidden border border-slate-100 relative">
@@ -34,16 +63,28 @@
                 <input type="hidden" name="era" value="${era}">
                 <input type="hidden" name="relationship" value="${relationship}">
                 
-                <!-- Budget -->
-                <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Total Budget ($)</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <span class="text-slate-500 sm:text-sm">$</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <!-- Budget -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Total Budget ($)</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <span class="text-slate-500 sm:text-sm">$</span>
+                            </div>
+                            <input type="number" name="budget" required min="0" value="0"
+                                   class="w-full pl-8 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                                   placeholder="e.g. 10000">
                         </div>
-                        <input type="number" name="budget" required min="1000"
-                               class="w-full pl-8 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                               placeholder="e.g. 10000">
+                        <p class="text-xs text-slate-400 mt-1">Enter 0 to see full costs without budget limit.</p>
+                    </div>
+
+                    <!-- Sqft (Restored Control) -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">House Size (Sq Ft)</label>
+                        <input type="number" name="sqft" min="100" step="10"
+                               class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                               placeholder="e.g. 2000 (Optional)">
+                        <p class="text-xs text-slate-400 mt-1">Leave blank to use local average.</p>
                     </div>
                 </div>
 

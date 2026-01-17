@@ -162,6 +162,57 @@ public class VerdictEngineService {
                 .optionalActions(Collections.emptyList())
                 .futureCostWarning(Collections.emptyList())
                 .upgradeScenario(Collections.emptyList())
+                // Deal Killer Logic
+                .isDealKiller(isDealKiller(context))
+                .dealKillerMessage(getDealKillerMessage(context))
+                // Context Briefing
+                .contextBriefing(buildContextBriefing(context))
+                .build();
+    }
+
+    private boolean isDealKiller(UserContext context) {
+        return Boolean.TRUE.equals(context.getIsChineseDrywall()) ||
+                Boolean.TRUE.equals(context.getIsFpePanel()) ||
+                Boolean.TRUE.equals(context.getIsPolyB());
+    }
+
+    private String getDealKillerMessage(UserContext context) {
+        if (Boolean.TRUE.equals(context.getIsChineseDrywall()))
+            return "CRITICAL ALERT: Defective Chinese Drywall Detected. This is a Transaction-Ending Defect.";
+        if (Boolean.TRUE.equals(context.getIsFpePanel()))
+            return "CRITICAL ALERT: Federal Pacific/Zinsco Panel. High Fire Risk - Uninsurable.";
+        if (Boolean.TRUE.equals(context.getIsPolyB()))
+            return "CRITICAL ALERT: Polybutylene Plumbing. Structural Flood Risk.";
+        return null;
+    }
+
+    public VerdictDTOs.ContextBriefing getPrecalcBriefing(String metro, String era) {
+        UserContext minimalContext = UserContext.builder()
+                .metroCode(metro)
+                .era(era)
+                .build();
+        return buildContextBriefing(minimalContext);
+    }
+
+    private VerdictDTOs.ContextBriefing buildContextBriefing(UserContext context) {
+        MetroCityData city = metroMasterData.getData().get(context.getMetroCode());
+        String laborRateDesc = String.format("Local Labor: %.0f%% of National Avg", city.getLaborMult() * 100);
+
+        // Era Feature Logic
+        String eraFeature = "Standard Construction Era";
+        if (context.getEra().contains("1920") || context.getEra().contains("PRE_1950"))
+            eraFeature = "Era Risk: Knob & Tube Wiring / Lead Paint";
+        else if (context.getEra().contains("1970"))
+            eraFeature = "Era Risk: Aluminum Wiring / Asbestos";
+        else if (context.getEra().contains("2000"))
+            eraFeature = "Era Risk: Synthetic Stucco / Chinese Drywall";
+
+        return VerdictDTOs.ContextBriefing.builder()
+                .regionalRisk(city.getRisk())
+                .foundationType(city.getFoundation())
+                .laborMarketRate(laborRateDesc)
+                .eraFeature(eraFeature)
+                .disclaimer("This is a contextual signal, not a full inspection.")
                 .build();
     }
 
@@ -519,7 +570,11 @@ public class VerdictEngineService {
         }
         MetroCityData city = metroMasterData.getData().get(context.getMetroCode());
 
-        double avgHouse = city.getAvgHouse() != null ? city.getAvgHouse() : 2000.0;
+        // Use User Input if available, else fallback to Metro Avg
+        double avgHouse = (context.getSqft() != null && context.getSqft() > 0)
+                ? context.getSqft()
+                : (city.getAvgHouse() != null ? city.getAvgHouse() : 2000.0);
+
         double avgLot = city.getAvgLot() != null ? city.getAvgLot() : 8000.0;
 
         return EstimatedScale.builder()
