@@ -11,6 +11,7 @@ public class VerdictDTOs {
 
     // Cost Range for YMYL-compliant presentation
     public enum CostRange {
+        MINIMAL("Minimal Risks (<$10k)", 0, 10000),
         LOW_FIVE_FIGURES("Low five figures", 10000, 30000),
         MID_FIVE_FIGURES("Mid-five figures", 30000, 60000),
         HIGH_FIVE_FIGURES("High five figures", 60000, 100000),
@@ -147,6 +148,8 @@ public class VerdictDTOs {
         private boolean mandatory;
         private String explanation; // Why is this here? (e.g. "Era Risk: Polybutylene")
         private String compoundingBadge; // e.g., "RISK COMPOUNDING APPLIED (1.3x)"
+        private Boolean isForensicConfirmed;
+        private Boolean isCodeMandated;
     }
 
     @Data
@@ -204,6 +207,7 @@ public class VerdictDTOs {
         // YMYL-Safe Cost Presentation
         private CostRange costRange; // Primary UI display (e.g., MID_FIVE_FIGURES)
         private String costRangeLabel; // "Mid-five figures ($30k–$60k typical range)"
+        private String primaryCostDriver; // e.g., "Primary Driver: Roof Replacement (~$12k)"
         private Integer itemsAnalyzed; // Transparency: "Based on 127 items"
 
         // Internal calculations (opt-in detailed view only)
@@ -234,9 +238,17 @@ public class VerdictDTOs {
     @AllArgsConstructor
     public static class ContextBriefing {
         private String regionalRisk; // e.g., "Chicago: Freeze-Thaw / Union Labor"
+        private String regionalRiskReason; // e.g., "Driven by significant weather extremes and labor union density in
+                                           // Chicago."
+
         private String foundationType; // e.g., "Historic Brick/Stone Foundation"
+
         private String laborMarketRate; // e.g., "High (145% National Avg)"
+        private String laborMarketRateReason; // e.g., "Based on 2026 RSMeans City Cost Index for Chicago, IL."
+
         private String eraFeature; // e.g., "1920s: Likely Knob & Tube Wiring"
+        private String eraFeatureReason; // e.g., "Common construction standard for homes built prior to 1950."
+
         private String disclaimer; // "This is a contextual signal, not a full inspection"
     }
 }

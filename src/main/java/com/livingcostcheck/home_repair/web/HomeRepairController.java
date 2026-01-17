@@ -30,7 +30,24 @@ public class HomeRepairController {
     @GetMapping
     public String index(Model model) {
         // Step 1: Landing Page (Location & Era)
-        model.addAttribute("metroData", verdictEngineService.getMetroMasterData());
+
+        // Prepare Metros List
+        List<String> metros = verdictEngineService.getMetroMasterData().getData().keySet().stream()
+                .sorted()
+                .toList();
+
+        // Prepare Eras List (Ordered Chronologically)
+        List<String> eras = java.util.List.of(
+                "PRE_1950",
+                "1950_1970",
+                "1970_1980",
+                "1980_1995",
+                "1995_2010",
+                "2010_PRESENT");
+
+        model.addAttribute("metros", metros);
+        model.addAttribute("eras", eras);
+
         return "pages/index";
     }
 

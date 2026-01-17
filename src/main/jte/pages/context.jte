@@ -27,10 +27,19 @@
                  </div>
                  <div class="flex-1">
                      <h3 class="text-sm font-bold text-slate-800 mb-1">Context Snapshot</h3>
-                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-1 gap-x-4 text-xs text-slate-600">
-                         <p><span class="font-semibold text-slate-700">Risk:</span> ${contextBriefing.getRegionalRisk()}</p>
-                         <p><span class="font-semibold text-slate-700">Labor:</span> ${contextBriefing.getLaborMarketRate()}</p>
-                         <p class="sm:col-span-2"><span class="font-semibold text-slate-700">Era:</span> ${contextBriefing.getEraFeature()}</p>
+                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-4 text-xs text-slate-600">
+                         <div>
+                             <p><span class="font-semibold text-slate-700">Risk:</span> ${contextBriefing.getRegionalRisk()}</p>
+                             <p class="text-[10px] text-slate-400 mt-0.5 italic pl-2 border-l-2 border-slate-200">${contextBriefing.getRegionalRiskReason()}</p>
+                         </div>
+                         <div>
+                             <p><span class="font-semibold text-slate-700">Labor:</span> ${contextBriefing.getLaborMarketRate()}</p>
+                             <p class="text-[10px] text-slate-400 mt-0.5 italic pl-2 border-l-2 border-slate-200">${contextBriefing.getLaborMarketRateReason()}</p>
+                         </div>
+                         <div class="sm:col-span-2">
+                             <p><span class="font-semibold text-slate-700">Era:</span> ${contextBriefing.getEraFeature()}</p>
+                             <p class="text-[10px] text-slate-400 mt-0.5 italic pl-2 border-l-2 border-slate-200">${contextBriefing.getEraFeatureReason()}</p>
+                         </div>
                      </div>
                      <div class="mt-2 pt-2 border-t border-slate-200">
                          <p class="text-[10px] text-slate-400 font-medium tracking-wide uppercase">
