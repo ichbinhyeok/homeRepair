@@ -68,44 +68,80 @@ public class HomeRepairController {
     }
 
     @PostMapping("/verdict")
-    public String generateVerdict(@ModelAttribute UserContext context,
+    public String generateVerdict(
+            @RequestParam("metroCode") String metroCode,
+            @RequestParam("era") String era,
+            @RequestParam(value = "budget", defaultValue = "0") Double budget,
+            @RequestParam(value = "sqft", required = false) Double sqft,
+            @RequestParam(value = "relationship", defaultValue = "LIVING") String relationshipStr,
+            @RequestParam(value = "history", required = false) List<String> history,
+            @RequestParam(value = "condition", defaultValue = "UNKNOWN") String condition,
+            @RequestParam(value = "isFpePanel", defaultValue = "false") Boolean isFpePanel,
+            @RequestParam(value = "isPolyB", defaultValue = "false") Boolean isPolyB,
+            @RequestParam(value = "isAluminum", defaultValue = "false") Boolean isAluminum,
+            @RequestParam(value = "isChineseDrywall", defaultValue = "false") Boolean isChineseDrywall,
             @RequestParam(value = "userEmail", defaultValue = "anonymous") String userEmail,
             Model model) {
 
         try {
+            // Manual Context Construction to prevent mapping errors
+            RelationshipToHouse relationship = RelationshipToHouse.LIVING;
+            try {
+                relationship = RelationshipToHouse.valueOf(relationshipStr);
+            } catch (Exception e) {
+                log.warn("Invalid relationship param: {}", relationshipStr);
+            }
+
+            UserContext context = UserContext.builder()
+                    .metroCode(metroCode)
+                    .era(era)
+                    .budget(budget)
+                    .sqft(sqft)
+                    .relationship(relationship)
+                    .history(history != null ? history : java.util.Collections.emptyList())
+                    .condition(condition)
+                    .isFpePanel(isFpePanel)
+                    .isPolyB(isPolyB)
+                    .isAluminum(isAluminum)
+                    .isChineseDrywall(isChineseDrywall)
+                    .build();
+
             // 1. Generate Verdict
             Verdict verdict = verdictEngineService.generateVerdict(context);
 
             // 2. Persistence (History)
-            VerdictHistory history = new VerdictHistory(
+            VerdictHistory verdictHistory = new VerdictHistory(
                     context.getMetroCode(),
                     String.valueOf(context.getBudget()),
-                    context.getRelationship() != null ? context.getRelationship().name() : "LIVING", // Default to
-                                                                                                     // LIVING if null
+                    context.getRelationship().name(),
                     context.getEra(),
                     verdict.getTier(), // Code/Result
                     "v2026.01",
                     String.valueOf(context.hashCode()) // Simple hash for context
             );
             if (!"anonymous".equals(userEmail)) {
-                history.setUserEmail(userEmail);
+                verdictHistory.setUserEmail(userEmail);
             }
 
             // Save detailed context for re-generation
             String historyStr = context.getHistory() != null ? String.join(",", context.getHistory()) : "";
-            history.setRepairContext(historyStr, context.getCondition());
-            history.setForensicClues(
+            verdictHistory.setRepairContext(historyStr, context.getCondition());
+            verdictHistory.setForensicClues(
                     context.getIsFpePanel(),
                     context.getIsPolyB(),
                     context.getIsAluminum(),
                     context.getIsChineseDrywall());
 
-            repository.save(history);
+            repository.save(verdictHistory);
 
-            return "redirect:/home-repair/result/" + history.getId();
+            return "redirect:/home-repair/result/" + verdictHistory.getId();
         } catch (Exception e) {
             log.error("Error generating verdict", e);
-            model.addAttribute("errorMessage", "Error generating verdict. Please try again or contact support.");
+            String stackTrace = java.util.Arrays.stream(e.getStackTrace())
+                    .limit(5)
+                    .map(StackTraceElement::toString)
+                    .collect(java.util.stream.Collectors.joining("\n"));
+            model.addAttribute("errorMessage", "DEBUG ERROR: " + e.toString() + "\nAT: " + stackTrace);
             return "error";
         }
     }

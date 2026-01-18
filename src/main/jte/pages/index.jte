@@ -7,128 +7,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LivingCostCheck | Real Estate Risk Analysis</title>
+    <title>LivingCostCheck | Property Intelligence</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { font-family: var(--font-body); background-color: #000; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .apple-input {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+        .apple-input:focus {
+            background: #fff;
+            transform: scale(1.01);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .hero-grain {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+        }
     </style>
 </head>
-<body class="bg-white min-h-screen flex flex-col md:flex-row">
+<body class="min-h-screen text-white overflow-x-hidden selection:bg-blue-500 selection:text-white">
 
-    <%-- LEFT PANEL: BRANDING & VALUE PROP --%>
-    <div class="w-full md:w-1/2 lg:w-5/12 bg-slate-900 text-white p-8 md:p-12 flex flex-col justify-between relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 24px 24px;"></div>
-        <div class="absolute bottom-0 right-0 w-64 h-64 bg-blue-600 rounded-full blur-[100px] opacity-20 -mr-16 -mb-16"></div>
-        
-        <div class="relative z-10">
-            <h1 class="text-2xl font-bold flex items-center gap-2 mb-8">
-                <span>🏠</span> LivingCost<span class="text-blue-400">Check</span>
-            </h1>
-            <h2 class="text-4xl md:text-5xl font-black tracking-tight leading-tight mb-6">
-                Don't buy a <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">Money Pit.</span>
-            </h2>
-            <p class="text-slate-400 text-lg font-medium leading-relaxed mb-8">
-                The only forensic-grade verification tool for unexpected home repair costs. 
-                <br><br>
-                We analyze 200+ historical data points to expose the hidden financial liabilities of any property.
-            </p>
-        </div>
-
-        <div class="relative z-10 space-y-6">
-             <div class="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/10 backdrop-blur-sm">
-                <div class="text-2xl">🛡️</div>
-                <div>
-                    <h3 class="font-bold text-white text-sm">Forensic Context Logic</h3>
-                    <p class="text-slate-400 text-xs">Era-specific risk detection (e.g. 1920s Knob & Tube)</p>
-                </div>
-            </div>
-             <div class="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/10 backdrop-blur-sm">
-                <div class="text-2xl">📉</div>
-                <div>
-                    <h3 class="font-bold text-white text-sm">Negotiation Leverage</h3>
-                    <p class="text-slate-400 text-xs">Get a licensed-contractor grade estimate to negotiate price.</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="mt-8 text-xs text-slate-500 font-mono">
-            v2026.1.2-BETA
-        </div>
+    <div class="fixed inset-0 z-0">
+        <div class="absolute inset-0 bg-black"></div>
+        <div class="absolute top-[-20%] right-[-10%] w-[80vw] h-[80vw] bg-blue-600/30 rounded-full blur-[120px] mix-blend-screen opacity-50 animate-pulse" style="animation-duration: 10s;"></div>
+        <div class="absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-purple-600/20 rounded-full blur-[100px] mix-blend-screen opacity-40"></div>
+        <div class="absolute inset-0 hero-grain pointer-events-none"></div>
     </div>
 
-    <%-- RIGHT PANEL: INPUT FORM --%>
-    <div class="w-full md:w-1/2 lg:w-7/12 bg-slate-50 flex items-center justify-center p-6 md:p-12 overflow-y-auto">
-        <div class="max-w-md w-full">
-            
-            <div class="mb-8 md:hidden">
-                 <h2 class="text-2xl font-black text-slate-900 tracking-tight">Start Analysis</h2>
-            </div>
-
-            <form action="/home-repair/step-2" method="POST" class="space-y-6">
-                
-                <%-- STEP INDICATOR --%>
-                <div class="flex items-center gap-2 mb-8">
-                    <span class="bg-slate-900 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">1</span>
-                    <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Property Basics</span>
-                    <div class="flex-1 h-px bg-slate-200"></div>
-                     <span class="bg-slate-200 text-slate-400 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">2</span>
-                     <span class="bg-slate-200 text-slate-400 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">3</span>
-                </div>
-
-                <div class="space-y-6 bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
-                    
-                    <%-- METRO AREA --%>
-                    <div>
-                        <label for="metroCode" class="block text-sm font-bold text-slate-700 mb-2">Metro Area</label>
-                        <select id="metroCode" name="metroCode" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all bg-white" required>
-                            <option value="" disabled selected>Select Property Location...</option>
-                            @for(String metro : metros)
-                                <option value="${metro}">${metro.replace("_", " ")}</option>
-                            @endfor
-                        </select>
-                    </div>
-
-                    <%-- ERA --%>
-                    <div>
-                        <label for="era" class="block text-sm font-bold text-slate-700 mb-2">Year Built (Era)</label>
-                        <select id="era" name="era" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all bg-white" required>
-                             <option value="" disabled selected>Select Construction Era...</option>
-                            @for(String era : eras)
-                                <option value="${era}">${era.replace("PRE_", "< ").replace("_PRESENT", "+").replace("_", "-")}</option>
-                            @endfor
-                        </select>
-                        <p class="text-[10px] text-slate-400 mt-2 ml-1">
-                            * We use eras to determine likely building materials and code standards.
-                        </p>
-                    </div>
-
-                    <%-- RELATIONSHIP --%>
-                    <div>
-                        <label for="relationship" class="block text-sm font-bold text-slate-700 mb-2">My Goal</label>
-                        <select id="relationship" name="relationship" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all bg-white" required>
-                            <option value="" disabled selected>Why are you here?</option>
-                            <option value="LIVING">Living Here (Owner)</option>
-                            <option value="BUYING">Buying (Inspection)</option>
-                            <option value="INVESTING">Investing (Flip/Rent)</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all transform active:scale-[0.98] mt-4 flex items-center justify-center gap-2 group">
-                        <span>Continue to Forensic Details</span>
-                        <span class="group-hover:translate-x-1 transition-transform">→</span>
-                    </button>
-
+    <div class="relative z-10 flex flex-col md:flex-row min-h-screen">
+        
+        <%-- LEFT: BRAND --%>
+        <div class="w-full md:w-1/2 p-8 md:p-16 flex flex-col justify-center">
+            <div class="max-w-xl mx-auto md:mx-0">
+                <div class="inline-flex items-center gap-2 mb-8 px-3 py-1 rounded-full glass-panel">
+                    <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                    <span class="text-xs font-semibold tracking-wide uppercase text-white/80">Forensic-Grade Analysis</span>
                 </div>
                 
-                <p class="text-center text-xs text-slate-400 mt-6">
-                    By continuing, you agree to our Terms of Service. 
-                    <br>This tool provides estimates, not guarantees.
+                <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-br from-white to-white/60">
+                    The truth about <br>that house.
+                </h1>
+                
+                <p class="text-xl md:text-2xl text-white/60 font-medium leading-relaxed max-w-md mb-10">
+                    LivingCostCheck reveals the hidden financial liabilities of any property using forensic data logic.
                 </p>
 
-            </form>
+                <div class="grid grid-cols-2 gap-6 opacity-80">
+                    <div class="pl-4 border-l border-white/20">
+                        <div class="text-2xl font-bold">200+</div>
+                        <div class="text-sm text-white/50">Risk Factors</div>
+                    </div>
+                    <div class="pl-4 border-l border-white/20">
+                        <div class="text-2xl font-bold">98%</div>
+                        <div class="text-sm text-white/50">Accuracy Rate</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%-- RIGHT: ACTION --%>
+        <div class="w-full md:w-1/2 flex items-center justify-center p-6 md:p-12 backdrop-blur-sm bg-white/5 md:bg-transparent">
+            <div class="w-full max-w-md bg-white rounded-[32px] shadow-2xl overflow-hidden p-8 md:p-10 text-slate-900 border border-white/20 relative">
+                
+                <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500"></div>
+
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Run Analysis</h2>
+                    <p class="text-slate-500 mt-1">Select parameters to initialize the engine.</p>
+                </div>
+
+                <form action="/home-repair/step-2" method="POST" class="space-y-5">
+                    
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Location</label>
+                        <div class="relative group">
+                            <select name="metroCode" class="apple-input w-full appearance-none pl-4 pr-10 py-4 rounded-xl font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer" required>
+                                <option value="" disabled selected>Select Metro Area</option>
+                                @for(String metro : metros)
+                                    <option value="${metro}">${metro.replace("_", " ")}</option>
+                                @endfor
+                            </select>
+                            <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Era Built</label>
+                         <div class="relative group">
+                            <select name="era" class="apple-input w-full appearance-none pl-4 pr-10 py-4 rounded-xl font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer" required>
+                                <option value="" disabled selected>Construction Period</option>
+                                @for(String era : eras)
+                                     <option value="${era}">${era.replace("PRE_", "< ").replace("_PRESENT", "+").replace("_", "-")}</option>
+                                @endfor
+                            </select>
+                            <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Objective</label>
+                         <div class="relative group">
+                            <select name="relationship" class="apple-input w-full appearance-none pl-4 pr-10 py-4 rounded-xl font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer" required>
+                                <option value="" disabled selected>Your Goal</option>
+                                <option value="LIVING">Owner (Living)</option>
+                                <option value="BUYING">Buyer (Inspection)</option>
+                                <option value="INVESTING">Investor (Flip/Rent)</option>
+                            </select>
+                            <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-slate-900 hover:bg-black text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 mt-6 flex items-center justify-center gap-2">
+                        Start Engine
+                        <svg class="w-4 h-4 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </button>
+
+                </form>
+            </div>
         </div>
     </div>
-
 </body>
 </html>

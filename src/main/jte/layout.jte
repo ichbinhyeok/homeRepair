@@ -28,13 +28,10 @@
 
     @template.layout._header()
 
-    <div class="app-container">
-        <!-- AD_SLOT_TOP -->
-        <div class="w-full mb-8 bg-gray-100 h-24 flex items-center justify-center text-gray-400 text-sm border-2 border-dashed border-gray-300 rounded-lg">
-            AD_SLOT_TOP (Placeholder)
-        </div>
-
-        <main class="w-full bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+    <div class="w-full min-h-screen pt-4 pb-12">
+        <!-- AD_SLOT_TOP (Hidden for now to keep design clean) -->
+        
+        <main class="w-full">
             ${content}
         </main>
     </div>

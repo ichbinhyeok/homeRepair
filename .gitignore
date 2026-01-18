@@ -38,3 +38,6 @@ out/
 
 ### JTE ###
 jte-classes/
+
+*.log
+logs/

@@ -5,44 +5,35 @@
  */
 
 :root {
-    /* Color Palette - Trust & Professionalism */
-    --color-bg-body: #F8F9FA;
-    /* Soft Light Gray Background */
+    /* Color Palette - Premium & Modern (Apple-esque) */
+    --color-bg-body: #F5F5F7; /* Apple's off-white background */
     --color-bg-card: #FFFFFF;
-    /* Pure White Card Background */
-    --color-text-primary: #1F2937;
-    /* Very Dark Gray (Almost Black) for Headings */
-    --color-text-secondary: #4B5563;
-    /* Medium Gray for Body Text */
-    --color-text-tertiary: #9CA3AF;
-    /* Light Gray for Metadata */
-    --color-border: #E5E7EB;
-    /* Subtle Border Color */
-
+    --color-text-primary: #1D1D1F; /* Apple's almost-black */
+    --color-text-secondary: #86868B; /* Sophisticated gray */
+    --color-text-tertiary: #A1A1A6;
+    --color-border: #D2D2D7; /* Softer border */
+    
     /* Brand & Accent Colors */
-    --color-primary: #10B981;
-    /* Emerald Green - Approved / Positive Action */
-    --color-primary-hover: #059669;
-    /* Darker Emerald for Hover */
-    --color-warning: #F59E0B;
-    /* Amber - Warning */
-    --color-danger: #EF4444;
-    /* Red - Denied / Critical */
-    --color-neutral: #6B7280;
-    /* Cool Gray 500 */
+    --color-primary: #0071E3; /* Apple Blue */
+    --color-primary-hover: #0077ED;
+    --color-success: #34C759; /* Apple Green */
+    --color-warning: #FF9F0A; /* Apple Orange */
+    --color-danger: #FF3B30; /* Apple Red */
+    --color-neutral: #E8E8ED;
 
     /* Structural Variables */
-    --max-width-container: 1000px;
-    /* Reduced specific max-width for focus */
-    --header-height: 72px;
-    --border-radius-card: 12px;
-    --border-radius-sm: 6px;
-    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+    --max-width-container: 980px; /* Tighter focus */
+    --header-height: 48px; /* Sleeker header */
+    --border-radius-card: 20px; /* Larger, smoother curvature */
+    --border-radius-sm: 12px;
+    
+    /* Shadows - Soft & Diffused */
+    --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.04);
+    --shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.08);
 
     /* Typography */
-    --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-heading: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", Roboto, sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", Roboto, sans-serif;
 }
 
 /* Base Resets & Typography */

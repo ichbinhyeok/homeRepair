@@ -21,266 +21,194 @@
 <body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
 
     <%-- 1. BRAND HEADER --%>
-    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-                <span class="text-2xl">🏠</span>
-                <span class="font-bold text-slate-800 tracking-tight text-2xl">LivingCost<span class="text-blue-600">Check</span></span>
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/60">
+        <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="text-xl">🏠</span>
+                <span class="font-semibold text-slate-900 tracking-tight text-lg">LivingCost<span class="text-blue-600">Check</span></span>
             </div>
-            <div class="text-xs font-medium text-slate-400">
-                VERDICT ID: ${java.util.UUID.randomUUID().toString().substring(0,8).toUpperCase()}
+            <div class="flex items-center gap-3">
+                <span class="px-2 py-1 bg-slate-100 rounded-md text-[10px] font-mono text-slate-500">
+                    ID: ${java.util.UUID.randomUUID().toString().substring(0,8).toUpperCase()}
+                </span>
+                <a href="/" class="text-xs font-semibold text-blue-600 hover:text-blue-700 transition">New Scan</a>
             </div>
         </div>
     </nav>
 
-    <%-- 2. HERO SECTION --%>
-    <header class="relative w-full border-b overflow-hidden
-        ${"LOW_RISK".equals(verdict.getTier()) ? "bg-emerald-50 border-emerald-200" : 
-          "CONDITIONAL".equals(verdict.getTier()) ? "bg-amber-50 border-amber-200" : 
-          verdict.isDealKiller() ? "bg-slate-900 border-slate-700" : "bg-rose-50 border-rose-200"}">
+    <main class="max-w-6xl mx-auto px-6 py-10">
         
-        <div class="absolute inset-0 hero-pattern"></div>
-        <div class="relative max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-            
-            <%-- Deal Killer Overlay Logic --%>
-            @if(verdict.isDealKiller())
-                <div class="absolute top-0 left-0 w-full bg-red-600 text-white text-center py-2 font-bold text-sm tracking-widest uppercase animate-pulse">
-                     Transaction Critical Alert
-                </div>
-            @endif
-
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-                <div>
-                     <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-4 inline-block shadow-sm 
-                        ${"LOW_RISK".equals(verdict.getTier()) ? "bg-emerald-100 text-emerald-800" : 
-                          "CONDITIONAL".equals(verdict.getTier()) ? "bg-amber-100 text-amber-800" : 
-                          verdict.isDealKiller() ? "bg-red-600 text-white" : "bg-rose-100 text-rose-800"}">
-                        Analysis Complete
+        <%-- 2. STATUS HEADER (Minimalist) --%>
+        <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-12">
+            <div>
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="w-2.5 h-2.5 rounded-full 
+                        ${"LOW_RISK".equals(verdict.getTier()) ? "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]" : 
+                          "CONDITIONAL".equals(verdict.getTier()) ? "bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.4)]" : 
+                          verdict.isDealKiller() ? "bg-red-600 shadow-[0_0_8px_rgba(220,38,38,0.4)]" : "bg-rose-500"}">
                     </span>
-                    <h1 class="text-4xl sm:text-5xl font-black tracking-tight leading-tight mb-4
-                        ${"LOW_RISK".equals(verdict.getTier()) ? "text-emerald-900" : 
-                          "CONDITIONAL".equals(verdict.getTier()) ? "text-amber-900" : 
-                          verdict.isDealKiller() ? "text-white" : "text-rose-900"}">
-                        ${verdict.getHeadline().split("\\.")[0]}.
-                    </h1>
-                     <p class="text-lg opacity-80 max-w-2xl font-medium leading-relaxed
-                        ${"LOW_RISK".equals(verdict.getTier()) ? "text-emerald-900" : 
-                          "CONDITIONAL".equals(verdict.getTier()) ? "text-amber-900" : 
-                          verdict.isDealKiller() ? "text-white" : "text-rose-900"}">
-                        ${verdict.getHeadline().contains(".") && verdict.getHeadline().split("\\.").length > 1 ? verdict.getHeadline().split("\\.")[1] : ""}
-                    </p>
-                    
-                    @if(verdict.isDealKiller())
-                        <div class="mt-6 p-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white">
-                             <p class="font-bold flex items-center gap-2">
-                                <span>⚠️</span> ${verdict.getDealKillerMessage()}
-                            </p>
-                        </div>
-                    @endif
+                    <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Forensic Analysis Complete</span>
                 </div>
-                <div class="hidden sm:block text-8xl opacity-20 transform rotate-12 select-none grayscale">
-                    ${"LOW_RISK".equals(verdict.getTier()) ? "✅" : 
-                      "CONDITIONAL".equals(verdict.getTier()) ? "⚠️" : 
-                      verdict.isDealKiller() ? "☠️" : "🛑"}
-                </div>
+                <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-2">
+                    ${verdict.getHeadline().split("\\.")[0]}.
+                </h1>
+                <p class="text-lg text-slate-500 max-w-2xl leading-relaxed">
+                    ${verdict.getHeadline().contains(".") && verdict.getHeadline().split("\\.").length > 1 ? verdict.getHeadline().split("\\.")[1] : ""}
+                </p>
+
+                @if(verdict.isDealKiller())
+                    <div class="mt-4 inline-flex items-center gap-2 px-3 py-2 bg-red-50 border border-red-100 rounded-lg text-red-700 text-sm font-semibold">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        ${verdict.getDealKillerMessage()}
+                    </div>
+                @endif
+            </div>
+            
+            <div class="text-right hidden md:block opacity-10">
+                <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
             </div>
         </div>
-    </header>
 
-    <%-- 3. BENTO GRID DASHBOARD --%>
-    <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 py-10 w-full relative -mt-8">
-        
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        <%-- 3. KEY METRICS GRID (Apple Health Style) --%>
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-16">
 
-            <%-- CARD 1: COST ESTIMATE (Hero Card) --%>
-            <div class="bento-card md:col-span-8 flex flex-col justify-between relative overflow-hidden ring-1 ring-slate-900/5">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+            <%-- CARD 1: COST ESTIMATE (Large Card) --%>
+            <div class="md:col-span-8 bg-black rounded-[32px] p-8 text-white relative overflow-hidden shadow-2xl flex flex-col justify-between group">
+                <div class="absolute inset-0 bg-gradient-to-br from-slate-900 to-black"></div>
+                <div class="absolute right-0 bottom-0 w-64 h-64 bg-blue-600 rounded-full blur-[120px] opacity-20 group-hover:opacity-30 transition-opacity"></div>
                 
-                <div>
-                    <h2 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-1">Estimated Capital Requirement</h2>
-                    <div class="flex items-baseline gap-2 mt-2">
-                        <span class="text-5xl font-black text-slate-900 tracking-tighter">
+                <div class="relative z-10">
+                    <h2 class="text-sm font-medium text-slate-400 uppercase tracking-widest mb-1">Capital Exposure Estimate</h2>
+                    <div class="flex items-baseline gap-1 mt-4">
+                        <span class="text-7xl font-semibold tracking-tighter">
                             ${verdict.getCostRangeLabel().contains("(") ? verdict.getCostRangeLabel().substring(0, verdict.getCostRangeLabel().indexOf("(")) : verdict.getCostRangeLabel()}
                         </span>
                     </div>
-                    <p class="text-slate-500 text-sm mt-2 font-medium">
-                        ${verdict.getCostRangeLabel().contains("(") ? verdict.getCostRangeLabel().substring(verdict.getCostRangeLabel().indexOf("(")) : ""}
-                    </p>
                 </div>
 
-                <div class="mt-8 space-y-4">
-                     @if(verdict.getPrimaryCostDriver() != null)
-                        <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-start gap-3">
-                            <span class="text-xl">📉</span>
-                            <div>
-                                <p class="text-xs font-bold text-slate-500 uppercase">Primary Cost Driver</p>
-                                <p class="font-bold text-slate-800 text-sm mt-0.5">${verdict.getPrimaryCostDriver().replace("Primary Cost Driver:", "").trim()}</p>
-                            </div>
+                <div class="relative z-10 mt-8 flex items-end justify-between">
+                     <p class="text-slate-400 text-sm font-medium max-w-sm">
+                        Total estimated immediate to 5-year liability based on forensic scan of ${verdict.getItemsAnalyzed()} components.
+                    </p>
+                    @if(verdict.getPrimaryCostDriver() != null)
+                        <div class="text-right">
+                             <div class="text-xs font-bold text-slate-500 uppercase mb-1">Primary Driver</div>
+                             <div class="text-lg font-semibold">${verdict.getPrimaryCostDriver().replace("Primary Cost Driver:", "").trim()}</div>
                         </div>
                     @endif
-                    
-                    <div class="flex items-center gap-2 text-xs text-slate-400">
-                        <span>ℹ️ Includes material/labor for ${verdict.getItemsAnalyzed()} data points</span>
-                    </div>
                 </div>
             </div>
 
-            <%-- CARD 2: STRATEGY (Actionable) --%>
-            <div class="bento-card md:col-span-4 bg-slate-900 text-white border-none shadow-xl flex flex-col justify-between">
+            <%-- CARD 2: ACTION PLAN (Strategy) --%>
+            <div class="md:col-span-4 bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between">
                 <div>
-                    <div class="flex items-center gap-2 mb-4 opacity-80">
-                         <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                         <span class="text-xs font-bold uppercase tracking-widest">Active Strategy</span>
+                     <div class="flex items-center gap-2 mb-6">
+                        <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Strategy</span>
                     </div>
-                    <h3 class="text-2xl font-bold mb-2">${verdict.getStrategyUsed().replace("_", " ")}</h3>
-                    <p class="text-sm text-slate-300 leading-relaxed opacity-90">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">${verdict.getStrategyUsed().replace("_", " ")}</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">
                         ${verdict.getStrategyExplanation()}
                     </p>
                 </div>
-                <div class="mt-6 pt-4 border-t border-slate-700">
-                    <button onclick="document.getElementById('details-section').scrollIntoView({behavior: 'smooth'})" 
-                            class="w-full py-2 text-sm font-bold text-center bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white">
-                        View Itemized Plan ↓
-                    </button>
+                <button onclick="document.getElementById('details-section').scrollIntoView({behavior: 'smooth'})" class="mt-6 w-full py-3 bg-slate-50 text-slate-900 font-semibold rounded-xl text-sm hover:bg-slate-100 transition-colors">
+                    View Verified Plan
+                </button>
+            </div>
+
+            <%-- CARD 3: MARKET SIGNALS (Detail Grid) --%>
+            <div class="md:col-span-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Regional Risk -->
+                <div class="bg-white rounded-[24px] p-6 border border-slate-100 shadow-sm">
+                     <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold text-slate-400 uppercase">Context Risk</span>
+                        <span class="text-xl">🌍</span>
+                     </div>
+                     @if(verdict.getContextBriefing() != null)
+                        <div class="text-2xl font-bold text-slate-900 mb-1">${verdict.getContextBriefing().getRegionalRisk()}</div>
+                        <div class="w-full bg-slate-100 h-1.5 rounded-full mb-3 overflow-hidden">
+                           <div class="bg-blue-500 h-full rounded-full" style="width: 75%"></div>
+                        </div>
+                        <p class="text-xs text-slate-500">${verdict.getContextBriefing().getRegionalRiskReason()}</p>
+                     @else
+                        <div class="text-lg font-bold text-slate-400 mb-1">N/A</div>
+                        <p class="text-xs text-slate-400">Regional data unavailable.</p>
+                     @endif
                 </div>
-            </div>
 
-            <%-- CARD 3: MARKET CONTEXT (Evidence) --%>
-            <div class="bento-card md:col-span-6">
-                <h3 class="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2">
-                    <span>🌍</span> Market Context Signals
-                </h3>
-                <div class="space-y-4">
-                    <%-- Context Item 1: Risk --%>
-                    <div>
-                        <div class="flex justify-between items-center text-xs mb-1">
-                            <span class="font-semibold text-slate-600">Regional Risk</span>
-                            <span class="text-slate-900 font-bold">${verdict.getContextBriefing().getRegionalRisk()}</span>
+                <!-- Labor Market -->
+                <div class="bg-white rounded-[24px] p-6 border border-slate-100 shadow-sm">
+                     <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold text-slate-400 uppercase">Labor Rates</span>
+                        <span class="text-xl">🔨</span>
+                     </div>
+                     @if(verdict.getContextBriefing() != null)
+                        <div class="text-2xl font-bold text-slate-900 mb-1">${verdict.getContextBriefing().getLaborMarketRate()}</div>
+                        <div class="w-full bg-slate-100 h-1.5 rounded-full mb-3 overflow-hidden">
+                           <div class="bg-indigo-500 h-full rounded-full" style="width: 85%"></div>
                         </div>
-                        <div class="w-full bg-slate-200 rounded-full h-1.5 mb-1">
-                            <div class="bg-blue-600 h-1.5 rounded-full" style="width: 75%"></div>
-                        </div>
-                        <p class="text-[10px] text-slate-400 bg-slate-50 p-1.5 rounded border border-slate-100">
-                            ${verdict.getContextBriefing().getRegionalRiskReason()}
-                        </p>
-                    </div>
-
-                     <%-- Context Item 2: Labor --%>
-                     <div>
-                        <div class="flex justify-between items-center text-xs mb-1">
-                            <span class="font-semibold text-slate-600">Labor Market</span>
-                            <span class="text-slate-900 font-bold">${verdict.getContextBriefing().getLaborMarketRate()}</span>
-                        </div>
-                        <div class="w-full bg-slate-200 rounded-full h-1.5 mb-1">
-                            <div class="bg-indigo-600 h-1.5 rounded-full" style="width: 85%"></div>
-                        </div>
-                        <p class="text-[10px] text-slate-400 bg-slate-50 p-1.5 rounded border border-slate-100">
-                            ${verdict.getContextBriefing().getLaborMarketRateReason()}
-                        </p>
-                    </div>
-
-                    <%-- Context Item 3: Era Feature --%>
-                    <div>
-                        <div class="flex justify-between items-center text-xs mb-1">
-                            <span class="font-semibold text-slate-600">Construction Norms</span>
-                            <span class="text-slate-900 font-bold">${verdict.getContextBriefing().getEraFeature()}</span>
-                        </div>
-                        <div class="w-full bg-slate-200 rounded-full h-1.5 mb-1">
-                            <div class="bg-indigo-400 h-1.5 rounded-full" style="width: 60%"></div>
-                        </div>
-                        <p class="text-[10px] text-slate-400 bg-slate-50 p-1.5 rounded border border-slate-100">
-                            ${verdict.getContextBriefing().getEraFeatureReason()}
-                        </p>
-                    </div>
+                        <p class="text-xs text-slate-500">${verdict.getContextBriefing().getLaborMarketRateReason()}</p>
+                     @else
+                        <div class="text-lg font-bold text-slate-400 mb-1">N/A</div>
+                        <p class="text-xs text-slate-400">Labor data unavailable.</p>
+                     @endif
                 </div>
-            </div>
 
-             <%-- CARD 4: NEGOTIATION LEVERAGE (Money) --%>
-            <div class="bento-card md:col-span-6 bg-gradient-to-br from-white to-slate-50">
-                 <h3 class="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2">
-                    <span>🤝</span> Negotiation Power
-                </h3>
-                 <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm mb-4">
-                    <p class="text-xs text-slate-500 uppercase font-bold mb-1">Leverage Value</p>
-                    <div class="text-3xl font-black text-slate-900 tracking-tight">
-                        $${String.format("%,.0f", verdict.getExactCostEstimate() * 1.5)}
-                    </div>
-                    <p class="text-xs text-green-600 font-bold mt-1">
-                        +50% buffer for unseen conditions
-                    </p>
-                 </div>
-                 <div class="text-xs text-slate-500 leading-snug">
-                    <p class="mb-2">Use this figure to negotiate credits. Copy the script below:</p>
-                    <div class="bg-slate-100 p-2 rounded text-slate-600 font-mono text-[10px] border border-slate-200 select-all">
-                        "Independent analysis indicates $${String.format("%,.0f", verdict.getExactCostEstimate() * 1.5)} in immediate correction exposure..."
-                    </div>
-                 </div>
-            </div>
+                <!-- Leverage -->
+                <div class="bg-gradient-to-br from-slate-50 to-white rounded-[24px] p-6 border border-slate-100 shadow-sm relative overflow-hidden group">
+                     <div class="absolute right-0 top-0 p-3 opacity-10 font-black text-6xl text-slate-900 select-none">$</div>
+                     <div class="relative z-10">
+                        <span class="text-xs font-bold text-slate-400 uppercase">Negotiation Value</span>
+                        <div class="text-3xl font-bold text-slate-900 mt-2 tracking-tight">$${String.format("%,.0f", verdict.getExactCostEstimate() * 1.5)}</div>
+                        <p class="text-xs text-slate-500 mt-2 font-medium bg-white/50 inline-block px-2 py-1 rounded">
+                            Suggested credit request (+50% buffer)
+                        </p>
+                     </div>
+                </div>
 
+            </div>
         </div>
 
-    </main>
-
-    <%-- 4. DETAILED BREAKDOWN (Secondary Info) --%>
-    <section id="details-section" class="bg-white border-t border-slate-200 py-12 md:py-20">
-         <div class="max-w-4xl mx-auto px-4 sm:px-6">
-            <div class="text-center mb-12">
-                <h3 class="text-2xl font-bold text-slate-900 tracking-tight">Technical Breakdown</h3>
-                <p class="text-slate-500 mt-2">Itemized verification of the analysis.</p>
-            </div>
+        <%-- 4. DETAILS SECTION --%>
+        <section id="details-section" class="border-t border-slate-100 pt-16">
+            <h3 class="text-xl font-bold text-slate-900 mb-8">Itemized Verification.</h3>
             
-            <%-- DIAGNOSTICS --%>
-            @if(verdict.getSkippedStrategies() != null && !verdict.getSkippedStrategies().isEmpty())
-                <details class="mb-8 group">
-                    <summary class="flex items-center cursor-pointer text-xs font-bold text-slate-400 uppercase tracking-widest hover:text-slate-600 transition-colors">
-                        <span class="mr-2">▶</span> Analysis Diagnostics (Skipped Strategies)
-                    </summary>
-                    <div class="mt-4 space-y-2 pl-4 border-l-2 border-slate-100">
-                        @for(String skip : verdict.getSkippedStrategies())
-                            <div class="text-xs text-slate-500 font-mono">
-                                ${skip}
-                            </div>
-                        @endfor
-                    </div>
-                </details>
-            @endif
-
-            <%-- MUST DO --%>
+            <%-- MUST DO LIST --%>
             @if(verdict.getPlan().getMustDo() != null && !verdict.getPlan().getMustDo().isEmpty())
-                <div class="mb-12">
-                    <h4 class="text-sm font-bold text-rose-600 uppercase tracking-widest mb-6 border-b border-rose-100 pb-2">CRITICAL PRIORITY (Must Do)</h4>
-                    <div class="space-y-4">
-                        @for(RiskAdjustedItem item : verdict.getPlan().getMustDo())
-                            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 bg-white border border-slate-200 rounded-xl hover:border-rose-200 transition-colors">
-                                <div>
-                                    <div class="flex items-center gap-2">
-                                        <span class="font-bold text-slate-800">${item.getPrettyName()}</span>
-                                        @if(item.getIsForensicConfirmed())
-                                            <span class="px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 text-[10px] font-bold">FORENSIC MATCH</span>
-                                        @endif
-                                        @if(item.getIsCodeMandated())
-                                            <span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[10px] font-bold">CODE</span>
-                                        @endif
-                                    </div>
-                                    <p class="text-sm text-slate-500 mt-1">${item.getExplanation()}</p>
+                <div class="space-y-4">
+                    @for(RiskAdjustedItem item : verdict.getPlan().getMustDo())
+                        <div class="flex flex-col sm:flex-row items-baseline justify-between p-6 bg-white border border-slate-100 rounded-2xl hover:border-slate-300 transition-colors group">
+                            <div class="flex-1 pr-6">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <h4 class="font-bold text-slate-900">${item.getPrettyName()}</h4>
+                                    
+                                     @if(Boolean.TRUE.equals(item.getIsForensicConfirmed()))
+                                        <span class="px-2 py-0.5 rounded-md bg-rose-50 text-rose-600 text-[10px] font-bold uppercase tracking-wide border border-rose-100">Forensic Match</span>
+                                    @endif
+                                    @if(Boolean.TRUE.equals(item.getIsCodeMandated()))
+                                        <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-bold uppercase tracking-wide">Code</span>
+                                    @endif
                                 </div>
-                                <div class="mt-2 sm:mt-0 text-right">
-                                    <span class="block font-bold text-slate-900">$${String.format("%,.0f", item.getAdjustedCost())}</span>
-                                </div>
+                                <p class="text-sm text-slate-500 group-hover:text-slate-700 transition-colors">${item.getExplanation()}</p>
                             </div>
-                        @endfor
-                    </div>
+                            <div class="font-mono font-semibold text-slate-900 mt-4 sm:mt-0">
+                                $${String.format("%,.0f", item.getAdjustedCost())}
+                            </div>
+                        </div>
+                    @endfor
                 </div>
             @endif
 
-            <div class="text-center pt-8">
-                 <a href="/" class="inline-flex items-center justify-center px-6 py-3 border border-slate-300 shadow-sm text-base font-medium rounded-md text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
-                    Start New Analysis
-                </a>
+            <div class="mt-16 text-center">
+                 <p class="text-xs text-slate-400 mb-4">Calculations generated at ${new java.util.Date().toString()}</p>
+                 <a href="/" class="text-sm font-semibold text-blue-600 hover:text-black transition">Start Another Analysis &rarr;</a>
             </div>
+        </section>
 
-         </div>
-    </section>
+    </main>
 
 </body>
 </html>
