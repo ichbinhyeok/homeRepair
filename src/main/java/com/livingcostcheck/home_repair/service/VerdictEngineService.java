@@ -260,8 +260,57 @@ public class VerdictEngineService {
                 .eraFeature(eraFeature)
                 .eraFeatureReason(
                         String.format("Based on common building codes from %s.", context.getEra().replace("_", "-")))
+                .dynamicNarrative(generateDynamicNarrative(context, city))
                 .disclaimer("This is a contextual signal, not a full inspection.")
                 .build();
+    }
+
+    /**
+     * GENERATES UNIQUE CONTENT (DCI) for pSEO
+     * Combines climate, era, and regional labor data into a unique authoritative
+     * paragraph.
+     */
+    private String generateDynamicNarrative(UserContext context, MetroCityData city) {
+        StringBuilder sb = new StringBuilder();
+
+        // 1. Climate Context (Authoritative Unique Content)
+        String climate = city.getClimateZone();
+        if (climate != null) {
+            if (climate.startsWith("1") || climate.startsWith("2")) {
+                sb.append(String.format(
+                        "As a humid location in zone %s, homes in %s are particularly susceptible to mold infiltration in building envelopes. ",
+                        climate, context.getMetroCode()));
+            } else if (climate.startsWith("5") || climate.startsWith("6")) {
+                sb.append(String.format(
+                        "The severe freeze-thaw cycles in climate zone %s necessitate rigorous inspection of foundation footings and exterior masonry. ",
+                        climate));
+            } else {
+                sb.append(String.format(
+                        "The temperate climate of zone %s typically minimizes rapid exterior degradation compared to coastal regions. ",
+                        climate));
+            }
+        }
+
+        // 2. Era Specific Insight
+        if (context.getEra().contains("PRE_1950")) {
+            sb.append(
+                    "Maintaining a pre-1950 structure requires careful management of legacy electrical systems and potential lead-based coatings. ");
+        } else if (context.getEra().contains("2010")) {
+            sb.append(
+                    "While modern 2010+ eras benefit from updated energy codes, moisture management in tightly sealed envelopes remains a priority. ");
+        }
+
+        // 3. Labor Market Conclusion
+        if (city.getLaborMult() > 1.1) {
+            sb.append(String.format(
+                    "Due to elevated labor costs in the %s market, prioritizing high-efficiency materials can yield significant long-term ROI. ",
+                    context.getMetroCode()));
+        } else {
+            sb.append(
+                    "Stable local labor rates allow for more comprehensive restoration projects within a standard budget. ");
+        }
+
+        return sb.toString();
     }
 
     // === PHASE 1: STRATEGY ELIGIBILITY LAYER ===
@@ -518,6 +567,29 @@ public class VerdictEngineService {
                 .mapToDouble(RiskAdjustedItem::getAdjustedCost)
                 .sum();
 
+        // FIX V1.5: SAFETY FLOOR LOGIC
+        // If Risk detected but total cost is 0, add a "Trust Min Floor" for inspection.
+        boolean dangerDetected = context.getIsChineseDrywall() == Boolean.TRUE ||
+                context.getIsFpePanel() == Boolean.TRUE ||
+                context.getIsPolyB() == Boolean.TRUE ||
+                context.getIsAluminum() == Boolean.TRUE;
+
+        if (dangerDetected && totalCost < 1500.0) {
+            RiskAdjustedItem floorItem = RiskAdjustedItem.builder()
+                    .itemCode("V15_SAFETY_FLOOR")
+                    .prettyName("Professional Forensic Inspection / Risk Mitigation Audit")
+                    .category("SAFETY")
+                    .adjustedCost(2500.0)
+                    .mandatory(true)
+                    .explanation(
+                            "Critical risk detected. Even if specific damage is not visible, a professional audit is non-negotiable for safety mapping.")
+                    .isCodeMandated(true)
+                    .isForensicConfirmed(true)
+                    .build();
+            plan.getMustDo().add(0, floorItem);
+            totalCost += 2500.0;
+        }
+
         // For FOREVER_HOME (and others if applicable), 'Should Do' items are part of
         // the investment plan
         if (!plan.getShouldDo().isEmpty()) {
@@ -732,9 +804,15 @@ public class VerdictEngineService {
                     if (candidate.getCategory().contains("INTERIOR") && candidate.getItemCode().contains("FLOOR")) {
                         quantity = scale.getInteriorSqft() * 0.85; // 85% coverage
                     } else if (candidate.getItemCode().contains("DECK")) {
-                        quantity = 400.0; // Reasonable fixed size for deck (not whole lot!)
+                        // FIX V1.5: Decking should NOT use the whole yard or whole house.
+                        // Standard deck is ~400 sqft. Cap it at 600 for large homes.
+                        double houseSqft = scale.getInteriorSqft();
+                        quantity = Math.min(Math.max(houseSqft * 0.15, 300.0), 600.0);
                     } else if (candidate.getCategory().contains("LANDSCAPING")) {
-                        quantity = scale.getExteriorSqft(); // Yard work uses lot size
+                        // FIX V1.5: Landscaping maintenance shouldn't be the core yard cost if it's
+                        // high.
+                        // Use a fractional approach.
+                        quantity = 1.0; // Maintenance often quoted per project baseline unless ACRE
                     } else {
                         quantity = scale.getInteriorSqft(); // Fallback
                     }
@@ -915,6 +993,7 @@ public class VerdictEngineService {
             String explanation = "";
             String compoundingBadge = null;
             String category = "COSMETIC"; // Default
+            ConstructionItem itemDef = (ConstructionItem) item.getRawData().get("itemDef");
 
             // 0. FORENSIC CONFIRMATION (Phase 4 - User Visual Observations)
             // These override statistical guessing with explicit user confirmation
@@ -1047,6 +1126,27 @@ public class VerdictEngineService {
             }
             // COSMETIC is default (Includes SIDING, WINDOWS unless mapped otherwise or
             // Critical)
+
+            // 0. Age-Based Mandatory (V1.5)
+            // If item has a mandatory age limit and house is older, force it into Must Do
+            Integer ageLimit = itemDef.getMandatoryIfAgeGt();
+            if (ageLimit != null) {
+                // Parse age from era string (e.g., 1970_1980 -> 1970)
+                String startYearStr = context.getEra().split("_")[0];
+                try {
+                    int startYear = "PRE".equals(startYearStr) ? 1900 : Integer.parseInt(startYearStr);
+                    int currentAge = 2026 - startYear;
+                    if (currentAge > ageLimit) {
+                        mandatory = true;
+                        riskFlags.add("AGE_MANDATORY: > " + ageLimit + " years");
+                        explanation += " **System Lifecycle Alert**: At " + currentAge
+                                + " years, this system exceeds standard safety limits (" + ageLimit
+                                + " years) and requires replacement. ";
+                    }
+                } catch (Exception e) {
+                    // Fallback if era string is weird
+                }
+            }
 
             // Safety Override (Dynamic Promotion)
             if (mandatory || riskFlags.stream().anyMatch(f -> f.contains("CRITICAL"))) {
@@ -1234,8 +1334,8 @@ public class VerdictEngineService {
 
                 case STANDARD_LIVING:
                     // Safety + Functional + Standards
-                    boolean isCatastrophic = item.getAdjustedCost() >= 10000.0;
-                    boolean isHighRiskCrash = item.getAdjustedCost() >= 5000.0 &&
+                    boolean isCatastrophic = item.getAdjustedCost() >= 25000.0;
+                    boolean isHighRiskCrash = item.getAdjustedCost() >= 8000.0 &&
                             item.getRiskFlags().stream().anyMatch(f -> f.contains("CRITICAL") || f.contains("HAZMAT")); // Simplified
                                                                                                                         // logic
 
@@ -1243,7 +1343,7 @@ public class VerdictEngineService {
                         mustDo.add(item);
                     } else if (isCatastrophic || isHighRiskCrash) {
                         // PROMOTION RULE: Catastrophic Financial Risk -> Must Do
-                        item.setExplanation("[CRITICAL PROMOTION] High financial liability detected ($"
+                        item.setExplanation("[FINANCIAL RISK PROMOTION] High liability detected ($"
                                 + String.format("%,.0f", item.getAdjustedCost()) + "). " + item.getExplanation());
                         item.setMandatory(true);
                         mustDo.add(item);

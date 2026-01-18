@@ -249,6 +249,7 @@ public class VerdictDTOs {
         private String eraFeature; // e.g., "1920s: Likely Knob & Tube Wiring"
         private String eraFeatureReason; // e.g., "Common construction standard for homes built prior to 1950."
 
+        private String dynamicNarrative; // For pSEO unique content
         private String disclaimer; // "This is a contextual signal, not a full inspection"
     }
 }

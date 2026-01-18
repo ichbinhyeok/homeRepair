@@ -119,6 +119,8 @@ public class DataMapping {
         private Double shortOrderMultiplier;
         @JsonProperty("tax_credit_eligible")
         private Boolean taxCreditEligible;
+        @JsonProperty("mandatory_if_age_gt")
+        private Integer mandatoryIfAgeGt;
     }
 
     @Data

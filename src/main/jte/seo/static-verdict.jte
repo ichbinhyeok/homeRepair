@@ -159,6 +159,10 @@
     @template.layout._header()
 
     <div class="verdict-container">
+        <!-- TOP AD PLACEHOLDER (LEADERBOARD) -->
+        <div class="ad-placeholder-top" style="width: 100%; height: 90px; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; margin-bottom: 30px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;">
+            <span>&mdash; Advertisement Placeholder &mdash;</span>
+        </div>
         
         <!-- Main Verdict Card -->
         <article class="card verdict-header-card">
@@ -174,6 +178,24 @@
                 </h2>
                 <div class="headline explanation-text">
                     ${verdict.getHeadline()}
+                </div>
+                
+                @if(verdict.getContextBriefing() != null && verdict.getContextBriefing().getDynamicNarrative() != null)
+                    <div class="card pSEO-narrative" style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 24px; border-radius: 12px; font-style: italic; line-height: 1.6; color: #475569; margin-bottom: 30px;">
+                        <strong>Expert Insight:</strong> ${verdict.getContextBriefing().getDynamicNarrative()}
+                    </div>
+                @endif
+            </section>
+
+            <!-- MONETIZATION PLACEHOLDER: VERIFIED PROS -->
+            <section class="verified-pros-ghost" style="background: linear-gradient(135deg, #eff6ff 0%, #fef2f2 100%); padding: 24px; border-radius: 16px; border: 1px dashed #3b82f6; margin-bottom: 40px;">
+                <h3 style="margin-top:0; font-size: 1rem; color: #1e40af; display: flex; align-items: center; gap: 8px;">
+                    <span>🛡️</span> Verified Local Specialists in ${metroName}
+                </h3>
+                <p style="font-size: 0.85rem; color: #64748b;">Finding qualified contractors for ${eraName} homes requires specialized expertise. Our certified network is launching soon in this region.</p>
+                <div style="display: flex; gap: 12px; margin-top: 16px; opacity: 0.6;">
+                    <div style="flex: 1; background: white; height: 12px; border-radius: 6px;"></div>
+                    <div style="flex: 1; background: white; height: 12px; border-radius: 6px;"></div>
                 </div>
             </section>
         </article>
@@ -219,8 +241,12 @@
                                 @endif
                             </div>
 
-                            <div class="data-cost" style="font-weight: 800; color: #1e293b;">
-                                Estimated Cost: $${String.format("%,.0f", item.getAdjustedCost())}
+                            <div class="data-cost" style="font-weight: 800; color: #1e293b; display: flex; justify-content: space-between; align-items: center;">
+                                <span>Estimated Cost: $${String.format("%,.0f", item.getAdjustedCost())}</span>
+                                <!-- MONETIZATION PLACEHOLDER: GET QUOTE / PRICE TRACKING -->
+                                <button style="font-size: 11px; background: #3b82f6; color: white; border: none; padding: 4px 10px; border-radius: 4px; font-weight: 600; cursor: pointer; opacity: 0.8; transition: all 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">
+                                    Get Local Quote &rarr;
+                                </button>
                             </div>
                         </div>
                     @endfor
@@ -250,7 +276,6 @@
             </section>
         @endif
     
-        <!-- Call to Action -->
         <section id="cta" class="card" style="text-align: center; border-top: 4px solid var(--color-primary); background-color: #F8FAFC; margin-top: 40px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
             <h2 class="section-title" style="justify-content: center; margin-bottom: 16px; border: none; color: #1e293b;">
                 Need a Custom Analysis?
@@ -262,6 +287,18 @@
                 Recalculate with your own budget
             </a>
         </section>
+
+        <!-- BOTTOM AD PLACEHOLDER (RECTANGLE / NATIVE) -->
+        <div class="ad-placeholder-bottom" style="width: 100%; min-height: 250px; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 12px; margin-top: 40px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 12px; font-weight: 500; text-transform: uppercase;">
+            <div style="text-align: center;">
+                <p>&mdash; Recommended For You &mdash;</p>
+                <div style="display: flex; gap: 20px; margin-top: 20px;">
+                    <div style="width: 150px; height: 100px; background: #e2e8f0; border-radius: 4px;"></div>
+                    <div style="width: 150px; height: 100px; background: #e2e8f0; border-radius: 4px;"></div>
+                    <div style="width: 150px; height: 100px; background: #e2e8f0; border-radius: 4px;"></div>
+                </div>
+            </div>
+        </div>
     
         <!-- Internal Navigation -->
         <section class="internal-links" style="margin-top: 60px;">
