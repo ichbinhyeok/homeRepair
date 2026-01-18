@@ -106,14 +106,24 @@ public class InternalLinkBuilder {
         private List<String> getDefaultNearbyMetros(String currentMetro) {
                 // Fallback to major metros if no specific region defined
                 List<String> majorMetros = Arrays.asList(
-                                "NEW_YORK_NEWARK_NJ",
-                                "LOS_ANGELES_LONG_BEACH_CA",
+                                "ATLANTA_SANDY_SPRINGS_GA",
+                                "BOSTON_CAMBRIDGE_MA",
                                 "CHICAGO_NAPERVILLE_IL",
+                                "DALLAS_FT_WORTH_ARLINGTON_TX",
                                 "HOUSTON_THE_WOODLANDS_TX",
-                                "PHOENIX_MESA_AZ");
+                                "LOS_ANGELES_LONG_BEACH_CA",
+                                "MIAMI_FT_LAUDERDALE_FL",
+                                "PHILADELPHIA_PA_NJ",
+                                "PHOENIX_MESA_CHANDLER_AZ",
+                                "SAN_ANTONIO_NEW_BRAUNFELS_TX",
+                                "SAN_DIEGO_CHULA_VISTA_CA",
+                                "SAN_FRANCISCO_OAKLAND_CA",
+                                "SAN_JOSE_SUNNYVALE_CA",
+                                "SEATTLE_TACOMA_BELLEVUE_WA",
+                                "WASHINGTON_ARLINGTON_DC_VA");
                 return majorMetros.stream()
                                 .filter(m -> !m.equals(currentMetro))
-                                .limit(3)
+                                .limit(5)
                                 .collect(Collectors.toList());
         }
 
