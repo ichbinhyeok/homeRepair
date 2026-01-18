@@ -38,6 +38,8 @@ public class DataMapping {
         private Double avgLot;
         private String foundation;
         private String risk;
+        @JsonProperty("climate_zone")
+        private String climateZone;
         // other fields optional/ignored
     }
 

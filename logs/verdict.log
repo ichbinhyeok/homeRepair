@@ -7100,3 +7100,269 @@ java.lang.NullPointerException: Cannot invoke "com.livingcostcheck.home_repair.s
 2026-01-18T13:31:56.989+09:00 DEBUG 42676 --- [home-repair] [http-nio-8081-exec-3] c.l.h.web.HomeRepairController           : Loading result for ID: 13671e17-cdba-41f3-8af0-82aec380a6ba
 2026-01-18T13:31:56.990+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-3] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1995_2010 metro=ABILENE_TX eligible=true missing=[]
 2026-01-18T13:31:56.990+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-3] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1995_2010 metro=ABILENE_TX relationship=LIVING
+2026-01-18T13:38:26.843+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-6] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL eligible=true missing=[]
+2026-01-18T13:38:26.844+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-6] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL relationship=LIVING
+2026-01-18T13:38:26.865+09:00 DEBUG 42676 --- [home-repair] [http-nio-8081-exec-7] c.l.h.web.HomeRepairController           : Loading result for ID: b4881a7e-fef9-4f72-8d40-256b110f543d
+2026-01-18T13:38:26.866+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL eligible=true missing=[]
+2026-01-18T13:38:26.866+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL relationship=LIVING
+2026-01-18T13:39:08.519+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-4] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=2010_PRESENT metro=CHICAGO_NAPERVILLE_IL eligible=true missing=[]
+2026-01-18T13:39:08.520+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-4] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=2010_PRESENT metro=CHICAGO_NAPERVILLE_IL relationship=BUYING
+2026-01-18T13:39:08.521+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-4] c.l.h.service.VerdictEngineService       : Zero-cost verdict generated. Assuming Low Risk / New Condition. strategy=SAFETY_FLIP
+2026-01-18T13:39:08.537+09:00 DEBUG 42676 --- [home-repair] [http-nio-8081-exec-5] c.l.h.web.HomeRepairController           : Loading result for ID: 1ae2a436-3e2c-427f-8f35-f4c30d55596b
+2026-01-18T13:39:08.537+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-5] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=2010_PRESENT metro=CHICAGO_NAPERVILLE_IL eligible=true missing=[]
+2026-01-18T13:39:08.537+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-5] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=2010_PRESENT metro=CHICAGO_NAPERVILLE_IL relationship=BUYING
+2026-01-18T13:39:08.538+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-5] c.l.h.service.VerdictEngineService       : Zero-cost verdict generated. Assuming Low Risk / New Condition. strategy=SAFETY_FLIP
+2026-01-18T13:39:50.581+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-10] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=CHICAGO_NAPERVILLE_IL eligible=true missing=[]
+2026-01-18T13:39:50.582+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-10] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=1950_1970 metro=CHICAGO_NAPERVILLE_IL relationship=INVESTING
+2026-01-18T13:39:50.605+09:00 DEBUG 42676 --- [home-repair] [http-nio-8081-exec-2] c.l.h.web.HomeRepairController           : Loading result for ID: d4e21010-0ab7-4530-8826-d31c2c5481f9
+2026-01-18T13:39:50.605+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-2] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=CHICAGO_NAPERVILLE_IL eligible=true missing=[]
+2026-01-18T13:39:50.605+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-2] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=1950_1970 metro=CHICAGO_NAPERVILLE_IL relationship=INVESTING
+2026-01-18T13:40:58.659+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-2] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=2010_PRESENT metro=CHICAGO_NAPERVILLE_IL eligible=true missing=[]
+2026-01-18T13:40:58.660+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-2] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=2010_PRESENT metro=CHICAGO_NAPERVILLE_IL relationship=BUYING
+2026-01-18T13:40:58.661+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-2] c.l.h.service.VerdictEngineService       : Zero-cost verdict generated. Assuming Low Risk / New Condition. strategy=SAFETY_FLIP
+2026-01-18T13:40:58.673+09:00 DEBUG 42676 --- [home-repair] [http-nio-8081-exec-3] c.l.h.web.HomeRepairController           : Loading result for ID: fbebd783-820e-4015-9348-d548d46a2e67
+2026-01-18T13:40:58.674+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-3] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=2010_PRESENT metro=CHICAGO_NAPERVILLE_IL eligible=true missing=[]
+2026-01-18T13:40:58.674+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-3] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=2010_PRESENT metro=CHICAGO_NAPERVILLE_IL relationship=BUYING
+2026-01-18T13:40:58.674+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-3] c.l.h.service.VerdictEngineService       : Zero-cost verdict generated. Assuming Low Risk / New Condition. strategy=SAFETY_FLIP
+2026-01-18T13:54:51.765+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-2] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL eligible=true missing=[]
+2026-01-18T13:54:51.766+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-2] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL relationship=LIVING
+2026-01-18T13:54:51.795+09:00 DEBUG 42676 --- [home-repair] [http-nio-8081-exec-3] c.l.h.web.HomeRepairController           : Loading result for ID: 931d6896-facb-4c27-8dc2-ef3523eda260
+2026-01-18T13:54:51.795+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-3] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL eligible=true missing=[]
+2026-01-18T13:54:51.796+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-3] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL relationship=LIVING
+2026-01-18T13:55:50.330+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-8] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL eligible=true missing=[]
+2026-01-18T13:55:50.330+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-8] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL relationship=LIVING
+2026-01-18T13:55:50.347+09:00 DEBUG 42676 --- [home-repair] [http-nio-8081-exec-9] c.l.h.web.HomeRepairController           : Loading result for ID: fa1d423c-8aec-4b75-8b5b-38b0d290feed
+2026-01-18T13:55:50.348+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-9] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL eligible=true missing=[]
+2026-01-18T13:55:50.348+09:00  INFO 42676 --- [home-repair] [http-nio-8081-exec-9] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL relationship=LIVING
+2026-01-18T14:01:54.201+09:00  INFO 18120 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Starting HomeRepairApplication using Java 17.0.17 with PID 18120 (C:\Development\Owner\home-repair\build\classes\java\main started by tlsgu in C:\Development\Owner\home-repair)
+2026-01-18T14:01:54.204+09:00 DEBUG 18120 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Running with Spring Boot v3.5.9, Spring v6.2.15
+2026-01-18T14:01:54.205+09:00  INFO 18120 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : No active profile set, falling back to 1 default profile: "default"
+2026-01-18T14:01:55.234+09:00  INFO 18120 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-18T14:01:55.308+09:00  INFO 18120 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 64 ms. Found 2 JPA repository interfaces.
+2026-01-18T14:01:55.916+09:00  INFO 18120 --- [home-repair] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2026-01-18T14:01:55.936+09:00  INFO 18120 --- [home-repair] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-18T14:01:55.936+09:00  INFO 18120 --- [home-repair] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-18T14:01:56.014+09:00  INFO 18120 --- [home-repair] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-18T14:01:56.015+09:00  INFO 18120 --- [home-repair] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1757 ms
+2026-01-18T14:01:56.214+09:00  INFO 18120 --- [home-repair] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-18T14:01:56.298+09:00  INFO 18120 --- [home-repair] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
+2026-01-18T14:01:56.340+09:00  INFO 18120 --- [home-repair] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-18T14:01:56.699+09:00  INFO 18120 --- [home-repair] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-18T14:01:56.740+09:00  INFO 18120 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-18T14:01:56.974+09:00  INFO 18120 --- [home-repair] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026-01-18T14:01:56.976+09:00  INFO 18120 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-18T14:01:57.011+09:00  WARN 18120 --- [home-repair] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-18T14:01:57.038+09:00  INFO 18120 --- [home-repair] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-18T14:01:58.001+09:00  INFO 18120 --- [home-repair] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-18T14:01:58.068+09:00  INFO 18120 --- [home-repair] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-18T14:01:58.220+09:00  INFO 18120 --- [home-repair] [main] c.l.h.service.VerdictEngineService       : VerdictEngine Data Loaded Successfully.
+2026-01-18T14:01:58.708+09:00  INFO 18120 --- [home-repair] [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2026-01-18T14:01:58.786+09:00  INFO 18120 --- [home-repair] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2026-01-18T14:01:58.794+09:00  INFO 18120 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Started HomeRepairApplication in 5.213 seconds (process running for 5.607)
+2026-01-18T14:02:16.713+09:00  INFO 18120 --- [home-repair] [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-18T14:02:16.714+09:00  INFO 18120 --- [home-repair] [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-18T14:02:16.714+09:00  INFO 18120 --- [home-repair] [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-01-18T14:03:25.926+09:00  INFO 18120 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL eligible=true missing=[]
+2026-01-18T14:03:25.929+09:00  INFO 18120 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL relationship=LIVING
+2026-01-18T14:03:26.350+09:00 DEBUG 18120 --- [home-repair] [http-nio-8081-exec-8] c.l.h.web.HomeRepairController           : Loading result for ID: c26fcd8b-93ac-4b24-b79c-26e840dc6d57
+2026-01-18T14:03:26.351+09:00  INFO 18120 --- [home-repair] [http-nio-8081-exec-8] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL eligible=true missing=[]
+2026-01-18T14:03:26.352+09:00  INFO 18120 --- [home-repair] [http-nio-8081-exec-8] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL relationship=LIVING
+2026-01-18T14:10:12.972+09:00  INFO 38740 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Starting HomeRepairApplication using Java 17.0.17 with PID 38740 (C:\Development\Owner\home-repair\build\classes\java\main started by tlsgu in C:\Development\Owner\home-repair)
+2026-01-18T14:10:12.974+09:00 DEBUG 38740 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Running with Spring Boot v3.5.9, Spring v6.2.15
+2026-01-18T14:10:12.974+09:00  INFO 38740 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : No active profile set, falling back to 1 default profile: "default"
+2026-01-18T14:10:13.596+09:00  INFO 38740 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-18T14:10:13.656+09:00  INFO 38740 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 52 ms. Found 2 JPA repository interfaces.
+2026-01-18T14:10:14.141+09:00  INFO 38740 --- [home-repair] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2026-01-18T14:10:14.157+09:00  INFO 38740 --- [home-repair] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-18T14:10:14.157+09:00  INFO 38740 --- [home-repair] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-18T14:10:14.227+09:00  INFO 38740 --- [home-repair] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-18T14:10:14.228+09:00  INFO 38740 --- [home-repair] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1215 ms
+2026-01-18T14:10:14.396+09:00  INFO 38740 --- [home-repair] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-18T14:10:14.476+09:00  INFO 38740 --- [home-repair] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
+2026-01-18T14:10:14.521+09:00  INFO 38740 --- [home-repair] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-18T14:10:14.962+09:00  INFO 38740 --- [home-repair] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-18T14:10:15.007+09:00  INFO 38740 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-18T14:10:15.260+09:00  INFO 38740 --- [home-repair] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026-01-18T14:10:15.262+09:00  INFO 38740 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-18T14:10:15.305+09:00  WARN 38740 --- [home-repair] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-18T14:10:15.337+09:00  INFO 38740 --- [home-repair] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-18T14:10:16.276+09:00  INFO 38740 --- [home-repair] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-18T14:10:16.346+09:00  INFO 38740 --- [home-repair] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-18T14:10:16.510+09:00  INFO 38740 --- [home-repair] [main] c.l.h.service.VerdictEngineService       : VerdictEngine Data Loaded Successfully.
+2026-01-18T14:10:16.932+09:00  INFO 38740 --- [home-repair] [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2026-01-18T14:10:16.998+09:00  WARN 38740 --- [home-repair] [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-01-18T14:10:16.999+09:00  INFO 38740 --- [home-repair] [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-18T14:10:17.000+09:00  INFO 38740 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-01-18T14:10:17.002+09:00  INFO 38740 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-01-18T14:10:17.014+09:00  INFO 38740 --- [home-repair] [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-01-18T14:10:17.034+09:00 ERROR 38740 --- [home-repair] [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8081 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8081 or configure this application to listen on another port.
+
+2026-01-18T14:10:37.964+09:00  INFO 17396 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Starting HomeRepairApplication using Java 17.0.17 with PID 17396 (C:\Development\Owner\home-repair\build\classes\java\main started by tlsgu in C:\Development\Owner\home-repair)
+2026-01-18T14:10:37.966+09:00 DEBUG 17396 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Running with Spring Boot v3.5.9, Spring v6.2.15
+2026-01-18T14:10:37.967+09:00  INFO 17396 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : No active profile set, falling back to 1 default profile: "default"
+2026-01-18T14:10:38.501+09:00  INFO 17396 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-18T14:10:38.555+09:00  INFO 17396 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 47 ms. Found 2 JPA repository interfaces.
+2026-01-18T14:10:38.986+09:00  INFO 17396 --- [home-repair] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2026-01-18T14:10:38.998+09:00  INFO 17396 --- [home-repair] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-18T14:10:38.998+09:00  INFO 17396 --- [home-repair] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-18T14:10:39.054+09:00  INFO 17396 --- [home-repair] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-18T14:10:39.054+09:00  INFO 17396 --- [home-repair] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1049 ms
+2026-01-18T14:10:39.203+09:00  INFO 17396 --- [home-repair] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-18T14:10:39.256+09:00  INFO 17396 --- [home-repair] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
+2026-01-18T14:10:39.289+09:00  INFO 17396 --- [home-repair] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-18T14:10:39.560+09:00  INFO 17396 --- [home-repair] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-18T14:10:39.590+09:00  INFO 17396 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-18T14:10:39.761+09:00  INFO 17396 --- [home-repair] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026-01-18T14:10:39.763+09:00  INFO 17396 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-18T14:10:39.785+09:00  WARN 17396 --- [home-repair] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-18T14:10:39.807+09:00  INFO 17396 --- [home-repair] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-18T14:10:40.580+09:00  INFO 17396 --- [home-repair] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-18T14:10:40.640+09:00  INFO 17396 --- [home-repair] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-18T14:10:40.773+09:00  INFO 17396 --- [home-repair] [main] c.l.h.service.VerdictEngineService       : VerdictEngine Data Loaded Successfully.
+2026-01-18T14:10:41.127+09:00  INFO 17396 --- [home-repair] [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2026-01-18T14:10:41.184+09:00  WARN 17396 --- [home-repair] [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-01-18T14:10:41.186+09:00  INFO 17396 --- [home-repair] [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-18T14:10:41.188+09:00  INFO 17396 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-01-18T14:10:41.193+09:00  INFO 17396 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-01-18T14:10:41.203+09:00  INFO 17396 --- [home-repair] [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-01-18T14:10:41.221+09:00 ERROR 17396 --- [home-repair] [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8081 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8081 or configure this application to listen on another port.
+
+2026-01-18T14:12:05.527+09:00  INFO 39856 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Starting HomeRepairApplication using Java 17.0.17 with PID 39856 (C:\Development\Owner\home-repair\build\classes\java\main started by tlsgu in C:\Development\Owner\home-repair)
+2026-01-18T14:12:05.530+09:00 DEBUG 39856 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Running with Spring Boot v3.5.9, Spring v6.2.15
+2026-01-18T14:12:05.530+09:00  INFO 39856 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : No active profile set, falling back to 1 default profile: "default"
+2026-01-18T14:12:06.305+09:00  INFO 39856 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-18T14:12:06.367+09:00  INFO 39856 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 53 ms. Found 2 JPA repository interfaces.
+2026-01-18T14:12:06.853+09:00  INFO 39856 --- [home-repair] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2026-01-18T14:12:06.865+09:00  INFO 39856 --- [home-repair] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-18T14:12:06.865+09:00  INFO 39856 --- [home-repair] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-18T14:12:06.925+09:00  INFO 39856 --- [home-repair] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-18T14:12:06.925+09:00  INFO 39856 --- [home-repair] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1351 ms
+2026-01-18T14:12:07.086+09:00  INFO 39856 --- [home-repair] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-18T14:12:07.140+09:00  INFO 39856 --- [home-repair] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
+2026-01-18T14:12:07.178+09:00  INFO 39856 --- [home-repair] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-18T14:12:07.526+09:00  INFO 39856 --- [home-repair] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-18T14:12:07.560+09:00  INFO 39856 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-18T14:12:07.744+09:00  INFO 39856 --- [home-repair] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026-01-18T14:12:07.747+09:00  INFO 39856 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-18T14:12:07.771+09:00  WARN 39856 --- [home-repair] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-18T14:12:07.797+09:00  INFO 39856 --- [home-repair] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-18T14:12:08.698+09:00  INFO 39856 --- [home-repair] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-18T14:12:08.773+09:00  INFO 39856 --- [home-repair] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-18T14:12:08.942+09:00  INFO 39856 --- [home-repair] [main] c.l.h.service.VerdictEngineService       : VerdictEngine Data Loaded Successfully.
+2026-01-18T14:12:09.399+09:00  INFO 39856 --- [home-repair] [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2026-01-18T14:12:09.475+09:00  INFO 39856 --- [home-repair] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2026-01-18T14:12:09.483+09:00  INFO 39856 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Started HomeRepairApplication in 4.487 seconds (process running for 4.811)
+2026-01-18T14:12:18.045+09:00  INFO 39856 --- [home-repair] [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-18T14:12:18.046+09:00  INFO 39856 --- [home-repair] [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-18T14:12:18.047+09:00  INFO 39856 --- [home-repair] [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-01-18T14:13:05.212+09:00  INFO 39856 --- [home-repair] [http-nio-8081-exec-6] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL eligible=true missing=[]
+2026-01-18T14:13:05.215+09:00  INFO 39856 --- [home-repair] [http-nio-8081-exec-6] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL relationship=LIVING
+2026-01-18T14:13:05.536+09:00 DEBUG 39856 --- [home-repair] [http-nio-8081-exec-7] c.l.h.web.HomeRepairController           : Loading result for ID: bcb25a8c-44fe-4436-b87e-68dfe036fa83
+2026-01-18T14:13:05.537+09:00  INFO 39856 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL eligible=true missing=[]
+2026-01-18T14:13:05.538+09:00  INFO 39856 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL relationship=LIVING
+2026-01-18T14:14:29.465+09:00  INFO 39856 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL eligible=true missing=[]
+2026-01-18T14:14:29.466+09:00  INFO 39856 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL relationship=LIVING
+2026-01-18T14:14:29.481+09:00 DEBUG 39856 --- [home-repair] [http-nio-8081-exec-8] c.l.h.web.HomeRepairController           : Loading result for ID: c1b67002-da18-442b-9d41-9bc58ad9c1b3
+2026-01-18T14:14:29.482+09:00  INFO 39856 --- [home-repair] [http-nio-8081-exec-8] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL eligible=true missing=[]
+2026-01-18T14:14:29.482+09:00  INFO 39856 --- [home-repair] [http-nio-8081-exec-8] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL relationship=LIVING
+2026-01-18T14:15:49.240+09:00  INFO 19488 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Starting HomeRepairApplication using Java 17.0.17 with PID 19488 (C:\Development\Owner\home-repair\build\classes\java\main started by tlsgu in C:\Development\Owner\home-repair)
+2026-01-18T14:15:49.242+09:00 DEBUG 19488 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Running with Spring Boot v3.5.9, Spring v6.2.15
+2026-01-18T14:15:49.244+09:00  INFO 19488 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : No active profile set, falling back to 1 default profile: "default"
+2026-01-18T14:15:50.019+09:00  INFO 19488 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-18T14:15:50.087+09:00  INFO 19488 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 58 ms. Found 2 JPA repository interfaces.
+2026-01-18T14:15:50.617+09:00  INFO 19488 --- [home-repair] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2026-01-18T14:15:50.632+09:00  INFO 19488 --- [home-repair] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-18T14:15:50.632+09:00  INFO 19488 --- [home-repair] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-18T14:15:50.712+09:00  INFO 19488 --- [home-repair] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-18T14:15:50.712+09:00  INFO 19488 --- [home-repair] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1399 ms
+2026-01-18T14:15:50.903+09:00  INFO 19488 --- [home-repair] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-18T14:15:50.966+09:00  INFO 19488 --- [home-repair] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
+2026-01-18T14:15:51.005+09:00  INFO 19488 --- [home-repair] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-18T14:15:51.325+09:00  INFO 19488 --- [home-repair] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-18T14:15:51.362+09:00  INFO 19488 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-18T14:15:51.614+09:00  INFO 19488 --- [home-repair] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026-01-18T14:15:51.616+09:00  INFO 19488 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-18T14:15:51.640+09:00  WARN 19488 --- [home-repair] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-18T14:15:51.664+09:00  INFO 19488 --- [home-repair] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-18T14:15:52.630+09:00  INFO 19488 --- [home-repair] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-18T14:15:52.700+09:00  INFO 19488 --- [home-repair] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-18T14:15:52.874+09:00  INFO 19488 --- [home-repair] [main] c.l.h.service.VerdictEngineService       : VerdictEngine Data Loaded Successfully.
+2026-01-18T14:15:53.339+09:00  INFO 19488 --- [home-repair] [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2026-01-18T14:15:53.468+09:00  INFO 19488 --- [home-repair] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2026-01-18T14:15:53.481+09:00  INFO 19488 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Started HomeRepairApplication in 4.847 seconds (process running for 5.216)
+2026-01-18T14:16:11.020+09:00  INFO 19488 --- [home-repair] [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-18T14:16:11.020+09:00  INFO 19488 --- [home-repair] [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-18T14:16:11.020+09:00  INFO 19488 --- [home-repair] [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-01-18T14:17:25.556+09:00  INFO 19488 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL eligible=true missing=[]
+2026-01-18T14:17:25.581+09:00  INFO 19488 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL relationship=LIVING
+2026-01-18T14:17:25.876+09:00 DEBUG 19488 --- [home-repair] [http-nio-8081-exec-8] c.l.h.web.HomeRepairController           : Loading result for ID: 45149b8d-550d-4ebc-8c10-e9fe72dd61c5
+2026-01-18T14:17:25.876+09:00  INFO 19488 --- [home-repair] [http-nio-8081-exec-8] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL eligible=true missing=[]
+2026-01-18T14:17:25.876+09:00  INFO 19488 --- [home-repair] [http-nio-8081-exec-8] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL relationship=LIVING
+2026-01-18T14:18:38.968+09:00  INFO 19488 --- [home-repair] [http-nio-8081-exec-5] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL eligible=true missing=[]
+2026-01-18T14:18:38.969+09:00  INFO 19488 --- [home-repair] [http-nio-8081-exec-5] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL relationship=LIVING
+2026-01-18T14:18:38.997+09:00 DEBUG 19488 --- [home-repair] [http-nio-8081-exec-6] c.l.h.web.HomeRepairController           : Loading result for ID: 9e44c039-a72f-455e-8107-a66f9ad84190
+2026-01-18T14:18:38.998+09:00  INFO 19488 --- [home-repair] [http-nio-8081-exec-6] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL eligible=true missing=[]
+2026-01-18T14:18:38.998+09:00  INFO 19488 --- [home-repair] [http-nio-8081-exec-6] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=MIAMI_FT_LAUDERDALE_FL relationship=LIVING

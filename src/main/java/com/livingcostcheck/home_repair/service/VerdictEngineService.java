@@ -141,7 +141,8 @@ public class VerdictEngineService {
         SortedPlan displayPlan = chosenOption.getPlan();
 
         // Build strategy explanation for transparency
-        String strategyExplanation = buildStrategyExplanation(allEligibilities, chosenEligibility);
+        String strategyExplanation = buildStrategyExplanation(allEligibilities, chosenEligibility,
+                chosenOption.getDescription());
 
         List<String> skippedStrategies = allEligibilities.stream()
                 .filter(e -> !e.isEligible())
@@ -149,34 +150,48 @@ public class VerdictEngineService {
                 .collect(Collectors.toList());
 
         // Build final verdict
+        // Helper to title case
+        String rawStrategy = chosenEligibility.getStrategyType().name(); // e.g. STANDARD_LIVING
+        String prettyStrategy = Arrays.stream(rawStrategy.split("_"))
+                .map(word -> word.substring(0, 1) + word.substring(1).toLowerCase())
+                .collect(Collectors.joining(" "));
+
+        // New variables for the updated Verdict.builder()
+        UUID verdictId = UUID.randomUUID();
+        List<String> explanations = new ArrayList<>(); // Assuming this is a new field, initialize as empty or populate
+                                                       // as needed
+        double totalCost = minRequired; // Using minRequired as totalCost
+        VerdictDTOs.CostRange costRange = VerdictDTOs.CostRange.fromCost(minRequired);
+        String costRangeLabel = costRange.getLabel() + " (" + costRange.getFormattedRange() + " typical range)";
+        String primaryDriver = displayPlan.getMustDo() != null && !displayPlan.getMustDo().isEmpty()
+                ? String.format("%s ($%,.0f)", displayPlan.getMustDo().get(0).getPrettyName(),
+                        displayPlan.getMustDo().get(0).getAdjustedCost())
+                : null;
+        boolean isDealKiller = isDealKiller(context);
+        String dealKillerMessage = getDealKillerMessage(context);
+        SortedPlan plan = displayPlan; // Using displayPlan as plan
+
         return Verdict.builder()
-                .tier(tier)
+                .tier(tier) // Correct variable
                 .headline(headline)
-                .strategyUsed(chosenEligibility.getStrategyType().name())
+                // .explanations() removed (not in DTO)
+                .strategyUsed(prettyStrategy) // Use pretty title case
                 .strategyExplanation(strategyExplanation)
                 .skippedStrategies(skippedStrategies)
-                .strategyOptions(Collections.emptyList()) // Hide strategies to enforce Single Verdict UI
+                .strategyOptions(Collections.emptyList())
                 .exclusionNote(exclusionNotes)
-                .plan(displayPlan)
-                // YMYL-Safe Cost Presentation
-                .costRange(VerdictDTOs.CostRange.fromCost(minRequired))
-                .costRangeLabel(VerdictDTOs.CostRange.fromCost(minRequired).getLabel() +
-                        " (" + VerdictDTOs.CostRange.fromCost(minRequired).getFormattedRange() + " typical range)")
-                .primaryCostDriver(displayPlan.getMustDo() != null && !displayPlan.getMustDo().isEmpty()
-                        ? String.format("Primary Cost Driver: %s ($%,.0f)",
-                                displayPlan.getMustDo().get(0).getPrettyName(),
-                                displayPlan.getMustDo().get(0).getAdjustedCost())
-                        : null)
+                .plan(plan)
+                .costRange(costRange)
+                .costRangeLabel(costRangeLabel)
+                .primaryCostDriver(primaryDriver) // Correct variable
                 .itemsAnalyzed(candidates.size())
                 .exactCostEstimate(minRequired)
                 .mustDoExplanation(Collections.emptyList())
                 .optionalActions(Collections.emptyList())
                 .futureCostWarning(Collections.emptyList())
                 .upgradeScenario(Collections.emptyList())
-                // Deal Killer Logic
-                .isDealKiller(isDealKiller(context))
-                .dealKillerMessage(getDealKillerMessage(context))
-                // Context Briefing
+                .isDealKiller(isDealKiller)
+                .dealKillerMessage(dealKillerMessage)
                 .contextBriefing(buildContextBriefing(context))
                 .build();
     }
@@ -218,10 +233,27 @@ public class VerdictEngineService {
         else if (context.getEra().contains("2000"))
             eraFeature = "Era Risk: Synthetic Stucco / Chinese Drywall";
 
+        // Logic Injection: Climate Zone Interpretation
+        String climateZone = city.getClimateZone(); // e.g., "1", "2A", "5A"
+        String climateWarning = "";
+
+        if (climateZone != null) {
+            if (climateZone.startsWith("1") || climateZone.startsWith("2")) {
+                climateWarning = " [High Humidity / Mold Risk]";
+            } else if (climateZone.startsWith("3") || climateZone.startsWith("4")) {
+                climateWarning = " [Mixed Climate / Moisture Control]";
+            } else if (climateZone.startsWith("5") || climateZone.startsWith("6") || climateZone.startsWith("7")) {
+                climateWarning = " [Freeze / Thaw Cycle Risk]";
+            } else if (climateZone.contains("B")) { // Dry zones
+                climateWarning = " [Dry Heat / UV Exposure]";
+            }
+        }
+
         return VerdictDTOs.ContextBriefing.builder()
-                .regionalRisk(city.getRisk())
+                .regionalRisk(city.getRisk() + climateWarning)
                 .regionalRiskReason(
-                        String.format("Driven by market conditions in the %s metro area.", context.getMetroCode()))
+                        String.format("Driven by market conditions in the %s metro area (Climate Zone %s).",
+                                context.getMetroCode(), climateZone != null ? climateZone : "Unknown"))
                 .foundationType(city.getFoundation())
                 .laborMarketRate(laborRateDesc)
                 .laborMarketRateReason("Indexed against 2026 National Construction Average.")
@@ -389,12 +421,11 @@ public class VerdictEngineService {
      */
     private String buildStrategyExplanation(
             List<StrategyEligibility> allEligibilities,
-            StrategyEligibility chosen) {
+            StrategyEligibility chosen,
+            String description) {
 
         StringBuilder explanation = new StringBuilder();
-        explanation.append("Analysis Strategy: ")
-                .append(chosen.getStrategyType().name())
-                .append(". ");
+        explanation.append(description).append(". ");
 
         // Explain why others were skipped
         List<StrategyEligibility> skipped = allEligibilities.stream()
@@ -402,12 +433,16 @@ public class VerdictEngineService {
                 .collect(Collectors.toList());
 
         if (!skipped.isEmpty()) {
-            explanation.append("Skipped strategies: ");
-            for (StrategyEligibility skip : skipped) {
+            explanation.append(" Alternatives considered: ");
+            for (int i = 0; i < skipped.size(); i++) {
+                StrategyEligibility skip = skipped.get(i);
                 explanation.append(skip.getStrategyType().name())
                         .append(" (")
                         .append(skip.getExplanation())
-                        .append("); ");
+                        .append(")");
+                if (i < skipped.size() - 1) {
+                    explanation.append("; ");
+                }
             }
         }
 
@@ -525,25 +560,27 @@ public class VerdictEngineService {
                 break;
             case STANDARD_LIVING:
                 name = "Functional Living Standards";
-                description = "Stable living conditions for 5-7 years";
+                description = "Comfortable, modern living standards for 5-7 years";
                 goal = "Habitability & System Stability";
-                materialGrade = "All Essential Systems (Safety + Mechanical + Structural)";
+                materialGrade = "Reliable Standard (Safety + Function + Structure)";
                 includedCategories = Arrays.asList("SAFETY", "STRUCTURAL", "MECHANICAL", "FUNCTIONAL");
                 keyHighlights = Arrays.asList(
-                        "All safety + essential systems",
-                        "Standard contractor materials",
-                        "Balanced functionality");
+                        "Full functional restoration",
+                        "Market-standard finishes",
+                        "Energy efficiency upgrades (Windows/Insulation)",
+                        "10-year system reliability");
                 break;
             case FOREVER_HOME:
                 name = "Asset Protection Plan";
-                description = "Long-term structural preservation";
+                description = "Long-term structural preservation & legacy quality";
                 goal = "Minimize Future CapEx & Depreciation";
                 materialGrade = "Asset-Grade (Durability Focused)";
                 includedCategories = Arrays.asList("ALL");
                 keyHighlights = Arrays.asList(
-                        "Cosmetic & Asset preservation",
-                        "Durability-focused materials",
-                        "Minimize resale friction");
+                        "Top-tier materials (e.g., HardiePlank, Metal Roof)",
+                        "Full structural reinforcement",
+                        "Smart home integration",
+                        "Lifetime warranty components");
                 break;
         }
 
