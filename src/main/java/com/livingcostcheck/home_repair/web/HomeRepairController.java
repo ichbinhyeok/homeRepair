@@ -6,6 +6,7 @@ import com.livingcostcheck.home_repair.repository.EventLogRepository;
 import com.livingcostcheck.home_repair.repository.HomeRepairRepository;
 import com.livingcostcheck.home_repair.service.VerdictEngineService;
 import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.*;
+import com.livingcostcheck.home_repair.seo.StaticPageGeneratorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,11 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.*;
 
+/**
+ * Main controller for Home Repair Verdict Engine
+ */
 @Slf4j
 @Controller
 @RequestMapping("/home-repair")

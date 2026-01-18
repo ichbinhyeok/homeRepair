@@ -41,7 +41,7 @@ public class InternalLinkBuilder {
 
                 // California Coast
                 regions.put("LOS_ANGELES_LONG_BEACH_CA", Arrays.asList(
-                                "SAN_DIEGO_CARLSBAD_CA", "RIVERSIDE_SAN_BERNARDINO_CA", "ANAHEIM_SANTA_ANA_CA"));
+                                "SAN_DIEGO_CHULA_VISTA_CA", "RIVERSIDE_SAN_BERNARDINO_CA", "ANAHEIM_SANTA_ANA_CA"));
                 regions.put("SAN_FRANCISCO_OAKLAND_CA", Arrays.asList(
                                 "SAN_JOSE_SUNNYVALE_CA", "SACRAMENTO_ROSEVILLE_CA", "OAKLAND_BERKELEY_CA"));
 
@@ -162,6 +162,36 @@ public class InternalLinkBuilder {
                         default:
                                 return era;
                 }
+        }
+
+        /**
+         * Get related cities in the same state (Hub-and-Spoke structure)
+         */
+        public List<InternalLink> getRelatedCitiesInState(String currentMetro, String era) {
+                String state = extractStateCode(currentMetro);
+                if (state == null) {
+                        return Collections.emptyList();
+                }
+
+                return METRO_REGIONS.keySet().stream()
+                                .filter(metro -> metro.endsWith("_" + state))
+                                .filter(metro -> !metro.equals(currentMetro))
+                                .limit(8)
+                                .map(metro -> new InternalLink(
+                                                formatMetroName(metro) + " (" + formatEraText(era) + ")",
+                                                buildVerdictUrl(metro, era)))
+                                .collect(Collectors.toList());
+        }
+
+        private String extractStateCode(String metroCode) {
+                String[] parts = metroCode.split("_");
+                if (parts.length > 0) {
+                        String lastPart = parts[parts.length - 1];
+                        if (lastPart.length() == 2 && lastPart.matches("[A-Z]{2}")) {
+                                return lastPart;
+                        }
+                }
+                return null;
         }
 
         /**

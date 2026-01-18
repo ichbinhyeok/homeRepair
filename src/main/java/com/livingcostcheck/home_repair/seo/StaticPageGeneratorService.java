@@ -122,6 +122,8 @@ public class StaticPageGeneratorService {
         templateData.put("cityLinks", cityLinks);
         templateData.put("baseUrl", "https://livingcostcheck.com");
         templateData.put("canonicalUrl", buildCanonicalUrl(metroCode, era));
+        templateData.put("faqSchema", generateFAQSchema(formatMetroName(metroCode), formatEraName(era), verdict));
+        templateData.put("stateLinks", internalLinkBuilder.getRelatedCitiesInState(metroCode, era));
 
         // Render HTML using JTE template
         StringOutput output = new StringOutput();
@@ -199,5 +201,76 @@ public class StaticPageGeneratorService {
                 .replaceAll(">\\s+<", "><")
                 .replaceAll("\\s{2,}", " ")
                 .trim();
+    }
+
+    /**
+     * Generate FAQ Schema (JSON-LD) for Rich Snippets
+     * This dramatically improves CTR by showing FAQ in search results
+     */
+    private String generateFAQSchema(String metroName, String eraName, Verdict verdict) {
+        List<Map<String, String>> faqItems = new ArrayList<>();
+
+        // Q1: Cost-related question
+        if (verdict.getCostRangeLabel() != null) {
+            faqItems.add(Map.of(
+                    "question",
+                    String.format("What is the average home repair cost for %s homes in %s?", eraName, metroName),
+                    "answer", String.format("The typical repair cost range is %s. %s",
+                            verdict.getCostRangeLabel(),
+                            verdict.getHeadline() != null ? verdict.getHeadline() : "")));
+        }
+
+        // Q2: Top risk question
+        if (verdict.getPlan() != null && verdict.getPlan().getMustDo() != null
+                && !verdict.getPlan().getMustDo().isEmpty()) {
+            String topRisk = verdict.getPlan().getMustDo().get(0).getPrettyName();
+            faqItems.add(Map.of(
+                    "question", String.format("What are the most critical repairs for %s homes?", eraName),
+                    "answer",
+                    String.format("%s is the highest priority item requiring immediate attention.", topRisk)));
+        }
+
+        // Q3: Deal Killer question (if applicable)
+        if (verdict.isDealKiller() && verdict.getDealKillerMessage() != null) {
+            faqItems.add(Map.of(
+                    "question", String.format("Is it safe to buy a %s home in %s?", eraName, metroName),
+                    "answer", verdict.getDealKillerMessage()));
+        }
+
+        // Build JSON-LD schema
+        StringBuilder schema = new StringBuilder();
+        schema.append("<script type=\"application/ld+json\">\n");
+        schema.append("{\n");
+        schema.append("  \"@context\": \"https://schema.org\",\n");
+        schema.append("  \"@type\": \"FAQPage\",\n");
+        schema.append("  \"mainEntity\": [\n");
+
+        for (int i = 0; i < faqItems.size(); i++) {
+            Map<String, String> item = faqItems.get(i);
+            schema.append("    {\n");
+            schema.append("      \"@type\": \"Question\",\n");
+            schema.append(String.format("      \"name\": \"%s\",\n", escapeJson(item.get("question"))));
+            schema.append("      \"acceptedAnswer\": {\n");
+            schema.append("        \"@type\": \"Answer\",\n");
+            schema.append(String.format("        \"text\": \"%s\"\n", escapeJson(item.get("answer"))));
+            schema.append("      }\n");
+            schema.append("    }");
+            if (i < faqItems.size() - 1) {
+                schema.append(",");
+            }
+            schema.append("\n");
+        }
+
+        schema.append("  ]\n");
+        schema.append("}\n");
+        schema.append("</script>");
+
+        return schema.toString();
+    }
+
+    private String escapeJson(String text) {
+        if (text == null)
+            return "";
+        return text.replace("\"", "\\\"").replace("\n", " ").replace("\r", "");
     }
 }

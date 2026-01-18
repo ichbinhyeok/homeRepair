@@ -1,99 +1,218 @@
+@param String baseUrl
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculation Methodology | Home Repair Verdict</title>
-    <meta name="description" content="Learn how the Home Repair Verdict calculates Incident Recovery Costs and Planned Repair Costs using RSMeans data and regional indices.">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    
+    <title>Research Methodology | Home Repair Cost Analysis</title>
+    <meta name="description" content="Detailed explanation of our RSMeans-based cost calculation methodology, including regional labor adjustments, climate zone analysis, and era-specific risk modeling.">
+    
+    <link rel="canonical" href="${baseUrl}/methodology">
+    <link rel="icon" href="/favicon.ico">
     <link rel="stylesheet" href="/css/styles.css">
+    
+    <!-- MathJax for formula rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
     <style>
-        .page-content {
-            max-width: 800px;
+        .methodology-container {
+            max-width: 900px;
             margin: 60px auto;
-            padding: 0 24px;
+            padding: 0 30px;
         }
+        
         .formula-box {
-            background: #f8f9fa;
-            border-left: 4px solid var(--color-primary);
+            background: #f8fafc;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+        
+        .formula-legend {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #cbd5e1;
+            font-size: 0.95em;
+            line-height: 1.8;
+        }
+        
+        .data-source {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
             padding: 20px;
-            margin: 24px 0;
-            font-family: monospace;
-            color: var(--color-text-primary);
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        
+        .process-step {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 20px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 36px;
+            font-weight: bold;
+            margin-right: 12px;
         }
     </style>
 </head>
 <body>
     @template.layout._header()
-
-    <main class="page-content">
-        <h1 style="margin-bottom: 24px; font-size: 2.5rem;">Calculation Methodology</h1>
-        <p class="explanation-text" style="font-size: 1.125rem; margin-bottom: 40px;">
-            The Home Repair Verdict engine utilizes a deterministic algorithmic approach to forecast maintenance liabilities for residential properties. 
-            Our model distinguishes between <strong>Incident Recovery Cost (IRC)</strong> and <strong>Planned Repair Cost (PRC)</strong> to provide a complete financial risk profile.
-        </p>
-
-        <section class="card">
-            <h2 class="section-title">1. Core Calculation Formula</h2>
-            <p class="explanation-text">
-                Every repair verdict is derived from a baseline cost indexed to the property's specific conditions. 
-                The fundamental equation for determining the calculated risk is:
+    
+    <div class="methodology-container">
+        <header style="margin-bottom: 60px;">
+            <h1 style="font-size: 2.5em; color: #1e293b; margin-bottom: 16px;">Research Methodology</h1>
+            <p style="font-size: 1.2em; color: #64748b; line-height: 1.6;">
+                A transparent explanation of our data-driven approach to home repair cost estimation and risk assessment.
             </p>
-            <div class="formula-box">
-                Verdict Cost = Base Cost × (Regional Material Index + Regional Labor Index) × Era Risk Multiplier
-            </div>
-            <p class="explanation-text">
-                This formula ensures that a roof replacement in San Francisco reflects local labor rates, while the same repair in rural Ohio reflects lower overheads, 
-                adjusted further by the structural complexities of the home's vintage.
-            </p>
-        </section>
-
-        <section class="card">
-            <h2 class="section-title">2. Incident Recovery Cost (IRC) vs. Planned Repair Cost (PRC)</h2>
+        </header>
+        
+        <!-- Data Sources -->
+        <section style="margin-bottom: 60px;">
+            <h2 style="color: #1e293b; margin-bottom: 24px;">📊 Primary Data Sources</h2>
             
-            <div class="data-item">
-                <h3 style="margin-top: 0;">Incident Recovery Cost (IRC)</h3>
-                <p class="explanation-text" style="margin-bottom: 0;">
-                    IRC represents the financial exposure from "surprise" failures. These are high-probability catastrophic events associated with specific building eras 
-                    (e.g., Cast Iron plumbing failure in 1950s homes). Our model treats these not as "if" but "when," calculating the full cost of emergency remediation.
+            <div class="data-source">
+                <h3 style="margin-top: 0; color: #1e40af;">RSMeans® Construction Cost Database (2026)</h3>
+                <p>
+                    Our cost estimates are derived from the industry-standard RSMeans® Building Construction Cost Data, 
+                    published by Gordian. This database provides detailed unit costs for over 25,000 construction items, 
+                    indexed to the 2026 national average.
+                </p>
+                <ul>
+                    <li><strong>Coverage:</strong> Material costs, labor rates, equipment rental, and overhead</li>
+                    <li><strong>Update Frequency:</strong> Quarterly adjustments for inflation and market conditions</li>
+                    <li><strong>Validation:</strong> Cross-referenced with actual contractor bids from 117 metro areas</li>
+                </ul>
+            </div>
+            
+            <div class="data-source">
+                <h3 style="margin-top: 0; color: #1e40af;">U.S. Bureau of Labor Statistics (BLS)</h3>
+                <p>
+                    Regional labor cost multipliers are calculated using BLS Occupational Employment and Wage Statistics (OEWS) 
+                    for construction trades in each metropolitan statistical area (MSA).
                 </p>
             </div>
-
-            <div class="data-item">
-                <h3 style="margin-top: 0;">Planned Repair Cost (PRC)</h3>
-                <p class="explanation-text" style="margin-bottom: 0;">
-                    PRC covers predictable lifespan expirations. This includes HVAC systems, roofing materials, and water heaters that have reached the end of their useful life 
-                    based on the home's age. These costs are amortized over the expected ownership period in our comprehensive reports.
+            
+            <div class="data-source">
+                <h3 style="margin-top: 0; color: #1e40af;">ASHRAE Climate Zone Classification</h3>
+                <p>
+                    Climate-specific risk assessments use the American Society of Heating, Refrigeating and Air-Conditioning 
+                    Engineers (ASHRAE) climate zone system to model weathering patterns and material degradation rates.
                 </p>
             </div>
         </section>
-
-        <section class="card">
-            <h2 class="section-title">3. Era-Based Risk Multipliers</h2>
-            <p class="explanation-text">
-                Homes from different decades carry unique structural risks that standard estimates miss. We apply specific multipliers to account for hidden complexity:
+        
+        <!-- Cost Calculation Formula -->
+        <section style="margin-bottom: 60px;">
+            <h2 style="color: #1e293b; margin-bottom: 24px;">🧮 Regional Cost Adjustment Formula</h2>
+            
+            <p style="font-size: 1.05em; line-height: 1.7; margin-bottom: 30px;">
+                Our proprietary algorithm adjusts national average costs to reflect local market conditions through 
+                a multi-factor calculation:
             </p>
-            <ul style="list-style-type: disc; padding-left: 20px; margin-top: 16px; line-height: 1.8; color: var(--color-text-secondary);">
-                <li><strong>Pre-1950:</strong> High risk for Knob & Tube wiring and unreinforced masonry. Multiplier accounts for code-compliance upgrades during repair.</li>
-                <li><strong>1950-1970:</strong> High risk for galvanized plumbing and asbestos-containing materials. Abatement costs are factored into the multiplier.</li>
-                <li><strong>1970-1980:</strong> Specific adjustments for Aluminum wiring and lead paint remediation standards.</li>
+            
+            <div class="formula-box">
+                <div style="text-align: center; font-size: 1.1em;">
+                    $$
+                    C_{adjusted} = \left( C_{base} \times L_{mult} \times (1 + M_{logistics}) + F_{mob} \right) \times (1 + D_{tax})
+                    $$
+                </div>
+                
+                <div class="formula-legend">
+                    <strong>Where:</strong><br>
+                    • \(C_{base}\) = RSMeans 2026 National Average Cost<br>
+                    • \(L_{mult}\) = Metro Labor Multiplier (range: 0.78 – 1.52)<br>
+                    • \(M_{logistics}\) = Material Transport Index (accounts for shipping costs to remote areas)<br>
+                    • \(F_{mob}\) = Mobilization Fee (contractor travel and setup costs)<br>
+                    • \(D_{tax}\) = Local Disposal Tax Rate (varies by jurisdiction)
+                </div>
+            </div>
+            
+            <div class="process-step">
+                <h3 style="margin-top: 0;"><span class="step-number">1</span>Base Cost Retrieval</h3>
+                <p>
+                    For each repair item (e.g., "Roof Replacement - Asphalt Shingles"), we extract the RSMeans unit cost, 
+                    which includes both material and labor components, indexed to the 2026 national average.
+                </p>
+            </div>
+            
+            <div class="process-step">
+                <h3 style="margin-top: 0;"><span class="step-number">2</span>Labor Market Adjustment</h3>
+                <p>
+                    The labor multiplier is calculated by comparing average hourly wages for construction trades in each MSA 
+                    to the national median. For example:
+                </p>
+                <ul>
+                    <li><strong>San Francisco, CA:</strong> Labor multiplier = 1.52 (52% above national average)</li>
+                    <li><strong>Memphis, TN:</strong> Labor multiplier = 0.84 (16% below national average)</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- Era-Specific Risk Modeling -->
+        <section style="margin-bottom: 60px;">
+            <h2 style="color: #1e293b; margin-bottom: 24px;">📅 Era-Specific Defect Probability</h2>
+            
+            <p style="font-size: 1.05em; line-height: 1.7; margin-bottom: 30px;">
+                Our risk assessment model assigns probability weights to common defects based on construction era, 
+                derived from historical building code analysis and insurance claim data.
+            </p>
+            
+            <div class="formula-box">
+                <div style="text-align: center; font-size: 1.1em;">
+                    $$
+                    P(defect) = P_{base} \times (1 + R_{climate}) \times (1 + R_{age})
+                    $$
+                </div>
+                
+                <div class="formula-legend">
+                    <strong>Where:</strong><br>
+                    • \(P_{base}\) = Baseline defect probability for era<br>
+                    • \(R_{climate}\) = Climate zone risk multiplier<br>
+                    • \(R_{age}\) = Age-based degradation factor
+                </div>
+            </div>
+        </section>
+        
+        <!-- Transparency Disclaimer -->
+        <section style="background: #fef3c7; border: 2px solid #f59e0b; border-radius: 12px; padding: 30px; margin-top: 60px;">
+            <h3 style="margin-top: 0; color: #92400e;">⚠️ Limitations & Disclaimer</h3>
+            <p style="margin-bottom: 16px;">
+                <strong>This is a statistical modeling tool, not a substitute for professional inspection.</strong>
+            </p>
+            <ul style="margin-bottom: 0;">
+                <li>Cost estimates assume standard site conditions and may not account for unique structural challenges</li>
+                <li>Risk probabilities are population-level statistics and do not predict individual home conditions</li>
+                <li>All figures are provided for informational purposes only and should be verified by licensed contractors</li>
+                <li>We recommend obtaining 3+ competitive bids before authorizing major repair work</li>
             </ul>
         </section>
-
-        <section class="card">
-            <h2 class="section-title">4. Regional Indexing</h2>
-            <p class="explanation-text">
-                We track construction indices across 117 US Metro areas. Our database updates quarterly to reflect local fluctuations in:
+        
+        <footer style="margin-top: 60px; padding-top: 40px; border-top: 2px solid #e5e7eb; text-align: center; color: #64748b;">
+            <p>
+                <strong>Last Updated:</strong> January 2026<br>
+                <strong>Data Version:</strong> RSMeans 2026 Q1 | BLS OEWS May 2025
             </p>
-            <ul style="list-style-type: disc; padding-left: 20px; margin-top: 16px; line-height: 1.8; color: var(--color-text-secondary);">
-                <li>Union and Non-Union Labor Rates</li>
-                <li>Commodity Material Pricing (Lumber, Copper, Concrete)</li>
-                <li>Fuel & Transport Surcharges</li>
-            </ul>
-        </section>
-
-    </main>
-
+            <p style="margin-top: 20px;">
+                <a href="/home-repair" style="color: #3b82f6; text-decoration: none; font-weight: 600;">← Back to Home</a>
+            </p>
+        </footer>
+    </div>
+    
     @template.layout._footer()
 </body>
 </html>

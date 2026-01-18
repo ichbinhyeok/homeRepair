@@ -11,6 +11,8 @@
 @param List<InternalLink> cityLinks
 @param String baseUrl
 @param String canonicalUrl
+@param String faqSchema
+@param List<InternalLink> stateLinks
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +24,7 @@
     <meta name="description" content="${verdict.getTier()}: ${verdict.getHeadline()} Analysis of ${eraName} homes in ${metroName} with detailed cost breakdowns and critical repair priorities based on 2026 RSMeans data.">
     
     <link rel="canonical" href="${canonicalUrl}">
+    <link rel="icon" href="/favicon.ico">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="stylesheet" href="/css/styles.css">
     
@@ -67,6 +70,9 @@
         ]
     }
     </script>
+    
+    <!-- FAQ Schema for Rich Snippets (CTR Boost) -->
+    $unsafe{faqSchema}
     
     <style>
         /* Page-specific minimal styles that sit on top of shared styles.css */
@@ -243,16 +249,22 @@
 
                             <div class="data-cost" style="font-weight: 800; color: #1e293b; display: flex; justify-content: space-between; align-items: center;">
                                 <span>Estimated Cost: $${String.format("%,.0f", item.getAdjustedCost())}</span>
-                                <!-- MONETIZATION PLACEHOLDER: GET QUOTE / PRICE TRACKING -->
-                                <button style="font-size: 11px; background: #3b82f6; color: white; border: none; padding: 4px 10px; border-radius: 4px; font-weight: 600; cursor: pointer; opacity: 0.8; transition: all 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">
-                                    Get Local Quote &rarr;
-                                </button>
                             </div>
                         </div>
                     @endfor
                 </div>
             @endif
         </section>
+
+    <style>
+        @media (min-width: 768px) {
+            .data-list {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+    </style>
     
         <!-- Recommended Repairs Section -->
         @if(!verdict.getPlan().getShouldDo().isEmpty())
@@ -283,7 +295,7 @@
             <p class="explanation-text" style="margin-bottom: 32px; font-size: 1.05em;">
                 This verdict is based on a standard budget. Your actual costs may vary based on specific conditions found during inspection.
             </p>
-            <a href="/" class="header-cta" style="font-size: 1.1em; padding: 16px 32px; background-color: var(--color-primary); color: white; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-block;">
+            <a href="/home-repair" class="header-cta" style="font-size: 1.1em; padding: 16px 32px; background-color: var(--color-primary); color: white; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-block;">
                 Recalculate with your own budget
             </a>
         </section>
@@ -316,6 +328,18 @@
             @endfor
             </div>
         </section>
+
+        <!-- State Hub Links (Hub-and-Spoke SEO) -->
+        @if(stateLinks != null && !stateLinks.isEmpty())
+            <section class="internal-links" style="margin-top: 40px; padding-top: 40px; border-top: 2px solid #e5e7eb;">
+                <h3 style="margin-bottom: 16px;">🏛️ Other Cities in the Same State (${eraName})</h3>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                @for(var link : stateLinks)
+                    <a href="${link.getHref()}" style="padding: 6px 12px; background: white; border: 1px solid #E5E7EB; border-radius: 6px; font-size: 0.9em; color: var(--color-text-secondary);">${link.getText()}</a>
+                @endfor
+                </div>
+            </section>
+        @endif
     </div>
 
     @template.layout._footer()

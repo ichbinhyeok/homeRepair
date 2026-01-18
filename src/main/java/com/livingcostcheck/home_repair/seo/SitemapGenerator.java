@@ -31,6 +31,23 @@ public class SitemapGenerator {
             "1995_2010",
             "2010_PRESENT");
 
+    private static final Set<String> TIER_1_METROS = Set.of(
+            "ATLANTA_SANDY_SPRINGS_GA",
+            "BOSTON_CAMBRIDGE_MA",
+            "CHICAGO_NAPERVILLE_IL",
+            "DALLAS_FT_WORTH_ARLINGTON_TX",
+            "HOUSTON_THE_WOODLANDS_TX",
+            "LOS_ANGELES_LONG_BEACH_CA",
+            "MIAMI_FT_LAUDERDALE_FL",
+            "PHILADELPHIA_PA_NJ",
+            "PHOENIX_MESA_CHANDLER_AZ",
+            "SAN_ANTONIO_NEW_BRAUNFELS_TX",
+            "SAN_DIEGO_CHULA_VISTA_CA",
+            "SAN_FRANCISCO_OAKLAND_CA",
+            "SAN_JOSE_SUNNYVALE_CA",
+            "SEATTLE_TACOMA_BELLEVUE_WA",
+            "WASHINGTON_ARLINGTON_DC_VA");
+
     private static final String BASE_URL = "https://livingcostcheck.com";
 
     /**
@@ -51,6 +68,17 @@ public class SitemapGenerator {
         Map<String, ?> allMetros = verdictEngineService.getMetroMasterData().getData();
         List<String> metroCodes = new ArrayList<>(allMetros.keySet());
 
+        // SORT: Tier 1 cities first, then alphabetical
+        metroCodes.sort((a, b) -> {
+            boolean aIsTier1 = TIER_1_METROS.contains(a);
+            boolean bIsTier1 = TIER_1_METROS.contains(b);
+            if (aIsTier1 && !bIsTier1)
+                return -1;
+            if (!aIsTier1 && bIsTier1)
+                return 1;
+            return a.compareTo(b);
+        });
+
         String lastMod = LocalDate.now().format(DateTimeFormatter.ISO_DATE);
         int urlCount = 0;
 
@@ -60,9 +88,12 @@ public class SitemapGenerator {
 
         // Add all verdict pages
         for (String metroCode : metroCodes) {
+            boolean isTier1 = TIER_1_METROS.contains(metroCode);
+            String priority = isTier1 ? "1.0" : "0.8";
+
             for (String era : ALL_ERAS) {
                 String url = buildVerdictUrl(metroCode, era);
-                xml.append(buildUrlEntry(url, lastMod, "monthly", "0.8"));
+                xml.append(buildUrlEntry(url, lastMod, "monthly", priority));
                 urlCount++;
             }
         }

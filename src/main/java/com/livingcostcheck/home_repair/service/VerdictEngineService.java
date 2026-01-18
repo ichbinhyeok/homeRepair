@@ -267,50 +267,41 @@ public class VerdictEngineService {
 
     /**
      * GENERATES UNIQUE CONTENT (DCI) for pSEO
-     * Combines climate, era, and regional labor data into a unique authoritative
-     * paragraph.
+     * Uses Fragment Library with deterministic shuffling to create thousands of
+     * unique variations
      */
     private String generateDynamicNarrative(UserContext context, MetroCityData city) {
-        StringBuilder sb = new StringBuilder();
+        // Generate seed for deterministic randomization (same city+era always gets same
+        // result)
+        long seed = context.getMetroCode().hashCode() + context.getEra().hashCode();
 
-        // 1. Climate Context (Authoritative Unique Content)
-        String climate = city.getClimateZone();
-        if (climate != null) {
-            if (climate.startsWith("1") || climate.startsWith("2")) {
-                sb.append(String.format(
-                        "As a humid location in zone %s, homes in %s are particularly susceptible to mold infiltration in building envelopes. ",
-                        climate, context.getMetroCode()));
-            } else if (climate.startsWith("5") || climate.startsWith("6")) {
-                sb.append(String.format(
-                        "The severe freeze-thaw cycles in climate zone %s necessitate rigorous inspection of foundation footings and exterior masonry. ",
-                        climate));
-            } else {
-                sb.append(String.format(
-                        "The temperate climate of zone %s typically minimizes rapid exterior degradation compared to coastal regions. ",
-                        climate));
-            }
-        }
+        // 1. Select fragments from library
+        String climateFragment = com.livingcostcheck.home_repair.seo.FragmentLibrary
+                .selectClimateFragment(city.getClimateZone(), seed);
+        String eraFragment = com.livingcostcheck.home_repair.seo.FragmentLibrary
+                .selectEraFragment(context.getEra(), seed + 1); // Different seed for variation
+        String costFragment = com.livingcostcheck.home_repair.seo.FragmentLibrary
+                .selectCostFragment(city.getLaborMult(), seed + 2);
 
-        // 2. Era Specific Insight
-        if (context.getEra().contains("PRE_1950")) {
-            sb.append(
-                    "Maintaining a pre-1950 structure requires careful management of legacy electrical systems and potential lead-based coatings. ");
-        } else if (context.getEra().contains("2010")) {
-            sb.append(
-                    "While modern 2010+ eras benefit from updated energy codes, moisture management in tightly sealed envelopes remains a priority. ");
-        }
+        // 2. Create list of fragments
+        List<String> fragments = new ArrayList<>(Arrays.asList(
+                climateFragment,
+                eraFragment,
+                costFragment));
 
-        // 3. Labor Market Conclusion
-        if (city.getLaborMult() > 1.1) {
-            sb.append(String.format(
-                    "Due to elevated labor costs in the %s market, prioritizing high-efficiency materials can yield significant long-term ROI. ",
-                    context.getMetroCode()));
-        } else {
-            sb.append(
-                    "Stable local labor rates allow for more comprehensive restoration projects within a standard budget. ");
-        }
+        // 3. 🔥 CRITICAL: Shuffle sentence order to prevent pattern detection
+        // Using deterministic shuffle so same page always has same order (cacheable)
+        Collections.shuffle(fragments, new Random(seed));
 
-        return sb.toString();
+        // 4. Join and return
+        return String.join(" ", fragments);
+
+        // Result examples:
+        // Page A: [Cost] + [Climate] + [Era]
+        // Page B: [Era] + [Cost] + [Climate]
+        // Page C: [Climate] + [Era] + [Cost]
+        // With 3,456 fragment combinations × 6 possible orders = 20,736 unique
+        // variations
     }
 
     // === PHASE 1: STRATEGY ELIGIBILITY LAYER ===
