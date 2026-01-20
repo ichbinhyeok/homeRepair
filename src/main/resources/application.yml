@@ -2,25 +2,20 @@ spring:
   application:
     name: home-repair
   datasource:
-#    url: jdbc:postgresql://localhost:5433/homerepair
-#    username: myuser
-#    password: mypassword
-#    driver-class-name: org.postgresql.Driver
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
-    driverClassName: org.h2.Driver
-    username: sa
-    password: password
+    url: jdbc:postgresql://db:5432/homerepair
+    username: myuser
+    password: mypassword
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
     open-in-view: false
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     properties:
       hibernate:
-#        dialect: org.hibernate.dialect.PostgreSQLDialect
-        dialect: org.hibernate.dialect.H2Dialect
-  h2:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
     console:
       enabled: true
       path: /h2-console
@@ -37,7 +32,9 @@ app:
     sitemap-path: /sitemap-home-repair.xml
 
 server:
-  port: 8081
+  port: 8080
+  servlet:
+    context-path: /home-repair
 
 gg:
   jte:
