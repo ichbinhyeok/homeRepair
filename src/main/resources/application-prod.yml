@@ -12,5 +12,6 @@ spring:
 
 gg:
   jte:
+    usePrecompiledTemplates: true
     developmentMode: false
     templateLocation: ''
