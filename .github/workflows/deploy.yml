@@ -48,6 +48,7 @@ jobs:
           key: ${{ secrets.OCI_KEY }}
           script: |
             cd ~/home-repair
-            docker-compose pull
-            docker-compose up -d app
+            # 하이픈(-)을 뺀 docker compose 명령어로 수정
+            docker compose pull
+            docker compose up -d --build app
             docker image prune -f
