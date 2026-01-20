@@ -1,7 +1,8 @@
 version: '3.8'
 services:
   app:
-    image: ${{ secrets.DOCKERHUB_USERNAME }}/home-repair-verdict:latest # Image name for CI/CD consistency
+    # 💡 변수 대신 실제 도커허브 아이디를 직접 입력합니다.
+    image: shinhyeok22/home-repair-verdict:latest
     container_name: home-repair-app
     ports:
       - "8084:8080"
