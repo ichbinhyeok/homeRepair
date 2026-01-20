@@ -5,7 +5,7 @@ COPY . .
 RUN gradle bootJar --no-daemon
 
 # Run Stage
-FROM bellsoft/liberica-runtime-container:jre-21-alpine-musl
+FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 COPY --from=builder /app/build/libs/*.jar app.jar
 EXPOSE 8080
