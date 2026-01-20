@@ -29,7 +29,7 @@ jobs:
           context: .
           platforms: linux/arm64
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/home-repair-verdict:latest
+          tags: shinhyeok22/home-repair-verdict:latest
 
       - name: Copy docker-compose.yml to server
         uses: appleboy/scp-action@v0.1.7
