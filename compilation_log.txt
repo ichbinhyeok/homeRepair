@@ -1,0 +1,361 @@
+﻿> Task :cleanGenerateJte
+> Task :cleanPrecompileJte UP-TO-DATE
+> Task :clean
+> Task :generateJte
+
+> Task :compileJava FAILED
+./gradlew : C:\Development\Owner\hom
+e-repair\build\generated-sources\jte
+\gg\jte\generated\precompiled\seo\Jt
+estaticverdictGenerated.java:127: er
+ror: cannot find symbol
+위치 줄:1 문자:1
++ ./gradlew clean compileJava --cons
+ole=plain --stacktrace 2>&1 | Out-F 
+...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSp 
+   ecified: (C:\Development\...not  
+   find symbol:String) [], Remote   
+ Exception
+    + FullyQualifiedErrorId : Nativ 
+   eCommandError
+ 
+	public static void render(gg.jte.ht
+ml.HtmlTemplateOutput jteOutput, gg.
+jte.html.HtmlInterceptor jteHtmlInte
+rceptor, String metroCode, String me
+troName, String era, String eraName,
+ Verdict verdict, List<InternalLink>
+ eraLinks, List<InternalLink> cityLi
+nks, String baseUrl, String canonica
+lUrl, String faqSchema, List<Interna
+lLink> stateLinks, String climateFra
+gment, String eraFragment, String co
+stFragment, List<Map<String, String>
+> faqItems, String lowPrice, String 
+highPrice) {
+	                                   
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                 ^
+  symbol:   class Map
+  location: class JtestaticverdictGe
+nerated
+1 error
+
+[Incubating] Problems report is available at: file:///C:/Development/Owner/home-repair/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an except
+ion.
+
+* What went wrong:
+Execution failed for task ':compileJ
+ava'.
+> Compilation failed; see the compil
+er output below.
+  C:\Development\Owner\home-repair\b
+uild\generated-sources\jte\gg\jte\ge
+nerated\precompiled\seo\Jtestaticver
+dictGenerated.java:127: error: canno
+t find symbol
+  	public static void render(gg.jte.
+html.HtmlTemplateOutput jteOutput, g
+g.jte.html.HtmlInterceptor jteHtmlIn
+terceptor, String metroCode, String 
+metroName, String era, String eraNam
+e, Verdict verdict, List<InternalLin
+k> eraLinks, List<InternalLink> city
+Links, String baseUrl, String canoni
+calUrl, String faqSchema, List<Inter
+nalLink> stateLinks, String climateF
+ragment, String eraFragment, String 
+costFragment, List<Map<String, Strin
+g>> faqItems, String lowPrice, Strin
+g highPrice) {
+  	                                 
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                   ^
+    symbol:   class Map
+    location: class Jtestaticverdict
+Generated
+  1 error
+
+* Try:
+> Check your code and dependencies t
+o fix the compilation error(s)
+> Run with --scan to get full insigh
+ts.
+
+* Exception is:
+org.gradle.api.tasks.TaskExecutionEx
+ception: Execution failed for task '
+:compileJava'.
+	at org.gradle.api.internal.tasks.ex
+ecution.ExecuteActionsTaskExecuter.l
+ambda$executeIfValid$1(ExecuteAction
+sTaskExecuter.java:130)
+	at org.gradle.internal.Try$Failure.
+ifSuccessfulOrElse(Try.java:293)
+	at org.gradle.api.internal.tasks.ex
+ecution.ExecuteActionsTaskExecuter.e
+xecuteIfValid(ExecuteActionsTaskExec
+uter.java:128)
+	at org.gradle.api.internal.tasks.ex
+ecution.ExecuteActionsTaskExecuter.e
+xecute(ExecuteActionsTaskExecuter.ja
+va:116)
+	at org.gradle.api.internal.tasks.ex
+ecution.ProblemsTaskPathTrackingTask
+Executer.execute(ProblemsTaskPathTra
+ckingTaskExecuter.java:41)
+	at org.gradle.api.internal.tasks.ex
+ecution.FinalizePropertiesTaskExecut
+er.execute(FinalizePropertiesTaskExe
+cuter.java:46)
+	at org.gradle.api.internal.tasks.ex
+ecution.ResolveTaskExecutionModeExec
+uter.execute(ResolveTaskExecutionMod
+eExecuter.java:51)
+	at org.gradle.api.internal.tasks.ex
+ecution.SkipTaskWithNoActionsExecute
+r.execute(SkipTaskWithNoActionsExecu
+ter.java:57)
+	at org.gradle.api.internal.tasks.ex
+ecution.SkipOnlyIfTaskExecuter.execu
+te(SkipOnlyIfTaskExecuter.java:74)
+	at org.gradle.api.internal.tasks.ex
+ecution.CatchExceptionTaskExecuter.e
+xecute(CatchExceptionTaskExecuter.ja
+va:36)
+	at org.gradle.api.internal.tasks.ex
+ecution.EventFiringTaskExecuter$1.ex
+ecuteTask(EventFiringTaskExecuter.ja
+va:77)
+	at org.gradle.api.internal.tasks.ex
+ecution.EventFiringTaskExecuter$1.ca
+ll(EventFiringTaskExecuter.java:55)
+	at org.gradle.api.internal.tasks.ex
+ecution.EventFiringTaskExecuter$1.ca
+ll(EventFiringTaskExecuter.java:52)
+	at org.gradle.internal.operations.D
+efaultBuildOperationRunner$CallableB
+uildOperationWorker.execute(DefaultB
+uildOperationRunner.java:210)
+	at org.gradle.internal.operations.D
+efaultBuildOperationRunner$CallableB
+uildOperationWorker.execute(DefaultB
+uildOperationRunner.java:205)
+	at org.gradle.internal.operations.D
+efaultBuildOperationRunner$2.execute
+(DefaultBuildOperationRunner.java:67
+)
+	at org.gradle.internal.operations.D
+efaultBuildOperationRunner$2.execute
+(DefaultBuildOperationRunner.java:60
+)
+	at org.gradle.internal.operations.D
+efaultBuildOperationRunner.execute(D
+efaultBuildOperationRunner.java:167)
+	at org.gradle.internal.operations.D
+efaultBuildOperationRunner.execute(D
+efaultBuildOperationRunner.java:60)
+	at org.gradle.internal.operations.D
+efaultBuildOperationRunner.call(Defa
+ultBuildOperationRunner.java:54)
+	at org.gradle.api.internal.tasks.ex
+ecution.EventFiringTaskExecuter.exec
+ute(EventFiringTaskExecuter.java:52)
+	at org.gradle.execution.plan.LocalT
+askNodeExecutor.execute(LocalTaskNod
+eExecutor.java:42)
+	at org.gradle.execution.taskgraph.D
+efaultTaskExecutionGraph$InvokeNodeE
+xecutorsAction.execute(DefaultTaskEx
+ecutionGraph.java:331)
+	at org.gradle.execution.taskgraph.D
+efaultTaskExecutionGraph$InvokeNodeE
+xecutorsAction.execute(DefaultTaskEx
+ecutionGraph.java:318)
+	at org.gradle.execution.taskgraph.D
+efaultTaskExecutionGraph$BuildOperat
+ionAwareExecutionAction.lambda$execu
+te$0(DefaultTaskExecutionGraph.java:
+314)
+	at org.gradle.internal.operations.C
+urrentBuildOperationRef.with(Current
+BuildOperationRef.java:85)
+	at org.gradle.execution.taskgraph.D
+efaultTaskExecutionGraph$BuildOperat
+ionAwareExecutionAction.execute(Defa
+ultTaskExecutionGraph.java:314)
+	at org.gradle.execution.taskgraph.D
+efaultTaskExecutionGraph$BuildOperat
+ionAwareExecutionAction.execute(Defa
+ultTaskExecutionGraph.java:303)
+	at org.gradle.execution.plan.Defaul
+tPlanExecutor$ExecutorWorker.execute
+(DefaultPlanExecutor.java:459)
+	at org.gradle.execution.plan.Defaul
+tPlanExecutor$ExecutorWorker.run(Def
+aultPlanExecutor.java:376)
+	at org.gradle.internal.concurrent.E
+xecutorPolicy$CatchAndRecordFailures
+.onExecute(ExecutorPolicy.java:64)
+	at org.gradle.internal.concurrent.A
+bstractManagedExecutor$1.run(Abstrac
+tManagedExecutor.java:48)
+Caused by: org.gradle.api.internal.t
+asks.compile.CompilationFailedExcept
+ion: Compilation failed; see the com
+piler output below.
+C:\Development\Owner\home-repair\bui
+ld\generated-sources\jte\gg\jte\gene
+rated\precompiled\seo\Jtestaticverdi
+ctGenerated.java:127: error: cannot 
+find symbol
+	public static void render(gg.jte.ht
+ml.HtmlTemplateOutput jteOutput, gg.
+jte.html.HtmlInterceptor jteHtmlInte
+rceptor, String metroCode, String me
+troName, String era, String eraName,
+ Verdict verdict, List<InternalLink>
+ eraLinks, List<InternalLink> cityLi
+nks, String baseUrl, String canonica
+lUrl, String faqSchema, List<Interna
+lLink> stateLinks, String climateFra
+gment, String eraFragment, String co
+stFragment, List<Map<String, String>
+> faqItems, String lowPrice, String 
+highPrice) {
+	                                   
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                 ^
+  symbol:   class Map
+  location: class JtestaticverdictGe
+nerated
+1 error
+	at org.gradle.api.internal.tasks.co
+mpile.JdkJavaCompiler.execute(JdkJav
+aCompiler.java:89)
+	at org.gradle.api.internal.tasks.co
+mpile.JdkJavaCompiler.execute(JdkJav
+aCompiler.java:50)
+	at org.gradle.api.internal.tasks.co
+mpile.daemon.AbstractIsolatedCompile
+rWorkerExecutor$CompilerWorkAction.e
+xecute(AbstractIsolatedCompilerWorke
+rExecutor.java:78)
+	at org.gradle.workers.internal.Defa
+ultWorkerServer.execute(DefaultWorke
+rServer.java:63)
+	at org.gradle.workers.internal.Abst
+ractClassLoaderWorker$1.create(Abstr
+actClassLoaderWorker.java:54)
+	at org.gradle.workers.internal.Abst
+ractClassLoaderWorker$1.create(Abstr
+actClassLoaderWorker.java:48)
+	at org.gradle.internal.classloader.
+ClassLoaderUtils.executeInClassloade
+r(ClassLoaderUtils.java:100)
+	at org.gradle.workers.internal.Abst
+ractClassLoaderWorker.executeInClass
+Loader(AbstractClassLoaderWorker.jav
+a:48)
+	at org.gradle.workers.internal.Flat
+ClassLoaderWorker.run(FlatClassLoade
+rWorker.java:32)
+	at org.gradle.workers.internal.Flat
+ClassLoaderWorker.run(FlatClassLoade
+rWorker.java:22)
+	at org.gradle.workers.internal.Work
+erDaemonServer.run(WorkerDaemonServe
+r.java:108)
+	at org.gradle.workers.internal.Work
+erDaemonServer.run(WorkerDaemonServe
+r.java:77)
+	at org.gradle.process.internal.work
+er.request.WorkerAction.lambda$run$1
+(WorkerAction.java:150)
+	at org.gradle.process.internal.work
+er.child.WorkerLogEventListener.with
+WorkerLoggingProtocol(WorkerLogEvent
+Listener.java:41)
+	at org.gradle.process.internal.work
+er.request.WorkerAction.lambda$run$2
+(WorkerAction.java:150)
+	at org.gradle.internal.operations.C
+urrentBuildOperationRef.with(Current
+BuildOperationRef.java:85)
+	at org.gradle.process.internal.work
+er.request.WorkerAction.run(WorkerAc
+tion.java:142)
+	at java.base/jdk.internal.reflect.N
+ativeMethodAccessorImpl.invoke0(Nati
+ve Method)
+	at java.base/jdk.internal.reflect.N
+ativeMethodAccessorImpl.invoke(Nativ
+eMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.D
+elegatingMethodAccessorImpl.invoke(D
+elegatingMethodAccessorImpl.java:43)
+	at org.gradle.internal.dispatch.Ref
+lectionDispatch.dispatch(ReflectionD
+ispatch.java:36)
+	at org.gradle.internal.dispatch.Ref
+lectionDispatch.dispatch(ReflectionD
+ispatch.java:24)
+	at org.gradle.internal.remote.inter
+nal.hub.MessageHubBackedObjectConnec
+tion$DispatchWrapper.dispatch(Messag
+eHubBackedObjectConnection.java:182)
+	at org.gradle.internal.remote.inter
+nal.hub.MessageHubBackedObjectConnec
+tion$DispatchWrapper.dispatch(Messag
+eHubBackedObjectConnection.java:164)
+	at org.gradle.internal.remote.inter
+nal.hub.MessageHub$Handler.run(Messa
+geHub.java:414)
+	at org.gradle.internal.concurrent.E
+xecutorPolicy$CatchAndRecordFailures
+.onExecute(ExecutorPolicy.java:64)
+	at org.gradle.internal.concurrent.A
+bstractManagedExecutor$1.run(Abstrac
+tManagedExecutor.java:48)
+
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 3s
+5 actionable tasks: 4 executed, 1 up-to-date

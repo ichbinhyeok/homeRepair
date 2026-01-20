@@ -120,10 +120,30 @@ public class StaticPageGeneratorService {
         templateData.put("verdict", verdict);
         templateData.put("eraLinks", eraLinks);
         templateData.put("cityLinks", cityLinks);
-        templateData.put("baseUrl", "https://livingcostcheck.com");
+        templateData.put("baseUrl", "https://lifeverdict.com");
         templateData.put("canonicalUrl", buildCanonicalUrl(metroCode, era));
         templateData.put("faqSchema", generateFAQSchema(formatMetroName(metroCode), formatEraName(era), verdict));
         templateData.put("stateLinks", internalLinkBuilder.getRelatedCitiesInState(metroCode, era));
+
+        // Add FragmentLibrary content for uniqueness
+        long seed = (metroCode + era).hashCode();
+        templateData.put("climateFragment", FragmentLibrary.selectClimateFragment(null, seed));
+        templateData.put("eraFragment", FragmentLibrary.selectEraFragment(era, seed + 1));
+        templateData.put("costFragment", FragmentLibrary.selectCostFragment(1.0, seed + 2));
+
+        // Calculate price range for schema
+        double lowPrice = verdict.getPlan().getMustDo().stream()
+                .mapToDouble(item -> item.getAdjustedCost())
+                .min()
+                .orElse(0.0);
+        double highPrice = verdict.getPlan().getMustDo().stream()
+                .mapToDouble(item -> item.getAdjustedCost())
+                .sum();
+
+        // Generate FAQ items for HTML display
+        templateData.put("faqItems", generateFAQItems(formatMetroName(metroCode), formatEraName(era), verdict));
+        templateData.put("lowPrice", String.format("%,.0f", lowPrice));
+        templateData.put("highPrice", String.format("%,.0f", highPrice));
 
         // Render HTML using JTE template
         StringOutput output = new StringOutput();
@@ -150,7 +170,7 @@ public class StaticPageGeneratorService {
     private String buildCanonicalUrl(String metroCode, String era) {
         String metroSlug = metroCode.toLowerCase().replace("_", "-");
         String eraSlug = era.toLowerCase().replace("_", "-");
-        return "https://livingcostcheck.com/home-repair/verdicts/" + metroSlug + "/" + eraSlug + ".html";
+        return "https://lifeverdict.com/home-repair/verdicts/" + metroSlug + "/" + eraSlug + ".html";
     }
 
     private String formatMetroName(String metroCode) {
@@ -201,6 +221,42 @@ public class StaticPageGeneratorService {
                 .replaceAll(">\\s+<", "><")
                 .replaceAll("\\s{2,}", " ")
                 .trim();
+    }
+
+    /**
+     * Generate FAQ items for HTML display (synced with FAQ Schema)
+     */
+    private List<Map<String, String>> generateFAQItems(String metroName, String eraName, Verdict verdict) {
+        List<Map<String, String>> faqItems = new ArrayList<>();
+
+        // Q1: Cost-related question
+        if (verdict.getCostRangeLabel() != null) {
+            faqItems.add(Map.of(
+                    "question",
+                    String.format("What is the average home repair cost for %s homes in %s?", eraName, metroName),
+                    "answer", String.format("The typical repair cost range is %s. %s",
+                            verdict.getCostRangeLabel(),
+                            verdict.getHeadline() != null ? verdict.getHeadline() : "")));
+        }
+
+        // Q2: Top risk question
+        if (verdict.getPlan() != null && verdict.getPlan().getMustDo() != null
+                && !verdict.getPlan().getMustDo().isEmpty()) {
+            String topRisk = verdict.getPlan().getMustDo().get(0).getPrettyName();
+            faqItems.add(Map.of(
+                    "question", String.format("What are the most critical repairs for %s homes?", eraName),
+                    "answer",
+                    String.format("%s is the highest priority item requiring immediate attention.", topRisk)));
+        }
+
+        // Q3: Deal Killer question (if applicable)
+        if (verdict.isDealKiller() && verdict.getDealKillerMessage() != null) {
+            faqItems.add(Map.of(
+                    "question", String.format("Is it safe to buy a %s home in %s?", eraName, metroName),
+                    "answer", verdict.getDealKillerMessage()));
+        }
+
+        return faqItems;
     }
 
     /**

@@ -31,7 +31,7 @@ spring:
 
 # Application-specific configuration
 app:
-  base-url: https://livingcostcheck.com
+  base-url: https://lifeverdict.com
   seo:
     default-image: /images/og-default.png
     sitemap-path: /sitemap-home-repair.xml

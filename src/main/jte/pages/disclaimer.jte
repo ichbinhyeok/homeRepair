@@ -56,7 +56,7 @@
         <section class="card">
             <h2 class="section-title">Limitation of Liability</h2>
             <p class="explanation-text">
-                The LivingCostCheck research team, its operators, and affiliates shall not be held liable for any decisions made based on the information provided on this website. 
+                The LifeVerdict research team, its operators, and affiliates shall not be held liable for any decisions made based on the information provided on this website. 
                 This includes, but is not limited to:
             </p>
             <ul class="explanation-text disclaimer-list" style="list-style-type: disc; padding-left: 20px;">

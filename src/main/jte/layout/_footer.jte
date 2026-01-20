@@ -5,7 +5,7 @@
             
             <!-- About Section -->
             <div>
-                <h4 style="color: white; font-size: 1.1em; margin-bottom: 16px; font-weight: 600;">LivingCostCheck</h4>
+                <h4 style="color: white; font-size: 1.1em; margin-bottom: 16px; font-weight: 600;">LifeVerdict</h4>
                 <p style="font-size: 0.9em; line-height: 1.7; color: #cbd5e1;">
                     Evidence-based home repair cost analysis powered by RSMeans® construction data and BLS labor statistics.
                 </p>
@@ -54,7 +54,7 @@
         <!-- Copyright -->
         <div style="text-align: center; margin-top: 20px;">
             <p style="font-size: 0.85em; color: #64748b;">
-                © 2026 LivingCostCheck. All rights reserved.
+                © 2026 LifeVerdict. All rights reserved.
             </p>
         </div>
     </div>

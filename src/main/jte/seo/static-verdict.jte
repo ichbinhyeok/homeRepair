@@ -1,6 +1,7 @@
 @import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.*
 @import com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink
 @import java.util.List
+@import java.util.Map
 
 @param String metroCode
 @param String metroName
@@ -13,6 +14,12 @@
 @param String canonicalUrl
 @param String faqSchema
 @param List<InternalLink> stateLinks
+@param String climateFragment
+@param String eraFragment
+@param String costFragment
+@param List<Map<String, String>> faqItems
+@param String lowPrice
+@param String highPrice
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,8 +27,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>${metroName} ${eraName} Home Repair Cost Guide [2026 Updated] | Verdict Engine</title>
-    <meta name="description" content="${verdict.getTier()}: ${verdict.getHeadline()} Analysis of ${eraName} homes in ${metroName} with detailed cost breakdowns and critical repair priorities based on 2026 RSMeans data.">
+    <title>${metroName} Home Repair Cost Calculator - ${eraName} Guide (2026 Updated)</title>
+    <meta name="description" content="${verdict.getHeadline()} Detailed cost analysis for ${eraName} homes in ${metroName} with repair priorities, budget breakdowns, and expert insights based on 2026 RSMeans construction data.">
     
     <link rel="canonical" href="${canonicalUrl}">
     <link rel="icon" href="/favicon.ico">
@@ -38,18 +45,18 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "name": "Home Repair Cost Analysis - ${metroName}",
-        "description": "Professional home repair cost analysis for ${eraName} homes in ${metroName}",
-        "areaServed": {
-            "@type": "City",
-            "name": "${metroName}"
-        },
+        "@type": "WebApplication",
+        "name": "Home Repair Cost Calculator - ${metroName}",
+        "applicationCategory": "FinanceApplication",
+        "description": "Professional home repair cost analysis calculator for ${eraName} homes in ${metroName}",
+        "operatingSystem": "Any",
         "offers": {
             "@type": "AggregateOffer",
             "priceCurrency": "USD",
-            "offerCount": "${verdict.getPlan().getMustDo().size()}"
-        }
+            "lowPrice": "${lowPrice}",
+            "highPrice": "${highPrice}"
+        },
+        "featureList": "Cost estimation, Repair prioritization, Era-specific analysis"
     }
     </script>
     
@@ -191,6 +198,19 @@
                         <strong>Expert Insight:</strong> ${verdict.getContextBriefing().getDynamicNarrative()}
                     </div>
                 @endif
+                
+                <!-- FragmentLibrary: Unique contextual insights -->
+                <div class="contextual-insights" style="display: grid; gap: 16px; margin-top: 24px;">
+                    <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 16px; border-radius: 8px;">
+                        <strong style="color: #1e40af;">🌡️ Climate Impact:</strong> ${climateFragment}
+                    </div>
+                    <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 16px; border-radius: 8px;">
+                        <strong style="color: #047857;">🏡 Era Context:</strong> ${eraFragment}
+                    </div>
+                    <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 16px; border-radius: 8px;">
+                        <strong style="color: #d97706;">💰 Local Market:</strong> ${costFragment}
+                    </div>
+                </div>
             </section>
 
             <!-- MONETIZATION PLACEHOLDER: VERIFIED PROS -->
@@ -330,6 +350,26 @@
                 </div>
             </div>
         </div>
+    
+        <!-- FAQ Section (Visible Content matching FAQ Schema) -->
+        @if(faqItems != null && !faqItems.isEmpty())
+            <section class="card faq-section" style="margin-top: 60px;" itemscope itemtype="https://schema.org/FAQPage">
+                <h2 class="section-title" style="border-bottom: 2px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 32px;">
+                    <span>❓</span> Frequently Asked Questions
+                </h2>
+                
+                @for(var faq : faqItems)
+                    <div class="faq-item" style="margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid #f1f5f9;" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                        <h3 style="font-size: 1.15em; color: #1e293b; margin: 0 0 12px 0; font-weight: 600;" itemprop="name">
+                            ${faq.get("question")}
+                        </h3>
+                        <div style="color: #475569; line-height: 1.7; padding-left: 16px; border-left: 3px solid #cbd5e1;" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                            <p style="margin: 0;" itemprop="text">${faq.get("answer")}</p>
+                        </div>
+                    </div>
+                @endfor
+            </section>
+        @endif
     
         <!-- Internal Navigation -->
         <section class="internal-links" style="margin-top: 60px;">

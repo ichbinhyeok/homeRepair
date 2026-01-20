@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LivingCostCheck | Property Intelligence</title>
+    <title>LifeVerdict | Property Intelligence</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
@@ -59,7 +59,7 @@
                 </h1>
                 
                 <p class="text-xl md:text-2xl text-white/60 font-medium leading-relaxed max-w-md mb-10">
-                    LivingCostCheck reveals the hidden financial liabilities of any property using forensic data logic.
+                    LifeVerdict reveals the hidden financial liabilities of any property using forensic data logic.
                 </p>
 
                 <div class="grid grid-cols-2 gap-6 opacity-80">
