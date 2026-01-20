@@ -1,17 +1,22 @@
-2026-01-20T22:36:57.126+09:00  INFO 6100 --- [home-repair] [main] c.l.h.HomeRepairApplicationTests         : Starting HomeRepairApplicationTests using Java 17.0.11 with PID 6100 (started by tlsgu in C:\Development\Owner\home-repair)
-2026-01-20T22:36:57.134+09:00 DEBUG 6100 --- [home-repair] [main] c.l.h.HomeRepairApplicationTests         : Running with Spring Boot v3.5.9, Spring v6.2.15
-2026-01-20T22:36:57.135+09:00  INFO 6100 --- [home-repair] [main] c.l.h.HomeRepairApplicationTests         : No active profile set, falling back to 1 default profile: "default"
-2026-01-20T22:36:57.896+09:00  INFO 6100 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-01-20T22:36:57.972+09:00  INFO 6100 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 59 ms. Found 2 JPA repository interfaces.
-2026-01-20T22:36:58.536+09:00  INFO 6100 --- [home-repair] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-01-20T22:36:58.612+09:00  INFO 6100 --- [home-repair] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
-2026-01-20T22:36:58.655+09:00  INFO 6100 --- [home-repair] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2026-01-20T22:36:59.130+09:00  INFO 6100 --- [home-repair] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-01-20T22:36:59.189+09:00  INFO 6100 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-01-20T22:36:59.506+09:00  INFO 6100 --- [home-repair] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
-2026-01-20T22:36:59.509+09:00  INFO 6100 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-01-20T22:36:59.538+09:00  WARN 6100 --- [home-repair] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-01-20T22:36:59.567+09:00  INFO 6100 --- [home-repair] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+2026-01-21T00:30:51.155+09:00  INFO 23540 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Starting HomeRepairApplication using Java 17.0.11 with PID 23540 (C:\Development\Owner\home-repair\bin\main started by tlsgu in C:\Development\Owner\home-repair)
+2026-01-21T00:30:51.163+09:00 DEBUG 23540 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Running with Spring Boot v3.5.9, Spring v6.2.15
+2026-01-21T00:30:51.165+09:00  INFO 23540 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : No active profile set, falling back to 1 default profile: "default"
+2026-01-21T00:30:52.012+09:00  INFO 23540 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-21T00:30:52.124+09:00  INFO 23540 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 93 ms. Found 2 JPA repository interfaces.
+2026-01-21T00:30:52.927+09:00  INFO 23540 --- [home-repair] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-21T00:30:52.944+09:00  INFO 23540 --- [home-repair] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-21T00:30:52.944+09:00  INFO 23540 --- [home-repair] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-21T00:30:53.028+09:00  INFO 23540 --- [home-repair] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-21T00:30:53.028+09:00  INFO 23540 --- [home-repair] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1796 ms
+2026-01-21T00:30:53.414+09:00  INFO 23540 --- [home-repair] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-21T00:30:53.523+09:00  INFO 23540 --- [home-repair] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
+2026-01-21T00:30:53.585+09:00  INFO 23540 --- [home-repair] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-21T00:30:54.046+09:00  INFO 23540 --- [home-repair] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-21T00:30:54.092+09:00  INFO 23540 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-21T00:30:54.327+09:00  INFO 23540 --- [home-repair] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026-01-21T00:30:54.330+09:00  INFO 23540 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-21T00:30:54.363+09:00  WARN 23540 --- [home-repair] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-21T00:30:54.402+09:00  INFO 23540 --- [home-repair] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 2.3.232
@@ -19,278 +24,12 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2026-01-20T22:37:00.399+09:00  INFO 6100 --- [home-repair] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-01-20T22:37:00.473+09:00  INFO 6100 --- [home-repair] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-01-20T22:37:00.738+09:00  INFO 6100 --- [home-repair] [main] c.l.h.service.VerdictEngineService       : VerdictEngine Data Loaded Successfully.
-2026-01-20T22:37:01.556+09:00  INFO 6100 --- [home-repair] [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
-2026-01-20T22:37:01.659+09:00  INFO 6100 --- [home-repair] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2026-01-20T22:37:01.660+09:00  INFO 6100 --- [home-repair] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2026-01-20T22:37:01.661+09:00  INFO 6100 --- [home-repair] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
-2026-01-20T22:37:01.712+09:00  INFO 6100 --- [home-repair] [main] c.l.h.HomeRepairApplicationTests         : Started HomeRepairApplicationTests in 5.038 seconds (process running for 6.139)
-2026-01-20T22:37:03.777+09:00  INFO 6100 --- [home-repair] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-01-20T22:37:03.779+09:00  INFO 6100 --- [home-repair] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2026-01-20T22:37:03.782+09:00  INFO 6100 --- [home-repair] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2026-01-20T22:37:15.116+09:00  INFO 2220 --- [home-repair] [main] c.l.h.HomeRepairApplicationTests         : Starting HomeRepairApplicationTests using Java 17.0.11 with PID 2220 (started by tlsgu in C:\Development\Owner\home-repair)
-2026-01-20T22:37:15.117+09:00 DEBUG 2220 --- [home-repair] [main] c.l.h.HomeRepairApplicationTests         : Running with Spring Boot v3.5.9, Spring v6.2.15
-2026-01-20T22:37:15.119+09:00  INFO 2220 --- [home-repair] [main] c.l.h.HomeRepairApplicationTests         : No active profile set, falling back to 1 default profile: "default"
-2026-01-20T22:37:15.823+09:00  INFO 2220 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-01-20T22:37:15.894+09:00  INFO 2220 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 61 ms. Found 2 JPA repository interfaces.
-2026-01-20T22:37:16.462+09:00  INFO 2220 --- [home-repair] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-01-20T22:37:16.570+09:00  INFO 2220 --- [home-repair] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
-2026-01-20T22:37:16.614+09:00  INFO 2220 --- [home-repair] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2026-01-20T22:37:17.056+09:00  INFO 2220 --- [home-repair] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-01-20T22:37:17.098+09:00  INFO 2220 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-01-20T22:37:17.335+09:00  INFO 2220 --- [home-repair] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
-2026-01-20T22:37:17.339+09:00  INFO 2220 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-01-20T22:37:17.367+09:00  WARN 2220 --- [home-repair] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-01-20T22:37:17.394+09:00  INFO 2220 --- [home-repair] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
-	Database driver: undefined/unknown
-	Database version: 2.3.232
-	Autocommit mode: undefined/unknown
-	Isolation level: undefined/unknown
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2026-01-20T22:37:18.221+09:00  INFO 2220 --- [home-repair] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-01-20T22:37:18.281+09:00  INFO 2220 --- [home-repair] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-01-20T22:37:18.499+09:00  INFO 2220 --- [home-repair] [main] c.l.h.service.VerdictEngineService       : VerdictEngine Data Loaded Successfully.
-2026-01-20T22:37:35.963+09:00  INFO 11680 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Starting HomeRepairApplication using Java 17.0.11 with PID 11680 (C:\Development\Owner\home-repair\bin\main started by tlsgu in C:\Development\Owner\home-repair)
-2026-01-20T22:37:35.966+09:00 DEBUG 11680 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Running with Spring Boot v3.5.9, Spring v6.2.15
-2026-01-20T22:37:35.967+09:00  INFO 11680 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : No active profile set, falling back to 1 default profile: "default"
-2026-01-20T22:37:36.691+09:00  INFO 11680 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-01-20T22:37:36.776+09:00  INFO 11680 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 69 ms. Found 2 JPA repository interfaces.
-2026-01-20T22:37:37.393+09:00  INFO 11680 --- [home-repair] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
-2026-01-20T22:37:37.409+09:00  INFO 11680 --- [home-repair] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-01-20T22:37:37.409+09:00  INFO 11680 --- [home-repair] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
-2026-01-20T22:37:37.475+09:00  INFO 11680 --- [home-repair] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2026-01-20T22:37:37.476+09:00  INFO 11680 --- [home-repair] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1454 ms
-2026-01-20T22:37:37.723+09:00  INFO 11680 --- [home-repair] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-01-20T22:37:37.786+09:00  INFO 11680 --- [home-repair] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
-2026-01-20T22:37:37.825+09:00  INFO 11680 --- [home-repair] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2026-01-20T22:37:38.144+09:00  INFO 11680 --- [home-repair] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-01-20T22:37:38.181+09:00  INFO 11680 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-01-20T22:37:38.364+09:00  INFO 11680 --- [home-repair] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
-2026-01-20T22:37:38.367+09:00  INFO 11680 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-01-20T22:37:38.394+09:00  WARN 11680 --- [home-repair] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-01-20T22:37:38.424+09:00  INFO 11680 --- [home-repair] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
-	Database driver: undefined/unknown
-	Database version: 2.3.232
-	Autocommit mode: undefined/unknown
-	Isolation level: undefined/unknown
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2026-01-20T22:37:39.225+09:00  INFO 11680 --- [home-repair] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-01-20T22:37:39.284+09:00  INFO 11680 --- [home-repair] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-01-20T22:37:39.456+09:00  INFO 11680 --- [home-repair] [main] c.l.h.service.VerdictEngineService       : VerdictEngine Data Loaded Successfully.
-2026-01-20T22:37:39.930+09:00  INFO 11680 --- [home-repair] [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
-2026-01-20T22:37:40.025+09:00  INFO 11680 --- [home-repair] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
-2026-01-20T22:37:40.035+09:00  INFO 11680 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Started HomeRepairApplication in 4.639 seconds (process running for 4.974)
-2026-01-20T22:37:53.187+09:00  INFO 11680 --- [home-repair] [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-01-20T22:37:53.189+09:00  INFO 11680 --- [home-repair] [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2026-01-20T22:37:53.191+09:00  INFO 11680 --- [home-repair] [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
-2026-01-20T22:38:05.889+09:00  INFO 11680 --- [home-repair] [http-nio-8081-exec-6] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=ABILENE_TX eligible=true missing=[]
-2026-01-20T22:38:05.892+09:00  INFO 11680 --- [home-repair] [http-nio-8081-exec-6] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=ABILENE_TX relationship=LIVING
-2026-01-20T22:38:06.160+09:00 DEBUG 11680 --- [home-repair] [http-nio-8081-exec-7] c.l.h.web.HomeRepairController           : Loading result for ID: 08dacefd-fccf-4209-9e8c-c69146154d89
-2026-01-20T22:38:06.160+09:00  INFO 11680 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=ABILENE_TX eligible=true missing=[]
-2026-01-20T22:38:06.162+09:00  INFO 11680 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=ABILENE_TX relationship=LIVING
-2026-01-20T22:42:11.335+09:00  INFO 4924 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Starting HomeRepairApplication using Java 17.0.11 with PID 4924 (C:\Development\Owner\home-repair\bin\main started by tlsgu in C:\Development\Owner\home-repair)
-2026-01-20T22:42:11.337+09:00 DEBUG 4924 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Running with Spring Boot v3.5.9, Spring v6.2.15
-2026-01-20T22:42:11.338+09:00  INFO 4924 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : No active profile set, falling back to 1 default profile: "default"
-2026-01-20T22:42:12.077+09:00  INFO 4924 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-01-20T22:42:12.166+09:00  INFO 4924 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 75 ms. Found 2 JPA repository interfaces.
-2026-01-20T22:42:12.810+09:00  INFO 4924 --- [home-repair] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
-2026-01-20T22:42:12.824+09:00  INFO 4924 --- [home-repair] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-01-20T22:42:12.825+09:00  INFO 4924 --- [home-repair] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
-2026-01-20T22:42:12.899+09:00  INFO 4924 --- [home-repair] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2026-01-20T22:42:12.899+09:00  INFO 4924 --- [home-repair] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1503 ms
-2026-01-20T22:42:13.243+09:00  INFO 4924 --- [home-repair] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-01-20T22:42:13.339+09:00  INFO 4924 --- [home-repair] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
-2026-01-20T22:42:13.396+09:00  INFO 4924 --- [home-repair] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2026-01-20T22:42:13.754+09:00  INFO 4924 --- [home-repair] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-01-20T22:42:13.795+09:00  INFO 4924 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-01-20T22:42:14.020+09:00  INFO 4924 --- [home-repair] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
-2026-01-20T22:42:14.024+09:00  INFO 4924 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-01-20T22:42:14.053+09:00  WARN 4924 --- [home-repair] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-01-20T22:42:14.084+09:00  INFO 4924 --- [home-repair] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
-	Database driver: undefined/unknown
-	Database version: 2.3.232
-	Autocommit mode: undefined/unknown
-	Isolation level: undefined/unknown
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2026-01-20T22:42:14.939+09:00  INFO 4924 --- [home-repair] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-01-20T22:42:15.003+09:00  INFO 4924 --- [home-repair] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-01-20T22:42:15.175+09:00  INFO 4924 --- [home-repair] [main] c.l.h.service.VerdictEngineService       : VerdictEngine Data Loaded Successfully.
-2026-01-20T22:42:15.781+09:00  INFO 4924 --- [home-repair] [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
-2026-01-20T22:42:15.889+09:00  INFO 4924 --- [home-repair] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
-2026-01-20T22:42:15.899+09:00  INFO 4924 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Started HomeRepairApplication in 5.247 seconds (process running for 5.658)
-2026-01-20T22:42:21.528+09:00  INFO 4924 --- [home-repair] [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-01-20T22:42:21.529+09:00  INFO 4924 --- [home-repair] [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2026-01-20T22:42:21.530+09:00  INFO 4924 --- [home-repair] [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2026-01-20T22:42:50.897+09:00  INFO 4924 --- [home-repair] [http-nio-8081-exec-10] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1970_1980 metro=SAN_FRANCISCO_OAKLAND_CA eligible=true missing=[]
-2026-01-20T22:42:50.900+09:00  INFO 4924 --- [home-repair] [http-nio-8081-exec-10] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=1970_1980 metro=SAN_FRANCISCO_OAKLAND_CA relationship=BUYING
-2026-01-20T22:42:51.126+09:00 DEBUG 4924 --- [home-repair] [http-nio-8081-exec-1] c.l.h.web.HomeRepairController           : Loading result for ID: 2300e732-0b1b-42f1-9494-856e08dde79a
-2026-01-20T22:42:51.127+09:00  INFO 4924 --- [home-repair] [http-nio-8081-exec-1] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1970_1980 metro=SAN_FRANCISCO_OAKLAND_CA eligible=true missing=[]
-2026-01-20T22:42:51.127+09:00  INFO 4924 --- [home-repair] [http-nio-8081-exec-1] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=1970_1980 metro=SAN_FRANCISCO_OAKLAND_CA relationship=BUYING
-2026-01-20T22:44:51.553+09:00 DEBUG 4924 --- [home-repair] [http-nio-8081-exec-5] c.l.h.web.HomeRepairController           : Loading result for ID: 2300e732-0b1b-42f1-9494-856e08dde79a
-2026-01-20T22:44:51.554+09:00  INFO 4924 --- [home-repair] [http-nio-8081-exec-5] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1970_1980 metro=SAN_FRANCISCO_OAKLAND_CA eligible=true missing=[]
-2026-01-20T22:44:51.554+09:00  INFO 4924 --- [home-repair] [http-nio-8081-exec-5] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=1970_1980 metro=SAN_FRANCISCO_OAKLAND_CA relationship=BUYING
-2026-01-20T22:44:55.699+09:00 DEBUG 4924 --- [home-repair] [http-nio-8081-exec-7] c.l.h.web.HomeRepairController           : Loading result for ID: 2300e732-0b1b-42f1-9494-856e08dde79a
-2026-01-20T22:44:55.700+09:00  INFO 4924 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1970_1980 metro=SAN_FRANCISCO_OAKLAND_CA eligible=true missing=[]
-2026-01-20T22:44:55.700+09:00  INFO 4924 --- [home-repair] [http-nio-8081-exec-7] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=1970_1980 metro=SAN_FRANCISCO_OAKLAND_CA relationship=BUYING
-2026-01-20T22:48:35.961+09:00  INFO 15840 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Starting HomeRepairApplication using Java 17.0.11 with PID 15840 (C:\Development\Owner\home-repair\bin\main started by tlsgu in C:\Development\Owner\home-repair)
-2026-01-20T22:48:35.965+09:00 DEBUG 15840 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Running with Spring Boot v3.5.9, Spring v6.2.15
-2026-01-20T22:48:35.966+09:00  INFO 15840 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : No active profile set, falling back to 1 default profile: "default"
-2026-01-20T22:48:36.720+09:00  INFO 15840 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-01-20T22:48:36.810+09:00  INFO 15840 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 76 ms. Found 2 JPA repository interfaces.
-2026-01-20T22:48:37.461+09:00  INFO 15840 --- [home-repair] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
-2026-01-20T22:48:37.475+09:00  INFO 15840 --- [home-repair] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-01-20T22:48:37.476+09:00  INFO 15840 --- [home-repair] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
-2026-01-20T22:48:37.545+09:00  INFO 15840 --- [home-repair] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2026-01-20T22:48:37.546+09:00  INFO 15840 --- [home-repair] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1526 ms
-2026-01-20T22:48:37.912+09:00  INFO 15840 --- [home-repair] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-01-20T22:48:37.998+09:00  INFO 15840 --- [home-repair] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
-2026-01-20T22:48:38.048+09:00  INFO 15840 --- [home-repair] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2026-01-20T22:48:38.398+09:00  INFO 15840 --- [home-repair] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-01-20T22:48:38.442+09:00  INFO 15840 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-01-20T22:48:38.653+09:00  INFO 15840 --- [home-repair] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
-2026-01-20T22:48:38.656+09:00  INFO 15840 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-01-20T22:48:38.686+09:00  WARN 15840 --- [home-repair] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-01-20T22:48:38.721+09:00  INFO 15840 --- [home-repair] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
-	Database driver: undefined/unknown
-	Database version: 2.3.232
-	Autocommit mode: undefined/unknown
-	Isolation level: undefined/unknown
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2026-01-20T22:48:39.653+09:00  INFO 15840 --- [home-repair] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-01-20T22:48:39.716+09:00  INFO 15840 --- [home-repair] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-01-20T22:48:39.884+09:00  INFO 15840 --- [home-repair] [main] c.l.h.service.VerdictEngineService       : VerdictEngine Data Loaded Successfully.
-2026-01-20T22:48:40.380+09:00  INFO 15840 --- [home-repair] [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
-2026-01-20T22:48:40.465+09:00  INFO 15840 --- [home-repair] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
-2026-01-20T22:48:40.475+09:00  INFO 15840 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Started HomeRepairApplication in 5.161 seconds (process running for 5.535)
-2026-01-20T22:48:46.249+09:00  INFO 15840 --- [home-repair] [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-01-20T22:48:46.249+09:00  INFO 15840 --- [home-repair] [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2026-01-20T22:48:46.251+09:00  INFO 15840 --- [home-repair] [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
-2026-01-20T22:48:46.428+09:00 ERROR 15840 --- [home-repair] [http-nio-8081-exec-1] c.l.h.web.HomeRepairController           : Error displaying result page
-
-java.lang.IllegalArgumentException: Invalid Verdict ID
-	at com.livingcostcheck.home_repair.web.HomeRepairController.lambda$1(HomeRepairController.java:158) ~[main/:na]
-	at java.base/java.util.Optional.orElseThrow(Optional.java:403) ~[na:na]
-	at com.livingcostcheck.home_repair.web.HomeRepairController.result(HomeRepairController.java:158) ~[main/:na]
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258) ~[spring-web-6.2.15.jar:6.2.15]
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191) ~[spring-web-6.2.15.jar:6.2.15]
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.15.jar:6.2.15]
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991) ~[spring-webmvc-6.2.15.jar:6.2.15]
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896) ~[spring-webmvc-6.2.15.jar:6.2.15]
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.15.jar:6.2.15]
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.2.15.jar:6.2.15]
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.2.15.jar:6.2.15]
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.15.jar:6.2.15]
-	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.2.15.jar:6.2.15]
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564) ~[tomcat-embed-core-10.1.50.jar:6.0]
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.15.jar:6.2.15]
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.50.jar:6.0]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.50.jar:10.1.50]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.15.jar:6.2.15]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.15.jar:6.2.15]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.15.jar:6.2.15]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1774) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
-
-2026-01-20T22:48:50.010+09:00 ERROR 15840 --- [home-repair] [http-nio-8081-exec-3] c.l.h.web.HomeRepairController           : Error displaying result page
-
-java.lang.IllegalArgumentException: Invalid Verdict ID
-	at com.livingcostcheck.home_repair.web.HomeRepairController.lambda$1(HomeRepairController.java:158) ~[main/:na]
-	at java.base/java.util.Optional.orElseThrow(Optional.java:403) ~[na:na]
-	at com.livingcostcheck.home_repair.web.HomeRepairController.result(HomeRepairController.java:158) ~[main/:na]
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258) ~[spring-web-6.2.15.jar:6.2.15]
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191) ~[spring-web-6.2.15.jar:6.2.15]
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.15.jar:6.2.15]
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991) ~[spring-webmvc-6.2.15.jar:6.2.15]
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896) ~[spring-webmvc-6.2.15.jar:6.2.15]
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.15.jar:6.2.15]
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.2.15.jar:6.2.15]
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.2.15.jar:6.2.15]
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.15.jar:6.2.15]
-	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.2.15.jar:6.2.15]
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564) ~[tomcat-embed-core-10.1.50.jar:6.0]
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.15.jar:6.2.15]
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.50.jar:6.0]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.50.jar:10.1.50]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.15.jar:6.2.15]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.15.jar:6.2.15]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.15.jar:6.2.15]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.15.jar:6.2.15]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1774) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.50.jar:10.1.50]
-	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
-
-2026-01-20T22:48:59.320+09:00  INFO 15840 --- [home-repair] [http-nio-8081-exec-9] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=AKRON_OH eligible=true missing=[]
-2026-01-20T22:48:59.324+09:00  INFO 15840 --- [home-repair] [http-nio-8081-exec-9] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=AKRON_OH relationship=LIVING
-2026-01-20T22:48:59.429+09:00 DEBUG 15840 --- [home-repair] [http-nio-8081-exec-10] c.l.h.web.HomeRepairController           : Loading result for ID: efd5cfb3-07fb-4d08-b267-5b05eec92181
-2026-01-20T22:48:59.429+09:00  INFO 15840 --- [home-repair] [http-nio-8081-exec-10] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=AKRON_OH eligible=true missing=[]
-2026-01-20T22:48:59.430+09:00  INFO 15840 --- [home-repair] [http-nio-8081-exec-10] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=AKRON_OH relationship=LIVING
+2026-01-21T00:30:55.415+09:00  INFO 23540 --- [home-repair] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-21T00:30:55.489+09:00  INFO 23540 --- [home-repair] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-21T00:30:55.732+09:00  INFO 23540 --- [home-repair] [main] c.l.h.service.VerdictEngineService       : VerdictEngine Data Loaded Successfully.
+2026-01-21T00:30:56.389+09:00  INFO 23540 --- [home-repair] [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2026-01-21T00:30:56.505+09:00  INFO 23540 --- [home-repair] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-01-21T00:30:56.517+09:00  INFO 23540 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Started HomeRepairApplication in 6.037 seconds (process running for 6.471)
+2026-01-21T00:31:01.051+09:00  INFO 23540 --- [home-repair] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-21T00:31:01.052+09:00  INFO 23540 --- [home-repair] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-21T00:31:01.054+09:00  INFO 23540 --- [home-repair] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
