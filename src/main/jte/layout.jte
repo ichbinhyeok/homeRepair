@@ -2,6 +2,7 @@
 @param Content content
 @param String title = "Home Repair Verdict"
 @param Content headContent = null
+@param boolean showHeader = true
 
 <!DOCTYPE html>
 <html lang="en" class="bg-gray-100">
@@ -42,7 +43,9 @@
 </head>
 <body class="antialiased min-h-screen">
 
-    @template.layout._header()
+    @if(showHeader)
+        @template.layout._header()
+    @endif
 
     <div class="w-full min-h-screen pt-4 pb-12">
         <!-- AD_SLOT_TOP (Hidden for now to keep design clean) -->

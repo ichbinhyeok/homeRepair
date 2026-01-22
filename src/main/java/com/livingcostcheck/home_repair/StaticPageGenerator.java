@@ -78,7 +78,7 @@ public class StaticPageGenerator {
             System.out.println();
 
             // Generate sitemap
-            String sitemapPath = "src/main/resources/static/sitemap-home-repair.xml";
+            String sitemapPath = "src/main/resources/static/sitemap.xml";
             int urlCount = sitemapGenerator.generateSitemap(sitemapPath);
 
             System.out.println("✓ Sitemap generated with " + urlCount + " URLs: " + sitemapPath);

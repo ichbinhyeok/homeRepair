@@ -48,7 +48,7 @@ public class SitemapGenerator {
             "SEATTLE_TACOMA_BELLEVUE_WA",
             "WASHINGTON_ARLINGTON_DC_VA");
 
-    private static final String BASE_URL = "https://livingcostcheck.com";
+    private static final String BASE_URL = "https://lifeverdict.com";
 
     /**
      * Generate sitemap.xml
@@ -83,7 +83,11 @@ public class SitemapGenerator {
         int urlCount = 0;
 
         // Add homepage
-        xml.append(buildUrlEntry(BASE_URL, lastMod, "weekly", "1.0"));
+        xml.append(buildUrlEntry(BASE_URL + "/", lastMod, "daily", "1.0"));
+        urlCount++;
+
+        // Add Home Repair Landing Page
+        xml.append(buildUrlEntry(BASE_URL + "/home-repair", lastMod, "weekly", "0.8"));
         urlCount++;
 
         // Add all verdict pages
