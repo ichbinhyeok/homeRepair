@@ -7,6 +7,7 @@ import com.livingcostcheck.home_repair.repository.HomeRepairRepository;
 import com.livingcostcheck.home_repair.service.VerdictEngineService;
 import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.*;
 import com.livingcostcheck.home_repair.seo.StaticPageGeneratorService;
+import com.livingcostcheck.home_repair.seo.VerdictSeoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,49 @@ public class HomeRepairController {
     private final HomeRepairRepository repository;
     private final EventLogRepository eventLogRepository;
     private final VerdictEngineService verdictEngineService;
+    private final com.livingcostcheck.home_repair.seo.VerdictSeoService verdictSeoService;
+
+    // Helper methods for formatting (duplicated from StaticPageGeneratorService for
+    // now to avoid cross-service dependency or should be moved to a Util)
+    private String formatMetroName(String metroCode) {
+        if (metroCode == null)
+            return "Unknown";
+        String[] parts = metroCode.split("_");
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < parts.length; i++) {
+            String part = parts[i];
+            if (i == parts.length - 1 && part.length() == 2) {
+                result.append(part);
+            } else {
+                result.append(part.substring(0, 1).toUpperCase())
+                        .append(part.substring(1).toLowerCase());
+            }
+            if (i < parts.length - 1)
+                result.append(" ");
+        }
+        return result.toString();
+    }
+
+    private String formatEraName(String era) {
+        if (era == null)
+            return "Unknown";
+        switch (era) {
+            case "PRE_1950":
+                return "Pre-1950";
+            case "1950_1970":
+                return "1950s-1970s";
+            case "1970_1980":
+                return "1970s";
+            case "1980_1995":
+                return "1980s-1990s";
+            case "1995_2010":
+                return "1995-2010";
+            case "2010_PRESENT":
+                return "2010-Present";
+            default:
+                return era;
+        }
+    }
 
     @GetMapping
     public String index(Model model) {
@@ -52,6 +96,7 @@ public class HomeRepairController {
 
         model.addAttribute("metros", metros);
         model.addAttribute("eras", eras);
+        model.addAttribute("title", "Buying a Fixer-Upper? Don't Sign Until You See This Verdict.");
 
         return "pages/index";
     }
@@ -214,6 +259,14 @@ public class HomeRepairController {
 
             Verdict verdict = verdictEngineService.generateVerdict(context);
 
+            // CTR Optimization: Verdict-First Titles & Decision-Oriented H1s
+            String city = formatMetroName(history.getZipCode());
+
+            // Use VerdictSeoService for "Outlook" headers (Contextual)
+            VerdictSeoService.SeoVariant seoVariant = verdictSeoService.getDynamicResultHeader(verdict, city);
+
+            model.addAttribute("title", seoVariant.title());
+            model.addAttribute("verdictH1", seoVariant.h1());
             model.addAttribute("verdict", verdict);
             model.addAttribute("history", history);
             return "pages/result";

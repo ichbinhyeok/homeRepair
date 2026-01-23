@@ -45,7 +45,8 @@ public class SeoVerificationTest {
         when(linkBuilder.getRelatedCitiesInState(any(), any())).thenReturn(Collections.emptyList());
 
         // Create Service
-        pageGenerator = new StaticPageGeneratorService(verdictService, linkBuilder, templateEngine);
+        com.livingcostcheck.home_repair.seo.VerdictSeoService verdictSeoService = new com.livingcostcheck.home_repair.seo.VerdictSeoService();
+        pageGenerator = new StaticPageGeneratorService(verdictService, linkBuilder, templateEngine, verdictSeoService);
     }
 
     @Test
@@ -108,8 +109,8 @@ public class SeoVerificationTest {
 
         String content = Files.readString(generatedFile);
 
-        // 1. Check Title Optimization
-        assertTrue(content.contains("Calculator"), "Title check");
+        // 1. Check Title Optimization (Must NOT contain Calculator)
+        assertFalse(content.contains("Calculator"), "Title check");
 
         // 2. Check Domain Update
         assertTrue(content.contains("https://lifeverdict.com"), "Domain check");

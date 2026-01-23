@@ -5,9 +5,13 @@
 @param Verdict verdict
 @param VerdictHistory history
 
+@param String title = "Verdict | LifeVerdict"
+@param String verdictH1 = null
+
 @template.layout(
-    title = "Verdict | LifeVerdict",
+    title = title,
     headContent = @`
+        <meta name="robots" content="noindex">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
         <style>
             .bento-card { @apply bg-white rounded-2xl border border-slate-100 shadow-sm p-6 hover:shadow-md transition-shadow duration-300; }
@@ -27,10 +31,10 @@
                               "CONDITIONAL".equals(verdict.getTier()) ? "bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.4)]" : 
                               verdict.isDealKiller() ? "bg-red-600 shadow-[0_0_8px_rgba(220,38,38,0.4)]" : "bg-rose-500"}">
                         </span>
-                        <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Forensic Analysis Complete</span>
+                        <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Home Health Check Complete</span>
                     </div>
                     <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-2">
-                        ${verdict.getHeadline().split("\\.")[0]}.
+                        ${verdictH1 != null ? verdictH1 : (verdict.getHeadline().split("\\.")[0] + ".")}
                     </h1>
                     <p class="text-lg text-slate-500 max-w-2xl leading-relaxed">
                         ${verdict.getHeadline().contains(".") && verdict.getHeadline().split("\\.").length > 1 ? verdict.getHeadline().split("\\.")[1] : ""}
@@ -60,7 +64,7 @@
                     <div class="absolute right-0 bottom-0 w-64 h-64 bg-blue-600 rounded-full blur-[120px] opacity-20 group-hover:opacity-30 transition-opacity"></div>
                     
                     <div class="relative z-10">
-                        <h2 class="text-sm font-medium text-slate-400 uppercase tracking-widest mb-1">Capital Exposure Estimate</h2>
+                        <h2 class="text-sm font-medium text-slate-400 uppercase tracking-widest mb-1">Estimated Repair Budget</h2>
                         <div class="flex items-baseline gap-1 mt-4">
                             <span class="text-7xl font-semibold tracking-tighter">
                                 ${verdict.getCostRangeLabel().contains("(") ? verdict.getCostRangeLabel().substring(0, verdict.getCostRangeLabel().indexOf("(")) : verdict.getCostRangeLabel()}
@@ -141,10 +145,10 @@
                     <div class="bg-gradient-to-br from-slate-50 to-white rounded-[24px] p-6 border border-slate-100 shadow-sm relative overflow-hidden group">
                          <div class="absolute right-0 top-0 p-3 opacity-10 font-black text-6xl text-slate-900 select-none">$</div>
                          <div class="relative z-10">
-                            <span class="text-xs font-bold text-slate-400 uppercase">Negotiation Value</span>
+                            <span class="text-xs font-bold text-slate-400 uppercase">Repair Allowance Estimate</span>
                             <div class="text-3xl font-bold text-slate-900 mt-2 tracking-tight">$${String.format("%,.0f", verdict.getExactCostEstimate() * 1.5)}</div>
                             <p class="text-xs text-slate-500 mt-2 font-medium bg-white/50 inline-block px-2 py-1 rounded">
-                                Suggested credit request (+50% buffer)
+                                Suggested allowance request (+50% buffer)
                             </p>
                          </div>
                     </div>

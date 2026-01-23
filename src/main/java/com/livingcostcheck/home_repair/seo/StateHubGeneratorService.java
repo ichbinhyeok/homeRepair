@@ -146,6 +146,13 @@ public class StateHubGeneratorService {
 
         // Prepare template data
         Map<String, Object> templateData = new HashMap<>();
+
+        // State Hub SEO Strategy (Navigational / High-Level Consideration)
+        String seoTitle = String.format("Is it safe to buy a fixer-upper in %s?", stateName);
+        String seoH1 = String.format("What to consider before fixing a home in %s", stateName);
+
+        templateData.put("title", seoTitle);
+        templateData.put("h1", seoH1);
         templateData.put("stateName", stateName);
         templateData.put("stateCode", stateCode);
         templateData.put("cities", cities);

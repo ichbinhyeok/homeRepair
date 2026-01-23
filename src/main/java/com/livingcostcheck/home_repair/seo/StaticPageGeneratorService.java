@@ -1,6 +1,7 @@
 package com.livingcostcheck.home_repair.seo;
 
 import com.livingcostcheck.home_repair.service.VerdictEngineService;
+import com.livingcostcheck.home_repair.seo.VerdictSeoService;
 import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.*;
 import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
@@ -28,6 +29,7 @@ public class StaticPageGeneratorService {
     private final VerdictEngineService verdictEngineService;
     private final InternalLinkBuilder internalLinkBuilder;
     private final TemplateEngine templateEngine;
+    private final VerdictSeoService verdictSeoService;
 
     // All eras to generate
     private static final List<String> ALL_ERAS = Arrays.asList(
@@ -111,18 +113,27 @@ public class StaticPageGeneratorService {
         List<InternalLinkBuilder.InternalLink> eraLinks = internalLinkBuilder.getOtherErasInCity(metroCode, era);
         List<InternalLinkBuilder.InternalLink> cityLinks = internalLinkBuilder.getNearbyMetrosInEra(metroCode, era);
 
+        // CTR Optimization: Verdict-First Titles & Decision-Oriented H1s
+        String metroName = formatMetroName(metroCode);
+        String eraName = formatEraName(era);
+
+        // Uses VerdictSeoService to ensure "Market Benchmark" branding (Informational)
+        VerdictSeoService.SeoVariant seoVariant = verdictSeoService.getStaticPageHeader(metroName, eraName);
+
         // Prepare template data
         Map<String, Object> templateData = new HashMap<>();
+        templateData.put("title", seoVariant.title());
+        templateData.put("h1Content", seoVariant.h1());
         templateData.put("metroCode", metroCode);
-        templateData.put("metroName", formatMetroName(metroCode));
+        templateData.put("metroName", metroName);
         templateData.put("era", era);
-        templateData.put("eraName", formatEraName(era));
+        templateData.put("eraName", eraName);
         templateData.put("verdict", verdict);
         templateData.put("eraLinks", eraLinks);
         templateData.put("cityLinks", cityLinks);
         templateData.put("baseUrl", "https://lifeverdict.com");
         templateData.put("canonicalUrl", buildCanonicalUrl(metroCode, era));
-        templateData.put("faqSchema", generateFAQSchema(formatMetroName(metroCode), formatEraName(era), verdict));
+        templateData.put("faqSchema", generateFAQSchema(metroName, eraName, verdict));
         templateData.put("stateLinks", internalLinkBuilder.getRelatedCitiesInState(metroCode, era));
 
         // Add FragmentLibrary content for uniqueness
@@ -130,6 +141,12 @@ public class StaticPageGeneratorService {
         templateData.put("climateFragment", FragmentLibrary.selectClimateFragment(null, seed));
         templateData.put("eraFragment", FragmentLibrary.selectEraFragment(era, seed + 1));
         templateData.put("costFragment", FragmentLibrary.selectCostFragment(1.0, seed + 2));
+
+        // Phase 2: Add Regional Insight (Combinatorial Logic)
+        String climateZone = verdictEngineService.getMetroMasterData().getData().get(metroCode).getClimateZone();
+        double laborMult = verdictEngineService.getMetroMasterData().getData().get(metroCode).getLaborMult();
+        String regionalInsight = FragmentLibrary.generateRegionalInsight(climateZone, era, laborMult, metroName, seed);
+        templateData.put("regionalInsight", regionalInsight);
 
         // Calculate price range for schema
         double lowPrice = verdict.getPlan().getMustDo().stream()

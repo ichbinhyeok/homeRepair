@@ -8,6 +8,8 @@
 @param List<StateHubGeneratorService.CityInfo> cities
 @param Map<String, Double> avgCostByEra
 @param String climateDescription
+@param String title
+@param String h1
 @param String baseUrl
 @param String canonicalUrl
 
@@ -17,7 +19,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>${stateName} Home Repair Cost Guide [2026] | State Overview</title>
+    <title>${title}</title>
     <meta name="description" content="Comprehensive home repair cost analysis for ${stateName}. Compare costs across ${cities.size()} cities, climate-specific risks, and era-based repair priorities.">
     
     <link rel="canonical" href="${canonicalUrl}">
@@ -74,7 +76,7 @@
     
     <div class="state-hub-container">
         <div class="state-header">
-            <h1 style="font-size: 2.5em; margin: 0 0 16px 0;">${stateName} Home Repair Costs</h1>
+            <h1 style="font-size: 2.5em; margin: 0 0 16px 0;">${h1}</h1>
             <p style="font-size: 1.2em; opacity: 0.95; margin: 0;">
                 Detailed cost analysis for ${cities.size()} cities across ${stateName}
             </p>

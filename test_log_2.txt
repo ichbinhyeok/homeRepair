@@ -1,0 +1,36 @@
+> Task :generateJte UP-TO-DATE
+
+> Task :compileJava FAILED
+C:\Development\Owner\home-repair\src\main\java\com\livingcostcheck\home_repair\web\HomeRepairController.java:265: error: package VerdictSeoService does not exist
+            VerdictSeoService.SeoPair seoPair = verdictSeoService.getVerdictSeoPair(city, history.getDecade());
+                             ^
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 error
+
+[Incubating] Problems report is available at: file:///C:/Development/Owner/home-repair/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler output below.
+  C:\Development\Owner\home-repair\src\main\java\com\livingcostcheck\home_repair\web\HomeRepairController.java:265: error: package VerdictSeoService does not exist
+              VerdictSeoService.SeoPair seoPair = verdictSeoService.getVerdictSeoPair(city, history.getDecade());
+                               ^
+  1 error
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 3s
+2 actionable tasks: 1 executed, 1 up-to-date

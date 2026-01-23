@@ -168,7 +168,7 @@ public class VerdictEngineService {
                         displayPlan.getMustDo().get(0).getAdjustedCost())
                 : null;
         boolean isDealKiller = isDealKiller(context);
-        String dealKillerMessage = getDealKillerMessage(context);
+        String dealKillerMessage = getDealKillerMessage(context); // Now "Leverage Point" message
         SortedPlan plan = displayPlan; // Using displayPlan as plan
 
         return Verdict.builder()
@@ -204,11 +204,11 @@ public class VerdictEngineService {
 
     private String getDealKillerMessage(UserContext context) {
         if (Boolean.TRUE.equals(context.getIsChineseDrywall()))
-            return "CRITICAL ALERT: Defective Chinese Drywall Detected. (Triggered by: Positive visual/olfactory identification)";
+            return "MAJOR LEVERAGE POINT: Defective Chinese Drywall Detected. (Ask for remediation credit)";
         if (Boolean.TRUE.equals(context.getIsFpePanel()))
-            return "CRITICAL ALERT: Federal Pacific/Zinsco Panel. (Triggered by: Panel brand identification)";
+            return "MAJOR LEVERAGE POINT: Federal Pacific/Zinsco Panel. (Safety update required)";
         if (Boolean.TRUE.equals(context.getIsPolyB()))
-            return "CRITICAL ALERT: Polybutylene Plumbing. (Triggered by: Pipe material identification)";
+            return "MAJOR LEVERAGE POINT: Polybutylene Plumbing. (Re-pipe credit recommended)";
         return null;
     }
 
@@ -1146,9 +1146,32 @@ public class VerdictEngineService {
             }
 
             // --- PHASE 6: HISTORY LOGIC (REFECTORED) ---
-            // STRICT RULE: History is applied ONLY for LIVING users.
-            // BUYING/INVESTING users see FULL RISK SCOPE.
 
+            // BACKWARD COMPATIBILITY: Handle deprecated 'history' field FIRST
+            // This works even when relationship is null (for tests and legacy endpoints)
+            if (context.getHistory() != null && "NONE".equals(context.getCondition())) {
+                boolean shouldSkipDueToHistory = false;
+
+                // Check if item matches any category in history
+                for (String historyCategory : context.getHistory()) {
+                    if (item.getItemCode().contains(historyCategory)) {
+                        shouldSkipDueToHistory = true;
+
+                        // Add exclusion note
+                        String categoryName = historyCategory;
+                        exclusionNotes.add("History Exclusion: " + categoryName
+                                + " (user-confirmed as recently replaced, condition=NONE)");
+                        break;
+                    }
+                }
+
+                if (shouldSkipDueToHistory) {
+                    continue; // Skip this item
+                }
+            }
+
+            // STRICT RULE: New history fields only for LIVING users
+            // BUYING/INVESTING users see FULL RISK SCOPE
             if (context.getRelationship() == RelationshipToHouse.LIVING) {
 
                 // Logic A: Core Systems (Risk Layer)

@@ -54,8 +54,9 @@ public class StaticPageGenerator {
 
             // Initialize pSEO services
             InternalLinkBuilder linkBuilder = new InternalLinkBuilder();
+            com.livingcostcheck.home_repair.seo.VerdictSeoService verdictSeoService = new com.livingcostcheck.home_repair.seo.VerdictSeoService();
             StaticPageGeneratorService pageGenerator = new StaticPageGeneratorService(
-                    verdictService, linkBuilder, templateEngine);
+                    verdictService, linkBuilder, templateEngine, verdictSeoService);
             SitemapGenerator sitemapGenerator = new SitemapGenerator(verdictService);
 
             System.out.println();
@@ -65,7 +66,7 @@ public class StaticPageGenerator {
             System.out.println();
 
             // Generate all pages
-            String outputPath = "src/main/resources/static/verdicts";
+            String outputPath = "src/main/resources/static/home-repair/verdicts";
             int pageCount = pageGenerator.generateAllPages(outputPath);
 
             System.out.println();

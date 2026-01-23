@@ -1,6 +1,6 @@
 @import gg.jte.Content
 @param Content content
-@param String title = "Home Repair Verdict"
+@param String title = "LifeVerdict | Property Intelligence"
 @param Content headContent = null
 @param boolean showHeader = true
 

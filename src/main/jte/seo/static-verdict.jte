@@ -3,6 +3,8 @@
 @import java.util.List
 @import java.util.Map
 
+@param String title
+@param String h1Content
 @param String metroCode
 @param String metroName
 @param String era
@@ -17,6 +19,7 @@
 @param String climateFragment
 @param String eraFragment
 @param String costFragment
+@param String regionalInsight
 @param List<Map<String, String>> faqItems
 @param String lowPrice
 @param String highPrice
@@ -27,8 +30,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>${metroName} Home Repair Cost Calculator - ${eraName} Guide (2026 Updated)</title>
-    <meta name="description" content="${verdict.getHeadline()} Detailed cost analysis for ${eraName} homes in ${metroName} with repair priorities, budget breakdowns, and expert insights based on 2026 RSMeans construction data.">
+    <title>${title}</title>
+    <!-- Description optimized for curiosity, matching the H1 tone -->
+    <meta name="description" content="${h1Content} LifeVerdict analyzes specific risk factors for ${eraName} homes in ${metroName}. See the full breakdown before you buy.">
     
     <link rel="canonical" href="${canonicalUrl}">
     <link rel="icon" href="/favicon.ico">
@@ -37,8 +41,8 @@
     
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="article">
-    <meta property="og:title" content="${metroName} ${eraName} Home Repair Cost [2026 Updated]">
-    <meta property="og:description" content="${verdict.getHeadline()}">
+    <meta property="og:title" content="${title}">
+    <meta property="og:description" content="${h1Content}">
     <meta property="og:url" content="${canonicalUrl}">
     
     <!-- Schema.org Structured Data -->
@@ -180,14 +184,22 @@
         <!-- Main Verdict Card -->
         <article class="card verdict-header-card">
             <header class="verdict-header">
-                <div class="badge ${verdict.getTier()}">${verdict.getTier()}</div>
-                <h1>${metroName} Home Repair Cost Analysis — ${eraName}</h1>
-                <p class="data-meta">Updated for 2026 • Based on RSMeans Construction Data</p>
+                <div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-full uppercase tracking-widest border border-blue-100">Market Benchmark Report</span>
+                    </div>
+                     <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-slate-900 mb-4 leading-tight">
+                        ${h1Content}
+                    </h1>
+                     <p class="text-lg text-slate-500 max-w-2xl leading-relaxed">
+                        A data-driven analysis of historical repair costs for ${eraName} properties in the ${metroName} area.
+                    </p>
+                </div>
             </header>
 
             <section class="verdict-summary">
                 <h2 class="section-title">
-                    <span>📊</span> Verdict Summary
+                    <span>📊</span> Regional Cost Analysis
                 </h2>
                 <div class="headline explanation-text">
                     ${verdict.getHeadline()}
@@ -211,6 +223,19 @@
                         <strong style="color: #d97706;">💰 Local Market:</strong> ${costFragment}
                     </div>
                 </div>
+
+                <!-- Phase 2: Regional Insight (Why This Region Is Different) -->
+                @if(regionalInsight != null && !regionalInsight.isEmpty())
+                    <div class="regional-insight-block" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 2px solid #0284c7; padding: 20px; border-radius: 12px; margin-top: 24px;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                            <span style="font-size: 1.3em;">🔍</span>
+                            <strong style="color: #075985; font-size: 1.05em;">Why ${metroName} is different</strong>
+                        </div>
+                        <p style="margin: 0; line-height: 1.7; color: #0c4a6e; font-size: 0.95em;">
+                            ${regionalInsight}
+                        </p>
+                    </div>
+                @endif
             </section>
 
             <!-- MONETIZATION PLACEHOLDER: VERIFIED PROS -->
@@ -329,13 +354,13 @@
     
         <section id="cta" class="card" style="text-align: center; border-top: 4px solid var(--color-primary); background-color: #F8FAFC; margin-top: 40px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
             <h2 class="section-title" style="justify-content: center; margin-bottom: 16px; border: none; color: #1e293b;">
-                Need a Custom Analysis?
+                Calculated your true cost yet?
             </h2>
             <p class="explanation-text" style="margin-bottom: 32px; font-size: 1.05em;">
-                This verdict is based on a standard budget. Your actual costs may vary based on specific conditions found during inspection.
+                This chart shows market averages. Your home's condition could be <strong>50% higher or lower</strong>.
             </p>
             <a href="/home-repair" class="header-cta" style="font-size: 1.1em; padding: 16px 32px; background-color: var(--color-primary); color: white; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-block;">
-                Recalculate with your own budget
+                Start My Personal Estimate
             </a>
         </section>
 
