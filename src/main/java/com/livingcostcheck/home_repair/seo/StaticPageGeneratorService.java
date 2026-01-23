@@ -40,8 +40,8 @@ public class StaticPageGeneratorService {
             "1995_2010",
             "2010_PRESENT");
 
-    // Default budget for static pages (mid-range to get realistic verdicts)
-    private static final double DEFAULT_BUDGET = 15000.0;
+    // Default budget for static pages (-1.0 triggers Benchmark Mode)
+    private static final double DEFAULT_BUDGET = -1.0;
     private static final String DEFAULT_PURPOSE = "LIVING";
 
     /**

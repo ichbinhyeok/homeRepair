@@ -141,17 +141,13 @@ public class VerdictEngineService {
         String tier = "DENIED";
         String headline = "";
 
-        // CRITICAL: minRequired should NEVER be 0 if we reached this point
-        // If it is 0, that's a BUG - eligibility check should have caught it
-        if (minRequired == 0.0) {
-            // Valid Zero-Cost Variant (e.g. New Construction)
-            log.info("Zero-cost verdict generated. Assuming Low Risk / New Condition. strategy={}",
-                    chosenEligibility.getStrategyType());
-
-            // Allow proceeding
-        }
-
-        if (budget >= minRequired) {
+        // BENCHMARK MODE (Static SEO Pages)
+        // If budget is negative (e.g. -1.0), we are in Benchmark Mode.
+        // Show the cost estimate without judging affordability.
+        if (budget < 0) {
+            tier = "LOW_RISK"; // Neutral/Positive color
+            headline = String.format("Estimated Renovation Cost: $%,.0f (Market Average)", minRequired);
+        } else if (budget >= minRequired) {
             tier = "LOW_RISK";
             headline = String.format(
                     "Sufficient budget to cover critical code-mandatory repairs ($%,.0f). Financial risk is manageable.",
