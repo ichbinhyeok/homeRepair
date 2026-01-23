@@ -982,10 +982,10 @@
         "description": "Premium composite decking, including substructure",
         "measure_unit": "SQFT",
         "material_cost_range": {
-          "low": 35.0,
-          "high": 65.0
+          "low": 25.0,
+          "high": 45.0
         },
-        "labor_hours_per_unit": 2.2,
+        "labor_hours_per_unit": 0.6,
         "base_labor_rate_national": 75.0,
         "mobilization_base_fee": 5000.0,
         "min_project_size": 150,

@@ -110,6 +110,33 @@ public class VerdictEngineService {
                 ? chosenOption.getTotalCost()
                 : safetyOption.getTotalCost();
 
+        // LOGIC UPGRADE: Safety Fallback for Budget-Constrained Users
+        // If they can't afford STANDARD_LIVING but CAN afford SAFETY_FLIP, switch them.
+        if (context.getBudget() < minRequired &&
+                chosenOption.getStrategyType() != StrategyType.SAFETY_FLIP &&
+                safetyOption != null) {
+
+            if (context.getBudget() >= safetyOption.getTotalCost()) {
+                log.info(
+                        "Auto-Downgrade Triggered | Budget=${} < Standard=${}, but >= Safety=${}. Switching to SAFETY_FLIP.",
+                        context.getBudget(), minRequired, safetyOption.getTotalCost());
+
+                // Switch contexts
+                chosenOption = safetyOption;
+                minRequired = safetyOption.getTotalCost();
+
+                // Update eligibility pointer for correct explanation
+                StrategyEligibility safetyElig = allEligibilities.stream()
+                        .filter(e -> e.getStrategyType() == StrategyType.SAFETY_FLIP)
+                        .findFirst()
+                        .orElse(null);
+
+                if (safetyElig != null) {
+                    chosenEligibility = safetyElig;
+                }
+            }
+        }
+
         double budget = context.getBudget();
         String tier = "DENIED";
         String headline = "";

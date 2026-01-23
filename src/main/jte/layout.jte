@@ -1,6 +1,7 @@
 @import gg.jte.Content
 @param Content content
 @param String title = "LifeVerdict | Property Intelligence"
+@param String description = null
 @param Content headContent = null
 @param boolean showHeader = true
 
@@ -19,6 +20,9 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @if(description != null)
+        <meta name="description" content="${description}">
+    @endif
     <title>${title}</title>
     @if(headContent != null)
         ${headContent}

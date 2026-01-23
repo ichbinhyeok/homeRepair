@@ -1055,3 +1055,43 @@ Identify and stop the process that's listening on port 8080 or configure this ap
 2026-01-23T15:22:49.422+09:00 DEBUG 30580 --- [home-repair] [http-nio-8080-exec-5] c.l.h.web.HomeRepairController           : Loading result for ID: 2801bf62-38fc-4336-816f-90880bbe5986
 2026-01-23T15:22:49.422+09:00  INFO 30580 --- [home-repair] [http-nio-8080-exec-5] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1950_1970 metro=BALTIMORE_COLUMBIA_MD eligible=true missing=[]
 2026-01-23T15:22:49.423+09:00  INFO 30580 --- [home-repair] [http-nio-8080-exec-5] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=STANDARD_LIVING era=1950_1970 metro=BALTIMORE_COLUMBIA_MD relationship=LIVING
+2026-01-23T15:31:09.987+09:00  INFO 19496 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Starting HomeRepairApplication using Java 21.0.9 with PID 19496 (C:\Development\Owner\home-repair\build\classes\java\main started by tlsgu in C:\Development\Owner\home-repair)
+2026-01-23T15:31:09.990+09:00 DEBUG 19496 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Running with Spring Boot v3.5.9, Spring v6.2.15
+2026-01-23T15:31:09.991+09:00  INFO 19496 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : No active profile set, falling back to 1 default profile: "default"
+2026-01-23T15:31:11.350+09:00  INFO 19496 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-23T15:31:11.416+09:00  INFO 19496 --- [home-repair] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 56 ms. Found 2 JPA repository interfaces.
+2026-01-23T15:31:11.894+09:00  INFO 19496 --- [home-repair] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-23T15:31:11.910+09:00  INFO 19496 --- [home-repair] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-23T15:31:11.910+09:00  INFO 19496 --- [home-repair] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-01-23T15:31:11.983+09:00  INFO 19496 --- [home-repair] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-23T15:31:11.984+09:00  INFO 19496 --- [home-repair] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1949 ms
+2026-01-23T15:31:12.161+09:00  INFO 19496 --- [home-repair] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-23T15:31:12.225+09:00  INFO 19496 --- [home-repair] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
+2026-01-23T15:31:12.264+09:00  INFO 19496 --- [home-repair] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-23T15:31:12.571+09:00  INFO 19496 --- [home-repair] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-23T15:31:12.604+09:00  INFO 19496 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-23T15:31:12.793+09:00  INFO 19496 --- [home-repair] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026-01-23T15:31:12.794+09:00  INFO 19496 --- [home-repair] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-23T15:31:12.819+09:00  WARN 19496 --- [home-repair] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-23T15:31:12.840+09:00  INFO 19496 --- [home-repair] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-23T15:31:13.695+09:00  INFO 19496 --- [home-repair] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-23T15:31:13.763+09:00  INFO 19496 --- [home-repair] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-23T15:31:13.967+09:00  INFO 19496 --- [home-repair] [main] c.l.h.service.VerdictEngineService       : VerdictEngine Data Loaded Successfully.
+2026-01-23T15:31:14.404+09:00  INFO 19496 --- [home-repair] [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2026-01-23T15:31:14.493+09:00  INFO 19496 --- [home-repair] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-01-23T15:31:14.499+09:00  INFO 19496 --- [home-repair] [main] c.l.home_repair.HomeRepairApplication    : Started HomeRepairApplication in 5.105 seconds (process running for 5.474)
+2026-01-23T15:31:18.495+09:00  INFO 19496 --- [home-repair] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-23T15:31:18.495+09:00  INFO 19496 --- [home-repair] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-23T15:31:18.497+09:00  INFO 19496 --- [home-repair] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-01-23T15:53:41.274+09:00  INFO 19496 --- [home-repair] [http-nio-8080-exec-6] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=PRE_1950 metro=AUSTIN_ROUND_ROCK_TX eligible=true missing=[]
+2026-01-23T15:53:41.276+09:00  INFO 19496 --- [home-repair] [http-nio-8080-exec-6] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=PRE_1950 metro=AUSTIN_ROUND_ROCK_TX relationship=BUYING
+2026-01-23T15:53:41.688+09:00 DEBUG 19496 --- [home-repair] [http-nio-8080-exec-8] c.l.h.web.HomeRepairController           : Loading result for ID: ab7caa5a-29e9-44aa-91cc-2addf87edd92
+2026-01-23T15:53:41.690+09:00  INFO 19496 --- [home-repair] [http-nio-8080-exec-8] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=PRE_1950 metro=AUSTIN_ROUND_ROCK_TX eligible=true missing=[]
+2026-01-23T15:53:41.690+09:00  INFO 19496 --- [home-repair] [http-nio-8080-exec-8] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=PRE_1950 metro=AUSTIN_ROUND_ROCK_TX relationship=BUYING
