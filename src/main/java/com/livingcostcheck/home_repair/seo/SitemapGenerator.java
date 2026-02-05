@@ -53,12 +53,12 @@ public class SitemapGenerator {
     /**
      * Generate sitemap.xml
      * 
-     * @param outputPath Path to write sitemap.xml (e.g.,
-     *                   "src/main/resources/static/sitemap.xml")
+     * @param outputPath Path to write sitemap.xml
+     * @param extraUrls  Additional URLs to include (Level 2 pages)
      * @return Number of URLs in sitemap
      */
-    public int generateSitemap(String outputPath) throws IOException {
-        log.info("Generating sitemap.xml...");
+    public int generateSitemap(String outputPath, List<String> extraUrls) throws IOException {
+        log.info("Generating sitemap.xml with extra URLs...");
 
         StringBuilder xml = new StringBuilder();
         xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
@@ -90,7 +90,7 @@ public class SitemapGenerator {
         xml.append(buildUrlEntry(BASE_URL + "/home-repair", lastMod, "weekly", "0.8"));
         urlCount++;
 
-        // Add all verdict pages
+        // Add all verdict pages (Level 1)
         for (String metroCode : metroCodes) {
             boolean isTier1 = TIER_1_METROS.contains(metroCode);
             String priority = isTier1 ? "1.0" : "0.8";
@@ -98,6 +98,18 @@ public class SitemapGenerator {
             for (String era : ALL_ERAS) {
                 String url = buildVerdictUrl(metroCode, era);
                 xml.append(buildUrlEntry(url, lastMod, "monthly", priority));
+                urlCount++;
+            }
+        }
+
+        // Add extra URLs (Level 2)
+        if (extraUrls != null) {
+            for (String url : extraUrls) {
+                // If it's already added (Level 1), skip
+                if (url.contains("/verdicts/") && url.split("/").length <= 6) {
+                    continue;
+                }
+                xml.append(buildUrlEntry(url, lastMod, "monthly", "0.6"));
                 urlCount++;
             }
         }

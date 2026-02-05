@@ -27,6 +27,7 @@ public class StaticPageGeneratorService {
     private final InternalLinkBuilder internalLinkBuilder;
     private final TemplateEngine templateEngine;
     private final VerdictSeoService verdictSeoService;
+    private final SitemapGenerator sitemapGenerator;
 
     // All eras to generate
     private static final List<String> ALL_ERAS = Arrays.asList(
@@ -58,15 +59,17 @@ public class StaticPageGeneratorService {
         int successCount = 0;
         int errorCount = 0;
         List<String> failedPages = new ArrayList<>();
+        List<String> allGeneratedUrls = new ArrayList<>();
 
         for (String metroCode : metroCodes) {
             for (String era : ALL_ERAS) {
                 try {
-                    generateSinglePage(metroCode, era, outputBasePath);
-                    successCount++;
+                    List<String> pageUrls = generateSinglePage(metroCode, era, outputBasePath);
+                    allGeneratedUrls.addAll(pageUrls);
+                    successCount += pageUrls.size();
 
-                    if (successCount % 50 == 0) {
-                        log.info("Progress: {} pages generated...", successCount);
+                    if (successCount % 100 == 0) {
+                        log.info("Progress: {} total URLs generated...", successCount);
                     }
                 } catch (Exception e) {
                     errorCount++;
@@ -82,6 +85,15 @@ public class StaticPageGeneratorService {
         log.info("Success: {} pages", successCount);
         log.info("Errors: {} pages", errorCount);
 
+        // --- NEW: Generate Sitemap automatically ---
+        try {
+            String sitemapPath = outputBasePath.replace("home-repair/verdicts", "sitemap.xml");
+            int sitemapUrls = sitemapGenerator.generateSitemap(sitemapPath, allGeneratedUrls);
+            log.info("Sitemap updated with {} URLs at {}", sitemapUrls, sitemapPath);
+        } catch (IOException e) {
+            log.error("Failed to generate sitemap after pSEO generation: {}", e.getMessage());
+        }
+
         if (!failedPages.isEmpty()) {
             log.warn("Failed pages: {}", failedPages);
         }
@@ -90,9 +102,12 @@ public class StaticPageGeneratorService {
     }
 
     /**
-     * Generate a single static page
+     * Generate a single static page and its child risk pages
+     * 
+     * @return List of all generated URLs (absolute)
      */
-    private void generateSinglePage(String metroCode, String era, String outputBasePath) throws IOException {
+    private List<String> generateSinglePage(String metroCode, String era, String outputBasePath) throws IOException {
+        List<String> generatedUrls = new ArrayList<>();
         // Create UserContext with default values
         UserContext context = UserContext.builder()
                 .metroCode(metroCode)
@@ -130,6 +145,8 @@ public class StaticPageGeneratorService {
         templateData.put("baseUrl", "https://lifeverdict.com");
         templateData.put("canonicalUrl", buildCanonicalUrl(metroCode, era));
         templateData.put("faqSchema", generateFAQSchema(metroName, eraName, verdict));
+        templateData.put("breadcrumbSchema",
+                generateBreadcrumbSchema(metroName, eraName, buildCanonicalUrl(metroCode, era)));
         templateData.put("stateLinks", internalLinkBuilder.getRelatedCitiesInState(metroCode, era));
 
         // Add FragmentLibrary content for uniqueness
@@ -172,21 +189,27 @@ public class StaticPageGeneratorService {
         Files.writeString(filePath, html);
 
         log.debug("Generated Level 1: {}", filePath);
+        generatedUrls.add(buildCanonicalUrl(metroCode, era));
 
         // ----------------------------------------------------------------
         // LEVEL 2 GENERATION: SPECIFIC RISK PAGES
         // ----------------------------------------------------------------
         if (verdict.getPlan() != null && verdict.getPlan().getMustDo() != null) {
             for (RiskAdjustedItem item : verdict.getPlan().getMustDo()) {
-                generateRiskPage(metroCode, era, item, verdict, regionalInsight, outputBasePath);
+                String riskUrl = generateRiskPage(metroCode, era, item, verdict, regionalInsight, outputBasePath);
+                generatedUrls.add(riskUrl);
             }
         }
+
+        return generatedUrls;
     }
 
     /**
      * Generate a Level 2 Risk Detail Page
+     * 
+     * @return Absolute URL of the generated page
      */
-    private void generateRiskPage(String metroCode, String era, RiskAdjustedItem item, Verdict verdict,
+    private String generateRiskPage(String metroCode, String era, RiskAdjustedItem item, Verdict verdict,
             String regionalInsight, String outputBasePath) throws IOException {
         String metroName = formatMetroName(metroCode);
         String eraName = formatEraName(era);
@@ -212,12 +235,11 @@ public class StaticPageGeneratorService {
                 + era.toLowerCase().replace("_", "-") + ".html";
         templateData.put("parentUrl", parentUrl);
         templateData.put("baseUrl", "https://lifeverdict.com");
-        // Canonical:
-        // https://lifeverdict.com/home-repair/verdicts/abilene-tx/pre-1950/knob-and-tube.html
-        templateData.put("canonicalUrl",
-                "https://lifeverdict.com" + parentUrl.replace(".html", "/") + itemSlug + ".html");
-
         templateData.put("faqSchema", generateRiskFAQSchema(item, metroName));
+        String riskCanonical = "https://lifeverdict.com" + parentUrl.replace(".html", "/") + itemSlug + ".html";
+        templateData.put("canonicalUrl", riskCanonical);
+        templateData.put("breadcrumbSchema",
+                generateRiskBreadcrumbSchema(metroName, eraName, parentUrl, item.getPrettyName(), riskCanonical));
 
         // Render Level 2 Template
         StringOutput output = new StringOutput();
@@ -232,6 +254,7 @@ public class StaticPageGeneratorService {
 
         Files.writeString(filePath, html);
         log.debug("Generated Level 2: {}", filePath);
+        return riskCanonical;
     }
 
     private String generateRiskFAQSchema(RiskAdjustedItem item, String metroName) {
@@ -402,6 +425,64 @@ public class StaticPageGeneratorService {
         schema.append("</script>");
 
         return schema.toString();
+    }
+
+    // Generate Breadcrumb Schema for Level 1
+    private String generateBreadcrumbSchema(String metroName, String eraName, String currentUrl) {
+        return "<script type=\"application/ld+json\">\n" +
+                "{\n" +
+                "  \"@context\": \"https://schema.org\",\n" +
+                "  \"@type\": \"BreadcrumbList\",\n" +
+                "  \"itemListElement\": [{\n" +
+                "    \"@type\": \"ListItem\",\n" +
+                "    \"position\": 1,\n" +
+                "    \"name\": \"Home\",\n" +
+                "    \"item\": \"https://lifeverdict.com\"\n" +
+                "  },{\n" +
+                "    \"@type\": \"ListItem\",\n" +
+                "    \"position\": 2,\n" +
+                "    \"name\": \"Home Repair\",\n" +
+                "    \"item\": \"https://lifeverdict.com/home-repair\"\n" +
+                "  },{\n" +
+                "    \"@type\": \"ListItem\",\n" +
+                "    \"position\": 3,\n" +
+                "    \"name\": \"" + metroName + " (" + eraName + ")\",\n" +
+                "    \"item\": \"" + currentUrl + "\"\n" +
+                "  }]\n" +
+                "}\n" +
+                "</script>";
+    }
+
+    // Generate Breadcrumb Schema for Level 2
+    private String generateRiskBreadcrumbSchema(String metroName, String eraName, String parentPath, String itemName,
+            String currentUrl) {
+        return "<script type=\"application/ld+json\">\n" +
+                "{\n" +
+                "  \"@context\": \"https://schema.org\",\n" +
+                "  \"@type\": \"BreadcrumbList\",\n" +
+                "  \"itemListElement\": [{\n" +
+                "    \"@type\": \"ListItem\",\n" +
+                "    \"position\": 1,\n" +
+                "    \"name\": \"Home\",\n" +
+                "    \"item\": \"https://lifeverdict.com\"\n" +
+                "  },{\n" +
+                "    \"@type\": \"ListItem\",\n" +
+                "    \"position\": 2,\n" +
+                "    \"name\": \"Home Repair\",\n" +
+                "    \"item\": \"https://lifeverdict.com/home-repair\"\n" +
+                "  },{\n" +
+                "    \"@type\": \"ListItem\",\n" +
+                "    \"position\": 3,\n" +
+                "    \"name\": \"" + metroName + " (" + eraName + ")\",\n" +
+                "    \"item\": \"https://lifeverdict.com" + parentPath + "\"\n" +
+                "  },{\n" +
+                "    \"@type\": \"ListItem\",\n" +
+                "    \"position\": 4,\n" +
+                "    \"name\": \"" + itemName + "\",\n" +
+                "    \"item\": \"" + currentUrl + "\"\n" +
+                "  }]\n" +
+                "}\n" +
+                "</script>";
     }
 
     private String escapeJson(String text) {

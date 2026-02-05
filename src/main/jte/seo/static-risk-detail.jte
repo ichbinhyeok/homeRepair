@@ -16,6 +16,7 @@
 @param String faqSchema
 @param String regionalInsight
 @param String parentUrl
+@param String breadcrumbSchema
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +29,7 @@
     <meta name="description" content="Detailed cost analysis for ${item.getPrettyName()} in ${metroName}. Review repair costs, negotiation tactics, and safety risks before buying a ${eraName} home.">
     
     <link rel="canonical" href="${canonicalUrl}">
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="stylesheet" href="/css/styles.css">
     
     <!-- Open Graph -->
@@ -38,6 +39,7 @@
     <meta property="og:url" content="${canonicalUrl}">
     
     $unsafe{faqSchema}
+    $unsafe{breadcrumbSchema}
 
     <style>
         :root {

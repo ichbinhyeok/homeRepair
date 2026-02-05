@@ -14,6 +14,7 @@ import org.springframework.core.io.ResourceLoader;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 
 /**
  * Standalone executable to generate all pSEO static pages
@@ -55,9 +56,9 @@ public class StaticPageGenerator {
             // Initialize pSEO services
             InternalLinkBuilder linkBuilder = new InternalLinkBuilder();
             com.livingcostcheck.home_repair.seo.VerdictSeoService verdictSeoService = new com.livingcostcheck.home_repair.seo.VerdictSeoService();
-            StaticPageGeneratorService pageGenerator = new StaticPageGeneratorService(
-                    verdictService, linkBuilder, templateEngine, verdictSeoService);
             SitemapGenerator sitemapGenerator = new SitemapGenerator(verdictService);
+            StaticPageGeneratorService pageGenerator = new StaticPageGeneratorService(
+                    verdictService, linkBuilder, templateEngine, verdictSeoService, sitemapGenerator);
 
             System.out.println();
             System.out.println("────────────────────────────────────────────────────────────");
@@ -80,7 +81,9 @@ public class StaticPageGenerator {
 
             // Generate sitemap
             String sitemapPath = "src/main/resources/static/sitemap.xml";
-            int urlCount = sitemapGenerator.generateSitemap(sitemapPath);
+            // Extra URLs are handled within StaticPageGeneratorService during build phase,
+            // but for standalone, we just pass empty or re-run logic.
+            int urlCount = sitemapGenerator.generateSitemap(sitemapPath, Collections.emptyList());
 
             System.out.println("✓ Sitemap generated with " + urlCount + " URLs: " + sitemapPath);
 

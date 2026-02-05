@@ -23,6 +23,7 @@
 @param List<Map<String, String>> faqItems
 @param String lowPrice
 @param String highPrice
+@param String breadcrumbSchema
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +35,7 @@
     <meta name="description" content="Forensic cost analysis for ${eraName} homes in ${metroName}. Discover hidden liabilities, life expectancy of key systems, and negotiation leverage points for 2026.">
     
     <link rel="canonical" href="${canonicalUrl}">
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     
     <!-- Open Graph -->
@@ -43,6 +44,7 @@
     <meta property="og:url" content="${canonicalUrl}">
     
     $unsafe{faqSchema}
+    $unsafe{breadcrumbSchema}
 
     <style>
         :root {
@@ -159,7 +161,14 @@
         </div>
     </header>
 
-    <main class="container">
+    <main class="container" style="margin-top: 20px;">
+        <nav style="margin-bottom: 24px; font-size: 0.85rem; color: var(--slate-400); font-family: 'Outfit';">
+            <a href="/" style="color: var(--slate-400); text-decoration: none;">Home</a> 
+            <span style="margin: 0 8px; opacity: 0.5;">&sol;</span>
+            <a href="/home-repair" style="color: var(--slate-400); text-decoration: none;">Home Repair</a>
+            <span style="margin: 0 8px; opacity: 0.5;">&sol;</span>
+            <span style="color: var(--slate-900); font-weight: 600;">${metroName} (${eraName})</span>
+        </nav>
         <div class="bento-grid">
             <!-- 1. EXECUTIVE SUMMARY CARD -->
             <div class="bento-card span-12">
