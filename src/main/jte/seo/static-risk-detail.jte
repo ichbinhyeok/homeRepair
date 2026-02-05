@@ -129,6 +129,23 @@
             </div>
         </section>
 
+        <!-- Related Risks (Cross-linking) -->
+        @if(verdict.getPlan().getMustDo().size() > 1)
+            <section class="card">
+                <h2>🔍 Other Critical Risks in this Home</h2>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                    @for(var other : verdict.getPlan().getMustDo())
+                        @if(!other.getItemCode().equals(item.getItemCode()))
+                            <a href="/home-repair/verdicts/${metroCode.toLowerCase().replace("_", "-")}/${era.toLowerCase().replace("_", "-")}/${other.getItemCode().toLowerCase().replace("_", "-")}.html" 
+                               style="background: #f8fafc; color: #475569; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-size: 0.9rem; border: 1px solid #e2e8f0;">
+                                ${other.getPrettyName()} Audit &rarr;
+                            </a>
+                        @endif
+                    @endfor
+                </div>
+            </section>
+        @endif
+
         <!-- 5. CTA -->
         <section style="margin: 40px 0;">
             <h3 style="text-align: center; margin-bottom: 16px;">See the full list of risks for this home</h3>

@@ -286,6 +286,9 @@
 
         <!-- 7. INTERNAL LINKS HUB -->
         <div class="link-hub">
+            @for(var link : eraLinks)
+                <a href="${link.getHref()}">${link.getText()}</a>
+            @endfor
             @for(var link : cityLinks)
                 <a href="${link.getHref()}">${link.getText()}</a>
             @endfor

@@ -102,17 +102,8 @@ public class SitemapGenerator {
             }
         }
 
-        // Add extra URLs (Level 2)
-        if (extraUrls != null) {
-            for (String url : extraUrls) {
-                // If it's already added (Level 1), skip
-                if (url.contains("/verdicts/") && url.split("/").length <= 6) {
-                    continue;
-                }
-                xml.append(buildUrlEntry(url, lastMod, "monthly", "0.6"));
-                urlCount++;
-            }
-        }
+        // Seed Strategy: Only include Level 1 URLs in the sitemap.
+        // Level 2 (Risk Detail) pages are discovered via internal links.
 
         xml.append("</urlset>");
 

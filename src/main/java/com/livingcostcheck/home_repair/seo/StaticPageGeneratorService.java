@@ -98,6 +98,31 @@ public class StaticPageGeneratorService {
             log.warn("Failed pages: {}", failedPages);
         }
 
+        // --- NEW: Generate State Hub Pages ---
+        try {
+            int statePages = generateStateHubPages(metroCodes, outputBasePath);
+            log.info("Generated {} State Hub pages.", statePages);
+
+            // Add state pages to sitemap URLs
+            for (String state : getAllStates(metroCodes)) {
+                allGeneratedUrls
+                        .add("https://lifeverdict.com/home-repair/verdicts/states/" + state.toLowerCase() + ".html");
+            }
+
+            // Regenerate sitemap with state pages
+            try {
+                String sitemapPath = outputBasePath.replace("home-repair/verdicts", "sitemap.xml");
+                // Seed Strategy: Level 1 + State Hubs
+                int sitemapUrls = sitemapGenerator.generateSitemap(sitemapPath, allGeneratedUrls);
+                log.info("Sitemap updated AGAIN with State Hubs: {} URLs", sitemapUrls);
+            } catch (IOException e) {
+                log.error("Failed to update sitemap with State Hubs: {}", e.getMessage());
+            }
+
+        } catch (Exception e) {
+            log.error("Failed to generate State Hub Pages", e);
+        }
+
         return successCount;
     }
 
@@ -451,6 +476,205 @@ public class StaticPageGeneratorService {
                 "  }]\n" +
                 "}\n" +
                 "</script>";
+    }
+
+    // ----------------------------------------------------------------
+    // STATE HUB GENERATION
+    // ----------------------------------------------------------------
+
+    private int generateStateHubPages(List<String> metroCodes, String outputBasePath) throws IOException {
+        // Group by State
+        Map<String, List<String>> metrosByState = new HashMap<>();
+        for (String metro : metroCodes) {
+            String state = extractStateCode(metro);
+            if (state != null) {
+                metrosByState.computeIfAbsent(state, k -> new ArrayList<>()).add(metro);
+            }
+        }
+
+        int count = 0;
+        for (Map.Entry<String, List<String>> entry : metrosByState.entrySet()) {
+            String stateCode = entry.getKey();
+            List<String> cities = entry.getValue();
+
+            generateSingleStatePage(stateCode, cities, outputBasePath);
+            count++;
+        }
+        return count;
+    }
+
+    private void generateSingleStatePage(String stateCode, List<String> cityCodes, String outputBasePath)
+            throws IOException {
+        String stateName = getStateName(stateCode);
+        String fileName = stateCode.toLowerCase() + ".html";
+        String filePath = outputBasePath.replace("verdicts", "verdicts/states/") + fileName;
+
+        // Prepare City Data
+        List<Map<String, Object>> cityList = new ArrayList<>();
+        for (String cityCode : cityCodes) {
+            Map<String, Object> cityData = new HashMap<>();
+            cityData.put("name", formatMetroName(cityCode));
+
+            List<InternalLinkBuilder.InternalLink> eraLinks = new ArrayList<>();
+            for (String era : ALL_ERAS) {
+                eraLinks.add(new InternalLinkBuilder.InternalLink(
+                        formatEraText(era),
+                        buildCanonicalUrl(cityCode, era).replace("https://lifeverdict.com", "")));
+            }
+            cityData.put("eras", eraLinks);
+            cityList.add(cityData);
+        }
+
+        // Sort by City Name
+        cityList.sort((a, b) -> ((String) a.get("name")).compareTo((String) b.get("name")));
+
+        String canonicalUrl = "https://lifeverdict.com/home-repair/verdicts/states/" + fileName;
+
+        Map<String, Object> templateData = new HashMap<>();
+        templateData.put("stateCode", stateCode);
+        templateData.put("stateName", stateName);
+        templateData.put("canonicalUrl", canonicalUrl);
+        templateData.put("cities", cityList);
+        templateData.put("breadcrumbSchema", generateStateBreadcrumbSchema(stateName, canonicalUrl));
+
+        StringOutput output = new StringOutput();
+        templateEngine.render("seo/static-state-hub.jte", templateData, output);
+
+        Path path = Paths.get(filePath);
+        Files.createDirectories(path.getParent());
+        Files.writeString(path, output.toString());
+    }
+
+    private String extractStateCode(String metroCode) {
+        String[] parts = metroCode.split("_");
+        if (parts.length > 0) {
+            String last = parts[parts.length - 1];
+            if (last.length() == 2)
+                return last;
+        }
+        return null; // Fallback
+    }
+
+    // Formatting Helper
+    private String formatEraText(String era) {
+        switch (era) {
+            case "PRE_1950":
+                return "Pre-1950";
+            case "1950_1970":
+                return "1950s-1970s";
+            case "1970_1980":
+                return "1970s";
+            case "1980_1995":
+                return "1980s-1990s";
+            case "1995_2010":
+                return "1995-2010";
+            case "2010_PRESENT":
+                return "2010-Present";
+            default:
+                return era;
+        }
+    }
+
+    private String getStateName(String code) {
+        // Simple mapping for demo, can be expanded
+        switch (code) {
+            case "AL":
+                return "Alabama";
+            case "AZ":
+                return "Arizona";
+            case "CA":
+                return "California";
+            case "CO":
+                return "Colorado";
+            case "CT":
+                return "Connecticut";
+            case "DC":
+                return "District of Columbia";
+            case "FL":
+                return "Florida";
+            case "GA":
+                return "Georgia";
+            case "IL":
+                return "Illinois";
+            case "IN":
+                return "Indiana";
+            case "MA":
+                return "Massachusetts";
+            case "MD":
+                return "Maryland";
+            case "MI":
+                return "Michigan";
+            case "MN":
+                return "Minnesota";
+            case "MO":
+                return "Missouri";
+            case "NC":
+                return "North Carolina";
+            case "NJ":
+                return "New Jersey";
+            case "NV":
+                return "Nevada";
+            case "NY":
+                return "New York";
+            case "OH":
+                return "Ohio";
+            case "OR":
+                return "Oregon";
+            case "PA":
+                return "Pennsylvania";
+            case "RI":
+                return "Rhode Island";
+            case "TN":
+                return "Tennessee";
+            case "TX":
+                return "Texas";
+            case "UT":
+                return "Utah";
+            case "VA":
+                return "Virginia";
+            case "WA":
+                return "Washington";
+            case "WI":
+                return "Wisconsin";
+            default:
+                return code;
+        }
+    }
+
+    // Breadcrumb for State Page
+    private String generateStateBreadcrumbSchema(String stateName, String currentUrl) {
+        return "<script type=\"application/ld+json\">\n" +
+                "{\n" +
+                "  \"@context\": \"https://schema.org\",\n" +
+                "  \"@type\": \"BreadcrumbList\",\n" +
+                "  \"itemListElement\": [{\n" +
+                "    \"@type\": \"ListItem\",\n" +
+                "    \"position\": 1,\n" +
+                "    \"name\": \"Home\",\n" +
+                "    \"item\": \"https://lifeverdict.com\"\n" +
+                "  },{\n" +
+                "    \"@type\": \"ListItem\",\n" +
+                "    \"position\": 2,\n" +
+                "    \"name\": \"Home Repair\",\n" +
+                "    \"item\": \"https://lifeverdict.com/home-repair\"\n" +
+                "  },{\n" +
+                "    \"@type\": \"ListItem\",\n" +
+                "    \"position\": 3,\n" +
+                "    \"name\": \"" + stateName + "\",\n" +
+                "    \"item\": \"" + currentUrl + "\"\n" +
+                "  }]\n" +
+                "}\n" +
+                "</script>";
+    }
+
+    private Set<String> getAllStates(List<String> metroCodes) {
+        Set<String> states = new HashSet<>();
+        for (String m : metroCodes) {
+            String s = extractStateCode(m);
+            if (s != null)
+                states.add(s);
+        }
+        return states;
     }
 
     // Generate Breadcrumb Schema for Level 2
