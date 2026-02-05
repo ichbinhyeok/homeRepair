@@ -1,0 +1,51 @@
+{
+    "meta": {
+        "source": "NAHB / HUD Residential Life Expectancy Standard",
+        "version": "2026.1",
+        "note": "Standard benchmarks for calculating depreciation and remaining useful life."
+    },
+    "items": {
+        "ROOFING": {
+            "standard_lifespan": 25,
+            "warning_threshold": 20,
+            "critical_threshold": 30,
+            "pretty_name": "Roofing System",
+            "impact_description": "Leaks lead to structural rot, mold, and insulation damage."
+        },
+        "HVAC": {
+            "standard_lifespan": 15,
+            "warning_threshold": 12,
+            "critical_threshold": 20,
+            "pretty_name": "HVAC System",
+            "impact_description": "Mechanical failure often happens during extreme weather, leading to emergency replacement costs."
+        },
+        "PLUMBING": {
+            "standard_lifespan": 50,
+            "warning_threshold": 40,
+            "critical_threshold": 60,
+            "pretty_name": "Main Plumbing Lines",
+            "impact_description": "Slow leaks behind walls cause silent structural damage and high water bills."
+        },
+        "ELECTRICAL": {
+            "standard_lifespan": 60,
+            "warning_threshold": 50,
+            "critical_threshold": 70,
+            "pretty_name": "Electrical System",
+            "impact_description": "Outdated insulation and grounding increase fire risk and exclude property from certain insurance."
+        },
+        "WINDOWS": {
+            "standard_lifespan": 30,
+            "warning_threshold": 20,
+            "critical_threshold": 40,
+            "pretty_name": "Windows & Glazing",
+            "impact_description": "Drafty windows increase energy bills by up to 25% and decrease indoor comfort."
+        },
+        "WATER_HEATER": {
+            "standard_lifespan": 10,
+            "warning_threshold": 8,
+            "critical_threshold": 12,
+            "pretty_name": "Water Heater",
+            "impact_description": "Sudden failure often results in basement or closet flooding."
+        }
+    }
+}

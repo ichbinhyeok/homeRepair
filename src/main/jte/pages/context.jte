@@ -37,16 +37,16 @@
                 <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
                     <h3 class="text-xl font-bold text-slate-900 mb-4">1. Project Scope</h3>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">Renovation Budget ($)</label>
-                            <input type="number" name="budget" required min="1000" step="1000" placeholder="e.g. 50000" class="w-full p-3 border border-slate-300 rounded-lg">
+                            <input type="number" name="budget" required min="1000" step="100" placeholder="e.g. 50000" class="w-full p-3 border border-slate-300 rounded-lg">
                             <p class="text-xs text-slate-500 mt-1">Cash available for repairs</p>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">House Size (SqFt)</label>
-                            <input type="number" name="sqft" required min="500" max="10000" placeholder="e.g. 2000" class="w-full p-3 border border-slate-300 rounded-lg">
-                            <p class="text-xs text-slate-500 mt-1">Interior living area</p>
+                            <input type="number" name="sqft" required min="500" max="10000" step="1" placeholder="e.g. 2000" class="w-full p-3 border border-slate-300 rounded-lg">
+                            <p class="text-xs text-slate-500 mt-1">Interior living area. (Unsure? Use 1800 for 3-Bed)</p>
                         </div>
                     </div>
 
@@ -63,15 +63,15 @@
                             <label class="cursor-pointer">
                                 <input type="radio" name="condition" value="MINOR" checked class="peer sr-only">
                                 <div class="p-3 text-center border rounded-lg peer-checked:bg-yellow-50 peer-checked:border-yellow-500 hover:bg-slate-50">
-                                    <div class="font-semibold">Lived In</div>
-                                    <div class="text-xs text-slate-500">Dated but functional</div>
+                                    <div class="font-semibold">Average</div>
+                                    <div class="text-xs text-slate-500">Dated / Lived In</div>
                                 </div>
                             </label>
                             <label class="cursor-pointer">
                                 <input type="radio" name="condition" value="SEVERE" class="peer sr-only">
                                 <div class="p-3 text-center border rounded-lg peer-checked:bg-red-50 peer-checked:border-red-500 hover:bg-slate-50">
-                                    <div class="font-semibold">Rough</div>
-                                    <div class="text-xs text-slate-500">Needs work</div>
+                                    <div class="font-semibold">Fixer Upper</div>
+                                    <div class="text-xs text-slate-500">Needs Work (Rough)</div>
                                 </div>
                             </label>
                         </div>
@@ -81,7 +81,7 @@
                 <!-- Phase 3: Forensic Clues -->
                 <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm border-l-4 border-l-orange-400">
                     <h3 class="text-xl font-bold text-slate-900 mb-2">2. Visual Inspection (Forensic Clues)</h3>
-                    <p class="text-sm text-slate-600 mb-4">Check any items you have visually confirmed. These override standard probabilistic models.</p>
+                    <p class="text-sm text-slate-600 mb-4">Check any items you have visually confirmed in photos or during a showing.</p>
                     
                     <div class="space-y-3">
                         <label class="flex items-center gap-3 p-3 border rounded-lg hover:bg-slate-50 cursor-pointer">
@@ -120,8 +120,8 @@
 
                 <!-- History -->
                 <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">3. Verified Updates</h3>
-                    <p class="text-sm text-slate-600 mb-4">Only check items that have been fully replaced in the last 5 years.</p>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">3. Verified Updates (From Listing)</h3>
+                    <p class="text-sm text-slate-600 mb-4">Only check items explicitly listed as "New" or "Replaced" (e.g. "New Roof 2024").</p>
                     
                     <div class="grid grid-cols-2 gap-3">
                         <label class="flex items-center gap-2"><input type="checkbox" name="history" value="ROOFING" class="rounded"> Roof</label>

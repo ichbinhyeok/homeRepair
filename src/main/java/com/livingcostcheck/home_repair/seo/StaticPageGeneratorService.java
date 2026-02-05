@@ -1,11 +1,8 @@
 package com.livingcostcheck.home_repair.seo;
 
 import com.livingcostcheck.home_repair.service.VerdictEngineService;
-import com.livingcostcheck.home_repair.seo.VerdictSeoService;
 import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.*;
-import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
-import gg.jte.TemplateOutput;
 import gg.jte.output.StringOutput;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -102,7 +99,6 @@ public class StaticPageGeneratorService {
                 .era(era)
                 .budget(DEFAULT_BUDGET)
                 .purpose(DEFAULT_PURPOSE)
-                .history(Collections.emptyList())
                 .condition(null)
                 .build();
 
@@ -175,7 +171,74 @@ public class StaticPageGeneratorService {
         Files.createDirectories(filePath.getParent());
         Files.writeString(filePath, html);
 
-        log.debug("Generated: {}", filePath);
+        log.debug("Generated Level 1: {}", filePath);
+
+        // ----------------------------------------------------------------
+        // LEVEL 2 GENERATION: SPECIFIC RISK PAGES
+        // ----------------------------------------------------------------
+        if (verdict.getPlan() != null && verdict.getPlan().getMustDo() != null) {
+            for (RiskAdjustedItem item : verdict.getPlan().getMustDo()) {
+                generateRiskPage(metroCode, era, item, verdict, regionalInsight, outputBasePath);
+            }
+        }
+    }
+
+    /**
+     * Generate a Level 2 Risk Detail Page
+     */
+    private void generateRiskPage(String metroCode, String era, RiskAdjustedItem item, Verdict verdict,
+            String regionalInsight, String outputBasePath) throws IOException {
+        String metroName = formatMetroName(metroCode);
+        String eraName = formatEraName(era);
+        String itemSlug = item.getItemCode().toLowerCase().replace("_", "-");
+
+        // Prepare Template Data
+        Map<String, Object> templateData = new HashMap<>();
+        String title = String.format("%s Cost in %s (%s Guide)", item.getPrettyName(), metroName, "2026");
+        String h1 = String.format("%s Replacement Cost", item.getPrettyName());
+
+        templateData.put("title", title);
+        templateData.put("h1Content", h1);
+        templateData.put("metroCode", metroCode);
+        templateData.put("metroName", metroName);
+        templateData.put("era", era);
+        templateData.put("eraName", eraName);
+        templateData.put("item", item);
+        templateData.put("verdict", verdict);
+        templateData.put("regionalInsight", regionalInsight);
+
+        // internal linking
+        String parentUrl = "/home-repair/verdicts/" + metroCode.toLowerCase().replace("_", "-") + "/"
+                + era.toLowerCase().replace("_", "-") + ".html";
+        templateData.put("parentUrl", parentUrl);
+        templateData.put("baseUrl", "https://lifeverdict.com");
+        // Canonical:
+        // https://lifeverdict.com/home-repair/verdicts/abilene-tx/pre-1950/knob-and-tube.html
+        templateData.put("canonicalUrl",
+                "https://lifeverdict.com" + parentUrl.replace(".html", "/") + itemSlug + ".html");
+
+        templateData.put("faqSchema", generateRiskFAQSchema(item, metroName));
+
+        // Render Level 2 Template
+        StringOutput output = new StringOutput();
+        templateEngine.render("seo/static-risk-detail.jte", templateData, output);
+        String html = minifyHtml(output.toString());
+
+        // Write File: /verdicts/{city}/{era}/{item-slug}.html
+        Path directory = buildFilePath(outputBasePath, metroCode, era).getParent();
+        Path eraDir = directory.resolve(era.toLowerCase().replace("_", "-"));
+        Files.createDirectories(eraDir);
+        Path filePath = eraDir.resolve(itemSlug + ".html");
+
+        Files.writeString(filePath, html);
+        log.debug("Generated Level 2: {}", filePath);
+    }
+
+    private String generateRiskFAQSchema(RiskAdjustedItem item, String metroName) {
+        return String.format(
+                "<script type=\"application/ld+json\">{\"@context\":\"https://schema.org\",\"@type\":\"FAQPage\",\"mainEntity\":[{\"@type\":\"Question\",\"name\":\"How much does it cost to fix %s in %s?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"The estimated cost is $%s depending on home size and local labor rates.\"}}]}</script>",
+                escapeJson(item.getPrettyName()), escapeJson(metroName),
+                String.format("%,.0f", item.getAdjustedCost()));
     }
 
     private Path buildFilePath(String basePath, String metroCode, String era) {

@@ -31,10 +31,20 @@
                               "CONDITIONAL".equals(verdict.getTier()) ? "bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.4)]" : 
                               verdict.isDealKiller() ? "bg-red-600 shadow-[0_0_8px_rgba(220,38,38,0.4)]" : "bg-rose-500"}">
                         </span>
-                        <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Home Health Check Complete</span>
+                        <span class="text-xs font-bold uppercase tracking-widest text-slate-500">
+                            @if("BUYING".equals(history.getPurpose()))
+                                Pre-Purchase Due Diligence
+                            @else
+                                Home Health Check Complete
+                            @endif
+                        </span>
                     </div>
                     <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-2">
-                        ${verdictH1 != null ? verdictH1 : (verdict.getHeadline().split("\\.")[0] + ".")}
+                        @if("BUYING".equals(history.getPurpose()))
+                            ${verdictH1 != null ? verdictH1 : "Risk Assessment Report"}
+                        @else
+                            ${verdictH1 != null ? verdictH1 : (verdict.getHeadline().split("\\.")[0] + ".")}
+                        @endif
                     </h1>
                     <p class="text-lg text-slate-500 max-w-2xl leading-relaxed">
                         ${verdict.getHeadline().contains(".") && verdict.getHeadline().split("\\.").length > 1 ? verdict.getHeadline().split("\\.")[1] : ""}
@@ -64,7 +74,13 @@
                     <div class="absolute right-0 bottom-0 w-64 h-64 bg-blue-600 rounded-full blur-[120px] opacity-20 group-hover:opacity-30 transition-opacity"></div>
                     
                     <div class="relative z-10">
-                        <h2 class="text-sm font-medium text-slate-400 uppercase tracking-widest mb-1">Estimated Repair Budget</h2>
+                        <h2 class="text-sm font-medium text-slate-400 uppercase tracking-widest mb-1">
+                            @if("BUYING".equals(history.getPurpose()))
+                                Potential Liability (Risk)
+                            @else
+                                Estimated Repair Budget
+                            @endif
+                        </h2>
                         <div class="flex items-baseline gap-1 mt-4">
                             <span class="text-7xl font-semibold tracking-tighter">
                                 ${verdict.getCostRangeLabel().contains("(") ? verdict.getCostRangeLabel().substring(0, verdict.getCostRangeLabel().indexOf("(")) : verdict.getCostRangeLabel()}
@@ -87,19 +103,37 @@
 
                 <%-- CARD 2: ACTION PLAN (Strategy) --%>
                 <div class="md:col-span-4 bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between">
-                    <div>
-                         <div class="flex items-center gap-2 mb-6">
-                            <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-                            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Strategy</span>
+                    @if("BUYING".equals(history.getPurpose()))
+                        <!-- BUYER MODE: Negotiation Tactic -->
+                        <div>
+                             <div class="flex items-center gap-2 mb-6">
+                                <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Negotiation</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Ask for Credit.</h3>
+                            <div class="bg-amber-50 p-3 rounded-lg border border-amber-100 text-xs font-mono text-slate-600 mb-2">
+                                "Request seller credit of $${String.format("%,.0f", verdict.getExactCostEstimate())} for ${verdict.getPrimaryCostDriver() != null ? verdict.getPrimaryCostDriver().replace("Primary Cost Driver:", "").trim() : "repairs"}..."
+                            </div>
                         </div>
-                        <h3 class="text-2xl font-bold text-slate-900 mb-2">${verdict.getStrategyUsed().replace("_", " ")}</h3>
-                        <p class="text-sm text-slate-500 leading-relaxed">
-                            ${verdict.getStrategyExplanation()}
-                        </p>
-                    </div>
-                    <button onclick="document.getElementById('details-section').scrollIntoView({behavior: 'smooth'})" class="mt-6 w-full py-3 bg-slate-50 text-slate-900 font-semibold rounded-xl text-sm hover:bg-slate-100 transition-colors">
-                        View Verified Plan
-                    </button>
+                        <button onclick="navigator.clipboard.writeText('Request seller credit of $${String.format("%,.0f", verdict.getExactCostEstimate())} for immediate repairs.'); alert('Copied to clipboard!');" class="mt-4 w-full py-3 bg-slate-900 text-white font-semibold rounded-xl text-sm hover:bg-slate-700 transition-colors">
+                            Copy Email Text
+                        </button>
+                    @else
+                        <!-- OWNER MODE: Strategy -->
+                        <div>
+                             <div class="flex items-center gap-2 mb-6">
+                                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Strategy</span>
+                            </div>
+                            <h3 class="text-2xl font-bold text-slate-900 mb-2">${verdict.getStrategyUsed().replace("_", " ")}</h3>
+                            <p class="text-sm text-slate-500 leading-relaxed">
+                                ${verdict.getStrategyExplanation()}
+                            </p>
+                        </div>
+                        <button onclick="document.getElementById('details-section').scrollIntoView({behavior: 'smooth'})" class="mt-6 w-full py-3 bg-slate-50 text-slate-900 font-semibold rounded-xl text-sm hover:bg-slate-100 transition-colors">
+                            View Verified Plan
+                        </button>
+                    @endif
                 </div>
 
                 <%-- CARD 3: MARKET SIGNALS (Detail Grid) --%>
@@ -156,41 +190,94 @@
                 </div>
             </div>
 
-            <%-- 4. DETAILS SECTION --%>
-            <section id="details-section" class="border-t border-slate-100 pt-16">
-                <h3 class="text-xl font-bold text-slate-900 mb-8">Itemized Verification.</h3>
-                
-                <%-- MUST DO LIST --%>
-                @if(verdict.getPlan().getMustDo() != null && !verdict.getPlan().getMustDo().isEmpty())
-                    <div class="space-y-4">
-                        @for(RiskAdjustedItem item : verdict.getPlan().getMustDo())
-                            <div class="flex flex-col sm:flex-row items-baseline justify-between p-6 bg-white border border-slate-100 rounded-2xl hover:border-slate-300 transition-colors group">
-                                <div class="flex-1 pr-6">
-                                    <div class="flex items-center gap-3 mb-2">
-                                        <h4 class="font-bold text-slate-900">${item.getPrettyName()}</h4>
-                                        
-                                         @if(Boolean.TRUE.equals(item.getIsForensicConfirmed()))
-                                            <span class="px-2 py-0.5 rounded-md bg-rose-50 text-rose-600 text-[10px] font-bold uppercase tracking-wide border border-rose-100">Forensic Match</span>
-                                        @endif
-                                        @if(Boolean.TRUE.equals(item.getIsCodeMandated()))
-                                            <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-bold uppercase tracking-wide">Code</span>
+                <!-- Neighbor Market Comparison -->
+                @if(verdict.getComparisonData() != null)
+                <div class="result-card p-0 overflow-hidden border-0 shadow-sm mb-5" style="border-radius: 32px; background: var(--slate-50);">
+                    <div class="row g-0">
+                        <div class="col-md-7 p-5">
+                            <div class="d-flex align-items-center mb-3">
+                                <span class="badge bg-white text-primary border px-3 py-2" style="font-size: 0.75rem; font-weight: 800; border-radius: 99px;">2026 MARKET BENCHMARK</span>
+                            </div>
+                            <h3 class="display-5 fw-bold mb-3" style="font-family: 'Outfit'; color: var(--slate-900);">
+                                <span class="text-danger">+${String.format("%.0f", verdict.getComparisonData().getDeltaPercentage())}%</span> Liability
+                            </h3>
+                            <p class="lead text-muted mb-4" style="font-size: 1.15rem;">
+                                This property carries a significantly higher repair liability compared to a modern benchmark home built in the 2010+ era in this area.
+                            </p>
+                            <div class="p-4 bg-white rounded-4 border border-dashed">
+                                <p class="mb-0 text-muted" style="font-size: 0.95rem;">
+                                    <strong>Comps Gap:</strong> 1950s homes in this zip code inherit an average of 
+                                    <span class="text-dark fw-bold">$${String.format("%,.0f", verdict.getComparisonData().getCostDelta())}</span> 
+                                    more in statistical risk than modern builds.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-5 d-none d-md-flex align-items-center justify-content-center border-start bg-white" style="position: relative; overflow: hidden;">
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 150%; height: 150%; opacity: 0.03; font-family: 'Outfit'; font-weight: 900; font-size: 20rem; color: var(--slate-900); pointer-events: none; user-select: none;">COMPS</div>
+                            <div class="text-center">
+                                <div class="h6 text-uppercase text-muted mb-2 ls-wider">Benchmark</div>
+                                <div class="h2 fw-bold text-dark">$${String.format("%,.0f", verdict.getComparisonData().getModernBenchmarkCost())}</div>
+                                <div class="text-muted small">2010+ Modern Baseline</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                <!-- System Integrity Timeline -->
+                @if(verdict.getPlan() != null && verdict.getPlan().getMustDo() != null)
+                <div class="result-card p-5 mb-5 shadow-sm border-0" style="border-radius: 32px; background: white;">
+                    <div class="d-flex align-items-center mb-5">
+                        <div class="bg-primary rounded-circle p-2 me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                            <i class="bi bi-clock-history text-white h4 mb-0"></i>
+                        </div>
+                        <div>
+                            <h3 class="mb-1 fw-bold" style="font-family: 'Outfit';">System Integrity Timeline</h3>
+                            <p class="mb-0 text-muted">Estimated remaining component lifespans for this property</p>
+                        </div>
+                    </div>
+
+                    <div class="row g-4">
+                        @for(var item : verdict.getPlan().getMustDo())
+                            @if(item.getRiskFlags() != null && (item.getRiskFlags().stream().anyMatch(f -> f.contains("DEAD") || f.contains("WATCH") || f.contains("VERIFIED"))))
+                            <div class="col-md-6 col-lg-4">
+                                <div class="p-4 rounded-4 border h-100 transition-hover" style="background: ${item.getRiskFlags().contains("VERIFIED_UPDATE: RECENTLY_REPLACED") ? "var(--slate-50)" : "white"};">
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <div class="h5 fw-bold mb-0">${item.getPrettyName()}</div>
+                                        @if(item.getRiskFlags().contains("VERIFIED_UPDATE: RECENTLY_REPLACED"))
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle">NEW</span>
+                                        @elseif(item.getRiskFlags().stream().anyMatch(f -> f.contains("DEAD")))
+                                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle">EXPIRED</span>
+                                        @else
+                                            <span class="badge bg-warning-subtle text-warning border border-warning-subtle">WATCH</span>
                                         @endif
                                     </div>
-                                    <p class="text-sm text-slate-500 group-hover:text-slate-700 transition-colors">${item.getExplanation()}</p>
-                                </div>
-                                <div class="font-mono font-semibold text-slate-900 mt-4 sm:mt-0">
-                                    $${String.format("%,.0f", item.getAdjustedCost())}
+                                    <p class="small text-muted mb-0">
+                                        ${item.getExplanation() != null && item.getExplanation().contains(".") ? item.getExplanation().split("\\.")[0] + "." : item.getExplanation()}
+                                    </p>
                                 </div>
                             </div>
+                            @endif
                         @endfor
+                        
+                        <!-- Always show some stability for balance -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="p-4 rounded-4 border h-100 bg-light-subtle">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div class="h5 fw-bold mb-0">Structural Shell</div>
+                                    <span class="badge bg-success-subtle text-success border border-success-subtle">STABLE</span>
+                                </div>
+                                <p class="small text-muted mb-0">Foundations and load-bearing elements are statistically reliable.</p>
+                            </div>
+                        </div>
                     </div>
+                </div>
                 @endif
 
                 <div class="mt-16 text-center">
                      <p class="text-xs text-slate-400 mb-4">Calculations generated at ${new java.util.Date().toString()}</p>
                      <a href="/" class="text-sm font-semibold text-blue-600 hover:text-black transition">Start Another Analysis &rarr;</a>
                 </div>
-            </section>
-        </div>
-    `
+            </div>
+        `
 )

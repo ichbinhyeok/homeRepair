@@ -43,13 +43,13 @@
                             <label class="block text-left text-sm font-semibold text-slate-700 mb-1">What is your goal?</label>
                             <div class="grid grid-cols-3 gap-2">
                                 <label class="cursor-pointer">
-                                    <input type="radio" name="relationship" value="LIVING" checked class="peer sr-only">
+                                    <input type="radio" name="relationship" value="LIVING" class="peer sr-only">
                                     <div class="p-3 text-sm font-medium text-center rounded-lg border border-slate-200 peer-checked:bg-blue-50 peer-checked:border-blue-500 peer-checked:text-blue-700 hover:bg-slate-50">
                                         Living<br><span class="text-xs font-normal text-slate-500">Fixing it up</span>
                                     </div>
                                 </label>
                                 <label class="cursor-pointer">
-                                    <input type="radio" name="relationship" value="BUYING" class="peer sr-only">
+                                    <input type="radio" name="relationship" value="BUYING" checked class="peer sr-only">
                                     <div class="p-3 text-sm font-medium text-center rounded-lg border border-slate-200 peer-checked:bg-blue-50 peer-checked:border-blue-500 peer-checked:text-blue-700 hover:bg-slate-50">
                                         Buying<br><span class="text-xs font-normal text-slate-500">Due diligence</span>
                                     </div>
@@ -64,7 +64,7 @@
                         </div>
 
                         <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl mt-4">
-                            Assess My Risk &rarr;
+                            See Hidden Costs Before You Buy &rarr;
                         </button>
                     </form>
                 </div>

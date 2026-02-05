@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.livingcostcheck.home_repair.service.dto.verdict.DataMapping.*;
 import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs;
 import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.*;
+import com.livingcostcheck.home_repair.service.dto.verdict.LifespanData;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ public class VerdictEngineService {
     private MetroMasterData metroMasterData;
     private RiskFactorsData riskFactorsData;
     private CostLibraryData costLibraryData;
+    private LifespanData lifespanData;
 
     public MetroMasterData getMetroMasterData() {
         return metroMasterData;
@@ -38,6 +40,7 @@ public class VerdictEngineService {
             riskFactorsData = loadJson("classpath:data/risk_factors_by_year.json", RiskFactorsData.class);
             costLibraryData = loadJson("classpath:data/2026_Integrated_Construction_Cost_Library.json",
                     CostLibraryData.class);
+            lifespanData = loadJson("classpath:data/item_lifespan_db.json", LifespanData.class);
             log.info("VerdictEngine Data Loaded Successfully.");
         } catch (Exception e) {
             log.error("Failed to load VerdictEngine Data", e);
@@ -216,7 +219,59 @@ public class VerdictEngineService {
                 .isDealKiller(isDealKiller)
                 .dealKillerMessage(dealKillerMessage)
                 .contextBriefing(buildContextBriefing(context))
+                .comparisonData(calculateComparisonData(context, minRequired))
                 .build();
+    }
+
+    private ComparisonData calculateComparisonData(UserContext context, double currentCost) {
+        try {
+            if (context == null || "2010_PRESENT".equals(context.getEra())) {
+                return ComparisonData.builder()
+                        .modernBenchmarkCost(currentCost)
+                        .costDelta(0)
+                        .deltaPercentage(0)
+                        .modernEraLabel("Modern Baseline")
+                        .build();
+            }
+
+            // 1. Create Modern Benchmark Context
+            UserContext benchmarkContext = UserContext.builder()
+                    .metroCode(context.getMetroCode())
+                    .era("2010_PRESENT")
+                    .sqft(context.getSqft())
+                    .budget(-1.0) // Benchmark mode
+                    .relationship(RelationshipToHouse.LIVING)
+                    .build();
+
+            // 2. Run simplified calculation (Step 0-4)
+            List<BaseCostItem> candidates = step0_candidateGenerator(benchmarkContext);
+            EstimatedScale scale = step2_autoScale(benchmarkContext);
+            List<BaseCostItem> costedItems = step3_preliminaryCosting(candidates, scale);
+
+            // Pass a fresh exclusion list for benchmark
+            List<RiskAdjustedItem> adjustedRange = step4_riskFilter(costedItems, benchmarkContext, new ArrayList<>());
+
+            // Use STANDARD_LIVING as benchmark strategy
+            StrategyOption modernOption = generateStrategyOption(StrategyType.STANDARD_LIVING, adjustedRange,
+                    benchmarkContext);
+
+            if (modernOption == null)
+                return null;
+
+            double modernCost = modernOption.getTotalCost();
+            double delta = currentCost - modernCost;
+            double pct = modernCost > 0 ? (delta / modernCost) * 100 : 0;
+
+            return ComparisonData.builder()
+                    .modernBenchmarkCost(modernCost)
+                    .costDelta(delta)
+                    .deltaPercentage(pct)
+                    .modernEraLabel("2010+ Modern Home")
+                    .build();
+        } catch (Exception e) {
+            log.warn("Failed to calculate comparison data: {}", e.getMessage());
+            return null; // Silent failure to avoid breaking the whole verdict
+        }
     }
 
     private boolean isDealKiller(UserContext context) {
@@ -1007,8 +1062,6 @@ public class VerdictEngineService {
             String explanation = "";
             String compoundingBadge = null;
             String category = "COSMETIC"; // Default
-            ConstructionItem itemDef = (ConstructionItem) item.getRawData().get("itemDef");
-
             // 0. FORENSIC CONFIRMATION (Phase 4 - User Visual Observations)
             // These override statistical guessing with explicit user confirmation
             boolean forensicMatch = false;
@@ -1141,56 +1194,86 @@ public class VerdictEngineService {
             // COSMETIC is default (Includes SIDING, WINDOWS unless mapped otherwise or
             // Critical)
 
-            // 0. Age-Based Mandatory (V1.5)
-            // If item has a mandatory age limit and house is older, force it into Must Do
-            Integer ageLimit = itemDef.getMandatoryIfAgeGt();
-            if (ageLimit != null) {
-                // Parse age from era string (e.g., 1970_1980 -> 1970)
-                String startYearStr = context.getEra().split("_")[0];
-                try {
-                    int startYear = "PRE".equals(startYearStr) ? 1900 : Integer.parseInt(startYearStr);
-                    int currentAge = 2026 - startYear;
-                    if (currentAge > ageLimit) {
-                        mandatory = true;
-                        riskFlags.add("AGE_MANDATORY: > " + ageLimit + " years");
-                        explanation += " **System Lifecycle Alert**: At " + currentAge
-                                + " years, this system exceeds standard safety limits (" + ageLimit
-                                + " years) and requires replacement. ";
-                    }
-                } catch (Exception e) {
-                    // Fallback if era string is weird
-                }
-            }
-
             // Safety Override (Dynamic Promotion)
             if (mandatory || riskFlags.stream().anyMatch(f -> f.contains("CRITICAL"))) {
                 category = "SAFETY";
                 mandatory = true;
             }
 
-            // --- PHASE 6: HISTORY LOGIC (REFECTORED) ---
+            // --- PHASE 6: LIFESPAN & HISTORY PRECISION LOGIC (V2.1) ---
+            String itemSubsystem = null;
+            if (item.getItemCode().contains("ROOF"))
+                itemSubsystem = "ROOFING";
+            else if (item.getItemCode().contains("HVAC"))
+                itemSubsystem = "HVAC";
+            else if (item.getItemCode().contains("PLUMBING"))
+                itemSubsystem = "PLUMBING";
+            else if (item.getItemCode().contains("PANEL") || item.getItemCode().contains("ELECTRICAL"))
+                itemSubsystem = "ELECTRICAL";
+            else if (item.getItemCode().contains("WINDOW"))
+                itemSubsystem = "WINDOWS";
+            else if (item.getItemCode().contains("WATER_HEATER"))
+                itemSubsystem = "WATER_HEATER";
 
-            // BACKWARD COMPATIBILITY: Handle deprecated 'history' field FIRST
-            // This works even when relationship is null (for tests and legacy endpoints)
+            if (itemSubsystem != null && lifespanData != null && lifespanData.getItems().containsKey(itemSubsystem)) {
+                LifespanData.ItemLifespan life = lifespanData.getItems().get(itemSubsystem);
+
+                // 1. Calculate Effective Age
+                int startYear = 1900;
+                try {
+                    String startYearStr = context.getEra().split("_")[0];
+                    startYear = "PRE".equals(startYearStr) ? 1920 : Integer.parseInt(startYearStr);
+                } catch (Exception e) {
+                }
+
+                int currentAge = 2026 - startYear;
+
+                // Combine core and living history for aging check
+                List<String> combinedHistory = new ArrayList<>();
+                if (context.getCoreSystemHistory() != null)
+                    combinedHistory.addAll(context.getCoreSystemHistory());
+                if (context.getLivingSpaceHistory() != null)
+                    combinedHistory.addAll(context.getLivingSpaceHistory());
+
+                boolean updatedByUser = combinedHistory.contains(itemSubsystem);
+
+                if (updatedByUser) {
+                    currentAge = 3; // Reset to 3 years old if user confirmed update
+                    riskFlags.add("VERIFIED_UPDATE: RECENTLY_REPLACED");
+                    explanation = "✨ **System Updated**: You confirmed this " + life.getPretty_name()
+                            + " was recently updated. Estimates reflect minor maintenance only. ";
+                } else {
+                    // Apply aging logic
+                    if (currentAge >= life.getCritical_threshold()) {
+                        mandatory = true;
+                        category = "SAFETY";
+                        double stressFactor = (double) currentAge / life.getStandard_lifespan();
+                        riskFlags.add(String.format("STATISTICALLY_DEAD: %.1fX_LIFESPAN", stressFactor));
+                        explanation += String.format(
+                                "🚨 **Age Warning**: At %d years, this %s is %.1fx past its reliable lifespan (%d yrs). Statistical failure is imminent. ",
+                                currentAge, life.getPretty_name(), stressFactor, life.getStandard_lifespan());
+                        finalCost *= 1.25; // Aging overhead for specialized labor/matching
+                    } else if (currentAge >= life.getWarning_threshold()) {
+                        riskFlags.add("WATCH: NEAR_END_OF_LIFE");
+                        explanation += String.format(
+                                "⚠️ **Watch**: This %s is %d years old (Standard lifespan: %d yrs). Expect rising maintenance costs. ",
+                                life.getPretty_name(), currentAge, life.getStandard_lifespan());
+                    }
+                }
+            }
+
+            // --- PHASE 7: HISTORY EXCLUSION (Legacy Support) ---
             if (context.getHistory() != null && "NONE".equals(context.getCondition())) {
                 boolean shouldSkipDueToHistory = false;
-
-                // Check if item matches any category in history
                 for (String historyCategory : context.getHistory()) {
                     if (item.getItemCode().contains(historyCategory)) {
                         shouldSkipDueToHistory = true;
-
-                        // Add exclusion note
-                        String categoryName = historyCategory;
-                        exclusionNotes.add("History Exclusion: " + categoryName
-                                + " (user-confirmed as recently replaced, condition=NONE)");
+                        exclusionNotes.add("History Exclusion: " + historyCategory + " (Recently replaced)");
                         break;
                     }
                 }
-
-                if (shouldSkipDueToHistory) {
-                    continue; // Skip this item
-                }
+                if (shouldSkipDueToHistory)
+                    continue;
             }
 
             // STRICT RULE: New history fields only for LIVING users

@@ -230,6 +230,20 @@ public class VerdictDTOs {
 
         // Context Briefing (Phase 2)
         private ContextBriefing contextBriefing;
+
+        // Neighbor Comparison (Phase 5: Comps)
+        private ComparisonData comparisonData;
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ComparisonData {
+        private double modernBenchmarkCost; // Cost for 2010_PRESENT era
+        private double costDelta; // currentExactCost - modernBenchmarkCost
+        private double deltaPercentage; // (costDelta / modernBenchmarkCost) * 100
+        private String modernEraLabel; // "2010+ Modern Home"
     }
 
     @Data
