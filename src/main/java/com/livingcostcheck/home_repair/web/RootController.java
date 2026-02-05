@@ -8,6 +8,22 @@ public class RootController {
 
     @GetMapping("/")
     public String index() {
-        return "pages/hub";
+        // Redirect root to home-repair hub for now, or render a landing page
+        return "redirect:/home-repair"; 
+    }
+
+    @GetMapping("/privacy-policy")
+    public String privacyPolicy() {
+        return "pages/privacy-policy";
+    }
+
+    @GetMapping("/terms-of-service")
+    public String termsOfService() {
+        return "pages/terms-of-service";
+    }
+
+    @GetMapping("/disclaimer")
+    public String disclaimer() {
+        return "pages/disclaimer";
     }
 }

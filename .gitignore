@@ -41,3 +41,5 @@ jte-classes/
 
 *.log
 logs/
+java_runtime/
+jdk.zip

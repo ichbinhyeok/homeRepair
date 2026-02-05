@@ -125,10 +125,14 @@
                 @for(var city : cities)
                     <div class="city-card">
                         <h3 style="margin: 0 0 12px 0; font-size: 1.1em; color: #1e293b;">${city.name()}</h3>
-                        <a href="/home-repair/verdicts/${city.slug()}/pre-1950.html" 
-                           style="color: #3b82f6; text-decoration: none; font-size: 0.9em; font-weight: 600;">
-                            View All Eras →
-                        </a>
+                        <div class="era-links" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                            <a href="/home-repair/verdicts/${city.slug()}/pre-1950.html" style="font-size: 0.85em; color: #3b82f6; text-decoration: none;">Pre-1950</a>
+                            <a href="/home-repair/verdicts/${city.slug()}/1950-1970.html" style="font-size: 0.85em; color: #3b82f6; text-decoration: none;">1950-70</a>
+                            <a href="/home-repair/verdicts/${city.slug()}/1970-1980.html" style="font-size: 0.85em; color: #3b82f6; text-decoration: none;">1970-80</a>
+                            <a href="/home-repair/verdicts/${city.slug()}/1980-1995.html" style="font-size: 0.85em; color: #3b82f6; text-decoration: none;">1980-95</a>
+                            <a href="/home-repair/verdicts/${city.slug()}/1995-2010.html" style="font-size: 0.85em; color: #3b82f6; text-decoration: none;">1995-10</a>
+                            <a href="/home-repair/verdicts/${city.slug()}/2010-present.html" style="font-size: 0.85em; color: #3b82f6; text-decoration: none;">2010+</a>
+                        </div>
                     </div>
                 @endfor
             </div>

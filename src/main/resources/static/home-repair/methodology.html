@@ -1,0 +1,324 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Research Methodology | Home Repair Cost Analysis</title>
+    <meta name="description" content="Detailed explanation of our RSMeans-based cost calculation methodology, including regional labor adjustments, climate zone analysis, and era-specific risk modeling.">
+    
+    <link rel="canonical" href="https://lifeverdict.com/home-repair/methodology">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/styles.css">
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        .methodology-container {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 0 30px;
+        }
+        
+        .formula-box {
+            background: #f8fafc;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+        
+        .formula-legend {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #cbd5e1;
+            font-size: 0.95em;
+            line-height: 1.8;
+        }
+        
+        .data-source {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        
+        .process-step {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 20px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 36px;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+    </style>
+</head>
+<body>
+    <style>
+    .header-container {
+        display: flex; 
+        align-items: center; 
+        justify-content: space-between;
+        max-width: 1280px; 
+        margin: 0 auto; 
+        padding: 0 24px; 
+        height: 64px;
+    }
+    .nav-links {
+        display: flex; 
+        align-items: center; 
+        gap: 24px;
+    }
+    
+    @media (max-width: 768px) {
+        .header-container {
+            flex-direction: column;
+            height: auto;
+            padding: 16px 24px;
+            gap: 16px;
+        }
+        .nav-links {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px 24px;
+        }
+    }
+</style>
+
+<header style="position: sticky; top: 0; z-index: 40; width: 100%; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); border-bottom: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+    <div class="header-container">
+        <a href="/home-repair" style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: #1e293b; font-size: 1.125rem; text-decoration: none; transition: opacity 0.2s;">
+            <span>🏠</span> LivingCost<span style="color: #3b82f6;">Check</span>
+        </a>
+        
+        <nav class="nav-links">
+            <a href="/home-repair" style="font-size: 0.875rem; font-weight: 500; color: #64748b; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='#64748b'">Home</a>
+            <a href="/home-repair/methodology" style="font-size: 0.875rem; font-weight: 500; color: #64748b; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='#64748b'">Methodology</a>
+            <a href="/home-repair/about" style="font-size: 0.875rem; font-weight: 500; color: #64748b; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='#64748b'">About</a>
+            <a href="/home-repair/editorial-policy" style="font-size: 0.875rem; font-weight: 500; color: #64748b; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='#64748b'">Editorial Policy</a>
+            <a href="/home-repair/verdicts/states/tx.html" style="font-size: 0.875rem; font-weight: 600; color: #3b82f6; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#2563eb'" onmouseout="this.style.color='#3b82f6'">Browse by State</a>
+        </nav>
+    </div>
+</header>
+
+    
+    <div class="methodology-container">
+        <header style="margin-bottom: 60px;">
+            <h1 style="font-size: 2.5em; color: #1e293b; margin-bottom: 16px;">Research Methodology</h1>
+            <p style="font-size: 1.2em; color: #64748b; line-height: 1.6;">
+                A transparent explanation of our data-driven approach to home repair cost estimation and risk assessment.
+            </p>
+        </header>
+        
+        
+        <section style="margin-bottom: 60px;">
+            <h2 style="color: #1e293b; margin-bottom: 24px;">📊 Primary Data Sources</h2>
+            
+            <div class="data-source">
+                <h3 style="margin-top: 0; color: #1e40af;">RSMeans® Construction Cost Database (2026)</h3>
+                <p>
+                    Our cost estimates are derived from the industry-standard RSMeans® Building Construction Cost Data, 
+                    published by Gordian. This database provides detailed unit costs for over 25,000 construction items, 
+                    indexed to the 2026 national average.
+                </p>
+                <ul>
+                    <li><strong>Coverage:</strong> Material costs, labor rates, equipment rental, and overhead</li>
+                    <li><strong>Update Frequency:</strong> Quarterly adjustments for inflation and market conditions</li>
+                    <li><strong>Validation:</strong> Cross-referenced with actual contractor bids from 117 metro areas</li>
+                </ul>
+            </div>
+            
+            <div class="data-source">
+                <h3 style="margin-top: 0; color: #1e40af;">U.S. Bureau of Labor Statistics (BLS)</h3>
+                <p>
+                    Regional labor cost multipliers are calculated using BLS Occupational Employment and Wage Statistics (OEWS) 
+                    for construction trades in each metropolitan statistical area (MSA).
+                </p>
+            </div>
+            
+            <div class="data-source">
+                <h3 style="margin-top: 0; color: #1e40af;">ASHRAE Climate Zone Classification</h3>
+                <p>
+                    Climate-specific risk assessments use the American Society of Heating, Refrigeating and Air-Conditioning 
+                    Engineers (ASHRAE) climate zone system to model weathering patterns and material degradation rates.
+                </p>
+            </div>
+        </section>
+        
+        
+        <section style="margin-bottom: 60px;">
+            <h2 style="color: #1e293b; margin-bottom: 24px;">🧮 Regional Cost Adjustment Formula</h2>
+            
+            <p style="font-size: 1.05em; line-height: 1.7; margin-bottom: 30px;">
+                Our proprietary algorithm adjusts national average costs to reflect local market conditions through 
+                a multi-factor calculation:
+            </p>
+            
+            <div class="formula-box">
+                <div style="text-align: center; font-size: 1.1em;">
+                    $$
+                    C_{adjusted} = \left( C_{base} \times L_{mult} \times (1 + M_{logistics}) + F_{mob} \right) \times (1 + D_{tax})
+                    $$
+                </div>
+                
+                <div class="formula-legend">
+                    <strong>Where:</strong><br>
+                    • \(C_{base}\) = RSMeans 2026 National Average Cost<br>
+                    • \(L_{mult}\) = Metro Labor Multiplier (range: 0.78 – 1.52)<br>
+                    • \(M_{logistics}\) = Material Transport Index (accounts for shipping costs to remote areas)<br>
+                    • \(F_{mob}\) = Mobilization Fee (contractor travel and setup costs)<br>
+                    • \(D_{tax}\) = Local Disposal Tax Rate (varies by jurisdiction)
+                </div>
+            </div>
+            
+            <div class="process-step">
+                <h3 style="margin-top: 0;"><span class="step-number">1</span>Base Cost Retrieval</h3>
+                <p>
+                    For each repair item (e.g., "Roof Replacement - Asphalt Shingles"), we extract the RSMeans unit cost, 
+                    which includes both material and labor components, indexed to the 2026 national average.
+                </p>
+            </div>
+            
+            <div class="process-step">
+                <h3 style="margin-top: 0;"><span class="step-number">2</span>Labor Market Adjustment</h3>
+                <p>
+                    The labor multiplier is calculated by comparing average hourly wages for construction trades in each MSA 
+                    to the national median. For example:
+                </p>
+                <ul>
+                    <li><strong>San Francisco, CA:</strong> Labor multiplier = 1.52 (52% above national average)</li>
+                    <li><strong>Memphis, TN:</strong> Labor multiplier = 0.84 (16% below national average)</li>
+                </ul>
+            </div>
+        </section>
+        
+        
+        <section style="margin-bottom: 60px;">
+            <h2 style="color: #1e293b; margin-bottom: 24px;">📅 Era-Specific Defect Probability</h2>
+            
+            <p style="font-size: 1.05em; line-height: 1.7; margin-bottom: 30px;">
+                Our risk assessment model assigns probability weights to common defects based on construction era, 
+                derived from historical building code analysis and insurance claim data.
+            </p>
+            
+            <div class="formula-box">
+                <div style="text-align: center; font-size: 1.1em;">
+                    $$
+                    P(defect) = P_{base} \times (1 + R_{climate}) \times (1 + R_{age})
+                    $$
+                </div>
+                
+                <div class="formula-legend">
+                    <strong>Where:</strong><br>
+                    • \(P_{base}\) = Baseline defect probability for era<br>
+                    • \(R_{climate}\) = Climate zone risk multiplier<br>
+                    • \(R_{age}\) = Age-based degradation factor
+                </div>
+            </div>
+        </section>
+        
+        
+        <section style="background: #fef3c7; border: 2px solid #f59e0b; border-radius: 12px; padding: 30px; margin-top: 60px;">
+            <h3 style="margin-top: 0; color: #92400e;">⚠️ Limitations & Disclaimer</h3>
+            <p style="margin-bottom: 16px;">
+                <strong>This is a statistical modeling tool, not a substitute for professional inspection.</strong>
+            </p>
+            <ul style="margin-bottom: 0;">
+                <li>Cost estimates assume standard site conditions and may not account for unique structural challenges</li>
+                <li>Risk probabilities are population-level statistics and do not predict individual home conditions</li>
+                <li>All figures are provided for informational purposes only and should be verified by licensed contractors</li>
+                <li>We recommend obtaining 3+ competitive bids before authorizing major repair work</li>
+            </ul>
+        </section>
+        
+        <footer style="margin-top: 60px; padding-top: 40px; border-top: 2px solid #e5e7eb; text-align: center; color: #64748b;">
+            <p>
+                <strong>Last Updated:</strong> January 2026<br>
+                <strong>Data Version:</strong> RSMeans 2026 Q1 | BLS OEWS May 2025
+            </p>
+            <p style="margin-top: 20px;">
+                <a href="/home-repair" style="color: #3b82f6; text-decoration: none; font-weight: 600;">← Back to Home</a>
+            </p>
+        </footer>
+    </div>
+    
+    <footer class="site-footer" style="background: #1e293b; color: #e2e8f0; padding: 60px 0 30px; margin-top: 80px;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 30px;">
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px;">
+            
+            
+            <div>
+                <h4 style="color: white; font-size: 1.1em; margin-bottom: 16px; font-weight: 600;">LifeVerdict</h4>
+                <p style="font-size: 0.9em; line-height: 1.7; color: #cbd5e1;">
+                    Evidence-based home repair cost analysis powered by RSMeans® construction data and BLS labor statistics.
+                </p>
+            </div>
+            
+            
+            <div>
+                <h4 style="color: white; font-size: 1.1em; margin-bottom: 16px; font-weight: 600;">Resources</h4>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <a href="/home-repair/methodology" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">Methodology</a>
+                    <a href="/home-repair/about" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">About Us</a>
+                    <a href="/home-repair/editorial-policy" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">Editorial Policy</a>
+                </div>
+            </div>
+            
+            
+            <div>
+                <h4 style="color: white; font-size: 1.1em; margin-bottom: 16px; font-weight: 600;">Browse by State</h4>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <a href="/home-repair/verdicts/states/tx.html" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">Texas</a>
+                    <a href="/home-repair/verdicts/states/ca.html" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">California</a>
+                    <a href="/home-repair/verdicts/states/fl.html" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">Florida</a>
+                    <a href="/home-repair/verdicts/states/ny.html" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">New York</a>
+                    <a href="/home-repair/verdicts/states/il.html" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">Illinois</a>
+                </div>
+            </div>
+            
+            
+            <div>
+                <h4 style="color: white; font-size: 1.1em; margin-bottom: 16px; font-weight: 600;">Legal</h4>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <a href="/privacy-policy" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">Privacy Policy</a>
+                    <a href="/terms-of-service" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">Terms of Service</a>
+                    <a href="/disclaimer" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">Disclaimer</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div style="border-top: 1px solid #334155; padding-top: 30px; margin-top: 30px;">
+            <p style="font-size: 0.85em; line-height: 1.7; color: #94a3b8; text-align: center;">
+                Estimates are informational only and based on regional averages. Actual contractor pricing may vary based on property layout, condition, and market factors. This site does not provide professional engineering or contractor services.
+            </p>
+        </div>
+        
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <p style="font-size: 0.85em; color: #64748b;">
+                © 2026 LifeVerdict. All rights reserved.
+            </p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

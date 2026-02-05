@@ -23,12 +23,28 @@ public class VerdictSeoService {
      * framing.
      */
     public SeoVariant getStaticPageHeader(String metroName, String eraName) {
-        // H1: "What homeowners typically spend fixing [Era] homes in [City]"
-        String h1 = String.format("What homeowners typically spend fixing %s homes in %s", eraName, metroName);
+        // Deterministic randomness based on metro/era combination
+        int seed = (metroName + eraName).hashCode();
+        int variant = Math.abs(seed % 3);
 
-        // Title: Curiosity Gap (High CTR) - "Can I afford...?"
-        // We stick to the successful "Can I really afford...?" pattern for SERP clicks.
-        String title = String.format("Can I really afford to fix a %s home in %s? (2026 Costs)", eraName, metroName);
+        String h1;
+        String title;
+
+        // Phase 3: CTR Optimization with 3 distinct hooks
+        switch (variant) {
+            case 0: // The "Hidden Cost" Angle
+                title = String.format("%s House in %s? 5 Hidden Costs (2026)", eraName, metroName);
+                h1 = String.format("The real cost of fixing up a %s home in %s", eraName, metroName);
+                break;
+            case 1: // The "Safety/Fear" Angle
+                title = String.format("Is it safe to buy a %s home in %s? (Risk Report)", eraName, metroName);
+                h1 = String.format("Critical safety risks in %s %s homes", metroName, eraName);
+                break;
+            default: // The "Question/Curiosity" Angle
+                title = String.format("Buying a %s home in %s? Read this first.", eraName, metroName);
+                h1 = String.format("What realtors won't tell you about %s homes in %s", eraName, metroName);
+                break;
+        }
 
         return new SeoVariant(title, h1);
     }

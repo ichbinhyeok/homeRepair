@@ -77,7 +77,10 @@ public class HomeRepairController {
     }
 
     @GetMapping
-    public String index(Model model) {
+    public String index(
+            @RequestParam(required = false) String metroCode,
+            @RequestParam(required = false) String era,
+            Model model) {
         // Step 1: Landing Page (Location & Era)
 
         // Prepare Metros List
@@ -97,6 +100,10 @@ public class HomeRepairController {
         model.addAttribute("metros", metros);
         model.addAttribute("eras", eras);
         model.addAttribute("title", "Buying a Fixer-Upper? Don't Sign Until You See This Verdict.");
+        
+        // Pre-fill support for pSEO traffic
+        model.addAttribute("prefilledMetro", metroCode);
+        model.addAttribute("prefilledEra", era);
 
         return "pages/index";
     }

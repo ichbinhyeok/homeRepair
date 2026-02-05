@@ -31,7 +31,7 @@
                               "CONDITIONAL".equals(verdict.getTier()) ? "bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.4)]" : 
                               verdict.isDealKiller() ? "bg-red-600 shadow-[0_0_8px_rgba(220,38,38,0.4)]" : "bg-rose-500"}">
                         </span>
-                        <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Home Health Check Complete</span>
+                        <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Pre-Purchase Cost Analysis</span>
                     </div>
                     <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-2">
                         ${verdictH1 != null ? verdictH1 : (verdict.getHeadline().split("\\.")[0] + ".")}
@@ -64,7 +64,7 @@
                     <div class="absolute right-0 bottom-0 w-64 h-64 bg-blue-600 rounded-full blur-[120px] opacity-20 group-hover:opacity-30 transition-opacity"></div>
                     
                     <div class="relative z-10">
-                        <h2 class="text-sm font-medium text-slate-400 uppercase tracking-widest mb-1">Estimated Repair Budget</h2>
+                        <h2 class="text-sm font-medium text-slate-400 uppercase tracking-widest mb-1">Estimated Hidden Costs</h2>
                         <div class="flex items-baseline gap-1 mt-4">
                             <span class="text-7xl font-semibold tracking-tighter">
                                 ${verdict.getCostRangeLabel().contains("(") ? verdict.getCostRangeLabel().substring(0, verdict.getCostRangeLabel().indexOf("(")) : verdict.getCostRangeLabel()}
@@ -74,7 +74,7 @@
 
                     <div class="relative z-10 mt-8 flex items-end justify-between">
                          <p class="text-slate-400 text-sm font-medium max-w-sm">
-                            Total estimated immediate to 5-year liability based on forensic scan of ${verdict.getItemsAnalyzed()} components.
+                            Immediate liability based on forensic scan of ${verdict.getItemsAnalyzed()} era-specific components.
                         </p>
                         @if(verdict.getPrimaryCostDriver() != null)
                             <div class="text-right">
@@ -98,29 +98,23 @@
                         </p>
                     </div>
                     <button onclick="document.getElementById('details-section').scrollIntoView({behavior: 'smooth'})" class="mt-6 w-full py-3 bg-slate-50 text-slate-900 font-semibold rounded-xl text-sm hover:bg-slate-100 transition-colors">
-                        View Verified Plan
+                        View Itemized Costs
                     </button>
                 </div>
 
                 <%-- CARD 3: MARKET SIGNALS (Detail Grid) --%>
                 <div class="md:col-span-12 grid grid-cols-1 md:grid-cols-3 gap-6">
                     
-                    <!-- Regional Risk -->
-                    <div class="bg-white rounded-[24px] p-6 border border-slate-100 shadow-sm">
+                    <!-- Negotiation Leverage (NEW) -->
+                    <div class="bg-gradient-to-br from-indigo-50 to-white rounded-[24px] p-6 border border-slate-100 shadow-sm relative overflow-hidden">
                          <div class="flex items-center justify-between mb-4">
-                            <span class="text-xs font-bold text-slate-400 uppercase">Context Risk</span>
-                            <span class="text-xl">🌍</span>
+                            <span class="text-xs font-bold text-indigo-500 uppercase">Negotiation Leverage</span>
+                            <span class="text-xl">🤝</span>
                          </div>
-                         @if(verdict.getContextBriefing() != null)
-                            <div class="text-2xl font-bold text-slate-900 mb-1">${verdict.getContextBriefing().getRegionalRisk()}</div>
-                            <div class="w-full bg-slate-100 h-1.5 rounded-full mb-3 overflow-hidden">
-                               <div class="bg-blue-500 h-full rounded-full" style="width: 75%"></div>
-                            </div>
-                            <p class="text-xs text-slate-500">${verdict.getContextBriefing().getRegionalRiskReason()}</p>
-                         @else
-                            <div class="text-lg font-bold text-slate-400 mb-1">N/A</div>
-                            <p class="text-xs text-slate-400">Regional data unavailable.</p>
-                         @endif
+                         <div class="text-3xl font-bold text-slate-900 mt-2 tracking-tight">$${String.format("%,.0f", verdict.getExactCostEstimate() * 1.5)}</div>
+                         <p class="text-sm text-slate-500 mt-2 leading-relaxed">
+                            Request this amount as a <strong>Repair Allowance</strong> or price reduction to cover hidden risks + overruns.
+                         </p>
                     </div>
 
                     <!-- Labor Market -->

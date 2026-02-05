@@ -246,31 +246,33 @@ public class StaticPageGeneratorService {
     private List<Map<String, String>> generateFAQItems(String metroName, String eraName, Verdict verdict) {
         List<Map<String, String>> faqItems = new ArrayList<>();
 
-        // Q1: Cost-related question
-        if (verdict.getCostRangeLabel() != null) {
-            faqItems.add(Map.of(
-                    "question",
-                    String.format("What is the average home repair cost for %s homes in %s?", eraName, metroName),
-                    "answer", String.format("The typical repair cost range is %s. %s",
-                            verdict.getCostRangeLabel(),
-                            verdict.getHeadline() != null ? verdict.getHeadline() : "")));
+        // Q1: Negotiation / Buying Decision
+        String topRisk = "general aging";
+        if (verdict.getPlan() != null && verdict.getPlan().getMustDo() != null && !verdict.getPlan().getMustDo().isEmpty()) {
+            topRisk = verdict.getPlan().getMustDo().get(0).getPrettyName();
         }
+        
+        faqItems.add(Map.of(
+                "question", String.format("Should I buy a %s home in %s?", eraName, metroName),
+                "answer", String.format("A %s home in %s typically requires %s in immediate repairs. If the seller hasn't updated critical systems like %s, you should request a price reduction or repair allowance.",
+                        eraName, metroName, verdict.getCostRangeLabel(), topRisk)));
 
-        // Q2: Top risk question
-        if (verdict.getPlan() != null && verdict.getPlan().getMustDo() != null
-                && !verdict.getPlan().getMustDo().isEmpty()) {
-            String topRisk = verdict.getPlan().getMustDo().get(0).getPrettyName();
-            faqItems.add(Map.of(
-                    "question", String.format("What are the most critical repairs for %s homes?", eraName),
-                    "answer",
-                    String.format("%s is the highest priority item requiring immediate attention.", topRisk)));
-        }
 
-        // Q3: Deal Killer question (if applicable)
+        // Q2: Hidden Costs
+        faqItems.add(Map.of(
+                "question", String.format("What hidden costs are common in %s homes?", eraName),
+                "answer", String.format("Beyond standard inspections, %s homes often hide issues like %s. Our data suggests budgeting an additional 15-20%% for unforeseen era-specific repairs.",
+                        eraName, topRisk)));
+
+        // Q3: Deal Killer question (if applicable) or Investment question
         if (verdict.isDealKiller() && verdict.getDealKillerMessage() != null) {
             faqItems.add(Map.of(
-                    "question", String.format("Is it safe to buy a %s home in %s?", eraName, metroName),
+                    "question", String.format("Is %s a deal breaker for %s homes?", topRisk, eraName),
                     "answer", verdict.getDealKillerMessage()));
+        } else {
+             faqItems.add(Map.of(
+                    "question", String.format("Are %s homes in %s a good investment?", eraName, metroName),
+                    "answer", "They can be excellent investments if purchased at the right price. Use our repair estimate to ensure your offer accounts for necessary modernization costs."));
         }
 
         return faqItems;
@@ -281,34 +283,8 @@ public class StaticPageGeneratorService {
      * This dramatically improves CTR by showing FAQ in search results
      */
     private String generateFAQSchema(String metroName, String eraName, Verdict verdict) {
-        List<Map<String, String>> faqItems = new ArrayList<>();
-
-        // Q1: Cost-related question
-        if (verdict.getCostRangeLabel() != null) {
-            faqItems.add(Map.of(
-                    "question",
-                    String.format("What is the average home repair cost for %s homes in %s?", eraName, metroName),
-                    "answer", String.format("The typical repair cost range is %s. %s",
-                            verdict.getCostRangeLabel(),
-                            verdict.getHeadline() != null ? verdict.getHeadline() : "")));
-        }
-
-        // Q2: Top risk question
-        if (verdict.getPlan() != null && verdict.getPlan().getMustDo() != null
-                && !verdict.getPlan().getMustDo().isEmpty()) {
-            String topRisk = verdict.getPlan().getMustDo().get(0).getPrettyName();
-            faqItems.add(Map.of(
-                    "question", String.format("What are the most critical repairs for %s homes?", eraName),
-                    "answer",
-                    String.format("%s is the highest priority item requiring immediate attention.", topRisk)));
-        }
-
-        // Q3: Deal Killer question (if applicable)
-        if (verdict.isDealKiller() && verdict.getDealKillerMessage() != null) {
-            faqItems.add(Map.of(
-                    "question", String.format("Is it safe to buy a %s home in %s?", eraName, metroName),
-                    "answer", verdict.getDealKillerMessage()));
-        }
+        // Reuse generateFAQItems logic to ensure consistency
+        List<Map<String, String>> faqItems = generateFAQItems(metroName, eraName, verdict);
 
         // Build JSON-LD schema
         StringBuilder schema = new StringBuilder();

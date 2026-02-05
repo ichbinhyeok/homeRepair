@@ -1,5 +1,6 @@
 package com.livingcostcheck.home_repair.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.livingcostcheck.home_repair.service.dto.verdict.DataMapping.*;
 import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs;
@@ -29,6 +30,10 @@ public class VerdictEngineService {
 
     public MetroMasterData getMetroMasterData() {
         return metroMasterData;
+    }
+
+    public JsonNode getRiskData() {
+        return objectMapper.valueToTree(riskFactorsData);
     }
 
     @PostConstruct

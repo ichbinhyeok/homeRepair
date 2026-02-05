@@ -1,8 +1,4 @@
 User-agent: *
 Allow: /
 
-Disallow: /api/
-Disallow: /admin/
-
-Sitemap: https://lifeverdict.com/sitemap.xml
-
+Sitemap: https://lifeverdict.com/sitemap-core.xml

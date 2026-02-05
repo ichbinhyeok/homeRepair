@@ -85,6 +85,96 @@ public class StaticPageGenerator {
             System.out.println("✓ Sitemap generated with " + urlCount + " URLs: " + sitemapPath);
 
             System.out.println();
+            System.out.println("────────────────────────────────────────────────────────────");
+            System.out.println("Phase 3: Generating State Hubs & Landing Pages");
+            System.out.println("────────────────────────────────────────────────────────────");
+            System.out.println();
+            
+            // Generate State Hubs
+            com.livingcostcheck.home_repair.seo.StateHubGeneratorService stateHubGenerator = new com.livingcostcheck.home_repair.seo.StateHubGeneratorService(verdictService, templateEngine);
+            String stateHubOutputPath = "src/main/resources/static/home-repair";
+            int stateHubsCount = stateHubGenerator.generateAllStateHubs(stateHubOutputPath);
+            System.out.println("✓ Generated " + stateHubsCount + " State Hubs");
+
+            // Generate Landing Page (Index) with updated links
+            // We need to re-render index.jte with the new links structure
+            // NOTE: Ideally we would move this logic to a service, but for now we put it here to ensure it's built
+            // Update: We'll skip complex dynamic generation for index for now as it requires list of states,
+            // but we'll assume index.jte is the source of truth and just needs to be rendered if not handled by Spring.
+            // However, the user asked to modify index.jte to ADD links first.
+
+
+            
+            System.out.println();
+            System.out.println("────────────────────────────────────────────────────────────");
+            System.out.println("Phase 4: Generating Glossary Pages (Guides)");
+            System.out.println("────────────────────────────────────────────────────────────");
+            System.out.println();
+
+            // Generate Glossary Pages
+            com.livingcostcheck.home_repair.seo.GlossaryGeneratorService glossaryGenerator = new com.livingcostcheck.home_repair.seo.GlossaryGeneratorService(verdictService, templateEngine);
+            String glossaryOutputPath = "src/main/resources/static/home-repair";
+            int glossaryCount = glossaryGenerator.generateAllGlossaryPages(glossaryOutputPath);
+            System.out.println("✓ Generated " + glossaryCount + " Glossary Pages");
+
+            System.out.println();
+            System.out.println("────────────────────────────────────────────────────────────");
+            System.out.println("Phase 5: Generating Support Pages (Legal & Info)");
+            System.out.println("────────────────────────────────────────────────────────────");
+            System.out.println();
+            
+            
+            // Support Pages List: Template Name -> Output Path (Relative to static root)
+            // Group 1: No Parameters
+            java.util.Map<String, String> simplePages = new java.util.HashMap<>();
+            simplePages.put("pages/privacy-policy.jte", "src/main/resources/static/privacy-policy.html");
+            simplePages.put("pages/terms-of-service.jte", "src/main/resources/static/terms-of-service.html");
+            simplePages.put("pages/disclaimer.jte", "src/main/resources/static/disclaimer.html");
+
+            // Group 2: Requires baseUrl
+            java.util.Map<String, String> contentPages = new java.util.HashMap<>();
+            contentPages.put("pages/about.jte", "src/main/resources/static/home-repair/about.html");
+            contentPages.put("pages/methodology.jte", "src/main/resources/static/home-repair/methodology.html");
+            contentPages.put("pages/editorial-policy.jte", "src/main/resources/static/home-repair/editorial-policy.html");
+
+            int supportCount = 0;
+            
+            // Render Simple Pages
+            for (java.util.Map.Entry<String, String> entry : simplePages.entrySet()) {
+                try {
+                    gg.jte.output.StringOutput output = new gg.jte.output.StringOutput();
+                    templateEngine.render(entry.getKey(), null, output);
+                    Path path = Paths.get(entry.getValue());
+                    java.nio.file.Files.createDirectories(path.getParent());
+                    java.nio.file.Files.writeString(path, output.toString());
+                    System.out.println("✓ Generated: " + entry.getValue());
+                    supportCount++;
+                } catch (Exception e) {
+                    System.err.println("✗ Failed to generate " + entry.getValue() + ": " + e.getMessage());
+                }
+            }
+
+            // Render Content Pages (with baseUrl)
+            java.util.Map<String, Object> contentParams = new java.util.HashMap<>();
+            contentParams.put("baseUrl", "https://lifeverdict.com/home-repair"); // Prod URL base
+            
+            for (java.util.Map.Entry<String, String> entry : contentPages.entrySet()) {
+                try {
+                    gg.jte.output.StringOutput output = new gg.jte.output.StringOutput();
+                    templateEngine.render(entry.getKey(), contentParams, output);
+                    Path path = Paths.get(entry.getValue());
+                    java.nio.file.Files.createDirectories(path.getParent());
+                    java.nio.file.Files.writeString(path, output.toString());
+                    System.out.println("✓ Generated: " + entry.getValue());
+                    supportCount++;
+                } catch (Exception e) {
+                    System.err.println("✗ Failed to generate " + entry.getValue() + ": " + e.getMessage());
+                }
+            }
+
+
+
+            System.out.println();
             System.out.println("╔════════════════════════════════════════════════════════════╗");
             System.out.println("║                    ✓ SUCCESS!                              ║");
             System.out.println("║                                                            ║");
