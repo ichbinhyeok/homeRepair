@@ -510,35 +510,33 @@ public class StaticPageGeneratorService {
         String filePath = outputBasePath.replace("verdicts", "verdicts/states/") + fileName;
 
         // Prepare City Data
-        List<Map<String, Object>> cityList = new ArrayList<>();
-        for (String cityCode : cityCodes) {
-            Map<String, Object> cityData = new HashMap<>();
-            cityData.put("name", formatMetroName(cityCode));
+        List<com.livingcostcheck.home_repair.service.dto.verdict.StateHubPage.CityData> cityList = new ArrayList<>();
 
+        for (String cityCode : cityCodes) {
+            String cityName = formatMetroName(cityCode);
             List<InternalLinkBuilder.InternalLink> eraLinks = new ArrayList<>();
             for (String era : ALL_ERAS) {
                 eraLinks.add(new InternalLinkBuilder.InternalLink(
                         formatEraText(era),
                         buildCanonicalUrl(cityCode, era).replace("https://lifeverdict.com", "")));
             }
-            cityData.put("eras", eraLinks);
-            cityList.add(cityData);
+            cityList.add(
+                    new com.livingcostcheck.home_repair.service.dto.verdict.StateHubPage.CityData(cityName, eraLinks));
         }
 
         // Sort by City Name
-        cityList.sort((a, b) -> ((String) a.get("name")).compareTo((String) b.get("name")));
+        cityList.sort((a, b) -> a.name.compareTo(b.name));
 
         String canonicalUrl = "https://lifeverdict.com/home-repair/verdicts/states/" + fileName;
+        String breadcrumb = generateStateBreadcrumbSchema(stateName, canonicalUrl);
 
-        Map<String, Object> templateData = new HashMap<>();
-        templateData.put("stateCode", stateCode);
-        templateData.put("stateName", stateName);
-        templateData.put("canonicalUrl", canonicalUrl);
-        templateData.put("cities", cityList);
-        templateData.put("breadcrumbSchema", generateStateBreadcrumbSchema(stateName, canonicalUrl));
+        // Create DTO
+        com.livingcostcheck.home_repair.service.dto.verdict.StateHubPage pageData = new com.livingcostcheck.home_repair.service.dto.verdict.StateHubPage(
+                stateCode, stateName, canonicalUrl, breadcrumb, cityList);
 
+        // Pass DTO directly (map key "page" matches JTE param)
         StringOutput output = new StringOutput();
-        templateEngine.render("seo/static-state-hub.jte", templateData, output);
+        templateEngine.render("seo/static-state-hub.jte", Collections.singletonMap("page", pageData), output);
 
         Path path = Paths.get(filePath);
         Files.createDirectories(path.getParent());

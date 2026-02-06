@@ -278,6 +278,40 @@ public class HomeRepairController {
     }
 
     // -------------------------------------------------------------------------
+    // STATIC INFO PAGES
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // STATIC INFO PAGES
+    // -------------------------------------------------------------------------
+    @GetMapping("/about")
+    public String about(Model model) {
+        model.addAttribute("baseUrl", "https://livingcostcheck.com");
+        return "pages/about";
+    }
+
+    @GetMapping("/methodology")
+    public String methodology(Model model) {
+        model.addAttribute("baseUrl", "https://livingcostcheck.com");
+        return "pages/methodology";
+    }
+
+    @GetMapping("/editorial-policy")
+    public String editorialPolicy(Model model) {
+        model.addAttribute("baseUrl", "https://livingcostcheck.com");
+        return "pages/editorial-policy";
+    }
+
+    @GetMapping("/data-sources")
+    public String dataSources() {
+        return "pages/data-sources";
+    }
+
+    @GetMapping("/disclaimer")
+    public String disclaimer() {
+        return "pages/disclaimer";
+    }
+
+    // -------------------------------------------------------------------------
     // API & TRACKING (AJAX/Redirects)
     // -------------------------------------------------------------------------
 

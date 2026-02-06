@@ -25,4 +25,19 @@ public class RootController {
         // Use the Product-Focused Hub Page
         return "pages/hub";
     }
+
+    @GetMapping("/privacy-policy")
+    public String privacyPolicy() {
+        return "pages/disclaimer";
+    }
+
+    @GetMapping("/terms-of-service")
+    public String termsOfService() {
+        return "pages/disclaimer";
+    }
+
+    @GetMapping("/disclaimer")
+    public String disclaimer() {
+        return "pages/disclaimer";
+    }
 }

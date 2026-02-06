@@ -1,33 +1,27 @@
-@import java.util.List
-@import java.util.Map
-@import java.util.Set
+@import com.livingcostcheck.home_repair.service.dto.verdict.StateHubPage
 @import com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink
 
-@param String stateCode
-@param String stateName
-@param String canonicalUrl
-@param List<Map<String, Object>> cities
-@param String breadcrumbSchema
+@param StateHubPage page
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Repair Costs in ${stateName} (2026 Report) | LifeVerdict</title>
-    <meta name="description" content="Forensic home repair cost analysis for all major cities in ${stateName}. Review 2026 construction data for Pre-1950s to modern homes.">
+    <title>Home Repair Costs in ${page.stateName} (2026 Report) | LifeVerdict</title>
+    <meta name="description" content="Forensic home repair cost analysis for all major cities in ${page.stateName}. Review 2026 construction data for Pre-1950s to modern homes.">
     
-    <link rel="canonical" href="${canonicalUrl}">
+    <link rel="canonical" href="${page.canonicalUrl}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="stylesheet" href="/css/styles.css">
     
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Home Repair Costs in ${stateName} (2026)">
-    <meta property="og:description" content="View detailed repair cost indices for ${cities.size()} cities in ${stateName}.">
-    <meta property="og:url" content="${canonicalUrl}">
+    <meta property="og:title" content="Home Repair Costs in ${page.stateName} (2026)">
+    <meta property="og:description" content="View detailed repair cost indices for ${page.cities.size()} cities in ${page.stateName}.">
+    <meta property="og:url" content="${page.canonicalUrl}">
 
-    $unsafe{breadcrumbSchema}
+    $unsafe{page.breadcrumbSchema}
 
     <style>
         :root {
@@ -115,7 +109,7 @@
     <header class="hero">
         <div class="container">
             <span style="color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem;">State Market Index</span>
-            <h1>${stateName} Repair Verdicts</h1>
+            <h1>${page.stateName} Repair Verdicts</h1>
             <p>Select a metro area to view forensic cost analysis reports by home era.</p>
         </div>
     </header>
@@ -125,15 +119,15 @@
         <nav style="margin-bottom: 40px; font-size: 0.9rem; color: var(--slate-600);">
             <a href="/" style="text-decoration: none; color: var(--slate-600);">Home</a> / 
             <a href="/home-repair" style="text-decoration: none; color: var(--slate-600);">Home Repair</a> / 
-            <span style="font-weight: 600; color: var(--slate-900);">${stateName}</span>
+            <span style="font-weight: 600; color: var(--slate-900);">${page.stateName}</span>
         </nav>
 
         <div class="city-grid">
-            @for(var city : cities)
+            @for(var city : page.cities)
                 <div class="city-card">
-                    <div class="city-name">${city.get("name")}</div>
+                    <div class="city-name">${city.name}</div>
                     <div class="era-list">
-                        @for(var era : (List<InternalLink>) city.get("eras"))
+                        @for(var era : city.eras)
                             <a href="${era.getHref()}" class="era-link">${era.getText()}</a>
                         @endfor
                     </div>
