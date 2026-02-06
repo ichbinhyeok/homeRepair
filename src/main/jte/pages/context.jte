@@ -40,7 +40,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">Renovation Budget ($)</label>
-                            <input type="number" name="budget" required min="1000" step="100" placeholder="e.g. 50000" class="w-full p-3 border border-slate-300 rounded-lg">
+                            <input type="number" name="budget" required min="1000" step="1" placeholder="e.g. 50000" class="w-full p-3 border border-slate-300 rounded-lg">
                             <p class="text-xs text-slate-500 mt-1">Cash available for repairs</p>
                         </div>
                         <div>
@@ -77,6 +77,72 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- House Configuration -->
+                <!-- House Configuration (Optional) -->
+                <details class="group bg-white p-6 rounded-xl border border-slate-200 shadow-sm open:ring-2 open:ring-blue-100">
+                    <summary class="flex justify-between items-center cursor-pointer list-none select-none">
+                        <div class="flex items-center gap-3">
+                             <span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-50 text-blue-600 font-bold text-sm">2</span>
+                             <div>
+                                <h3 class="text-lg font-bold text-slate-900">Advanced Specs (Optional)</h3>
+                                <p class="text-xs text-slate-500">Refine accuracy with detailed layout info</p>
+                             </div>
+                        </div>
+                        <span class="text-slate-400 group-open:rotate-180 transition-transform duration-300">
+                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
+                    </summary>
+                    
+                    <div class="mt-6 pt-6 border-t border-slate-100 animate-in fade-in slide-in-from-top-2 duration-300">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Bathrooms</label>
+                                <select name="bathrooms" class="w-full p-3 border border-slate-300 rounded-lg bg-slate-50 focus:bg-white transition-colors">
+                                    <option value="1">1 Bathroom</option>
+                                    <option value="2" selected>2 Bathrooms (Avg)</option>
+                                    <option value="3">3 Bathrooms</option>
+                                    <option value="4">4 Bathrooms</option>
+                                    <option value="5">5+ Bathrooms</option>
+                                </select>
+                                <p class="text-xs text-slate-500 mt-1">Affects plumbing and remodel scope</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Number of Stories</label>
+                                <select name="stories" class="w-full p-3 border border-slate-300 rounded-lg bg-slate-50 focus:bg-white transition-colors">
+                                    <option value="1" selected>1 Story (Ranch/Bungalow)</option>
+                                    <option value="2">2 Stories</option>
+                                    <option value="3">3+ Stories (Townhouse)</option>
+                                </select>
+                                <p class="text-xs text-slate-500 mt-1">Affects roofing and foundation footprint</p>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Roof Material</label>
+                            <div class="grid grid-cols-3 gap-3">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="roofType" value="ASPHALT" checked class="peer sr-only">
+                                    <div class="p-3 text-center border rounded-lg peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 hover:bg-slate-50 transition-all">
+                                        <div class="font-semibold text-sm">Asphalt</div>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="roofType" value="METAL" class="peer sr-only">
+                                    <div class="p-3 text-center border rounded-lg peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 hover:bg-slate-50 transition-all">
+                                        <div class="font-semibold text-sm">Metal</div>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="roofType" value="SLATE_TILE" class="peer sr-only">
+                                    <div class="p-3 text-center border rounded-lg peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 hover:bg-slate-50 transition-all">
+                                        <div class="font-semibold text-sm">Slate/Tile</div>
+                                    </div>
+                                </label>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2">Material costs differ by 300%+</p>
+                        </div>
+                    </div>
+                </details>
 
                 <!-- Phase 3: Forensic Clues -->
                 <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm border-l-4 border-l-orange-400">

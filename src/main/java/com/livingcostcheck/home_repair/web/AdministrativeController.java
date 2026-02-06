@@ -19,7 +19,8 @@ public class AdministrativeController {
     public String generate() {
         log.info("ADMIN: Triggering static page generation...");
         // Path relative to project root
-        int count = staticPageGeneratorService.generateAllPages("src/main/resources/static/home-repair/verdicts");
-        return "SUCCESS: Generated " + count + " pages.";
+        String outputPath = "src/main/resources/static/home-repair/verdicts";
+        int count = staticPageGeneratorService.generateAllPages(outputPath).size();
+        return "Generated " + count + " pages to " + outputPath;
     }
 }

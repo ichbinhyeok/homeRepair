@@ -76,7 +76,7 @@ public class VerdictDTOs {
     @AllArgsConstructor
     public static class UserContext {
         private Double budget;
-        private Double sqft; // User override for house size
+        private Integer sqft; // User override for house size
         private String metroCode;
         private String era; // PRE_1950, 1950_1970, etc.
         private RelationshipToHouse relationship; // New Primary Context
@@ -95,6 +95,11 @@ public class VerdictDTOs {
         private Boolean isPolyB; // Polybutylene plumbing pipes
         private Boolean isAluminum; // Aluminum wiring
         private Boolean isChineseDrywall; // Sulfur-emitting defective drywall (2001-2009)
+
+        // New Accuracy Factors
+        private Integer bathrooms;
+        private Integer stories;
+        private String roofType; // ASPHALT, SLATE_TILE, METAL
     }
 
     @Data
@@ -113,6 +118,8 @@ public class VerdictDTOs {
         private double mobFee;
         private double dispTax;
         private double avgHouseSqft;
+        private int bathrooms;
+        private int stories;
     }
 
     @Data
@@ -150,6 +157,11 @@ public class VerdictDTOs {
         private String compoundingBadge; // e.g., "RISK COMPOUNDING APPLIED (1.3x)"
         private Boolean isForensicConfirmed;
         private Boolean isCodeMandated;
+
+        // Enhanced Content Fields (Phase 2 Data Enhancement)
+        private String definition;
+        private String damageScenario;
+        private Double remedyMultiplier;
     }
 
     @Data

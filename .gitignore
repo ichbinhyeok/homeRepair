@@ -13,6 +13,13 @@ build/
 .settings
 .springBeans
 .sts4-cache
+
+### Custom Logs & Temp ###
+*.log
+*.txt
+!SERVICE_OVERVIEW.md
+!HELP.md
+
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/

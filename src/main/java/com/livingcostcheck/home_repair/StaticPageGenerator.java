@@ -14,7 +14,6 @@ import org.springframework.core.io.ResourceLoader;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
 
 /**
  * Standalone executable to generate all pSEO static pages
@@ -56,9 +55,9 @@ public class StaticPageGenerator {
             // Initialize pSEO services
             InternalLinkBuilder linkBuilder = new InternalLinkBuilder();
             com.livingcostcheck.home_repair.seo.VerdictSeoService verdictSeoService = new com.livingcostcheck.home_repair.seo.VerdictSeoService();
-            SitemapGenerator sitemapGenerator = new SitemapGenerator(verdictService);
+            SitemapGenerator sitemapGenerator = new SitemapGenerator();
             StaticPageGeneratorService pageGenerator = new StaticPageGeneratorService(
-                    verdictService, linkBuilder, templateEngine, verdictSeoService, sitemapGenerator);
+                    verdictService, linkBuilder, templateEngine, verdictSeoService);
 
             System.out.println();
             System.out.println("────────────────────────────────────────────────────────────");
@@ -68,7 +67,8 @@ public class StaticPageGenerator {
 
             // Generate all pages
             String outputPath = "src/main/resources/static/home-repair/verdicts";
-            int pageCount = pageGenerator.generateAllPages(outputPath);
+            java.util.List<String> allUrls = pageGenerator.generateAllPages(outputPath);
+            int pageCount = allUrls.size();
 
             System.out.println();
             System.out.println("✓ Generated " + pageCount + " pages to: " + outputPath);
@@ -81,9 +81,7 @@ public class StaticPageGenerator {
 
             // Generate sitemap
             String sitemapPath = "src/main/resources/static/sitemap.xml";
-            // Extra URLs are handled within StaticPageGeneratorService during build phase,
-            // but for standalone, we just pass empty or re-run logic.
-            int urlCount = sitemapGenerator.generateSitemap(sitemapPath, Collections.emptyList());
+            int urlCount = sitemapGenerator.generateSitemap(sitemapPath, allUrls);
 
             System.out.println("✓ Sitemap generated with " + urlCount + " URLs: " + sitemapPath);
 

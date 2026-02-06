@@ -158,8 +158,8 @@ public class StateHubGeneratorService {
         templateData.put("cities", cities);
         templateData.put("avgCostByEra", avgCostByEra);
         templateData.put("climateDescription", climateDesc);
-        templateData.put("baseUrl", "https://livingcostcheck.com");
-        templateData.put("canonicalUrl", "https://livingcostcheck.com/home-repair/states/" + stateCode.toLowerCase());
+        templateData.put("baseUrl", "https://lifeverdict.com");
+        templateData.put("canonicalUrl", "https://lifeverdict.com/home-repair/states/" + stateCode.toLowerCase());
 
         // Render HTML
         StringOutput output = new StringOutput();

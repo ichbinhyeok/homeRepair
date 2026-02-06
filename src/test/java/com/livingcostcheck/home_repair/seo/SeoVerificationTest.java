@@ -46,9 +46,7 @@ public class SeoVerificationTest {
 
         // Create Service
         com.livingcostcheck.home_repair.seo.VerdictSeoService verdictSeoService = new com.livingcostcheck.home_repair.seo.VerdictSeoService();
-        SitemapGenerator sitemapGenerator = Mockito.mock(SitemapGenerator.class);
-        pageGenerator = new StaticPageGeneratorService(verdictService, linkBuilder, templateEngine, verdictSeoService,
-                sitemapGenerator);
+        pageGenerator = new StaticPageGeneratorService(verdictService, linkBuilder, templateEngine, verdictSeoService);
     }
 
     @Test

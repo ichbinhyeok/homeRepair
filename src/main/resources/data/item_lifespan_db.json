@@ -20,18 +20,18 @@
             "impact_description": "Mechanical failure often happens during extreme weather, leading to emergency replacement costs."
         },
         "PLUMBING": {
-            "standard_lifespan": 50,
-            "warning_threshold": 40,
-            "critical_threshold": 60,
-            "pretty_name": "Main Plumbing Lines",
-            "impact_description": "Slow leaks behind walls cause silent structural damage and high water bills."
+            "standard_lifespan": 80,
+            "warning_threshold": 60,
+            "critical_threshold": 100,
+            "pretty_name": "Plumbing (Copper/PVC)",
+            "impact_description": "While modern pipes last 80+ years, 1970s polybutylene or older galvanized steel often fails prematurely."
         },
         "ELECTRICAL": {
-            "standard_lifespan": 60,
+            "standard_lifespan": 70,
             "warning_threshold": 50,
-            "critical_threshold": 70,
-            "pretty_name": "Electrical System",
-            "impact_description": "Outdated insulation and grounding increase fire risk and exclude property from certain insurance."
+            "critical_threshold": 100,
+            "pretty_name": "Main Electrical Wiring",
+            "impact_description": "Copper wiring is nearly permanent, but insulation and panel capacity become bottlenecks over 50 years."
         },
         "WINDOWS": {
             "standard_lifespan": 30,
@@ -46,6 +46,132 @@
             "critical_threshold": 12,
             "pretty_name": "Water Heater",
             "impact_description": "Sudden failure often results in basement or closet flooding."
+        },
+        "SIDING": {
+            "standard_lifespan": 20,
+            "warning_threshold": 15,
+            "critical_threshold": 25,
+            "pretty_name": "Siding (Vinyl/Wood)",
+            "impact_description": "Rot and moisture intrusion lead to frame damage and mold."
+        },
+        "GUTTERS": {
+            "standard_lifespan": 20,
+            "warning_threshold": 15,
+            "critical_threshold": 25,
+            "pretty_name": "Gutter System",
+            "impact_description": "Clogged or detached gutters cause foundation washout and basement leaks."
+        },
+        "DECK": {
+            "standard_lifespan": 15,
+            "warning_threshold": 10,
+            "critical_threshold": 20,
+            "pretty_name": "Deck Structure",
+            "impact_description": "Rotten ledger boards pose immediate collapse risk."
+        },
+        "GARAGE_DOOR": {
+            "standard_lifespan": 20,
+            "warning_threshold": 15,
+            "critical_threshold": 25,
+            "pretty_name": "Garage Door System",
+            "impact_description": "Spring failure can trap vehicles or cause injury."
+        },
+        "DRIVEWAY": {
+            "standard_lifespan": 20,
+            "warning_threshold": 15,
+            "critical_threshold": 25,
+            "pretty_name": "Driveway Paving",
+            "impact_description": "Cracks allow water freeze-thaw cycles to destroy substrate."
+        },
+        "FENCE": {
+            "standard_lifespan": 15,
+            "warning_threshold": 10,
+            "critical_threshold": 20,
+            "pretty_name": "Perimeter Fence",
+            "impact_description": "Leaning sections reduce security and property value."
+        },
+        "ATTIC_INSULATION": {
+            "standard_lifespan": 30,
+            "warning_threshold": 20,
+            "critical_threshold": 40,
+            "pretty_name": "Attic Insulation",
+            "impact_description": "Compressed insulation loses R-value, spiking HVAC costs."
+        },
+        "SUMP_PUMP": {
+            "standard_lifespan": 7,
+            "warning_threshold": 5,
+            "critical_threshold": 10,
+            "pretty_name": "Sump Pump",
+            "impact_description": "Failure during a storm guarantees basement flooding."
+        },
+        "SMOKE_DETECTOR": {
+            "standard_lifespan": 10,
+            "warning_threshold": 8,
+            "critical_threshold": 12,
+            "pretty_name": "Smoke/CO Detectors",
+            "impact_description": "Expired sensors fail to detect fire, risking lives."
+        },
+        "DISPOSAL": {
+            "standard_lifespan": 10,
+            "warning_threshold": 8,
+            "critical_threshold": 12,
+            "pretty_name": "Garbage Disposal",
+            "impact_description": "Seized motor causes sink backup and plumbing clogs."
+        },
+        "TOILET": {
+            "standard_lifespan": 50,
+            "warning_threshold": 40,
+            "critical_threshold": 100,
+            "pretty_name": "Toilet Fixtures",
+            "impact_description": "Wax ring failure causes hidden subfloor rot, though the porcelain lasts indefinitely."
+        },
+        "PAINT_EXTERIOR": {
+            "standard_lifespan": 7,
+            "warning_threshold": 5,
+            "critical_threshold": 10,
+            "pretty_name": "Exterior Paint/Stain",
+            "impact_description": "Peeling paint exposes wood to rapid decay."
+        },
+        "FLOORING_CARPET": {
+            "standard_lifespan": 10,
+            "warning_threshold": 7,
+            "critical_threshold": 12,
+            "pretty_name": "Carpet Flooring",
+            "impact_description": "Traps allergens and wears out in high traffic areas."
+        },
+        "SEPTIC_SYSTEM": {
+            "standard_lifespan": 30,
+            "warning_threshold": 25,
+            "critical_threshold": 40,
+            "pretty_name": "Septic System",
+            "impact_description": "Drain field failure costs $15k+ to replace."
+        },
+        "FURNACE": {
+            "standard_lifespan": 18,
+            "warning_threshold": 15,
+            "critical_threshold": 25,
+            "pretty_name": "Furnace / Heating Unit",
+            "impact_description": "Cracked heat exchangers leak carbon monoxide; critical safety risk."
+        },
+        "AIR_CONDITIONER": {
+            "standard_lifespan": 12,
+            "warning_threshold": 10,
+            "critical_threshold": 15,
+            "pretty_name": "Central AC Condenser",
+            "impact_description": "Efficiency drops 40% near end-of-life; refrigerant leaks are costly."
+        },
+        "DISHWASHER": {
+            "standard_lifespan": 10,
+            "warning_threshold": 8,
+            "critical_threshold": 13,
+            "pretty_name": "Dishwasher",
+            "impact_description": "Pump seal leaks often go unnoticed until subfloor rot occurs."
+        },
+        "KITCHEN_FAUCET": {
+            "standard_lifespan": 15,
+            "warning_threshold": 12,
+            "critical_threshold": 20,
+            "pretty_name": "Kitchen Sink Fixtures",
+            "impact_description": "Internal corrosion leads to spray hose and handle leaks."
         }
     }
 }

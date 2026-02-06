@@ -6,7 +6,6 @@ import com.livingcostcheck.home_repair.repository.EventLogRepository;
 import com.livingcostcheck.home_repair.repository.HomeRepairRepository;
 import com.livingcostcheck.home_repair.service.VerdictEngineService;
 import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.*;
-import com.livingcostcheck.home_repair.seo.StaticPageGeneratorService;
 import com.livingcostcheck.home_repair.seo.VerdictSeoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,10 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+import com.livingcostcheck.home_repair.util.TextUtil;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.*;
 
 /**
  * Main controller for Home Repair Verdict Engine
@@ -33,48 +32,6 @@ public class HomeRepairController {
     private final EventLogRepository eventLogRepository;
     private final VerdictEngineService verdictEngineService;
     private final com.livingcostcheck.home_repair.seo.VerdictSeoService verdictSeoService;
-
-    // Helper methods for formatting (duplicated from StaticPageGeneratorService for
-    // now to avoid cross-service dependency or should be moved to a Util)
-    private String formatMetroName(String metroCode) {
-        if (metroCode == null)
-            return "Unknown";
-        String[] parts = metroCode.split("_");
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < parts.length; i++) {
-            String part = parts[i];
-            if (i == parts.length - 1 && part.length() == 2) {
-                result.append(part);
-            } else {
-                result.append(part.substring(0, 1).toUpperCase())
-                        .append(part.substring(1).toLowerCase());
-            }
-            if (i < parts.length - 1)
-                result.append(" ");
-        }
-        return result.toString();
-    }
-
-    private String formatEraName(String era) {
-        if (era == null)
-            return "Unknown";
-        switch (era) {
-            case "PRE_1950":
-                return "Pre-1950";
-            case "1950_1970":
-                return "1950s-1970s";
-            case "1970_1980":
-                return "1970s";
-            case "1980_1995":
-                return "1980s-1990s";
-            case "1995_2010":
-                return "1995-2010";
-            case "2010_PRESENT":
-                return "2010-Present";
-            default:
-                return era;
-        }
-    }
 
     @GetMapping
     public String index(Model model) {
@@ -130,6 +87,9 @@ public class HomeRepairController {
             @RequestParam(value = "isPolyB", defaultValue = "false") Boolean isPolyB,
             @RequestParam(value = "isAluminum", defaultValue = "false") Boolean isAluminum,
             @RequestParam(value = "isChineseDrywall", defaultValue = "false") Boolean isChineseDrywall,
+            @RequestParam(value = "bathrooms", required = false) Integer bathrooms,
+            @RequestParam(value = "stories", required = false) Integer stories,
+            @RequestParam(value = "roofType", defaultValue = "ASPHALT") String roofType,
             @RequestParam(value = "userEmail", defaultValue = "anonymous") String userEmail,
             Model model) {
 
@@ -146,7 +106,7 @@ public class HomeRepairController {
                     .metroCode(metroCode)
                     .era(era)
                     .budget(budget)
-                    .sqft(sqft)
+                    .sqft(sqft.intValue())
                     .relationship(relationship)
                     .history(history != null ? history : java.util.Collections.emptyList())
                     .condition(condition)
@@ -154,6 +114,9 @@ public class HomeRepairController {
                     .isPolyB(isPolyB)
                     .isAluminum(isAluminum)
                     .isChineseDrywall(isChineseDrywall)
+                    .bathrooms(bathrooms)
+                    .stories(stories)
+                    .roofType(roofType)
                     .build();
 
             // 1. Generate Verdict
@@ -260,7 +223,7 @@ public class HomeRepairController {
             Verdict verdict = verdictEngineService.generateVerdict(context);
 
             // CTR Optimization: Verdict-First Titles & Decision-Oriented H1s
-            String city = formatMetroName(history.getZipCode());
+            String city = TextUtil.formatMetroName(history.getZipCode());
 
             // Use VerdictSeoService for "Outlook" headers (Contextual)
             VerdictSeoService.SeoVariant seoVariant = verdictSeoService.getDynamicResultHeader(verdict, city);
@@ -285,19 +248,19 @@ public class HomeRepairController {
     // -------------------------------------------------------------------------
     @GetMapping("/about")
     public String about(Model model) {
-        model.addAttribute("baseUrl", "https://livingcostcheck.com");
+        model.addAttribute("baseUrl", "https://lifeverdict.com");
         return "pages/about";
     }
 
     @GetMapping("/methodology")
     public String methodology(Model model) {
-        model.addAttribute("baseUrl", "https://livingcostcheck.com");
+        model.addAttribute("baseUrl", "https://lifeverdict.com");
         return "pages/methodology";
     }
 
     @GetMapping("/editorial-policy")
     public String editorialPolicy(Model model) {
-        model.addAttribute("baseUrl", "https://livingcostcheck.com");
+        model.addAttribute("baseUrl", "https://lifeverdict.com");
         return "pages/editorial-policy";
     }
 
@@ -309,6 +272,86 @@ public class HomeRepairController {
     @GetMapping("/disclaimer")
     public String disclaimer() {
         return "pages/disclaimer";
+    }
+
+    // -------------------------------------------------------------------------
+    // DYNAMIC LEVEL 2: RISK DETAIL PSEO
+    // -------------------------------------------------------------------------
+    @GetMapping("/verdicts/{metro}/{era}/{riskItem}.html")
+    public String viewRiskDetail(@PathVariable String metro,
+            @PathVariable String era,
+            @PathVariable String riskItem,
+            Model model) {
+
+        // 1. Generate core verdict logic
+        UserContext context = UserContext.builder()
+                .metroCode(metro.replace("-", "_").toUpperCase())
+                .era(era.replace("-", "_").toUpperCase())
+                .budget(0.0) // Info page assumption
+                .relationship(RelationshipToHouse.LIVING)
+                .build();
+
+        Verdict verdict = verdictEngineService.generateVerdict(context);
+
+        // 2. Find specific risk item
+        RiskAdjustedItem targetItem = verdict.getPlan().getMustDo().stream()
+                .filter(item -> item.getItemCode().toLowerCase().replace("_", "-")
+                        .equals(riskItem.replace(".html", "")))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Risk item not found: " + riskItem));
+
+        // 3. Prepare Model for Template (same as StaticPageGenerator)
+        String metroName = TextUtil.formatMetroName(context.getMetroCode());
+        String eraName = TextUtil.formatEraText(context.getEra());
+
+        // Phase 2: Add Metro Metadata & Regional Insight
+        var metroData = verdictEngineService.getMetroMasterData().getData().get(context.getMetroCode());
+        String climateZone = "US-Standard";
+        String metroRisk = "Standard Risks";
+        String foundation = "Standard";
+        double laborMult = 1.0;
+
+        if (metroData != null) {
+            climateZone = metroData.getClimateZone();
+            metroRisk = metroData.getRisk();
+            foundation = metroData.getFoundation();
+            laborMult = metroData.getLaborMult() != null ? metroData.getLaborMult() : 1.0;
+        }
+
+        long seed = (context.getMetroCode() + context.getEra()).hashCode();
+        String regionalInsight = com.livingcostcheck.home_repair.seo.FragmentLibrary.generateRegionalInsight(
+                climateZone, context.getEra(), laborMult, metroName, seed);
+
+        model.addAttribute("title",
+                String.format("%s in %s: $%,.0f Cost Guide (%s Homes)",
+                        targetItem.getPrettyName(), metroName, targetItem.getAdjustedCost(), eraName));
+        model.addAttribute("targetItem", targetItem); // Template expects 'item' or we map it
+        model.addAttribute("item", targetItem); // Mapping to 'item' as per template
+        model.addAttribute("itemSlug", riskItem.replace(".html", ""));
+        model.addAttribute("verdict", verdict);
+        model.addAttribute("metroCode", context.getMetroCode());
+        model.addAttribute("metroName", metroName);
+        model.addAttribute("era", era);
+        model.addAttribute("eraName", eraName);
+        model.addAttribute("baseUrl", "https://lifeverdict.com");
+
+        // Injected Data
+        model.addAttribute("regionalInsight", regionalInsight);
+        model.addAttribute("climateZone", climateZone);
+        model.addAttribute("metroRisk", metroRisk);
+        model.addAttribute("foundation", foundation);
+
+        // Internal Links (Simplified for Dynamic)
+        String parentUrl = "/home-repair/verdicts/" + metro + "/" + era + ".html";
+        model.addAttribute("parentUrl", parentUrl);
+        model.addAttribute("canonicalUrl",
+                "https://lifeverdict.com/home-repair/verdicts/" + metro + "/" + era + "/" + riskItem + ".html");
+
+        // Helper Schemas (Empty for now, can be refactored to shared service)
+        model.addAttribute("faqSchema", "");
+        model.addAttribute("breadcrumbSchema", "");
+
+        return "seo/static-risk-detail";
     }
 
     // -------------------------------------------------------------------------

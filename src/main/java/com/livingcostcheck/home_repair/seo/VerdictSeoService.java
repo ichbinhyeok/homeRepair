@@ -23,12 +23,12 @@ public class VerdictSeoService {
      * framing.
      */
     public SeoVariant getStaticPageHeader(String metroName, String eraName) {
-        // H1: "What homeowners typically spend fixing [Era] homes in [City]"
+        // H1: Informational, descriptive (what this page is about)
         String h1 = String.format("What homeowners typically spend fixing %s homes in %s", eraName, metroName);
 
-        // Title: Curiosity Gap (High CTR) - "Can I afford...?"
-        // We stick to the successful "Can I really afford...?" pattern for SERP clicks.
-        String title = String.format("Can I really afford to fix a %s home in %s? (2026 Costs)", eraName, metroName);
+        // Title: CTR-Optimized (Curiosity Gap + Urgency + Year)
+        // Pattern: "[Era] Home in [City]: $XX,XXX Hidden Costs? (2026)"
+        String title = String.format("%s Home Repair Costs in %s: What to Expect (2026)", eraName, metroName);
 
         return new SeoVariant(title, h1);
     }

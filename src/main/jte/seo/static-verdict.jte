@@ -9,7 +9,7 @@
 @param String metroName
 @param String era
 @param String eraName
-@param Verdict verdict
+@param com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.Verdict verdict
 @param List<InternalLink> eraLinks
 @param List<InternalLink> cityLinks
 @param String baseUrl
@@ -24,290 +24,297 @@
 @param String lowPrice
 @param String highPrice
 @param String breadcrumbSchema
+@param String metroRisk
+@param String climateZone
+@param String foundation
+@param String avgHouseAge
+@param String howToSchema
+@param String stateHubUrl = null
+@param String stateName = null
+@param String dateString
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <title>${title}</title>
-    <meta name="description" content="Forensic cost analysis for ${eraName} homes in ${metroName}. Discover hidden liabilities, life expectancy of key systems, and negotiation leverage points for 2026.">
+    <meta name="description" content="Buying a ${eraName} home in ${metroName}. Review repair costs and expert negotiation tips for 2026." />
     
-    <link rel="canonical" href="${canonicalUrl}">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="canonical" href="${canonicalUrl}" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/seo-report.css" />
     
     <!-- Open Graph -->
-    <meta property="og:type" content="article">
-    <meta property="og:title" content="${title}">
-    <meta property="og:url" content="${canonicalUrl}">
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="${title}" />
+    <meta property="og:description" content="Forensic cost analysis for ${eraName} homes in ${metroName}. 2026 Market Data." />
+    <meta property="og:url" content="${canonicalUrl}" />
     
     $unsafe{faqSchema}
     $unsafe{breadcrumbSchema}
-
-    <style>
-        :root {
-            --primary: #0f172a;
-            --accent: #2563eb;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --success: #10b981;
-            --slate-50: #f8fafc;
-            --slate-100: #f1f5f9;
-            --slate-200: #e2e8f0;
-            --slate-400: #94a3b8;
-            --slate-600: #475569;
-            --slate-900: #0f172a;
-        }
-        
-        body { 
-            background: #fff; 
-            color: var(--slate-900); 
-            font-family: 'Inter', sans-serif; 
-            margin: 0; 
-            -webkit-font-smoothing: antialiased;
-        }
-
-        h1, h2, h3 { font-family: 'Outfit', sans-serif; letter-spacing: -0.02em; }
-        
-        .report-header { 
-            background: linear-gradient(135deg, white 0%, var(--slate-50) 100%);
-            color: var(--slate-900); 
-            padding: 80px 20px; 
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            border-bottom: 1px solid var(--slate-200);
-        }
-        .report-header::before {
-            content: ""; position: absolute; inset: 0;
-            background-image: radial-gradient(var(--slate-200) 1px, transparent 1px);
-            background-size: 30px 30px;
-            opacity: 0.5;
-        }
-
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-        
-        .badge-market { background: var(--slate-100); color: var(--accent); padding: 8px 16px; border-radius: 99px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 24px; display: inline-block; border: 1px solid var(--slate-200); }
-        .title-h1 { font-size: 3.5rem; line-height: 1.1; margin: 0 auto 24px; max-width: 800px; font-weight: 800; color: var(--slate-900); }
-        .subtitle { font-size: 1.25rem; color: var(--slate-600); max-width: 650px; margin: 0 auto; line-height: 1.6; }
-
-        /* Bento Grid */
-        .bento-grid { 
-            display: grid; 
-            grid-template-columns: repeat(12, 1fr); 
-            gap: 24px; 
-            margin-top: -40px; 
-            position: relative; 
-            z-index: 10; 
-        }
-        .bento-card { 
-            background: white; 
-            border-radius: 32px; 
-            padding: 40px; 
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.05);
-            border: 1px solid var(--slate-200);
-        }
-        .span-12 { grid-column: span 12; }
-        .span-8 { grid-column: span 12; }
-        .span-4 { grid-column: span 12; }
-
-        @media (min-width: 768px) {
-            .span-8 { grid-column: span 8; }
-            .span-4 { grid-column: span 4; }
-            .title-h1 { font-size: 4.5rem; }
-        }
-
-        /* Stats Card */
-        .stat-banner { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        @media (min-width: 768px) { .stat-banner { grid-template-columns: repeat(4, 1fr); } }
-        .stat-item { text-align: center; }
-        .stat-val { font-size: 2.5rem; font-weight: 800; font-family: 'Outfit'; display: block; }
-        .stat-label { font-size: 0.7rem; color: var(--slate-400); text-transform: uppercase; font-weight: 700; }
-
-        /* Comps Section (Light Style) */
-        .comps-card { background: var(--slate-50); border: 1px solid var(--slate-200); overflow: hidden; position: relative; }
-        .comps-delta { font-size: 4rem; font-weight: 800; color: var(--danger); line-height: 1; }
-        
-        /* Timeline */
-        .timeline-box { display: flex; flex-direction: column; gap: 24px; margin-top: 32px; }
-        .timeline-item { display: flex; gap: 16px; align-items: flex-start; }
-        .dot { width: 12px; height: 12px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
-        
-        /* Action Table */
-        .risk-list { margin-top: 40px; }
-        .risk-row { display: flex; justify-content: space-between; align-items: center; padding: 24px 0; border-bottom: 1px solid var(--slate-200); }
-        .risk-info h4 { margin: 0; font-size: 1.25rem; }
-        .risk-info p { margin: 4px 0 0; color: var(--slate-600); font-size: 0.95rem; }
-
-        .cta-footer { background: var(--slate-900); padding: 100px 0; text-align: center; border-radius: 64px 64px 0 0; margin-top: 100px; color: white; }
-        .btn-premium { background: var(--accent); color: white; padding: 20px 48px; border-radius: 16px; text-decoration: none; font-weight: 700; font-size: 1.125rem; display: inline-block; transition: transform 0.2s; }
-        .btn-premium:hover { transform: scale(1.05); }
-
-        .link-hub { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-top: 60px; padding: 40px 0; border-top: 1px solid var(--slate-200); }
-        .link-hub a { color: var(--slate-400); text-decoration: none; font-size: 0.85rem; }
-        .link-hub a:hover { color: var(--accent); }
-    </style>
+    $unsafe{howToSchema}
 </head>
 <body>
     @template.layout._header()
 
     <header class="report-header">
         <div class="container">
-            <span class="badge-market">Verified Market Data: 2026</span>
+            <div class="breadcrumbs">
+                <a href="/">Home</a> 
+                <span class="separator">/</span>
+                <a href="/home-repair">Market Data</a>
+                <span class="separator">/</span>
+                @if(stateHubUrl != null)
+                    <a href="${stateHubUrl}">${stateName}</a>
+                    <span class="separator">/</span>
+                @endif
+                <span class="current">${metroName}</span>
+            </div>
+            
+            <span class="badge-market">Market Data: ${dateString}</span>
             <h1 class="title-h1">${h1Content}</h1>
-            <p class="subtitle">A forensic analysis of home repair liabilities and hidden risks in the ${metroName} metro for ${eraName} properties.</p>
+            <p class="subtitle">A forensic analysis of hidden liabilities and repair costs for ${eraName} properties in the ${metroName} area (Updated ${dateString}).</p>
+            
+            <div style="margin-top: 2rem;">
+                <a href="/home-repair" class="btn-primary" style="background: white; color: var(--primary);">
+                    Check Specific Address &rarr;
+                </a>
+                <p style="margin-top: 1rem; font-size: 0.85rem; opacity: 0.7;">
+                    <span style="opacity: 0.8;">Data sources:</span> RSMeans, BLS, NAHB
+                </p>
+            </div>
         </div>
     </header>
 
-    <main class="container" style="margin-top: 20px;">
-        <nav style="margin-bottom: 24px; font-size: 0.85rem; color: var(--slate-400); font-family: 'Outfit';">
-            <a href="/" style="color: var(--slate-400); text-decoration: none;">Home</a> 
-            <span style="margin: 0 8px; opacity: 0.5;">&sol;</span>
-            <a href="/home-repair" style="color: var(--slate-400); text-decoration: none;">Home Repair</a>
-            <span style="margin: 0 8px; opacity: 0.5;">&sol;</span>
-            <span style="color: var(--slate-900); font-weight: 600;">${metroName} (${eraName})</span>
-        </nav>
+    <main class="container" style="margin-top: -3rem; position: relative; z-index: 10;">
         <div class="bento-grid">
             <!-- 1. EXECUTIVE SUMMARY CARD -->
-            <div class="bento-card span-12">
+            <div class="bento-card span-8">
                 <div class="stat-banner">
                     <div class="stat-item">
-                        <span class="stat-val" style="color: var(--danger);">${verdict.getPlan().getMustDo().size()}</span>
+                        <span class="stat-val text-danger">${verdict.getPlan().getMustDo().size()}</span>
                         <span class="stat-label">Critical Risks</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-val">$${lowPrice}</span>
-                        <span class="stat-label">Min. Repair Cost</span>
+                        <span class="stat-label">Min. Repairs</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-val">$${highPrice}</span>
-                        <span class="stat-label">Market Liability</span>
+                        <span class="stat-label">Est. Liability</span>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-val" style="color: var(--accent);">1.5x</span>
-                        <span class="stat-label">Negotiation Multiplier</span>
-                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--slate-100); text-align: center;">
+                     <p style="color: var(--slate-500); margin-bottom: 1rem;">
+                        Homebuyers in <strong>${metroName}</strong> typically underestimate repair costs by <strong>30-40%</strong>. 
+                        Use this data to negotiate.
+                     </p>
                 </div>
             </div>
 
             <!-- 2. NEIGHBOR COMPARISON (COMPS) -->
             @if(verdict.getComparisonData() != null)
-                <div class="bento-card span-8 comps-card">
-                    <div style="position: relative; z-index: 2;">
-                        <span class="stat-label" style="color: var(--slate-400);">Neighbor Market Comparison</span>
-                        <h3 class="comps-delta">+${String.format("%.0f", verdict.getComparisonData().getDeltaPercentage())}%</h3>
-                        <p style="font-size: 1.25rem; font-weight: 600; color: var(--slate-900);">Higher liability than modern homes.</p>
-                        <p style="color: var(--slate-600); line-height: 1.6;">
-                            Buying in ${metroName} means inherited risks. ${eraName.replace(" Era", "s")} carry an additional 
-                            <strong>$${String.format("%,.0f", verdict.getComparisonData().getCostDelta())}</strong> 
-                            in statistical risk compared to 2010+ builds in the same zip code.
-                        </p>
-                    </div>
-                    <div style="position: absolute; right: -20px; bottom: -20px; font-size: 12rem; font-weight: 900; opacity: 0.03; color: var(--slate-900); pointer-events: none;">COMPS</div>
+                <div class="bento-card span-4" style="background: var(--slate-900); color: white; border: none; position: relative; overflow: hidden;">
+                    <!-- Background gradient effect -->
+                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at top right, rgba(255,255,255,0.05), transparent 60%); pointer-events: none;"></div>
+                    
+                    <span class="stat-label" style="color: var(--slate-400);">VS. Modern Homes</span>
+                    
+                    <h3 style="font-size: 3.5rem; color: white; margin: 1rem 0;">
+                        @if(verdict.getComparisonData().getCostDelta() > 0)
+                            <span style="color: #fca5a5;">+${String.format("%.0f", verdict.getComparisonData().getDeltaPercentage())}%</span>
+                        @else
+                            <span style="color: #6ee7b7;">${String.format("%.0f", verdict.getComparisonData().getDeltaPercentage())}%</span>
+                        @endif
+                    </h3>
+                    
+                    <p style="color: var(--slate-300); font-size: 0.95rem; line-height: 1.6;">
+                        Comparing ${eraName} homes to 2010+ builds in ${metroName}. 
+                        @if(verdict.getComparisonData().getCostDelta() > 0)
+                            You are taking on 
+                            <strong style="color: white; border-bottom: 1px dashed var(--slate-500);">$${String.format("%,.0f", verdict.getComparisonData().getCostDelta())}</strong> 
+                            in inherited liability.
+                        @else
+                            This home has a 
+                            <strong style="color: #6ee7b7; border-bottom: 1px dashed var(--slate-500);">$${String.format("%,.0f", Math.abs(verdict.getComparisonData().getCostDelta()))}</strong> 
+                            cost advantage vs new builds.
+                        @endif
+                    </p>
+                </div>
+            @else
+                <!-- Fallback if no comparison data -->
+                <div class="bento-card span-4">
+                    <span class="stat-label">Market Intelligence</span>
+                    <p style="margin-top: 1rem;">Detailed cost comparison data is processing.</p>
                 </div>
             @endif
 
-            <!-- 3. TIMELINE BOX -->
-            <div class="bento-card span-4">
-                <span class="stat-label">System Integrity Timeline</span>
-                <div class="timeline-box">
-                    @for(RiskAdjustedItem item : verdict.getPlan().getMustDo())
-                        <div class="timeline-item">
-                            <div class="dot" style="background: ${item.getRiskFlags().stream().anyMatch(f -> f.contains("DEAD")) ? "var(--danger)" : "var(--warning)"};"></div>
-                            <div>
-                                <div style="font-weight: 700; font-size: 0.95rem;">${item.getPrettyName()}</div>
-                                <div style="font-size: 0.75rem; color: var(--slate-400); text-transform: uppercase;">Statistically Due</div>
-                            </div>
-                        </div>
-                    @endfor
-                    @if(verdict.getPlan().getMustDo().size() < 3)
-                         <div class="timeline-item">
-                            <div class="dot" style="background: var(--success);"></div>
-                            <div>
-                                <div style="font-weight: 700; font-size: 0.95rem;">Structure & Foundation</div>
-                                <div style="font-size: 0.75rem; color: var(--slate-400); text-transform: uppercase;">Statistically Stable</div>
-                            </div>
-                        </div>
-                    @endif
+            <!-- 3. METRO & CLIMATE INTELLIGENCE (NEW PHASE 2) -->
+            <div class="bento-card span-12 insight-card">
+                <div class="insight-header">
+                    <span class="insight-icon">🌍</span>
+                    <h3>Local Market Factors: ${metroName}</h3>
                 </div>
-            </div>
-
-            <!-- 4. REGIONAL INSIGHT -->
-            <div class="bento-card span-12" style="background: var(--slate-50); border: 1px solid var(--slate-200);">
-                <h3 style="margin-top: 0; color: var(--accent);">📊 Market Intelligence: ${metroName}</h3>
-                <p style="font-size: 1.1rem; line-height: 1.7; color: var(--slate-600); border-left: 4px solid var(--accent); padding-left: 24px;">
-                    ${regionalInsight}
-                </p>
-                <div style="margin-top: 24px; padding: 20px; background: white; border-radius: 16px; border: 1px dashed var(--slate-200);">
-                    <p style="font-style: italic; color: var(--slate-600); margin: 0; font-size: 0.95rem;">
-                        "<strong>Expert Strategy:</strong> ${verdict.getContextBriefing() != null ? verdict.getContextBriefing().getDynamicNarrative() : ""}"
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                    <div>
+                        <h4 style="font-size: 0.9rem; text-transform: uppercase; color: var(--slate-500); margin-bottom: 0.5rem;">Regional Risk</h4>
+                        <p style="font-weight: 600; font-size: 1.1rem; color: var(--slate-900);">${metroRisk != null ? metroRisk : "Standard Regional Risks"}</p>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 0.9rem; text-transform: uppercase; color: var(--slate-500); margin-bottom: 0.5rem;">Climate Zone</h4>
+                        <p style="font-weight: 600; font-size: 1.1rem; color: var(--slate-900);">Zone ${climateZone != null ? climateZone : "US-Standard"}</p>
+                        <p style="font-size: 0.85rem; color: var(--slate-500); margin-top: 0.25rem;">Impacts HVAC & insulation lifespan.</p>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 0.9rem; text-transform: uppercase; color: var(--slate-500); margin-bottom: 0.5rem;">Foundation Type</h4>
+                        <p style="font-weight: 600; font-size: 1.1rem; color: var(--slate-900);">${foundation != null ? foundation : "Mixed Types"}</p>
+                    </div>
+                </div>
+                <div style="margin-top: 1.5rem; padding: 1.5rem; background: rgba(255,255,255,0.6); border-radius: var(--radius-lg);">
+                    <p style="color: var(--slate-600); font-style: italic;">
+                        "${regionalInsight}"
                     </p>
                 </div>
             </div>
 
-            <!-- 5. ITEMIZED DEEP DIVE -->
+            <!-- 4. CRITICAL RISK AUDIT (DYNAMIC LINKS) -->
             <div class="bento-card span-12">
-                <h3>Identified Risk Profile</h3>
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
+                    <h3>Forensic Risk Audit</h3>
+                    <span style="font-size: 0.9rem; color: var(--slate-500);">Verify these items immediately</span>
+                </div>
+                
                 <div class="risk-list">
                     @for(var item : verdict.getPlan().getMustDo())
                         <div class="risk-row">
                             <div class="risk-info">
                                 <h4>${item.getPrettyName()}</h4>
-                                <p>${item.getExplanation().split("\\.")[0]}.</p>
+                                
+                                <!-- Definition & Scenario (Phase 2 Data) -->
+                                <p class="text-sm text-slate-500 leading-snug" style="margin-bottom: 0.5rem;">
+                                    $unsafe{item.getExplanation() != null ? item.getExplanation() : item.getDefinition()}
+                                </p>
+                                
+                                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                    @if(item.getDamageScenario() != null)
+                                        <span style="font-size: 0.75rem; background: var(--slate-100); padding: 0.25rem 0.5rem; border-radius: 4px; color: var(--slate-600);">
+                                            ⚠️ ${item.getDamageScenario()}
+                                        </span>
+                                    @endif
+                                    
+                                    @for(String flag : item.getRiskFlags())
+                                        <span style="font-size: 0.75rem; background: #fff1f2; color: #e11d48; padding: 0.25rem 0.5rem; border-radius: 4px; border: 1px solid #fecdd3;">
+                                            ${flag.replace("_", " ")}
+                                        </span>
+                                    @endfor
+                                </div>
                             </div>
-                            <div style="text-align: right;">
-                                <div style="font-weight: 800; font-size: 1.25rem; color: var(--slate-900);">$${String.format("%,.0f", item.getAdjustedCost())}</div>
-                                <a href="/home-repair/verdicts/${metroCode.toLowerCase().replace("_", "-")}/${era.toLowerCase().replace("_", "-")}/${item.getItemCode().toLowerCase().replace("_", "-")}.html" style="color: var(--accent); font-size: 0.75rem; text-decoration: none; font-weight: 700; text-transform: uppercase;">View Audit &rarr;</a>
+                            
+                            <div class="risk-cost">
+                                <span class="amount">$${String.format("%,.0f", item.getAdjustedCost())}</span>
+                                <a href="/home-repair/verdicts/${metroCode.toLowerCase().replace("_", "-")}/${era.toLowerCase().replace("_", "-")}/${item.getItemCode().toLowerCase().replace("_", "-")}.html" class="action-link">
+                                    View Details &rarr;
+                                </a>
                             </div>
                         </div>
                     @endfor
                 </div>
             </div>
+            
+            <!-- 5. TIMELINE (VISUAL) -->
+            <div class="bento-card span-6">
+                <h3>System Lifespan Projection</h3>
+                <div class="timeline-box">
+                    @for(RiskAdjustedItem item : verdict.getPlan().getMustDo())
+                       <div class="timeline-item">
+                            <div class="dot" style="background: var(--danger);"></div>
+                            <div style="flex-grow: 1;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="font-weight: 600;">${item.getPrettyName()}</span>
+                                    <span style="font-size: 0.85rem; color: var(--danger); font-weight: 600;">Due Now</span>
+                                </div>
+                                <div style="height: 6px; background: var(--slate-100); border-radius: 100px; margin-top: 4px; overflow: hidden;">
+                                    <div style="width: 100%; height: 100%; background: var(--danger);"></div>
+                                </div>
+                            </div>
+                       </div>
+                    @endfor
+                    <!-- Show some stable items to contrast -->
+                     <div class="timeline-item">
+                        <div class="dot" style="background: var(--success);"></div>
+                        <div style="flex-grow: 1;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="font-weight: 600;">Foundation Structure</span>
+                                <span style="font-size: 0.85rem; color: var(--success); font-weight: 600;">Stable</span>
+                            </div>
+                            <div style="height: 6px; background: var(--slate-100); border-radius: 100px; margin-top: 4px;">
+                                <div style="width: 25%; height: 100%; background: var(--success);"></div>
+                            </div>
+                        </div>
+                   </div>
+                </div>
+            </div>
+            
+            <!-- 6. PRE-EMPTIVE CTA -->
+            <div class="bento-card span-6" style="background: var(--primary); color: white; display: flex; flex-direction: column; justify-content: center; text-align: center;">
+                <h3 style="color: white; margin-bottom: 1rem;">Get the Full Picture</h3>
+                <p style="color: rgba(255,255,255,0.9); margin-bottom: 2rem;">
+                    Generic era data isn't enough. Get a custom audit for a specific address, tuned to its exact permit history.
+                </p>
+                <a href="/home-repair" class="btn-primary" style="background: white; color: var(--primary);">
+                    Run Free Address Check
+                </a>
+            </div>
+
         </div>
 
-        <!-- 6. FAQ SECTION -->
-        <section style="margin-top: 100px;">
-            <h2 style="font-size: 2.5rem; text-align: center;">Frequently Asked Questions.</h2>
-            <div style="max-width: 800px; margin: 60px auto;">
-                @for(var faq : faqItems)
-                    <div style="margin-bottom: 40px; border-bottom: 1px solid var(--slate-100); padding-bottom: 32px;">
-                        <h4 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 16px; display: flex; gap: 12px; color: var(--slate-900);">
-                            <span style="color: var(--accent);">?</span> ${faq.get("question")}
-                        </h4>
-                        <div style="padding-left: 28px; color: var(--slate-600); line-height: 1.8; font-size: 1.05rem;">
-                            ${faq.get("answer")}
-                        </div>
+        <!-- 7. FAQ SECTION -->
+        <section style="margin-top: 6rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+            <h2 style="text-align: center; margin-bottom: 3rem;">Frequently Asked Questions</h2>
+            
+            @for(var faq : faqItems)
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span class="faq-icon">?</span>
+                        ${faq.get("question")}
                     </div>
-                @endfor
-            </div>
+                    <div class="faq-answer">
+                        ${faq.get("answer")}
+                    </div>
+                </div>
+            @endfor
         </section>
 
-        <!-- 7. INTERNAL LINKS HUB -->
-        <div class="link-hub">
-            @for(var link : eraLinks)
-                <a href="${link.getHref()}">${link.getText()}</a>
-            @endfor
-            @for(var link : cityLinks)
-                <a href="${link.getHref()}">${link.getText()}</a>
-            @endfor
-            @for(var link : stateLinks)
-                <a href="${link.getHref()}">${link.getText()}</a>
-            @endfor
+        <!-- 8. INTERNAL LINKS HUB -->
+        <div class="bento-card span-12" style="margin-top: 4rem; background: transparent; border: none; box-shadow: none;">
+            <h3 style="margin-bottom: 1.5rem;">Explore Other Markets</h3>
+            <div class="link-hub" style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                <!-- State Links (Priority) -->
+                @for(var link : stateLinks)
+                     <a href="${link.getHref()}" class="btn-outline" style="font-size: 0.85rem; padding: 0.5rem 1rem;">${link.getText()}</a>
+                @endfor
+            </div>
+            
+            <h4 style="margin: 2rem 0 1rem; color: var(--slate-500); font-size: 1rem; text-transform: uppercase;">Nearby Cities</h4>
+             <div class="link-hub" style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                @for(var link : cityLinks)
+                     <a href="${link.getHref()}" style="color: var(--slate-500); font-size: 0.9rem;">${link.getText()}</a>
+                @endfor
+            </div>
         </div>
     </main>
-
-    <section class="cta-footer">
-        <div class="container">
-            <h2 style="font-size: 3rem; margin-bottom: 24px; font-weight: 800;">Don't Buy Without a Verdict.</h2>
-            <p style="font-size: 1.25rem; color: var(--slate-400); margin-bottom: 48px; max-width: 600px; margin-left: auto; margin-right: auto;">
-                Get a custom repair profile for any specific address in ${metroName}. 100% Free forensic check.
-            </p>
-            <a href="/home-repair" class="btn-premium">Check Your Address Now &rarr;</a>
-            <p style="margin-top: 32px; font-size: 0.85rem; opacity: 0.5;">No email required. Instant results based on local market indices.</p>
-        </div>
-    </section>
+    
+    <!-- Sticky Mobile CTA -->
+    <div class="sticky-cta cta-floater">
+        <span>Buying in ${metroName}?</span>
+        <a href="/home-repair" class="btn-sm">Check Cost &rarr;</a>
+    </div>
 
     @template.layout._footer()
 </body>

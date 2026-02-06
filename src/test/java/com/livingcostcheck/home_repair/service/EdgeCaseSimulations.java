@@ -81,7 +81,7 @@ public class EdgeCaseSimulations {
         runSimulation("1. Ultra High Budget - Brand New House",
                 UserContext.builder()
                         .budget(500000.0)
-                        .sqft(4500.0)
+                        .sqft(4500)
                         .metroCode("SAN_FRANCISCO_OAKLAND_CA")
                         .era("2010_PRESENT")
                         .relationship(RelationshipToHouse.LIVING)
@@ -92,7 +92,7 @@ public class EdgeCaseSimulations {
         runSimulation("2. Minimal Budget - Ancient House",
                 UserContext.builder()
                         .budget(5000.0)
-                        .sqft(1200.0)
+                        .sqft(1200)
                         .metroCode("JACKSON_MS")
                         .era("PRE_1950")
                         .relationship(RelationshipToHouse.BUYING)
@@ -103,7 +103,7 @@ public class EdgeCaseSimulations {
         runSimulation("3. Multiple Deal Killers",
                 UserContext.builder()
                         .budget(200000.0)
-                        .sqft(2000.0)
+                        .sqft(2000)
                         .metroCode("MIAMI_FT_LAUDERDALE_FL")
                         .era("1970_1980")
                         .relationship(RelationshipToHouse.BUYING)
@@ -117,7 +117,7 @@ public class EdgeCaseSimulations {
         runSimulation("4. Investor - Fully Renovated",
                 UserContext.builder()
                         .budget(50000.0)
-                        .sqft(2500.0)
+                        .sqft(2500)
                         .metroCode("AUSTIN_ROUND_ROCK_TX")
                         .era("1980_1995")
                         .relationship(RelationshipToHouse.INVESTING)
@@ -129,7 +129,7 @@ public class EdgeCaseSimulations {
         runSimulation("5. Tiny House - Expensive City",
                 UserContext.builder()
                         .budget(80000.0)
-                        .sqft(800.0)
+                        .sqft(800)
                         .metroCode("NYC_NEWARK_JERSEY_CITY_NY_NJ")
                         .era("1995_2010")
                         .relationship(RelationshipToHouse.LIVING)
@@ -140,7 +140,7 @@ public class EdgeCaseSimulations {
         runSimulation("6. Mansion - Cheap City",
                 UserContext.builder()
                         .budget(150000.0)
-                        .sqft(6000.0)
+                        .sqft(6000)
                         .metroCode("OKLAHOMA_CITY_OK")
                         .era("1990_2000")
                         .relationship(RelationshipToHouse.LIVING)
@@ -151,7 +151,7 @@ public class EdgeCaseSimulations {
         runSimulation("7. Mid-Era - Partial History",
                 UserContext.builder()
                         .budget(100000.0)
-                        .sqft(2200.0)
+                        .sqft(2200)
                         .metroCode("DENVER_AURORA_LAKEWOOD_CO")
                         .era("1980_1995")
                         .relationship(RelationshipToHouse.LIVING)
@@ -164,7 +164,7 @@ public class EdgeCaseSimulations {
         runSimulation("8. Aluminum Wiring Only",
                 UserContext.builder()
                         .budget(60000.0)
-                        .sqft(1800.0)
+                        .sqft(1800)
                         .metroCode("PHOENIX_MESA_CHANDLER_AZ")
                         .era("1970_1980")
                         .relationship(RelationshipToHouse.LIVING)
@@ -176,7 +176,7 @@ public class EdgeCaseSimulations {
         runSimulation("9. Modern House - FPE Panel Anomaly",
                 UserContext.builder()
                         .budget(100000.0)
-                        .sqft(2500.0)
+                        .sqft(2500)
                         .metroCode("SEATTLE_TACOMA_BELLEVUE_WA")
                         .era("2010_PRESENT")
                         .relationship(RelationshipToHouse.BUYING)
@@ -187,7 +187,7 @@ public class EdgeCaseSimulations {
         runSimulation("10. Extreme Condition - Medium Budget",
                 UserContext.builder()
                         .budget(75000.0)
-                        .sqft(2000.0)
+                        .sqft(2000)
                         .metroCode("BOSTON_CAMBRIDGE_MA")
                         .era("PRE_1950")
                         .relationship(RelationshipToHouse.LIVING)

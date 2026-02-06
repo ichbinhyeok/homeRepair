@@ -219,11 +219,11 @@ public class VerdictEngineService {
                 .isDealKiller(isDealKiller)
                 .dealKillerMessage(dealKillerMessage)
                 .contextBriefing(buildContextBriefing(context))
-                .comparisonData(calculateComparisonData(context, minRequired))
+                .comparisonData(calculateComparisonData(context, minRequired, chosenOption.getStrategyType()))
                 .build();
     }
 
-    private ComparisonData calculateComparisonData(UserContext context, double currentCost) {
+    private ComparisonData calculateComparisonData(UserContext context, double currentCost, StrategyType strategyType) {
         try {
             if (context == null || "2010_PRESENT".equals(context.getEra())) {
                 return ComparisonData.builder()
@@ -251,8 +251,8 @@ public class VerdictEngineService {
             // Pass a fresh exclusion list for benchmark
             List<RiskAdjustedItem> adjustedRange = step4_riskFilter(costedItems, benchmarkContext, new ArrayList<>());
 
-            // Use STANDARD_LIVING as benchmark strategy
-            StrategyOption modernOption = generateStrategyOption(StrategyType.STANDARD_LIVING, adjustedRange,
+            // Use SAME strategy as user for apples-to-apples comparison
+            StrategyOption modernOption = generateStrategyOption(strategyType, adjustedRange,
                     benchmarkContext);
 
             if (modernOption == null)
@@ -796,6 +796,22 @@ public class VerdictEngineService {
             excludedKeywords.add("ASBESTOS");
         }
 
+        // Context-specific overrides
+        String roofType = context.getRoofType() != null ? context.getRoofType() : "ASPHALT";
+        if ("ASPHALT".equals(roofType)) {
+            excludedKeywords.add("ROOFING_METAL");
+            excludedKeywords.add("ROOFING_SLATE");
+            excludedKeywords.add("ROOFING_TILE");
+        } else if ("METAL".equals(roofType)) {
+            excludedKeywords.add("ROOFING_ASPHALT");
+            excludedKeywords.add("ROOFING_SLATE");
+            excludedKeywords.add("ROOFING_TILE");
+        } else if ("SLATE_TILE".equals(roofType)) {
+            // Since library is missing SLATE/TILE, we'll keep both for now or just allow
+            // METAL as proxy
+            excludedKeywords.add("ROOFING_ASPHALT");
+        }
+
         if (costLibraryData.getConstructionItemLibrary() != null) {
             costLibraryData.getConstructionItemLibrary().forEach((category, items) -> {
                 items.forEach((key, item) -> {
@@ -827,21 +843,34 @@ public class VerdictEngineService {
 
         // Use User Input if available, else fallback to Metro Avg
         double avgHouse = (context.getSqft() != null && context.getSqft() > 0)
-                ? context.getSqft()
+                ? (double) context.getSqft()
                 : (city.getAvgHouse() != null ? city.getAvgHouse() : 2000.0);
 
-        double avgLot = city.getAvgLot() != null ? city.getAvgLot() : 8000.0;
+        int stories = context.getStories() != null ? context.getStories() : 1;
+        int bathrooms = context.getBathrooms() != null ? context.getBathrooms() : 2;
+
+        // Footprint Logic: A 2-story house has half the roof/foundation area of a
+        // 1-story house of same sqft
+        double footprint = avgHouse / stories;
+
+        // Roofing squares calculation (1.15 pitch factor)
+        double roofingSquares = (footprint * 1.15) / 100.0;
+        if (stories > 1) {
+            roofingSquares *= 1.1; // Complexity/Scaffolding surcharge for height
+        }
 
         return EstimatedScale.builder()
-                .roofingSquares((avgHouse * 1.15) / 100.0)
+                .roofingSquares(roofingSquares)
                 .hvacTons(avgHouse / 500.0)
-                .interiorSqft(avgHouse / 1.5)
-                .exteriorSqft(Math.max(0, avgLot - avgHouse))
+                .interiorSqft(avgHouse)
+                .exteriorSqft(Math.sqrt(footprint) * 4 * 10 * stories) // Perimeter * 10ft height * stories
                 .laborMult(city.getLaborMult())
                 .matLogistics(city.getMatLogistics())
                 .mobFee(city.getMobFee())
                 .dispTax(city.getDispTax())
                 .avgHouseSqft(avgHouse)
+                .bathrooms(bathrooms)
+                .stories(stories)
                 .build();
     }
 
@@ -911,7 +940,7 @@ public class VerdictEngineService {
                     } else if (candidate.getItemCode().contains("DOOR")) {
                         quantity = 8.0;
                     } else if (candidate.getItemCode().contains("BATH")) {
-                        quantity = 2.0; // 2.0 bathrooms average
+                        quantity = (double) scale.getBathrooms(); // Accurate bathroom count
                     } else if (candidate.getItemCode().contains("PANEL")) {
                         quantity = 1.0;
                     } else {
@@ -1240,7 +1269,7 @@ public class VerdictEngineService {
                 if (updatedByUser) {
                     currentAge = 3; // Reset to 3 years old if user confirmed update
                     riskFlags.add("VERIFIED_UPDATE: RECENTLY_REPLACED");
-                    explanation = "✨ **System Updated**: You confirmed this " + life.getPretty_name()
+                    explanation = "✨ <strong>System Updated</strong>: You confirmed this " + life.getPretty_name()
                             + " was recently updated. Estimates reflect minor maintenance only. ";
                 } else {
                     // Apply aging logic
@@ -1250,13 +1279,13 @@ public class VerdictEngineService {
                         double stressFactor = (double) currentAge / life.getStandard_lifespan();
                         riskFlags.add(String.format("STATISTICALLY_DEAD: %.1fX_LIFESPAN", stressFactor));
                         explanation += String.format(
-                                "🚨 **Age Warning**: At %d years, this %s is %.1fx past its reliable lifespan (%d yrs). Statistical failure is imminent. ",
+                                "🚨 <strong>Age Warning</strong>: At %d years, this %s is %.1fx past its reliable lifespan (%d yrs). Statistical failure is imminent. ",
                                 currentAge, life.getPretty_name(), stressFactor, life.getStandard_lifespan());
                         finalCost *= 1.25; // Aging overhead for specialized labor/matching
                     } else if (currentAge >= life.getWarning_threshold()) {
                         riskFlags.add("WATCH: NEAR_END_OF_LIFE");
                         explanation += String.format(
-                                "⚠️ **Watch**: This %s is %d years old (Standard lifespan: %d yrs). Expect rising maintenance costs. ",
+                                "⚠️ <strong>Watch</strong>: This %s is %d years old (Standard lifespan: %d yrs). Expect rising maintenance costs. ",
                                 life.getPretty_name(), currentAge, life.getStandard_lifespan());
                     }
                 }
@@ -1326,7 +1355,7 @@ public class VerdictEngineService {
                             }
 
                             explanation += String.format(
-                                    " **IMPORTANT**: You indicated this system was recently updated, but visual inspection confirmed %s. "
+                                    " <strong>IMPORTANT</strong>: You indicated this system was recently updated, but visual inspection confirmed %s. "
                                             +
                                             "The original hazardous component remains and must be replaced.",
                                     forensicEvidence);
@@ -1386,6 +1415,9 @@ public class VerdictEngineService {
                     .compoundingBadge(compoundingBadge)
                     .isForensicConfirmed(forensicMatch)
                     .isCodeMandated(riskFlags.contains("MANDATORY_INSPECTION") || "CODE".equals(category))
+                    .definition(matchedRisk != null ? matchedRisk.getDefinition() : null)
+                    .damageScenario(matchedRisk != null ? matchedRisk.getDamageScenario() : null)
+                    .remedyMultiplier(matchedRisk != null ? matchedRisk.getRemedyMultiplier() : null)
                     .build());
         }
 

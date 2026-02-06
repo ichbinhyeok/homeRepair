@@ -190,57 +190,74 @@
                 </div>
             </div>
 
-                <!-- Neighbor Market Comparison -->
+                <!-- Market Benchmark (Redesigned) -->
                 @if(verdict.getComparisonData() != null)
-                <div class="result-card p-0 overflow-hidden border-0 shadow-sm mb-5" style="border-radius: 32px; background: var(--slate-50);">
-                    <div class="row g-0">
-                        <div class="col-md-7 p-5">
-                            <div class="d-flex align-items-center mb-3">
-                                <span class="badge bg-white text-primary border px-3 py-2" style="font-size: 0.75rem; font-weight: 800; border-radius: 99px;">2026 MARKET BENCHMARK</span>
-                            </div>
-                            <h3 class="display-5 fw-bold mb-3" style="font-family: 'Outfit'; color: var(--slate-900);">
-                                <span class="text-danger">+${String.format("%.0f", verdict.getComparisonData().getDeltaPercentage())}%</span> Liability
-                            </h3>
-                            <p class="lead text-muted mb-4" style="font-size: 1.15rem;">
-                                This property carries a significantly higher repair liability compared to a modern benchmark home built in the 2010+ era in this area.
-                            </p>
-                            <div class="p-4 bg-white rounded-4 border border-dashed">
-                                <p class="mb-0 text-muted" style="font-size: 0.95rem;">
-                                    <strong>Comps Gap:</strong> 1950s homes in this zip code inherit an average of 
-                                    <span class="text-dark fw-bold">$${String.format("%,.0f", verdict.getComparisonData().getCostDelta())}</span> 
-                                    more in statistical risk than modern builds.
-                                </p>
-                            </div>
+                <div class="bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm mb-12 flex flex-col md:flex-row items-center gap-8">
+                    <div class="flex-1">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-full mb-4">
+                            <span class="w-2 h-2 rounded-full bg-slate-900"></span>
+                            <span class="text-xs font-bold text-slate-600 uppercase tracking-widest">2026 Benchmark</span>
                         </div>
-                        <div class="col-md-5 d-none d-md-flex align-items-center justify-content-center border-start bg-white" style="position: relative; overflow: hidden;">
-                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 150%; height: 150%; opacity: 0.03; font-family: 'Outfit'; font-weight: 900; font-size: 20rem; color: var(--slate-900); pointer-events: none; user-select: none;">COMPS</div>
-                            <div class="text-center">
-                                <div class="h6 text-uppercase text-muted mb-2 ls-wider">Benchmark</div>
-                                <div class="h2 fw-bold text-dark">$${String.format("%,.0f", verdict.getComparisonData().getModernBenchmarkCost())}</div>
-                                <div class="text-muted small">2010+ Modern Baseline</div>
-                            </div>
+                        <h3 class="text-3xl font-bold text-slate-900 mb-2">
+                             @if(verdict.getComparisonData().getCostDelta() > 0)
+                                <span class="text-rose-500">+${String.format("%.0f", verdict.getComparisonData().getDeltaPercentage())}%</span> Liability Gap
+                             @else
+                                <span class="text-emerald-500">${String.format("%.0f", verdict.getComparisonData().getDeltaPercentage())}%</span> Cost Advantage
+                             @endif
+                        </h3>
+                        <p class="text-slate-500 text-lg leading-relaxed mb-6">
+                            @if(verdict.getComparisonData().getCostDelta() > 0)
+                                Compared to a modern home (2010+) in this zip code, this property carries an additional 
+                                <span class="font-bold text-slate-900">$${String.format("%,.0f", verdict.getComparisonData().getCostDelta())}</span> 
+                                in statistical maintenance risk.
+                            @else
+                                This property's estimated maintenance costs are 
+                                <span class="font-bold text-slate-900">$${String.format("%,.0f", Math.abs(verdict.getComparisonData().getCostDelta()))}</span> 
+                                lower than the modern benchmark for this area.
+                            @endif
+                        </p>
+                        
+                        <!-- Simple visual bar -->
+                        <div class="relative h-12 bg-slate-50 rounded-xl overflow-hidden flex items-center px-4 border border-slate-100">
+                             <div class="absolute left-0 top-0 bottom-0 bg-rose-500/10" style="width: ${Math.min(100, Math.max(0, verdict.getComparisonData().getDeltaPercentage()))}%"></div>
+                             <div class="relative z-10 flex justify-between w-full text-xs font-bold uppercase tracking-widest text-slate-500">
+                                <span>Modern Baseline</span>
+                                <span>This Property</span>
+                             </div>
+                             <!-- Marker for this property -->
+                             @if(verdict.getComparisonData().getDeltaPercentage() > 0)
+                                <div class="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-rose-500 rounded-full shadow-[0_0_12px_rgba(244,63,94,0.6)]" style="left: ${Math.min(98, Math.max(2, verdict.getComparisonData().getDeltaPercentage()))}%"></div>
+                             @else
+                                <div class="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-emerald-500 rounded-full shadow-[0_0_12px_rgba(16,185,129,0.6)]" style="left: 2%"></div>
+                             @endif
                         </div>
+                    </div>
+                    
+                    <div class="w-full md:w-64 bg-slate-50 rounded-2xl p-6 text-center border border-slate-100">
+                        <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Baseline Cost</div>
+                        <div class="text-2xl font-bold text-slate-900">$${String.format("%,.0f", verdict.getComparisonData().getModernBenchmarkCost())}</div>
+                        <div class="text-xs text-slate-400 mt-2">Expected 5yr Maintenance (2010+)</div>
                     </div>
                 </div>
                 @endif
 
                 <!-- System Integrity Timeline -->
                 @if(verdict.getPlan() != null && verdict.getPlan().getMustDo() != null)
-                <div class="result-card p-5 mb-5 shadow-sm border-0" style="border-radius: 32px; background: white;">
-                    <div class="d-flex align-items-center mb-5">
-                        <div class="bg-primary rounded-circle p-2 me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
-                            <i class="bi bi-clock-history text-white h4 mb-0"></i>
+                <div class="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm mb-12">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="p-3 bg-blue-50 rounded-2xl text-blue-600">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </div>
                         <div>
-                            <h3 class="mb-1 fw-bold" style="font-family: 'Outfit';">System Integrity Timeline</h3>
-                            <p class="mb-0 text-muted">Estimated remaining component lifespans for this property</p>
+                            <h3 class="text-2xl font-bold text-slate-900">Component Health</h3>
+                            <p class="text-slate-500">Forensic status of key systems</p>
                         </div>
                     </div>
 
-                    <div class="row g-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         @for(var item : verdict.getPlan().getMustDo())
                             @if(item.getRiskFlags() != null && (item.getRiskFlags().stream().anyMatch(f -> f.contains("DEAD") || f.contains("WATCH") || f.contains("VERIFIED"))))
-                            <div class="col-md-6 col-lg-4">
+                            <div class="group h-full">
                                 <div class="p-4 rounded-4 border h-100 transition-hover" style="background: ${item.getRiskFlags().contains("VERIFIED_UPDATE: RECENTLY_REPLACED") ? "var(--slate-50)" : "white"};">
                                     <div class="d-flex justify-content-between align-items-start mb-3">
                                         <div class="h5 fw-bold mb-0">${item.getPrettyName()}</div>
@@ -252,8 +269,8 @@
                                             <span class="badge bg-warning-subtle text-warning border border-warning-subtle">WATCH</span>
                                         @endif
                                     </div>
-                                    <p class="small text-muted mb-0">
-                                        ${item.getExplanation() != null && item.getExplanation().contains(".") ? item.getExplanation().split("\\.")[0] + "." : item.getExplanation()}
+                                    <p class="text-sm text-slate-500 leading-snug">
+                                        $unsafe{item.getExplanation() != null && item.getExplanation().contains(". ") ? item.getExplanation().split("\\. ")[0] + "." : item.getExplanation()}
                                     </p>
                                 </div>
                             </div>
@@ -261,7 +278,7 @@
                         @endfor
                         
                         <!-- Always show some stability for balance -->
-                        <div class="col-md-6 col-lg-4">
+                        <div class="group h-full">
                             <div class="p-4 rounded-4 border h-100 bg-light-subtle">
                                 <div class="d-flex justify-content-between align-items-start mb-3">
                                     <div class="h5 fw-bold mb-0">Structural Shell</div>
@@ -270,6 +287,106 @@
                                 <p class="small text-muted mb-0">Foundations and load-bearing elements are statistically reliable.</p>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Refine Analysis CTA -->
+                <div class="bg-indigo-50 border border-indigo-100 p-8 rounded-[32px] text-center mb-12">
+                     <h3 class="text-xl font-bold text-indigo-900 mb-2">Not accurate? Customize this estimate.</h3>
+                     <p class="text-indigo-700 mb-6 max-w-lg mx-auto">Property details like roof material and story count can change estimates by 30%+. Refine these details for precision.</p>
+                     
+                    <form action="/home-repair/verdict" method="post" class="w-full max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-sm border border-indigo-100 flex flex-col md:flex-row items-center gap-6">
+                        <input type="hidden" name="metroCode" value="ATLANTA_SANDY_SPRINGS_GA"> 
+                        <input type="hidden" name="sqft" value="2000"> 
+                        <input type="hidden" name="relationship" value="LIVING">
+                        <input type="hidden" name="budget" value="100000">
+
+                        <div class="w-full md:flex-1 text-left">
+                            <label class="block text-xs font-bold text-slate-500 mb-1 uppercase">Bathrooms</label>
+                            <select name="bathrooms" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 focus:ring-2 focus:ring-indigo-500">
+                                <option value="1">1 Bath</option>
+                                <option value="2" selected>2 Baths</option>
+                                <option value="3">3 Baths</option>
+                                <option value="4">4+ Baths</option>
+                            </select>
+                        </div>
+                        
+                        <div class="w-full md:flex-1 text-left">
+                            <label class="block text-xs font-bold text-slate-500 mb-1 uppercase">Stories</label>
+                            <select name="stories" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 focus:ring-2 focus:ring-indigo-500">
+                                 <option value="1">1 Story</option>
+                                 <option value="2" selected>2 Stories</option>
+                                 <option value="3">3+ Stories</option>
+                            </select>
+                        </div>
+
+                        <div class="w-full md:w-auto h-full flex items-end">
+                             <button type="submit" class="w-full md:w-auto h-[42px] whitespace-nowrap px-8 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition shadow-lg shadow-indigo-200 mt-5 md:mt-0">
+                                Recalculate
+                             </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 12-Month Post-Purchase Action Plan -->
+                <div class="bg-white p-8 rounded-[32px] border border-slate-200 shadow-sm mb-12">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center text-white text-xl">📅</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate-900 leading-tight">12-Month Security Calendar</h3>
+                            <p class="text-sm text-slate-500">Immediate maintenance steps to prevent asset depreciation.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100">
+                            <div class="text-xs font-bold text-indigo-600 uppercase tracking-widest mb-2">Month 1-3</div>
+                            <h4 class="font-bold text-slate-900 mb-2 whitespace-pre-line">Immediate Stabilization</h4>
+                            <ul class="text-xs text-slate-600 space-y-2">
+                                <li>• Clean all gutters & downspouts</li>
+                                <li>• Change HVAC filters (MERV 11)</li>
+                                <li>• Check attic for moisture signs</li>
+                                <li>• Locate main water shut-off</li>
+                            </ul>
+                        </div>
+                        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100">
+                            <div class="text-xs font-bold text-indigo-600 uppercase tracking-widest mb-2">Month 4-8</div>
+                            <h4 class="font-bold text-slate-900 mb-2 whitespace-pre-line">System Efficiency</h4>
+                            <ul class="text-xs text-slate-600 space-y-2">
+                                <li>• Professional AC/Furnace service</li>
+                                <li>• Flush sediment from water heater</li>
+                                <li>• Inspect caulking around windows</li>
+                                <li>• Test GFCI outlets in kitchen/bath</li>
+                            </ul>
+                        </div>
+                        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100">
+                            <div class="text-xs font-bold text-indigo-600 uppercase tracking-widest mb-2">Month 9-12</div>
+                            <h4 class="font-bold text-slate-900 mb-2 whitespace-pre-line">Asset Preservation</h4>
+                            <ul class="text-xs text-slate-600 space-y-2">
+                                <li>• Foundation/Grade inspection</li>
+                                <li>• Prune trees away from roofline</li>
+                                <li>• Check fireplace & chimney cap</li>
+                                <li>• Annual home insurance audit</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Share & Export -->
+                <div class="bg-slate-900 text-white p-8 rounded-[32px] shadow-xl flex flex-col md:flex-row items-center justify-between gap-8 mb-12 print:hidden">
+                    <div class="max-w-md">
+                        <h3 class="text-2xl font-bold mb-2">Take this report with you.</h3>
+                        <p class="text-slate-400 text-sm">Download the full forensic analysis or share it with your inspector/realtor to streamline negotiation.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-4">
+                        <button onclick="window.print()" class="px-6 py-3 bg-white text-slate-900 font-bold rounded-xl hover:bg-slate-100 transition flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 00-2 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                            Save as PDF / Print
+                        </button>
+                        <button onclick="navigator.clipboard.writeText(window.location.href); alert('Link copied!');" class="px-6 py-3 bg-slate-800 text-white font-bold rounded-xl border border-slate-700 hover:bg-slate-700 transition flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+                            Copy Sharable Link
+                        </button>
                     </div>
                 </div>
                 @endif
