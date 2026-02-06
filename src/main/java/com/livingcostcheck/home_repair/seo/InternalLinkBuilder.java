@@ -16,35 +16,28 @@ public class InternalLinkBuilder {
         private static final List<String> ALL_ERAS = Arrays.asList(
                         "PRE_1950", "1950_1970", "1970_1980", "1980_1995", "1995_2010", "2010_PRESENT");
 
-        private static final Map<String, List<String>> METRO_REGIONS = createMetroRegions();
-
         private static final List<String> ERA_LINK_PREFIXES = Arrays.asList(
                         "View repair costs for", "Analysis: ", "Renovation guide: ", "Estimated costs for",
-                        "Market data for");
+                        "Market data for", "Expected upkeep for", "Valuation impact of", "Maintenance index: ");
 
-        private static Map<String, List<String>> createMetroRegions() {
-                Map<String, List<String>> regions = new HashMap<>();
-                regions.put("AUSTIN_ROUND_ROCK_TX", Arrays.asList("SAN_ANTONIO_NEW_BRAUNFELS_TX",
-                                "HOUSTON_THE_WOODLANDS_TX", "DALLAS_FT_WORTH_ARLINGTON_TX"));
-                regions.put("DALLAS_FT_WORTH_ARLINGTON_TX", Arrays.asList("AUSTIN_ROUND_ROCK_TX",
-                                "SAN_ANTONIO_NEW_BRAUNFELS_TX", "HOUSTON_THE_WOODLANDS_TX"));
-                regions.put("HOUSTON_THE_WOODLANDS_TX", Arrays.asList("AUSTIN_ROUND_ROCK_TX",
-                                "SAN_ANTONIO_NEW_BRAUNFELS_TX", "DALLAS_FT_WORTH_ARLINGTON_TX"));
-                regions.put("LOS_ANGELES_LONG_BEACH_CA", Arrays.asList("SAN_DIEGO_CHULA_VISTA_CA",
-                                "RIVERSIDE_SAN_BERNARDINO_CA", "ANAHEIM_SANTA_ANA_CA"));
-                regions.put("SAN_FRANCISCO_OAKLAND_CA", Arrays.asList("SAN_JOSE_SUNNYVALE_CA",
-                                "SACRAMENTO_ROSEVILLE_CA", "OAKLAND_BERKELEY_CA"));
-                regions.put("NEW_YORK_NEWARK_NJ", Arrays.asList("PHILADELPHIA_CAMDEN_PA", "BOSTON_CAMBRIDGE_MA",
-                                "BRIDGEPORT_STAMFORD_CT"));
-                regions.put("BOSTON_CAMBRIDGE_MA", Arrays.asList("NEW_YORK_NEWARK_NJ", "PROVIDENCE_WARWICK_RI",
-                                "HARTFORD_WEST_HARTFORD_CT"));
-                regions.put("CHICAGO_NAPERVILLE_IL", Arrays.asList("DETROIT_WARREN_DEARBORN_MI",
-                                "MILWAUKEE_WAUKESHA_WI", "INDIANAPOLIS_CARMEL_IN"));
-                regions.put("SEATTLE_TACOMA_WA",
-                                Arrays.asList("PORTLAND_VANCOUVER_OR_WA", "SPOKANE_SPOKANE_VALLEY_WA", "EUGENE_OR"));
-                regions.put("ATLANTA_SANDY_SPRINGS_GA",
-                                Arrays.asList("CHARLOTTE_CONCORD_NC", "NASHVILLE_DAVIDSON_TN", "BIRMINGHAM_HOOVER_AL"));
-                return regions;
+        private static final List<String> RISK_LINK_PREFIXES = Arrays.asList(
+                        "Check details for", "Audit: ", "Forensic view: ", "Inspection points for",
+                        "Critical data: ", "Market benchmarks for");
+
+        // L2 Cross-Linking (Mesh)
+        public List<InternalLink> getOtherRisksInSameHome(String metroCode, String era, String currentRiskCode) {
+                List<String> categories = Arrays.asList("ROOFING", "PLUMBING", "HVAC", "ELECTRICAL", "FOUNDATION");
+                Random rand = new Random((metroCode + era + currentRiskCode).hashCode());
+
+                return categories.stream()
+                                .filter(cat -> !currentRiskCode.toUpperCase().contains(cat)) // 현재 리스크 제외
+                                .map(cat -> {
+                                        String prefix = RISK_LINK_PREFIXES.get(rand.nextInt(RISK_LINK_PREFIXES.size()));
+                                        return new InternalLink(
+                                                        prefix + " " + cat.toLowerCase() + " systems",
+                                                        buildRiskUrl(metroCode, era, cat));
+                                })
+                                .collect(Collectors.toList());
         }
 
         public List<InternalLink> getOtherErasInCity(String currentMetro, String currentEra) {
@@ -61,26 +54,36 @@ public class InternalLinkBuilder {
                                 .collect(Collectors.toList());
         }
 
-        public List<InternalLink> getNearbyMetrosInEra(String currentMetro, String currentEra) {
-                List<String> nearbyMetros = METRO_REGIONS.getOrDefault(currentMetro,
-                                getDefaultNearbyMetros(currentMetro));
-                return nearbyMetros.stream()
+        // Smart Regional Mapping: Use State-based matching instead of manual map
+        public List<InternalLink> getNearbyMetrosInEra(String currentMetro, String currentEra,
+                        Map<String, ?> allMetros) {
+                String state = extractStateCode(currentMetro);
+                if (state == null)
+                        return getDefaultNearbyMetros(currentMetro, currentEra);
+
+                return allMetros.keySet().stream()
+                                .filter(m -> m.endsWith("_" + state) && !m.equals(currentMetro))
                                 .limit(5)
                                 .map(metro -> new InternalLink(
-                                                "Market Comparison: " + formatMetroName(metro) + " ("
+                                                "Local Comp: " + formatMetroName(metro) + " ("
                                                                 + formatEraText(currentEra) + ")",
                                                 buildVerdictUrl(metro, currentEra)))
                                 .collect(Collectors.toList());
         }
 
-        private List<String> getDefaultNearbyMetros(String currentMetro) {
+        private List<InternalLink> getDefaultNearbyMetros(String currentMetro, String era) {
                 List<String> majorMetros = Arrays.asList(
                                 "ATLANTA_SANDY_SPRINGS_GA", "BOSTON_CAMBRIDGE_MA", "CHICAGO_NAPERVILLE_IL",
                                 "DALLAS_FT_WORTH_ARLINGTON_TX", "HOUSTON_THE_WOODLANDS_TX", "LOS_ANGELES_LONG_BEACH_CA",
-                                "MIAMI_FT_LAUDERDALE_FL", "PHILADELPHIA_PA_NJ", "PHOENIX_MESA_CHANDLER_AZ",
-                                "SAN_ANTONIO_NEW_BRAUNFELS_TX", "SAN_DIEGO_CHULA_VISTA_CA", "SAN_FRANCISCO_OAKLAND_CA",
-                                "SAN_JOSE_SUNNYVALE_CA", "SEATTLE_TACOMA_BELLEVUE_WA", "WASHINGTON_ARLINGTON_DC_VA");
-                return majorMetros.stream().filter(m -> !m.equals(currentMetro)).limit(5).collect(Collectors.toList());
+                                "NEW_YORK_NEWARK_NJ", "SAN_FRANCISCO_OAKLAND_CA");
+
+                return majorMetros.stream()
+                                .filter(m -> !m.equals(currentMetro))
+                                .limit(5)
+                                .map(metro -> new InternalLink(
+                                                "Market Comparison: " + formatMetroName(metro),
+                                                buildVerdictUrl(metro, era)))
+                                .collect(Collectors.toList());
         }
 
         private String buildVerdictUrl(String metro, String era) {
@@ -88,14 +91,20 @@ public class InternalLinkBuilder {
                                 + era.toLowerCase().replace("_", "-") + ".html";
         }
 
-        private String formatMetroName(String metroCode) {
+        private String buildRiskUrl(String metro, String era, String riskCode) {
+                return "/home-repair/verdicts/" + metro.toLowerCase().replace("_", "-") + "/"
+                                + era.toLowerCase().replace("_", "-") + "/" + riskCode.toLowerCase().replace("_", "-")
+                                + ".html";
+        }
+
+        public String formatMetroName(String metroCode) {
                 String[] parts = metroCode.split("_");
                 StringBuilder result = new StringBuilder();
                 for (int i = 0; i < parts.length; i++) {
                         String part = parts[i];
                         if (i == parts.length - 1 && part.length() == 2)
                                 result.append(part);
-                        else
+                        else if (part.length() > 0)
                                 result.append(part.substring(0, 1).toUpperCase())
                                                 .append(part.substring(1).toLowerCase());
                         if (i < parts.length - 1)
@@ -104,7 +113,7 @@ public class InternalLinkBuilder {
                 return result.toString();
         }
 
-        private String formatEraText(String era) {
+        public String formatEraText(String era) {
                 switch (era) {
                         case "PRE_1950":
                                 return "Pre-1950";
@@ -123,11 +132,12 @@ public class InternalLinkBuilder {
                 }
         }
 
-        public List<InternalLink> getRelatedCitiesInState(String currentMetro, String era) {
+        public List<InternalLink> getRelatedCitiesInState(String currentMetro, String era, Set<String> allMetroCodes) {
                 String state = extractStateCode(currentMetro);
                 if (state == null)
                         return Collections.emptyList();
-                return METRO_REGIONS.keySet().stream()
+
+                return allMetroCodes.stream()
                                 .filter(metro -> metro.endsWith("_" + state))
                                 .filter(metro -> !metro.equals(currentMetro))
                                 .limit(8)

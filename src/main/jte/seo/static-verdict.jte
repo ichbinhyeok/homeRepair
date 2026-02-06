@@ -47,6 +47,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet" />
+    
+    <!-- Preload critical fonts to improve LCP/CLS -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@700&display=swap" as="style" />
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" as="style" />
+    
     <link rel="stylesheet" href="/css/seo-report.css" />
     
     <!-- Open Graph -->
@@ -91,7 +96,7 @@
         </div>
     </header>
 
-    <main class="container" style="margin-top: -3rem; position: relative; z-index: 10;">
+    <main id="main-content" class="container" style="margin-top: -3rem; position: relative; z-index: 10;" role="main">
         <div class="bento-grid">
             <!-- 1. EXECUTIVE SUMMARY CARD -->
             <div class="bento-card span-8">
@@ -185,8 +190,8 @@
 
             <!-- 4. CRITICAL RISK AUDIT (DYNAMIC LINKS) -->
             <div class="bento-card span-12">
-                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
-                    <h3>Forensic Risk Audit</h3>
+                <div class="risk-audit-header" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                    <h3 style="margin-bottom: 0;">Forensic Risk Audit</h3>
                     <span style="font-size: 0.9rem; color: var(--slate-500);">Verify these items immediately</span>
                 </div>
                 

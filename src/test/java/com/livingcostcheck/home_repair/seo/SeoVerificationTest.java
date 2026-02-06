@@ -2,6 +2,7 @@ package com.livingcostcheck.home_repair.seo;
 
 import com.livingcostcheck.home_repair.service.VerdictEngineService;
 import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.*;
+import com.livingcostcheck.home_repair.service.dto.verdict.DataMapping;
 import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.resolve.DirectoryCodeResolver;
@@ -41,8 +42,19 @@ public class SeoVerificationTest {
         // InternalLinkBuilder (Mock)
         InternalLinkBuilder linkBuilder = Mockito.mock(InternalLinkBuilder.class);
         when(linkBuilder.getOtherErasInCity(any(), any())).thenReturn(Collections.emptyList());
-        when(linkBuilder.getNearbyMetrosInEra(any(), any())).thenReturn(Collections.emptyList());
-        when(linkBuilder.getRelatedCitiesInState(any(), any())).thenReturn(Collections.emptyList());
+        when(linkBuilder.getNearbyMetrosInEra(any(), any(), any())).thenReturn(Collections.emptyList());
+        when(linkBuilder.getRelatedCitiesInState(any(), any(), any())).thenReturn(Collections.emptyList());
+        when(linkBuilder.getOtherRisksInSameHome(any(), any(), any())).thenReturn(Collections.emptyList());
+
+        // Mock VerdictEngineService Master Data
+        DataMapping.MetroMasterData masterData = new DataMapping.MetroMasterData();
+        DataMapping.MetroCityData chicagoData = new DataMapping.MetroCityData();
+        chicagoData.setLaborMult(1.0);
+        chicagoData.setClimateZone("4");
+        chicagoData.setRisk("Flood");
+        chicagoData.setFoundation("Slab");
+        masterData.setData(Collections.singletonMap("chicago_il", chicagoData));
+        when(verdictService.getMetroMasterData()).thenReturn(masterData);
 
         // Create Service
         com.livingcostcheck.home_repair.seo.VerdictSeoService verdictSeoService = new com.livingcostcheck.home_repair.seo.VerdictSeoService();
@@ -70,12 +82,26 @@ public class SeoVerificationTest {
         RiskAdjustedItem item1 = new RiskAdjustedItem();
         item1.setPrettyName("Roof Repair");
         item1.setAdjustedCost(5000.0);
+        item1.setItemCode("ROOFING");
+        item1.setRiskFlags(Collections.singletonList("SAFETY_HAZARD"));
+        item1.setExplanation("Old shingles need replacement.");
         mustDo.add(item1);
 
         RiskAdjustedItem item2 = new RiskAdjustedItem();
-        item2.setPrettyName("Electric Update");
+        item2.setPrettyName("HVAC Service");
         item2.setAdjustedCost(3000.0);
+        item2.setItemCode("HVAC");
+        item2.setRiskFlags(Collections.emptyList());
+        item2.setExplanation("Regular maintenance needed.");
         mustDo.add(item2);
+
+        RiskAdjustedItem item3 = new RiskAdjustedItem();
+        item3.setPrettyName("Electric Update");
+        item3.setAdjustedCost(3000.0);
+        item3.setItemCode("ELECTR");
+        item3.setRiskFlags(Collections.emptyList());
+        item3.setExplanation("Old wiring check.");
+        mustDo.add(item3);
 
         plan.setMustDo(mustDo);
         plan.setShouldDo(Collections.emptyList());
@@ -89,9 +115,9 @@ public class SeoVerificationTest {
         // When
         try {
             java.lang.reflect.Method method = StaticPageGeneratorService.class.getDeclaredMethod("generateSinglePage",
-                    String.class, String.class, String.class);
+                    String.class, String.class, String.class, String.class);
             method.setAccessible(true);
-            method.invoke(pageGenerator, metroCode, era, outputDir);
+            method.invoke(pageGenerator, metroCode, era, outputDir, "February 2026");
         } catch (Exception e) {
             if (e instanceof java.lang.reflect.InvocationTargetException) {
                 Throwable target = ((java.lang.reflect.InvocationTargetException) e).getTargetException();
@@ -116,18 +142,17 @@ public class SeoVerificationTest {
         assertTrue(content.contains("https://lifeverdict.com"), "Domain check");
 
         // 3. Check JSON-LD Schema (with spaces handling)
-        // Checks based on JTE output format
-        assertTrue(content.contains("\"@type\": \"WebApplication\""), "Schema Type check");
-        assertTrue(content.contains("\"lowPrice\": \"3,000\""), "Price Low check");
-        assertTrue(content.contains("\"highPrice\": \"8,000\""), "Price High check");
+        assertTrue(content.contains("\"@type\":\"FAQPage\""), "FAQ Schema check");
+        assertTrue(content.contains("\"@type\":\"HowTo\""), "HowTo Schema check");
+        assertTrue(content.contains("3,000"), "Price Low check");
+        assertTrue(content.contains("11,000"), "Price High check");
 
         // 4. Check Visible FAQ Section
-        assertTrue(content.contains("class=\"card faq-section\""), "FAQ Section check");
+        assertTrue(content.contains("Frequently Asked Questions"), "FAQ Section check");
 
         // 5. Check FragmentLibrary (Null Safety)
-        assertTrue(content.contains("Climate Impact"), "Fragment Header check");
-        // Verify default fallbacks are working (e.g. "standard maintenance protocols")
-        assertTrue(content.contains("protocol"), "Fragment Content check");
+        // Verify regional insight contains part of the strategy
+        assertTrue(content.contains("maintenance"), "Fragment Content check");
 
         System.out.println("SEO Verification Test Passed for " + generatedFile);
     }

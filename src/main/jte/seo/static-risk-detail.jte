@@ -18,6 +18,7 @@
 @param String parentUrl
 @param String breadcrumbSchema
 @param String dateString
+@param List<InternalLink> otherRisks
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,6 +34,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet" />
+    
+    <!-- Preload critical fonts for LCP performance -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@700&display=swap" as="style" />
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" as="style" />
+    
     <link rel="stylesheet" href="/css/seo-report.css" />
     
     <!-- Open Graph -->
@@ -65,7 +71,7 @@
         </div>
     </header>
 
-    <main class="container" style="margin-top: -3rem; position: relative; z-index: 10;">
+    <main id="main-content" class="container" style="margin-top: -3rem; position: relative; z-index: 10;" role="main">
         <div class="bento-grid">
             
             <!-- 1. COST CARD (Top Priority) -->
@@ -135,18 +141,19 @@
                 </div>
             </div>
 
-            <!-- 4. OTHER RISKS -->
-            @if(verdict.getPlan().getMustDo().size() > 1)
+            <!-- 4. MESH LINKING (L2 Cross-Linking) -->
+            @if(otherRisks != null && !otherRisks.isEmpty())
             <div class="bento-card span-12">
-                <h3>Other Critical Risks in this Home</h3>
-                <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem;">
-                    @for(var other : verdict.getPlan().getMustDo())
-                        @if(!other.getItemCode().equals(item.getItemCode()))
-                            <a href="/home-repair/verdicts/${metroCode.toLowerCase().replace("_", "-")}/${era.toLowerCase().replace("_", "-")}/${other.getItemCode().toLowerCase().replace("_", "-")}.html" 
-                               class="btn-outline" style="font-size: 0.9rem;">
-                                ${other.getPrettyName()} &rarr;
-                            </a>
-                        @endif
+                <h3 style="font-size: 1.25rem; font-family: 'Outfit', sans-serif;">Related Inspection Points in ${metroName}</h3>
+                <p style="color: var(--slate-500); margin-bottom: 1.5rem;">Review other potential liabilities common for ${eraName} homes in this region.</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem;">
+                    @for(var link : otherRisks)
+                        <a href="${link.href}" class="mesh-link-card" 
+                           style="display: flex; align-items: center; justify-content: space-between; padding: 1.25rem; background: white; border: 1px solid var(--slate-200); border-radius: var(--radius-md); text-decoration: none; transition: all 0.2s;">
+                            <span style="font-weight: 600; color: var(--slate-900);">${link.text}</span>
+                            <span style="color: var(--primary); font-weight: bold;">&rarr;</span>
+                        </a>
                     @endfor
                 </div>
             </div>

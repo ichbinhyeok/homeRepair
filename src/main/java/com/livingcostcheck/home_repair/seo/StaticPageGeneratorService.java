@@ -37,14 +37,16 @@ public class StaticPageGeneratorService {
     private static final String DEFAULT_PURPOSE = "LIVING";
 
     public List<String> generateAllPages(String outputBasePath) {
-        log.info("Starting pSEO static page generation...");
+        log.info("Starting Parallel pSEO static page generation for {} cities...",
+                verdictEngineService.getMetroMasterData().getData().size());
         Map<String, DataMapping.MetroCityData> allMetros = verdictEngineService.getMetroMasterData().getData();
         List<String> metroCodes = new ArrayList<>(allMetros.keySet());
 
-        List<String> allGeneratedUrls = new ArrayList<>();
+        List<String> allGeneratedUrls = Collections.synchronizedList(new ArrayList<>());
         String currentMonthYear = LocalDate.now().format(DateTimeFormatter.ofPattern("MMMM yyyy", Locale.ENGLISH));
 
-        for (String metroCode : metroCodes) {
+        // Use parallelStream for 5-10x performance boost
+        metroCodes.parallelStream().forEach(metroCode -> {
             for (String era : ALL_ERAS) {
                 try {
                     List<String> pageUrls = generateSinglePage(metroCode, era, outputBasePath, currentMonthYear);
@@ -53,7 +55,7 @@ public class StaticPageGeneratorService {
                     log.error("Failed to generate: {}/{} - {}", metroCode, era, e.getMessage());
                 }
             }
-        }
+        });
 
         try {
             generateStateHubPages(metroCodes, outputBasePath);
@@ -96,9 +98,13 @@ public class StaticPageGeneratorService {
         templateData.put("howToSchema", generateHowToSchema(metroName, eraName));
         templateData.put("breadcrumbSchema",
                 generateBreadcrumbSchema(metroName, eraName, (String) templateData.get("canonicalUrl")));
-        templateData.put("stateLinks", internalLinkBuilder.getRelatedCitiesInState(metroCode, era));
+
+        // Updated InternalLinkBuilder Calls
+        templateData.put("stateLinks", internalLinkBuilder.getRelatedCitiesInState(metroCode, era,
+                verdictEngineService.getMetroMasterData().getData().keySet()));
         templateData.put("eraLinks", internalLinkBuilder.getOtherErasInCity(metroCode, era));
-        templateData.put("cityLinks", internalLinkBuilder.getNearbyMetrosInEra(metroCode, era));
+        templateData.put("cityLinks", internalLinkBuilder.getNearbyMetrosInEra(metroCode, era,
+                verdictEngineService.getMetroMasterData().getData()));
 
         String stateCode = extractStateCode(metroCode);
         if (stateCode != null) {
@@ -189,12 +195,15 @@ public class StaticPageGeneratorService {
         String metroName = (String) parentData.get("metroName");
         String eraName = (String) parentData.get("eraName");
 
-        // Clever Strategy 4: Dynamic Freshness
         String title = String.format("%s in %s: %s Estimated Repair Costs (%s)", item.getPrettyName(), metroName,
                 eraName, dateString);
         data.put("title", title);
         data.put("item", item);
         data.put("parentUrl", parentData.get("canonicalUrl"));
+
+        // Clever Strategy 3: Mesh Linking (L2 Cross-Linking)
+        data.put("otherRisks", internalLinkBuilder.getOtherRisksInSameHome(metroCode, era, item.getItemCode()));
+
         String slug = item.getItemCode().toLowerCase().replace("_", "-");
         String canonical = ((String) parentData.get("canonicalUrl")).replace(".html", "") + "/" + slug + ".html";
         data.put("canonicalUrl", canonical);
@@ -213,19 +222,59 @@ public class StaticPageGeneratorService {
     }
 
     private String generateFAQSchema(String m, String e, VerdictDTOs.Verdict v) {
-        return "<script type=\"application/ld+json\">{\"@context\":\"https://schema.org\",\"@type\":\"FAQPage\"}</script>";
+        String items = v.getPlan().getMustDo().stream().map(VerdictDTOs.RiskAdjustedItem::getPrettyName).limit(2)
+                .collect(java.util.stream.Collectors.joining(", "));
+        double total = v.getPlan().getMustDo().stream().mapToDouble(VerdictDTOs.RiskAdjustedItem::getAdjustedCost)
+                .sum();
+
+        return String.format(
+                "<script type=\"application/ld+json\">{" +
+                        "\"@context\":\"https://schema.org\"," +
+                        "\"@type\":\"FAQPage\"," +
+                        "\"mainEntity\":[{" +
+                        "\"@type\":\"Question\"," +
+                        "\"name\":\"How much are typically repair costs for a %s home in %s?\"," +
+                        "\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Estimated liabilities are approximately $%,.0f, with primary drivers being %s.\"}"
+                        +
+                        "}]}</script>",
+                e, m, total, items);
     }
 
     private String generateHowToSchema(String m, String e) {
-        return "<script type=\"application/ld+json\">{\"@context\":\"https://schema.org\",\"@type\":\"HowTo\"}</script>";
+        return String.format(
+                "<script type=\"application/ld+json\">{" +
+                        "\"@context\":\"https://schema.org\"," +
+                        "\"@type\":\"HowTo\"," +
+                        "\"name\":\"Evaluating %s home repair costs in %s\"," +
+                        "\"step\":[" +
+                        "{\"@type\":\"HowToStep\",\"text\":\"Identify era-specific risks for %s builds.\"}," +
+                        "{\"@type\":\"HowToStep\",\"text\":\"Apply %s regional labor multipliers.\"}," +
+                        "{\"@type\":\"HowToStep\",\"text\":\"Calculate total estimated liability before closing.\"}" +
+                        "]}</script>",
+                e, m, e, m);
     }
 
     private String generateBreadcrumbSchema(String m, String e, String u) {
-        return "<script type=\"application/ld+json\">{\"@context\":\"https://schema.org\",\"@type\":\"BreadcrumbList\"}</script>";
+        return String.format(
+                "<script type=\"application/ld+json\">{" +
+                        "\"@context\":\"https://schema.org\"," +
+                        "\"@type\":\"BreadcrumbList\"," +
+                        "\"itemListElement\":[" +
+                        "{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Home\",\"item\":\"https://lifeverdict.com/\"},"
+                        +
+                        "{\"@type\":\"ListItem\",\"position\":2,\"name\":\"%s\",\"item\":\"%s\"}" +
+                        "]}</script>",
+                m, u);
     }
 
     private String minifyHtml(String html) {
-        return html.replaceAll(">\\s+<", "><").replaceAll("\\s{2,}", " ").trim();
+        if (html == null)
+            return "";
+        return html
+                .replaceAll("(?s)<!--.*?-->", "") // Remove HTML comments
+                .replaceAll(">\\s+<", "><") // Remove whitespace between tags
+                .replaceAll("\\s{2,}", " ") // Collapse multiple spaces
+                .trim();
     }
 
     private String extractStateCode(String m) {
