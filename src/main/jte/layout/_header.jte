@@ -16,15 +16,15 @@
     
     @media (max-width: 768px) {
         .header-container {
-            flex-direction: column;
-            height: auto;
-            padding: 16px 24px;
-            gap: 16px;
+            /* Keep logical flow but reduce padding */
+            padding: 0 16px;
+            height: 56px; /* Slimmer header */
+        }
+        .nav-links a:not(.mobile-keep) {
+            display: none !important;
         }
         .nav-links {
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 16px 24px;
+            gap: 12px;
         }
     }
 </style>
@@ -36,7 +36,7 @@
         </a>
         
         <nav class="nav-links">
-            <a href="/home-repair" style="font-size: 0.875rem; font-weight: 500; color: #64748b; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='#64748b'">Home</a>
+            <a href="/home-repair" class="mobile-keep" style="font-size: 0.875rem; font-weight: 500; color: #64748b; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='#64748b'">Home</a>
             <a href="/home-repair/methodology" style="font-size: 0.875rem; font-weight: 500; color: #64748b; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='#64748b'">Methodology</a>
             <a href="/home-repair/about" style="font-size: 0.875rem; font-weight: 500; color: #64748b; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='#64748b'">About</a>
             <a href="/home-repair/editorial-policy" style="font-size: 0.875rem; font-weight: 500; color: #64748b; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='#64748b'">Editorial Policy</a>
