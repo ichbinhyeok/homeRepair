@@ -50,5 +50,5 @@ jobs:
             cd ~/home-repair
             # 하이픈(-)을 뺀 docker compose 명령어로 수정
             docker compose pull
-            docker compose up -d --build app
+            docker compose up -d --force-recreate --build app
             docker image prune -f
