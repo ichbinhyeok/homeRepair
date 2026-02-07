@@ -42,22 +42,22 @@
                         <div>
                             <label class="block text-left text-sm font-semibold text-slate-700 mb-1">What is your goal?</label>
                             <div class="grid grid-cols-3 gap-2">
-                                <label class="cursor-pointer">
+                                <label class="cursor-pointer h-full">
                                     <input type="radio" name="relationship" value="LIVING" class="peer sr-only">
-                                    <div class="p-3 text-sm font-medium text-center rounded-lg border border-slate-200 peer-checked:bg-blue-50 peer-checked:border-blue-500 peer-checked:text-blue-700 hover:bg-slate-50">
-                                        Living<br><span class="text-xs font-normal text-slate-500">Fixing it up</span>
+                                    <div class="p-3 h-full flex flex-col justify-center items-center text-sm font-medium text-center rounded-lg border border-slate-200 peer-checked:bg-blue-50 peer-checked:border-blue-500 peer-checked:text-blue-700 hover:bg-slate-50 transition-all">
+                                        Living<span class="text-xs font-normal text-slate-500 mt-1 block">Fixing it up</span>
                                     </div>
                                 </label>
-                                <label class="cursor-pointer">
+                                <label class="cursor-pointer h-full">
                                     <input type="radio" name="relationship" value="BUYING" checked class="peer sr-only">
-                                    <div class="p-3 text-sm font-medium text-center rounded-lg border border-slate-200 peer-checked:bg-blue-50 peer-checked:border-blue-500 peer-checked:text-blue-700 hover:bg-slate-50">
-                                        Buying<br><span class="text-xs font-normal text-slate-500">Due diligence</span>
+                                    <div class="p-3 h-full flex flex-col justify-center items-center text-sm font-medium text-center rounded-lg border border-slate-200 peer-checked:bg-blue-50 peer-checked:border-blue-500 peer-checked:text-blue-700 hover:bg-slate-50 transition-all">
+                                        Buying<span class="text-xs font-normal text-slate-500 mt-1 block">Due diligence</span>
                                     </div>
                                 </label>
-                                <label class="cursor-pointer">
+                                <label class="cursor-pointer h-full">
                                     <input type="radio" name="relationship" value="INVESTING" class="peer sr-only">
-                                    <div class="p-3 text-sm font-medium text-center rounded-lg border border-slate-200 peer-checked:bg-blue-50 peer-checked:border-blue-500 peer-checked:text-blue-700 hover:bg-slate-50">
-                                        Investing<br><span class="text-xs font-normal text-slate-500">Flipping/Rent</span>
+                                    <div class="p-3 h-full flex flex-col justify-center items-center text-sm font-medium text-center rounded-lg border border-slate-200 peer-checked:bg-blue-50 peer-checked:border-blue-500 peer-checked:text-blue-700 hover:bg-slate-50 transition-all">
+                                        Investing<span class="text-xs font-normal text-slate-500 mt-1 block">Flipping/Rent</span>
                                     </div>
                                 </label>
                             </div>

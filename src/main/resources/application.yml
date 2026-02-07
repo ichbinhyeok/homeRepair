@@ -37,7 +37,8 @@ server:
 gg:
   jte:
     templateLocation: src/main/jte
-    developmentMode: true
+    developmentMode: false
+    usePrecompiledTemplates: true
 
 logging:
   file:

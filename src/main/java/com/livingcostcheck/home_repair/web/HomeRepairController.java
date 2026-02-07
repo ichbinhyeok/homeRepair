@@ -277,7 +277,7 @@ public class HomeRepairController {
     // -------------------------------------------------------------------------
     // DYNAMIC LEVEL 2: RISK DETAIL PSEO
     // -------------------------------------------------------------------------
-    @GetMapping("/verdicts/{metro}/{era}/{riskItem}.html")
+    @GetMapping("/verdicts/{metro}/{era}/{riskItem}")
     public String viewRiskDetail(@PathVariable String metro,
             @PathVariable String era,
             @PathVariable String riskItem,

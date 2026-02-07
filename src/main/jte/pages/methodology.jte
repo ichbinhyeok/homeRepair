@@ -18,17 +18,28 @@
     
     <style>
         .methodology-container {
+            width: 100%;
             max-width: 900px;
-            margin: 60px auto;
-            padding: 0 30px;
+            margin: 40px auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+        
+        @media (min-width: 768px) {
+            .methodology-container {
+                margin: 60px auto;
+                padding: 0 30px;
+            }
         }
         
         .formula-box {
             background: #f8fafc;
             border: 2px solid #3b82f6;
             border-radius: 12px;
-            padding: 30px;
+            padding: 20px;
             margin: 30px 0;
+            overflow-x: auto; /* Enable scrolling for long formulas */
+            max-width: 100%;
         }
         
         .formula-legend {

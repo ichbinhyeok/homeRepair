@@ -7,12 +7,13 @@
     content = @`
     <div class="max-w-4xl mx-auto px-4 py-12">
         <!-- Hero Section -->
+        <!-- Hero Section -->
         <div class="text-center mb-16">
             <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-4">
-                Is that "Fixer-Upper"<br><span class="text-rose-600">Actually a Money Pit?</span>
+                The <span class="text-blue-600">Real Cost</span> of<br>Renovating in 2026.
             </h1>
             <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-8">
-                Detailed 2026 repair cost analysis for homebuyers. Don't sign the contract until you check the hidden costs.
+                Stop guessing. Get forensic repair cost estimates based on your home's age, location, and condition.
             </p>
 
             <!-- Calculator Form (Same as Index) -->

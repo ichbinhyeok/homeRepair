@@ -28,12 +28,12 @@ public class RootController {
 
     @GetMapping("/privacy-policy")
     public String privacyPolicy() {
-        return "pages/disclaimer";
+        return "pages/privacy-policy";
     }
 
     @GetMapping("/terms-of-service")
     public String termsOfService() {
-        return "pages/disclaimer";
+        return "pages/terms-of-service";
     }
 
     @GetMapping("/disclaimer")

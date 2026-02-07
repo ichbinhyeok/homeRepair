@@ -1,5 +1,6 @@
 package com.livingcostcheck.home_repair.service.dto.verdict;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class DataMapping {
 
     @Data
     @NoArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class MetroCityData {
         @JsonProperty("labor_mult")
         private Double laborMult;
@@ -46,6 +48,7 @@ public class DataMapping {
     // --- Risk Factors ---
     @Data
     @NoArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class RiskFactorsData {
         private Map<String, Object> meta;
         private Map<String, EraData> eras;
@@ -53,6 +56,7 @@ public class DataMapping {
 
     @Data
     @NoArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class EraData {
         @JsonProperty("era_name")
         private String eraName;
@@ -62,6 +66,7 @@ public class DataMapping {
 
     @Data
     @NoArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class RiskItem {
         private String item;
         private String severity;
@@ -85,6 +90,7 @@ public class DataMapping {
     // --- Cost Library ---
     @Data
     @NoArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class CostLibraryData {
         @JsonProperty("project_meta")
         private Map<String, Object> projectMeta;
@@ -97,6 +103,7 @@ public class DataMapping {
 
     @Data
     @NoArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class ConstructionItem {
         private String description;
         @JsonProperty("measure_unit")
@@ -125,6 +132,7 @@ public class DataMapping {
 
     @Data
     @NoArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class CostRange {
         private Double low;
         private Double high;

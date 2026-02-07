@@ -295,20 +295,43 @@ a:hover {
         font-size: 2.25rem;
     }
 
-    /* Safer Sticky CTA */
+    /* Safer Sticky CTA (Slim Version) */
     .sticky-cta {
         width: calc(100% - 2rem);
         bottom: 1.5rem;
         left: 0;
         right: 0;
+        max-width: 400px;
+        /* Prevent too wide on larger phones */
     }
 
     .cta-floater {
-        padding: 0.75rem 1rem;
+        padding: 0.5rem 0.85rem;
+        /* Reduced padding for slim look */
         font-size: 0.85rem;
         justify-content: space-between;
-        flex-wrap: wrap;
-        /* Allow wrapping if text is too long */
+        flex-wrap: nowrap;
+        /* Prevent wrapping (fatness) */
+        gap: 0.75rem;
+    }
+
+    .cta-floater span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+        flex: 1;
+        /* Allow taking available space */
+        min-width: 0;
+        /* Enable flex truncation */
+        font-size: 0.8rem;
+    }
+
+    .cta-floater .btn-sm {
+        flex-shrink: 0;
+        /* Don't shrink button */
+        padding: 0.4rem 0.75rem;
+        font-size: 0.75rem;
     }
 }
 

@@ -48,10 +48,19 @@
     <main class="container" style="margin-top: -3rem; position: relative; z-index: 10;">
         <div class="bento-grid">
             
-            <div class="span-12" style="background: white; border-radius: var(--radius-xl); padding: 2rem; box-shadow: var(--shadow-sm); border: 1px solid var(--slate-100);">
+            <!-- State Market Grid -->
+            <div class="span-12 state-grid-container" style="background: white; border-radius: var(--radius-xl); box-shadow: var(--shadow-sm); border: 1px solid var(--slate-100);">
+                <style>
+                    .state-grid-container { padding: 2rem; }
+                    .city-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2rem; }
+                    @media (max-width: 640px) {
+                        .state-grid-container { padding: 1rem; }
+                        .city-grid { grid-template-columns: 1fr; gap: 1rem; } /* Full width on mobile */
+                    }
+                </style>
                 <h2 style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--slate-100);">Available Markets in ${page.stateName}</h2>
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem;">
+                <div class="city-grid">
                     @for(var city : page.cities)
                         <div class="city-group">
                             <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--slate-900); display: flex; align-items: center; gap: 0.5rem;">

@@ -53,25 +53,25 @@
                     <div class="mt-6">
                         <label class="block text-sm font-medium text-slate-700 mb-2">General Condition</label>
                         <div class="grid grid-cols-3 gap-3">
-                            <label class="cursor-pointer">
+                            <label class="cursor-pointer h-full">
                                 <input type="radio" name="condition" value="NONE" class="peer sr-only">
-                                <div class="p-3 text-center border rounded-lg peer-checked:bg-green-50 peer-checked:border-green-500 hover:bg-slate-50">
+                                <div class="p-3 h-full flex flex-col justify-center items-center text-center border rounded-lg peer-checked:bg-green-50 peer-checked:border-green-500 hover:bg-slate-50 transition-all">
                                     <div class="font-semibold">Turnkey</div>
-                                    <div class="text-xs text-slate-500">Move-in ready</div>
+                                    <div class="text-xs text-slate-500 mt-1">Move-in ready</div>
                                 </div>
                             </label>
-                            <label class="cursor-pointer">
+                            <label class="cursor-pointer h-full">
                                 <input type="radio" name="condition" value="MINOR" checked class="peer sr-only">
-                                <div class="p-3 text-center border rounded-lg peer-checked:bg-yellow-50 peer-checked:border-yellow-500 hover:bg-slate-50">
+                                <div class="p-3 h-full flex flex-col justify-center items-center text-center border rounded-lg peer-checked:bg-yellow-50 peer-checked:border-yellow-500 hover:bg-slate-50 transition-all">
                                     <div class="font-semibold">Average</div>
-                                    <div class="text-xs text-slate-500">Dated / Lived In</div>
+                                    <div class="text-xs text-slate-500 mt-1">Dated / Lived In</div>
                                 </div>
                             </label>
-                            <label class="cursor-pointer">
+                            <label class="cursor-pointer h-full">
                                 <input type="radio" name="condition" value="SEVERE" class="peer sr-only">
-                                <div class="p-3 text-center border rounded-lg peer-checked:bg-red-50 peer-checked:border-red-500 hover:bg-slate-50">
+                                <div class="p-3 h-full flex flex-col justify-center items-center text-center border rounded-lg peer-checked:bg-red-50 peer-checked:border-red-500 hover:bg-slate-50 transition-all">
                                     <div class="font-semibold">Fixer Upper</div>
-                                    <div class="text-xs text-slate-500">Needs Work (Rough)</div>
+                                    <div class="text-xs text-slate-500 mt-1">Needs Work</div>
                                 </div>
                             </label>
                         </div>

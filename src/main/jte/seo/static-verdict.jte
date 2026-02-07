@@ -127,10 +127,9 @@
             
             <!-- TRUST & RATING BADGE (Required for Schema Compliance) -->
             <div style="text-align: center; margin-top: 1rem; margin-bottom: 2rem;">
-                <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.8); padding: 0.5rem 1rem; border-radius: 100px; border: 1px solid var(--slate-200);">
+                <div style="display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(255,255,255,0.9); padding: 0.35rem 0.85rem; border-radius: 100px; border: 1px solid var(--slate-200); box-shadow: var(--shadow-sm);">
                     <span style="color: #fbbf24;">★★★★★</span>
-                    <span style="font-size: 0.85rem; font-weight: 600; color: var(--slate-700);">Data Accuracy Rating: 4.8/5</span>
-                    <span style="font-size: 0.75rem; color: var(--slate-400);">(Verified by RSMeans)</span>
+                    <span style="font-size: 0.85rem; font-weight: 600; color: var(--slate-700);">Accuracy: 4.8/5</span>
                 </div>
             </div>
 
@@ -142,7 +141,7 @@
                     
                     <span class="stat-label" style="color: var(--slate-400);">VS. Modern Homes</span>
                     
-                    <h3 style="font-size: 3.5rem; color: white; margin: 1rem 0;">
+                    <h3 class="text-delta-responsive" style="color: white; margin: 1rem 0;">
                         @if(verdict.getComparisonData().getCostDelta() > 0)
                             <span style="color: #fca5a5;">+${String.format("%.0f", verdict.getComparisonData().getDeltaPercentage())}%</span>
                         @else
@@ -177,7 +176,16 @@
                     <span class="insight-icon">🌍</span>
                     <h3>Local Market Factors: ${metroName}</h3>
                 </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <!-- Responsive Grid for Insight -->
+                <style>
+                    .insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
+                    .text-delta-responsive { font-size: 3.5rem; }
+                    @media (max-width: 640px) {
+                        .insight-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+                        .text-delta-responsive { font-size: 2.25rem; }
+                    }
+                </style>
+                <div class="insight-grid">
                     <div>
                         <h4 style="font-size: 0.9rem; text-transform: uppercase; color: var(--slate-500); margin-bottom: 0.5rem;">Regional Risk</h4>
                         <p style="font-weight: 600; font-size: 1.1rem; color: var(--slate-900);">${metroRisk != null ? metroRisk : "Standard Regional Risks"}</p>
@@ -234,7 +242,7 @@
                             
                             <div class="risk-cost">
                                 <span class="amount">$${String.format("%,.0f", item.getAdjustedCost())}</span>
-                                <a href="/home-repair/verdicts/${metroCode.toLowerCase().replace("_", "-")}/${era.toLowerCase().replace("_", "-")}/${item.getItemCode().toLowerCase().replace("_", "-")}.html" class="action-link">
+                                <a href="/home-repair/verdicts/${metroCode.toLowerCase().replace("_", "-")}/${era.toLowerCase().replace("_", "-")}/${item.getItemCode().toLowerCase().replace("_", "-")}" class="action-link">
                                     View Details &rarr;
                                 </a>
                             </div>

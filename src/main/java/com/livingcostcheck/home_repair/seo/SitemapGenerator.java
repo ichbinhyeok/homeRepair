@@ -48,36 +48,22 @@ public class SitemapGenerator {
         xml.append(buildUrlEntry(BASE_URL + "/editorial-policy", lastMod, "monthly", "0.7"));
         urlCount += 5;
 
-        // 2. State Hubs (Priority Seed)
+        // 2. Generated Pages (All Static Seed Pages)
+        // Includes State Hubs and Verdict Pages (L1)
         if (extraUrls != null) {
-            for (String url : extraUrls) {
+            Set<String> uniqueUrls = new HashSet<>(extraUrls); // Deduplicate just in case
+            for (String url : uniqueUrls) {
+                // Determine priority based on type
+                String priority = "0.8";
+                String freq = "monthly";
+
                 if (url.contains("/states/")) {
-                    xml.append(buildUrlEntry(url, lastMod, "weekly", "0.9"));
-                    urlCount++;
+                    priority = "0.9";
+                    freq = "weekly";
                 }
-            }
-        }
 
-        // 3. Tier 1 Core Pages (Selective Indexing)
-        // We include Tier 1 L1 pages in sitemap to ensure faster indexing for
-        // high-value markets.
-        for (String metroCode : TIER_1_METROS) {
-            for (String era : ALL_ERAS) {
-                String url = buildVerdictUrl(metroCode, era);
-                xml.append(buildUrlEntry(url, lastMod, "monthly", "0.8"));
+                xml.append(buildUrlEntry(url, lastMod, freq, priority));
                 urlCount++;
-            }
-        }
-
-        // 4. Tier 1 L2 Pages (Selective Indexing)
-        // We also include Tier 1 L2 pages that were generated.
-        if (extraUrls != null) {
-            for (String url : extraUrls) {
-                // If it's an L2 page (contains slug of T1 metro and not a state hub)
-                if (!url.contains("/states/") && isTier1Url(url)) {
-                    xml.append(buildUrlEntry(url, lastMod, "monthly", "0.7"));
-                    urlCount++;
-                }
             }
         }
 
