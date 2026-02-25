@@ -174,18 +174,20 @@ public class StaticPageGeneratorService {
         private String generateComparisonInsight(DataMapping.MetroCityData mData, String metroName, long seed) {
                 double laborMult = mData.getLaborMult();
                 String context = "";
-                if (laborMult > 1.2) {
+                double deltaPct = Math.abs(laborMult - 1.0) * 100.0;
+
+                if (laborMult > 1.1) {
                         context = String.format(
-                                        "Labor costs in %s are significantly higher than the national average, making DIY solutions particularly valuable here.",
-                                        metroName);
-                } else if (laborMult < 0.9) {
+                                        "A mathematical analysis of %s contractor rates reveals labor costs pacing <strong>%.1f%% higher</strong> than the national baseline. This structural premium forces savvy buyers to factor in mobilization fees heavily during negotiation.",
+                                        metroName, deltaPct);
+                } else if (laborMult < 0.95) {
                         context = String.format(
-                                        "%s remains one of the more affordable markets for professional renovations compared to neighboring regions.",
-                                        metroName);
+                                        "Due to localized supply/demand economics, %s benefits from a <strong>%.1f%% discount</strong> against average national repair labor rates. However, material shipping logistics into %s can sometimes offset these savings.",
+                                        metroName, deltaPct, mData.getClimateZone());
                 } else {
                         context = String.format(
-                                        "Renovation costs in %s align closely with national benchmarks, providing a stable market for standard living upgrades.",
-                                        metroName);
+                                        "Renovation labor economics in %s index within <strong>%.1f%%</strong> of the national median (1.0). This rare pricing stability makes quote validation and standard material comparisons highly reliable.",
+                                        metroName, deltaPct);
                 }
                 return context;
         }
@@ -225,37 +227,38 @@ public class StaticPageGeneratorService {
                                 .map(VerdictDTOs.RiskAdjustedItem::getPrettyName).reduce((a, b) -> a + ", " + b)
                                 .orElse("aging systems");
 
-                // Q1: Cost Specifics (Unique Data: Cost + Era + Metro)
+                // Q1: Cost Specifics (Unique Data: Math Driven Cost + Era + Metro)
                 Map<String, String> q1 = new HashMap<>();
                 q1.put("question", String.format("How much should I budget for repairs on a %s home in %s?",
                                 eraName.split("\\(")[0].trim(), metroName.split(",")[0].trim()));
                 q1.put("answer", String.format(
-                                "Based on %s labor rates and %s construction standards, you should budget approximately <strong>$%,.0f</strong> for immediate repairs. The primary cost drivers are usually %s.",
-                                metroName, eraName.split("\\(")[0].trim(), totalCost, riskList));
+                                "Based on localized %s labor indexes (%.2fx multiplier) and %s structural standards, forensic analysis suggests budgeting approximately <strong>$%,.0f</strong> to clear immediate liabilities. The top expenditure vector involves %s.",
+                                metroName, (mData != null ? mData.getLaborMult() : 1.0), eraName.split("\\(")[0].trim(),
+                                totalCost, riskList));
                 faqs.add(q1);
 
-                // Q2: Regional Risk (Unique Data: Climate/Soil/Risk from Metadata)
+                // Q2: Regional Risk (Unique Entity Data: Climate/Soil/Risk)
                 if (mData != null) {
                         Map<String, String> q2 = new HashMap<>();
                         q2.put("question",
                                         String.format("What is the biggest hidden risk for homes in %s?", metroName));
                         q2.put("answer", String.format(
-                                        "In %s, the primary regional risk is <strong>%s</strong>, which heavily impacts home longevity. For %s era properties, this often manifests as accelerated wear on the %s.",
-                                        metroName, mData.getRisk(), eraName.split(" ")[0],
+                                        "In %s, the overarching regional hazard is <strong>%s</strong>, compounded by its %s climate classification. For %s properties, this actuarial risk directly translates to accelerated depreciation of the %s.",
+                                        metroName, mData.getRisk(), mData.getClimateZone(), eraName.split(" ")[0],
                                         mData.getFoundation().toLowerCase().contains("basement")
-                                                        ? "foundation and waterproofing"
-                                                        : "roof and exterior cladding"));
+                                                        ? "foundation and subsurface drainage"
+                                                        : "roofing membrane and exterior envelope"));
                         faqs.add(q2);
                 }
 
-                // Q3: Negotiation (Unique Data: Leverage Logic)
+                // Q3: Negotiation (Unique Data: Mathematical Leverage Logic)
                 Map<String, String> q3 = new HashMap<>();
                 q3.put("question", "Can I use these repair estimates to negotiate the home price?");
                 q3.put("answer", String.format(
-                                "Yes. This report identifies $%,.0f in specific, forensic liabilities. We recommend sharing this itemized list with your agent to request a seller credit or price reduction before closing, especially for critical items like %s.",
-                                totalCost, verdict.getPlan().getMustDo().stream().findFirst()
+                                "Yes. This analysis pinpoints $%,.0f in verifiable, deferred maintenance. Structuring a seller credit request of roughly %.1f%% of this total ($%,.0f) is a common tactic to offset the sudden capital expenditure required for critical items like %s.",
+                                totalCost, 80.0, totalCost * 0.8, verdict.getPlan().getMustDo().stream().findFirst()
                                                 .map(VerdictDTOs.RiskAdjustedItem::getPrettyName)
-                                                .orElse("safety hazards")));
+                                                .orElse("electrical panels")));
                 faqs.add(q3);
 
                 return faqs;
