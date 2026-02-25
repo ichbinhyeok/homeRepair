@@ -48,18 +48,18 @@ function check_string() {
 }
 
 # 1) L2 .html -> 301
-check_status "$HOST/home-repair/verdicts/atlanta-sandy-springs-ga/1980-1995/hvac-replacement.html" "301"
+check_status "$HOST/home-repair/verdicts/atlanta-sandy-springs-ga/1980-1995/hvac-heat-pump-central.html" "301"
 
 # 2) L2 .html.html.html -> 301
-check_status "$HOST/home-repair/verdicts/atlanta-sandy-springs-ga/1980-1995/hvac-replacement.html.html.html" "301"
+check_status "$HOST/home-repair/verdicts/atlanta-sandy-springs-ga/1980-1995/hvac-heat-pump-central.html.html.html" "301"
 
 # 3) Canonical L2 200
-check_status "$HOST/home-repair/verdicts/atlanta-sandy-springs-ga/1980-1995/hvac-replacement" "200"
+check_status "$HOST/home-repair/verdicts/atlanta-sandy-springs-ga/1980-1995/hvac-heat-pump-central" "200"
 
 # 4) L2 HTML Check (H1 empty issue, Market Data date format)
 MONTH_YEAR=$(date "+%B %Y")
-check_string "$HOST/home-repair/verdicts/atlanta-sandy-springs-ga/1980-1995/hvac-replacement" "Market Data: $MONTH_YEAR"
-check_string "$HOST/home-repair/verdicts/atlanta-sandy-springs-ga/1980-1995/hvac-replacement" "hvac-replacement cost in" # Or anything indicating H1 works
+check_string "$HOST/home-repair/verdicts/atlanta-sandy-springs-ga/1980-1995/hvac-heat-pump-central" "Market Data: $MONTH_YEAR"
+check_string "$HOST/home-repair/verdicts/atlanta-sandy-springs-ga/1980-1995/hvac-heat-pump-central" "cost in" # Or anything indicating H1 works
 # The actual H1 format is "{itemPrettyName} cost in {metroName}" so we can just check "cost in"
 
 # 5) Sitemap 200 checks (PSEO Hubs)

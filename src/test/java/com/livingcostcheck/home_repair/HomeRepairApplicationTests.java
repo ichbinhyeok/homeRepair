@@ -31,8 +31,8 @@ class HomeRepairApplicationTests {
 	@Test
 	void testRootRedirect() throws Exception {
 		mockMvc.perform(get("/"))
-				.andExpect(status().is3xxRedirection())
-				.andExpect(view().name("redirect:/home-repair"));
+				.andExpect(status().isOk())
+				.andExpect(view().name("pages/hub"));
 	}
 
 }

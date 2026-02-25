@@ -78,18 +78,20 @@
             </div>
             
             <div class="principle-box">
-                <h3 style="margin-top: 0; color: #1e40af;">3. Zero Tolerance for Conflicts of Interest</h3>
+                <h3 style="margin-top: 0; color: #1e40af;">3. Transparency in Partnerships</h3>
                 <p style="line-height: 1.8;">
-                    <strong>We accept NO financial compensation from:</strong>
+                    <strong>Editorial independence is non-negotiable.</strong> Our cost estimates and risk assessments are generated algorithmically from public data sources and are never altered based on commercial relationships.
+                </p>
+                <p style="line-height: 1.8; margin-top: 12px;">
+                    This site may contain affiliate links to third-party service providers (e.g., contractor matching platforms). If you click these links and request a quote, we may earn a referral fee at no additional cost to you. These partnerships:
                 </p>
                 <ul style="line-height: 1.8;">
-                    <li>Contractors or construction companies seeking preferential recommendations</li>
-                    <li>Material suppliers attempting to bias product selections</li>
-                    <li>Home inspection services offering referral fees</li>
-                    <li>Real estate platforms conditioning data access on favorable outcomes</li>
+                    <li><strong>Do NOT</strong> influence our cost calculations, risk flags, or recommendations</li>
+                    <li><strong>Do NOT</strong> result in any additional charges to the user</li>
+                    <li>Help sustain free access to our data and analysis tools</li>
                 </ul>
-                <p style="line-height: 1.8; margin-top: 16px;">
-                    Our business model is advertising-based (display ads only), ensuring complete editorial independence.
+                <p style="line-height: 1.8; margin-top: 12px;">
+                    We do not accept payments from contractors or suppliers seeking preferential placement in our analysis results.
                 </p>
             </div>
             

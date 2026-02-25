@@ -103,6 +103,21 @@
 
                 <%-- CARD 2: ACTION PLAN (Strategy) --%>
                 <div class="md:col-span-4 bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between">
+                    !{
+                        String primary = verdict.getPrimaryCostDriver() != null ? verdict.getPrimaryCostDriver().toLowerCase() : "general";
+                        String cat = "general";
+                        String catName = "Contractor";
+                        if (primary.contains("roof")) { cat = "roofing"; catName = "Roofing"; }
+                        else if (primary.contains("plumb") || primary.contains("pipe") || primary.contains("water")) { cat = "plumbing"; catName = "Plumbing"; }
+                        else if (primary.contains("electric") || primary.contains("wire") || primary.contains("panel")) { cat = "electrical"; catName = "Electrical"; }
+                        else if (primary.contains("foundation") || primary.contains("struct") || primary.contains("crack")) { cat = "foundation-repair"; catName = "Foundation"; }
+                        else if (primary.contains("hvac") || primary.contains("furnace") || primary.contains("ac") || primary.contains("air")) { cat = "hvac"; catName = "HVAC"; }
+                        
+                        String trackPrefix = "/home-repair/track?verdictId=" + history.getId() + "&type=AFFILIATE&target=";
+                        String buyingTarget = "https://angi.com/companylist/" + cat + ".htm";
+                        String livingTarget = "https://homeadvisor.com/task." + cat + ".html";
+                    }
+
                     @if("BUYING".equals(history.getPurpose()))
                         <!-- BUYER MODE: Negotiation Tactic -->
                         <div>
@@ -115,9 +130,26 @@
                                 "Request seller credit of $${String.format("%,.0f", verdict.getExactCostEstimate())} for ${verdict.getPrimaryCostDriver() != null ? verdict.getPrimaryCostDriver().replace("Primary Cost Driver:", "").trim() : "repairs"}..."
                             </div>
                         </div>
-                        <button onclick="navigator.clipboard.writeText('Request seller credit of $${String.format("%,.0f", verdict.getExactCostEstimate())} for immediate repairs.'); alert('Copied to clipboard!');" class="mt-4 w-full py-3 bg-slate-900 text-white font-semibold rounded-xl text-sm hover:bg-slate-700 transition-colors">
-                            Copy Email Text
-                        </button>
+                        <div>
+                            <button onclick="navigator.clipboard.writeText('Request seller credit of $${String.format("%,.0f", verdict.getExactCostEstimate())} for immediate repairs.'); alert('Copied to clipboard!');" class="mt-4 w-full py-3 bg-slate-900 text-white font-semibold rounded-xl text-sm hover:bg-slate-700 transition-colors">
+                                Copy Email Text
+                            </button>
+                            
+                            <!-- 메인 CTA (BUYING) -->
+                            <a href="${trackPrefix}${buyingTarget}&cat=${cat}&src=buying" target="_blank" class="mt-3 w-full py-3 bg-blue-600 text-white font-bold rounded-xl text-center text-sm hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200 block">
+                                Get a local ${catName} quote to back your negotiation &rarr;
+                            </a>
+                            
+                            <!-- 백업 CTA (이메일 수집 보험) -->
+                            <form onsubmit="event.preventDefault(); const form=this; fetch('/api/lead?verdictId=${history.getId().toString()}&email=' + this.email.value, {method: 'POST'}).then(r => r.text()).then(t => form.outerHTML = t);" class="mt-3 w-full">
+                                <div class="flex gap-2">
+                                    <input type="email" name="email" placeholder="Your email..." required class="flex-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
+                                    <button type="submit" class="px-3 py-2 bg-slate-100 text-slate-700 font-bold text-sm rounded-lg hover:bg-slate-200 transition-colors whitespace-nowrap">
+                                        Send Checklist
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     @else
                         <!-- OWNER MODE: Strategy -->
                         <div>
@@ -130,9 +162,21 @@
                                 ${verdict.getStrategyExplanation()}
                             </p>
                         </div>
-                        <button onclick="document.getElementById('details-section').scrollIntoView({behavior: 'smooth'})" class="mt-6 w-full py-3 bg-slate-50 text-slate-900 font-semibold rounded-xl text-sm hover:bg-slate-100 transition-colors">
-                            View Verified Plan
-                        </button>
+                        <div>
+                            <button onclick="document.getElementById('details-section').scrollIntoView({behavior: 'smooth'})" class="mt-6 w-full py-3 bg-slate-50 text-slate-900 font-semibold rounded-xl text-sm hover:bg-slate-100 transition-colors block">
+                                View Verified Plan
+                            </button>
+                            
+                            <!-- 메인 CTA (LIVING) -->
+                            <a href="${trackPrefix}${livingTarget}&cat=${cat}&src=living" target="_blank" class="mt-3 w-full py-3 bg-emerald-600 text-white font-bold rounded-xl text-center text-sm hover:bg-emerald-700 transition-colors shadow-lg shadow-emerald-200 block">
+                                Find a top-rated ${catName} pro before it gets worse &rarr;
+                            </a>
+                            
+                            <!-- 서브 CTA (LIVING 비교) -->
+                            <a href="${trackPrefix}https://thumbtack.com&cat=${cat}&src=living" target="_blank" class="mt-2 w-full py-2 bg-white border border-slate-200 text-slate-700 font-semibold rounded-xl text-center text-sm hover:bg-slate-50 transition-colors block">
+                                Compare ${catName} Quotes
+                            </a>
+                        </div>
                     @endif
                 </div>
 

@@ -97,7 +97,7 @@
             
             <div style="margin-top: 2rem;">
                 <a href="/home-repair" class="btn-primary" style="background: white; color: var(--primary);">
-                    Check Specific Address &rarr;
+                    Customize Your Estimate &rarr;
                 </a>
                 <p style="margin-top: 1rem; font-size: 0.85rem; opacity: 0.7;">
                     <span style="opacity: 0.8;">Data sources:</span> RSMeans, BLS, NAHB
@@ -300,12 +300,12 @@
             
             <!-- 6. PRE-EMPTIVE CTA -->
             <div class="bento-card span-6" style="background: var(--primary); color: white; display: flex; flex-direction: column; justify-content: center; text-align: center;">
-                <h3 style="color: white; margin-bottom: 1rem;">Get the Full Picture</h3>
+                <h3 style="color: white; margin-bottom: 1rem;">Get a More Precise Estimate</h3>
                 <p style="color: rgba(255,255,255,0.9); margin-bottom: 2rem;">
-                    Generic era data isn't enough. Get a custom audit for a specific address, tuned to its exact permit history.
+                    Generic era data is a starting point. Add your property details &mdash; bathrooms, stories, roof type &mdash; to refine the numbers.
                 </p>
                 <a href="/home-repair" class="btn-primary" style="background: white; color: var(--primary);">
-                    Run Free Address Check
+                    Customize Your Estimate &rarr;
                 </a>
             </div>
 
@@ -350,7 +350,7 @@
     <!-- Sticky Mobile CTA -->
     <div class="sticky-cta cta-floater">
         <span>Buying in ${metroName}?</span>
-        <a href="/home-repair" class="btn-sm">Check Cost &rarr;</a>
+        <a href="/home-repair" class="btn-sm">Get Your Estimate &rarr;</a>
     </div>
 
     @template.layout._footer()

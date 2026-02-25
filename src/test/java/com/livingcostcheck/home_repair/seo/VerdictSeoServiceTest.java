@@ -21,8 +21,8 @@ class VerdictSeoServiceTest {
         assertThat(result.h1()).contains(era);
 
         // Verify Curiosity Gap in Title
-        assertThat(result.title()).contains("Can I really afford");
-        assertThat(result.title()).contains("2026 Costs");
+        assertThat(result.title()).contains("Home Repair Costs in");
+        assertThat(result.title()).contains("What to Expect (2026)");
     }
 
     @Test

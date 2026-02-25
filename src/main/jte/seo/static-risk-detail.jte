@@ -172,11 +172,11 @@
              <div class="bento-card span-12" style="text-align: center; padding: 4rem 2rem;">
                 <h2 style="margin-bottom: 1.5rem;">Don't rely on averages.</h2>
                 <p style="margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; color: var(--slate-600);">
-                    Every home is different. Get a specific audit for the exact address you are buying.
+                    Every home is different. Add your property details to get a more precise estimate.
                 </p>
                 <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                     <a href="${parentUrl}" class="btn-outline">Back to Full Report</a>
-                    <a href="/home-repair" class="btn-primary">Run Address Check &rarr;</a>
+                    <a href="/home-repair" class="btn-primary">Customize Your Estimate &rarr;</a>
                 </div>
             </div>
 
