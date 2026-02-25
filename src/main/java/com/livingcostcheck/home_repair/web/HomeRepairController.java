@@ -454,6 +454,29 @@ public class HomeRepairController {
 
                 eventLogRepository.save(new EventLog(verdictId, EventLog.EventType.SUBMIT_EMAIL, email));
 
+                // Save lead to CSV
+                try {
+                        java.io.File file = new java.io.File("data/leads.csv");
+                        file.getParentFile().mkdirs();
+                        boolean isNew = !file.exists();
+                        try (java.io.FileWriter fw = new java.io.FileWriter(file, true);
+                                        java.io.PrintWriter pw = new java.io.PrintWriter(fw)) {
+                                if (isNew) {
+                                        pw.println("Timestamp,VerdictId,Email,MetroCode,Era");
+                                }
+                                String timestamp = java.time.LocalDateTime.now()
+                                                .format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                                pw.printf("%s,%s,%s,%s,%s%n",
+                                                timestamp,
+                                                verdictId.toString(),
+                                                email,
+                                                history.getZipCode(),
+                                                history.getDecade());
+                        }
+                } catch (Exception e) {
+                        log.error("Failed to write lead to CSV", e);
+                }
+
                 return ResponseEntity.ok(
                                 "<div class='p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg text-sm text-center font-medium'><strong>Success!</strong> Prepared checklist has been securely linked to "
                                                 + email
@@ -491,7 +514,16 @@ public class HomeRepairController {
                 if (target == null)
                         return false;
                 // Allow only known affiliate/partner domains (prevents open redirect)
-                return ALLOWED_DOMAINS.stream().anyMatch(domain -> target.contains(domain));
+                try {
+                        java.net.URI uri = new java.net.URI(target);
+                        String host = uri.getHost();
+                        if (host == null)
+                                return false;
+                        return ALLOWED_DOMAINS.stream()
+                                        .anyMatch(domain -> host.equals(domain) || host.endsWith("." + domain));
+                } catch (Exception e) {
+                        return false;
+                }
         }
         // -------------------------------------------------------------------------
         // DYNAMIC SEO PAGES: STATE INDEX & RISK HUBS

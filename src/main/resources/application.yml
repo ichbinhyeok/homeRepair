@@ -2,7 +2,7 @@ spring:
   application:
     name: home-repair
   datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:file:./data/verdictdb;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE
     driverClassName: org.h2.Driver
     username: sa
     password: password
@@ -17,7 +17,7 @@ spring:
         dialect: org.hibernate.dialect.H2Dialect
   h2:
     console:
-      enabled: true
+      enabled: false
       path: /h2-console
   web:
     resources:
@@ -29,7 +29,7 @@ app:
   base-url: https://lifeverdict.com
   seo:
     default-image: /images/og-default.png
-    sitemap-path: /sitemap-home-repair.xml
+    sitemap-path: /sitemap.xml
 
 server:
   port: 8080
