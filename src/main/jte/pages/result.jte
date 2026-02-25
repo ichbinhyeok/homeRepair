@@ -158,7 +158,7 @@
                             </button>
                             
                             <!-- 메인 CTA (BUYING) -->
-                            <a href="${trackPrefix}${buyingTarget}&cat=${cat}&src=buying" target="_blank" class="mt-3 w-full py-3 bg-blue-600 text-white font-bold rounded-xl text-center text-sm hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200 block">
+                            <a href="${trackPrefix}${buyingTarget}&cat=${cat}&src=buying" target="_blank" rel="nofollow sponsored noopener" class="mt-3 w-full py-3 bg-blue-600 text-white font-bold rounded-xl text-center text-sm hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200 block">
                                 Get a local ${catName} quote to back your negotiation &rarr;
                             </a>
                             
@@ -219,12 +219,12 @@
                             </button>
                             
                             <!-- 메인 CTA (LIVING) -->
-                            <a href="${trackPrefix}${livingTarget}&cat=${cat}&src=living" target="_blank" class="mt-3 w-full py-3 bg-emerald-600 text-white font-bold rounded-xl text-center text-sm hover:bg-emerald-700 transition-colors shadow-lg shadow-emerald-200 block">
+                            <a href="${trackPrefix}${livingTarget}&cat=${cat}&src=living" target="_blank" rel="nofollow sponsored noopener" class="mt-3 w-full py-3 bg-emerald-600 text-white font-bold rounded-xl text-center text-sm hover:bg-emerald-700 transition-colors shadow-lg shadow-emerald-200 block">
                                 Find a top-rated ${catName} pro before it gets worse &rarr;
                             </a>
                             
                             <!-- 서브 CTA (LIVING 비교) -->
-                            <a href="${trackPrefix}https://thumbtack.com&cat=${cat}&src=living" target="_blank" class="mt-2 w-full py-2 bg-white border border-slate-200 text-slate-700 font-semibold rounded-xl text-center text-sm hover:bg-slate-50 transition-colors block">
+                            <a href="${trackPrefix}https://thumbtack.com&cat=${cat}&src=living" target="_blank" rel="nofollow sponsored noopener" class="mt-2 w-full py-2 bg-white border border-slate-200 text-slate-700 font-semibold rounded-xl text-center text-sm hover:bg-slate-50 transition-colors block">
                                 Compare ${catName} Quotes
                             </a>
                         </div>

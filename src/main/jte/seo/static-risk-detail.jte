@@ -117,9 +117,29 @@
                  
                  <div style="margin-bottom: 2rem;">
                     <h3 style="font-size: 1.1rem; color: var(--slate-900); margin-bottom: 0.5rem;">What is it?</h3>
-                    <p style="font-size: 1.05rem; color: var(--slate-600); line-height: 1.7;">
+                    <p style="font-size: 1.05rem; color: var(--slate-600); line-height: 1.7; margin-bottom: 1.5rem;">
                         ${item.getDefinition() != null ? item.getDefinition() : item.getExplanation()}
                     </p>
+                    
+                    <!-- AEO (Answer Engine Optimization) Snippet Table -->
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; background: white; border: 1px solid var(--slate-200); text-align: left; border-radius: var(--radius-md); overflow: hidden;">
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--slate-100);">
+                                    <th style="padding: 1rem; background: var(--slate-50); color: var(--slate-700); font-weight: 700; width: 40%;">Repair Item</th>
+                                    <td style="padding: 1rem; font-weight: 600; color: var(--slate-900);">${item.getPrettyName()}</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--slate-100);">
+                                    <th style="padding: 1rem; background: var(--slate-50); color: var(--slate-700); font-weight: 700;">Cost locally in ${metroName}</th>
+                                    <td style="padding: 1rem; color: var(--primary); font-weight: bold;">$${String.format("%,.0f", item.getAdjustedCost())}</td>
+                                </tr>
+                                <tr>
+                                    <th style="padding: 1rem; background: var(--slate-50); color: var(--slate-700); font-weight: 700;">Mandatory?</th>
+                                    <td style="padding: 1rem; color: var(--slate-700); font-weight: 500;">${item.isMandatory() ? "Yes (Required for safety/insurance)" : "Recommended (Improves value)"}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                  </div>
                  
                  @if(item.getDamageScenario() != null)

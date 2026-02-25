@@ -216,6 +216,28 @@
                     <span style="font-size: 0.9rem; color: var(--slate-500);">Verify these items immediately</span>
                 </div>
                 
+                <!-- AEO (Answer Engine Optimization) Table -->
+                <div style="margin-bottom: 2rem; overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; background: white; border: 1px solid var(--slate-200); text-align: left; border-radius: var(--radius-md); overflow: hidden;">
+                        <thead>
+                            <tr style="background: var(--slate-50); border-bottom: 2px solid var(--slate-200);">
+                                <th style="padding: 1rem; color: var(--slate-700); font-weight: 700;">Repair Component</th>
+                                <th style="padding: 1rem; color: var(--slate-700); font-weight: 700;">Estimated Replacement Cost</th>
+                                <th style="padding: 1rem; color: var(--slate-700); font-weight: 700;">Safety Risk</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for(var item : verdict.getPlan().getMustDo())
+                            <tr style="border-bottom: 1px solid var(--slate-100);">
+                                <td style="padding: 1rem; font-weight: 600; color: var(--slate-900);">${item.getPrettyName()}</td>
+                                <td style="padding: 1rem; color: var(--slate-700); font-weight: 500;">$${String.format("%,.0f", item.getAdjustedCost())}</td>
+                                <td style="padding: 1rem; color: #e11d48; font-size: 0.85rem; font-weight: 600;">${item.getRiskFlags().size() > 0 ? "High" : "Moderate"}</td>
+                            </tr>
+                            @endfor
+                        </tbody>
+                    </table>
+                </div>
+                
                 <div class="risk-list">
                     @for(var item : verdict.getPlan().getMustDo())
                         <div class="risk-row">

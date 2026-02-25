@@ -24,11 +24,11 @@ public class VerdictSeoService {
      */
     public SeoVariant getStaticPageHeader(String metroName, String eraName) {
         // H1: Informational, descriptive (what this page is about)
-        String h1 = String.format("What homeowners typically spend fixing %s homes in %s", eraName, metroName);
+        String h1 = String.format("Hidden repair liabilities in %s homes in %s", eraName, metroName);
 
         // Title: CTR-Optimized (Curiosity Gap + Urgency + Year)
         // Pattern: "[Era] Home in [City]: $XX,XXX Hidden Costs? (2026)"
-        String title = String.format("%s Home Repair Costs in %s: What to Expect (2026)", eraName, metroName);
+        String title = String.format("Avoid Hidden Costs: %s Homes in %s (2026 Audit)", eraName, metroName);
 
         return new SeoVariant(title, h1);
     }
