@@ -160,7 +160,9 @@ public class HomeRepairController {
     }
 
     @GetMapping("/result/{uuid}")
-    public String result(@PathVariable("uuid") UUID uuid, Model model) {
+    public String result(@PathVariable("uuid") UUID uuid, Model model,
+            jakarta.servlet.http.HttpServletResponse response) {
+        response.setHeader("X-Robots-Tag", "noindex");
         try {
             VerdictHistory history = repository.findById(uuid)
                     .orElseThrow(() -> new IllegalArgumentException("Invalid Verdict ID"));
@@ -278,10 +280,32 @@ public class HomeRepairController {
     // DYNAMIC LEVEL 2: RISK DETAIL PSEO
     // -------------------------------------------------------------------------
     @GetMapping("/verdicts/{metro}/{era}/{riskItem}")
-    public String viewRiskDetail(@PathVariable String metro,
+    public Object viewRiskDetail(@PathVariable String metro,
             @PathVariable String era,
             @PathVariable String riskItem,
             Model model) {
+
+        String canonicalSlug = riskItem.trim().toLowerCase();
+        boolean needsRedirect = false;
+        while (canonicalSlug.endsWith(".html") || canonicalSlug.endsWith(".htm")) {
+            needsRedirect = true;
+            if (canonicalSlug.endsWith(".html")) {
+                canonicalSlug = canonicalSlug.substring(0, canonicalSlug.length() - 5);
+            } else if (canonicalSlug.endsWith(".htm")) {
+                canonicalSlug = canonicalSlug.substring(0, canonicalSlug.length() - 4);
+            }
+        }
+
+        if (needsRedirect) {
+            RedirectView rv = new RedirectView("/home-repair/verdicts/" + metro + "/" + era + "/" + canonicalSlug);
+            rv.setStatusCode(org.springframework.http.HttpStatus.MOVED_PERMANENTLY);
+            return rv;
+        }
+
+        if (!canonicalSlug.matches("^[a-z0-9-]+$") || canonicalSlug.contains("../")) {
+            throw new org.springframework.web.server.ResponseStatusException(
+                    org.springframework.http.HttpStatus.NOT_FOUND);
+        }
 
         // 1. Generate core verdict logic
         UserContext context = UserContext.builder()
@@ -294,11 +318,13 @@ public class HomeRepairController {
         Verdict verdict = verdictEngineService.generateVerdict(context);
 
         // 2. Find specific risk item
+        final String finalSlug = canonicalSlug;
         RiskAdjustedItem targetItem = verdict.getPlan().getMustDo().stream()
                 .filter(item -> item.getItemCode().toLowerCase().replace("_", "-")
-                        .equals(riskItem.replace(".html", "")))
+                        .equals(finalSlug))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Risk item not found: " + riskItem));
+                .orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(
+                        org.springframework.http.HttpStatus.NOT_FOUND));
 
         // 3. Prepare Model for Template (same as StaticPageGenerator)
         String metroName = TextUtil.formatMetroName(context.getMetroCode());
@@ -327,7 +353,7 @@ public class HomeRepairController {
                         targetItem.getPrettyName(), metroName, targetItem.getAdjustedCost(), eraName));
         model.addAttribute("targetItem", targetItem); // Template expects 'item' or we map it
         model.addAttribute("item", targetItem); // Mapping to 'item' as per template
-        model.addAttribute("itemSlug", riskItem.replace(".html", ""));
+        model.addAttribute("itemSlug", finalSlug);
         model.addAttribute("verdict", verdict);
         model.addAttribute("metroCode", context.getMetroCode());
         model.addAttribute("metroName", metroName);
@@ -345,7 +371,24 @@ public class HomeRepairController {
         String parentUrl = "/home-repair/verdicts/" + metro + "/" + era + ".html";
         model.addAttribute("parentUrl", parentUrl);
         model.addAttribute("canonicalUrl",
-                "https://lifeverdict.com/home-repair/verdicts/" + metro + "/" + era + "/" + riskItem + ".html");
+                "https://lifeverdict.com/home-repair/verdicts/" + metro + "/" + era + "/" + finalSlug);
+
+        String localDateString = java.time.LocalDate.now()
+                .format(java.time.format.DateTimeFormatter.ofPattern("MMMM yyyy", java.util.Locale.ENGLISH));
+        model.addAttribute("dateString", localDateString);
+        model.addAttribute("h1Content",
+                String.format("%s cost in %s (%s)", targetItem.getPrettyName(), metroName, eraName));
+
+        java.util.List<com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink> otherRisks = verdict
+                .getPlan().getMustDo().stream()
+                .filter(i -> !i.getItemCode().equalsIgnoreCase(targetItem.getItemCode()))
+                .limit(5)
+                .map(i -> new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
+                        i.getPrettyName(),
+                        "/home-repair/verdicts/" + metro + "/" + era + "/"
+                                + i.getItemCode().toLowerCase().replace("_", "-")))
+                .collect(java.util.stream.Collectors.toList());
+        model.addAttribute("otherRisks", otherRisks);
 
         // Helper Schemas (Empty for now, can be refactored to shared service)
         model.addAttribute("faqSchema", "");
@@ -400,5 +443,83 @@ public class HomeRepairController {
         // Whitelist allowed domains
         return target.startsWith("https://example.com") ||
                 target.startsWith("http://localhost");
+    }
+
+    // -------------------------------------------------------------------------
+    // DYNAMIC SEO PAGES: STATE INDEX & RISK HUBS
+    // -------------------------------------------------------------------------
+
+    @GetMapping("/verdicts/states")
+    public String statesHub(Model model) {
+        List<String> states = java.util.Arrays.asList(
+                "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
+                "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
+                "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
+                "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
+                "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "DC");
+        model.addAttribute("states", states);
+        model.addAttribute("baseUrl", "https://lifeverdict.com");
+        return "seo/state-index";
+    }
+
+    @GetMapping("/risks")
+    public String riskIndex(Model model) {
+        List<String> hubs = java.util.Arrays.asList(
+                "knob-and-tube-wiring",
+                "polybutylene-pipes",
+                "fpe-electrical-panel",
+                "asbestos-risk",
+                "galvanized-pipes");
+        model.addAttribute("hubs", hubs);
+        return "seo/risk-index";
+    }
+
+    @GetMapping("/risks/{riskSlug}")
+    public Object riskHub(@PathVariable String riskSlug, Model model) {
+        java.util.Map<String, String> titles = java.util.Map.of(
+                "knob-and-tube-wiring", "Knob and Tube Wiring Replacement Guide",
+                "polybutylene-pipes", "Polybutylene Pipe Replacement Guide",
+                "fpe-electrical-panel", "FPE Electrical Panel Upgrade Guide",
+                "asbestos-risk", "Asbestos Detection & Abatement Guide",
+                "galvanized-pipes", "Galvanized Plumbing Replacement Guide");
+
+        if (!titles.containsKey(riskSlug)) {
+            throw new org.springframework.web.server.ResponseStatusException(
+                    org.springframework.http.HttpStatus.NOT_FOUND);
+        }
+
+        model.addAttribute("riskSlug", riskSlug);
+        model.addAttribute("titleH1", titles.get(riskSlug));
+        model.addAttribute("l1Links", buildL1LinksForRiskHub());
+        model.addAttribute("baseUrl", "https://lifeverdict.com");
+        return "seo/risk-hub";
+    }
+
+    private List<com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink> buildL1LinksForRiskHub() {
+        return java.util.Arrays.asList(
+                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink("Older Homes in Scranton, PA",
+                        "/home-repair/verdicts/scranton-pa/pre-1950.html"),
+                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink("Older Homes in Syracuse, NY",
+                        "/home-repair/verdicts/syracuse-ny/pre-1950.html"),
+                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink("1950s Homes in Cleveland, OH",
+                        "/home-repair/verdicts/cleveland-oh/1950-1970.html"),
+                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
+                        "Mid-Century Homes in Kansas City, MO", "/home-repair/verdicts/kansas-city-mo/1950-1970.html"),
+                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
+                        "1970s Homes in Albuquerque, NM", "/home-repair/verdicts/albuquerque-nm/1970-1980.html"),
+                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink("1970s Homes in Omaha, NE",
+                        "/home-repair/verdicts/omaha-ne/1970-1980.html"),
+                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink("1980s Homes in Tulsa, OK",
+                        "/home-repair/verdicts/tulsa-ok/1980-1995.html"),
+                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink("1980s Homes in Wichita, KS",
+                        "/home-repair/verdicts/wichita-ks/1980-1995.html"),
+                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink("1990s Homes in Fresno, CA",
+                        "/home-repair/verdicts/fresno-ca/1980-1995.html"),
+                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
+                        "1990s Homes in Des Moines, IA", "/home-repair/verdicts/des-moines-ia/1980-1995.html"),
+                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink("Newer Homes in Boise, ID",
+                        "/home-repair/verdicts/boise-city-id/1995-2010.html"),
+                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink("Newer Homes in Provo, UT",
+                        "/home-repair/verdicts/provo-orem-ut/1995-2010.html"));
     }
 }

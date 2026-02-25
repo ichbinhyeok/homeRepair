@@ -43,10 +43,14 @@ public class SitemapGenerator {
         // 1. Core Pages (Seed)
         xml.append(buildUrlEntry(BASE_URL + "/", lastMod, "daily", "1.0"));
         xml.append(buildUrlEntry(BASE_URL + "/home-repair", lastMod, "weekly", "0.9"));
-        xml.append(buildUrlEntry(BASE_URL + "/methodology", lastMod, "monthly", "0.8"));
-        xml.append(buildUrlEntry(BASE_URL + "/about", lastMod, "monthly", "0.7"));
-        xml.append(buildUrlEntry(BASE_URL + "/editorial-policy", lastMod, "monthly", "0.7"));
-        urlCount += 5;
+        xml.append(buildUrlEntry(BASE_URL + "/home-repair/methodology", lastMod, "monthly", "0.8"));
+        xml.append(buildUrlEntry(BASE_URL + "/home-repair/about", lastMod, "monthly", "0.7"));
+        xml.append(buildUrlEntry(BASE_URL + "/home-repair/editorial-policy", lastMod, "monthly", "0.7"));
+        xml.append(buildUrlEntry(BASE_URL + "/home-repair/disclaimer", lastMod, "monthly", "0.7"));
+        xml.append(buildUrlEntry(BASE_URL + "/home-repair/data-sources", lastMod, "monthly", "0.7"));
+        xml.append(buildUrlEntry(BASE_URL + "/home-repair/verdicts/states", lastMod, "weekly", "0.9"));
+        xml.append(buildUrlEntry(BASE_URL + "/home-repair/risks", lastMod, "weekly", "0.9"));
+        urlCount += 9;
 
         // 2. Generated Pages (All Static Seed Pages)
         // Includes State Hubs and Verdict Pages (L1)

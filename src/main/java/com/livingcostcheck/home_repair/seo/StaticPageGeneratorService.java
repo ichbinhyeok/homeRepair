@@ -108,7 +108,8 @@ public class StaticPageGeneratorService {
                                                 stateCode));
 
                 // Strategy: Add Product Schema with AggregateRating (requires UI element)
-                templateData.put("productSchema", generateProductSchema(metroName, eraName, verdict));
+                // Removed productSchema as requested to prevent false schema spam
+                templateData.put("productSchema", "");
 
                 // Updated InternalLinkBuilder Calls
                 templateData.put("stateLinks", internalLinkBuilder.getRelatedCitiesInState(metroCode, era,

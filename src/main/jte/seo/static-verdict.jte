@@ -37,6 +37,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JV6YLYZHN8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-JV6YLYZHN8');
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
@@ -64,7 +73,6 @@
     $unsafe{faqSchema}
     $unsafe{breadcrumbSchema}
     $unsafe{howToSchema}
-    $unsafe{productSchema}
 </head>
 <body>
     @template.layout._header()
@@ -119,19 +127,13 @@
                 
                 <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--slate-100); text-align: center;">
                      <p style="color: var(--slate-500); margin-bottom: 1rem;">
-                        Homebuyers in <strong>${metroName}</strong> typically underestimate repair costs by <strong>30-40%</strong>. 
-                        Use this data to negotiate.
+                        Repair costs vary widely by property condition and bids in <strong>${metroName}</strong>. 
+                        Use these benchmarks as a starting point and validate with inspection + multiple quotes.
                      </p>
                 </div>
             </div>
             
-            <!-- TRUST & RATING BADGE (Required for Schema Compliance) -->
-            <div style="text-align: center; margin-top: 1rem; margin-bottom: 2rem;">
-                <div style="display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(255,255,255,0.9); padding: 0.35rem 0.85rem; border-radius: 100px; border: 1px solid var(--slate-200); box-shadow: var(--shadow-sm);">
-                    <span style="color: #fbbf24;">★★★★★</span>
-                    <span style="font-size: 0.85rem; font-weight: 600; color: var(--slate-700);">Accuracy: 4.8/5</span>
-                </div>
-            </div>
+
 
             <!-- 2. NEIGHBOR COMPARISON (COMPS) -->
             @if(verdict.getComparisonData() != null)
@@ -249,6 +251,17 @@
                         </div>
                     @endfor
                 </div>
+            </div>
+            
+            <div class="bento-card span-12 insight-card" style="margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 1rem;">Common Risks for ${eraName}</h3>
+                <ul style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; list-style: none; padding: 0;">
+                    <li><a href="/home-repair/risks/knob-and-tube-wiring" class="action-link" style="color: var(--primary);">Knob and Tube Wiring &rarr;</a></li>
+                    <li><a href="/home-repair/risks/polybutylene-pipes" class="action-link" style="color: var(--primary);">Polybutylene Pipes &rarr;</a></li>
+                    <li><a href="/home-repair/risks/fpe-electrical-panel" class="action-link" style="color: var(--primary);">FPE Electrical Panel &rarr;</a></li>
+                    <li><a href="/home-repair/risks/asbestos-risk" class="action-link" style="color: var(--primary);">Asbestos Risk &rarr;</a></li>
+                    <li><a href="/home-repair/risks/galvanized-pipes" class="action-link" style="color: var(--primary);">Galvanized Pipes &rarr;</a></li>
+                </ul>
             </div>
             
             <!-- 5. TIMELINE (VISUAL) -->
