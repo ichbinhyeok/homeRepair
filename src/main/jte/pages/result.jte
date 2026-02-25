@@ -104,18 +104,18 @@
                             @endif
                         </h2>
                         <div class="flex items-baseline gap-1 mt-4">
-                            <span class="text-7xl font-semibold tracking-tighter">
+                            <span class="text-5xl md:text-6xl lg:text-7xl xl:text-[4.5rem] font-semibold tracking-tighter leading-tight block">
                                 ${verdict.getCostRangeLabel().contains("(") ? verdict.getCostRangeLabel().substring(0, verdict.getCostRangeLabel().indexOf("(")) : verdict.getCostRangeLabel()}
                             </span>
                         </div>
                     </div>
 
-                    <div class="relative z-10 mt-8 flex items-end justify-between">
+                    <div class="relative z-10 mt-8 flex flex-col lg:flex-row items-start lg:items-end justify-between gap-6">
                          <p class="text-slate-400 text-sm font-medium max-w-sm">
                             Total estimated immediate to 5-year liability based on forensic scan of ${verdict.getItemsAnalyzed()} components.
                         </p>
                         @if(verdict.getPrimaryCostDriver() != null)
-                            <div class="text-right">
+                            <div class="text-left lg:text-right w-full lg:w-auto mt-2 lg:mt-0 pt-4 lg:pt-0 border-t border-slate-800 lg:border-t-0">
                                  <div class="text-xs font-bold text-slate-500 uppercase mb-1">Primary Cost Driver</div>
                                  <div class="text-lg font-semibold">${verdict.getPrimaryCostDriver().replace("Primary Cost Driver:", "").trim()}</div>
                             </div>

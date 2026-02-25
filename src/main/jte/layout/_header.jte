@@ -30,7 +30,7 @@
     }
 </style>
 
-<header style="position: sticky; top: 0; z-index: 40; width: 100%; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); border-bottom: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+<header style="position: sticky; top: 0; z-index: 100; width: 100%; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
     <div class="header-container">
         <a href="/home-repair" style="display: flex; align-items: center; gap: 8px; font-family: 'Outfit', sans-serif; font-weight: 800; color: #0f172a; font-size: 1.25rem; text-decoration: none; letter-spacing: -0.02em;">
             <!-- SVG Logo Icon -->

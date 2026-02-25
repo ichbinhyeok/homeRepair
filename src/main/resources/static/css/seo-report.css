@@ -487,10 +487,7 @@ a:hover {
 
 /* Sticky CTA */
 .sticky-cta {
-    position: sticky;
-    bottom: 2rem;
-    z-index: 50;
-    margin: 0 auto;
+    margin: 2rem auto;
     width: fit-content;
     animation: slideUp 0.5s ease-out;
 }
