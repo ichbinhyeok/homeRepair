@@ -216,6 +216,16 @@
                     <span style="font-size: 0.9rem; color: var(--slate-500);">Verify these items immediately</span>
                 </div>
                 
+                <!-- BLUF: Bottom Line Up Front (AEO Target) -->
+                <div style="background: linear-gradient(135deg, #eff6ff, #f0fdf4); border-left: 4px solid var(--primary); padding: 1.5rem 2rem; border-radius: 0 var(--radius-md) var(--radius-md) 0; margin-bottom: 2rem;">
+                    <p style="font-size: 1.05rem; font-weight: 600; color: var(--slate-900); margin-bottom: 0.5rem;">
+                        📋 Bottom Line for Buyers:
+                    </p>
+                    <p style="color: var(--slate-700); line-height: 1.7;">
+                        A ${eraName} home in ${metroName} carries an estimated <strong>$${lowPrice}&ndash;$${highPrice}</strong> in deferred maintenance liability across <strong>${verdict.getPlan().getMustDo().size()} critical systems</strong>. The primary cost drivers are age-related degradation of structural and mechanical components common to this building era. These figures reflect ${dateString} ${metroName}-area labor rates and material pricing.
+                    </p>
+                </div>
+
                 <!-- AEO (Answer Engine Optimization) Table -->
                 <div style="margin-bottom: 2rem; overflow-x: auto;">
                     <table style="width: 100%; border-collapse: collapse; background: white; border: 1px solid var(--slate-200); text-align: left; border-radius: var(--radius-md); overflow: hidden;">
@@ -272,6 +282,31 @@
                             </div>
                         </div>
                     @endfor
+                </div>
+            </div>
+
+            <!-- EDITORIAL ANALYSIS: Era + Climate + Cost Context (HCU Differentiation) -->
+            <div class="bento-card span-12" style="border-top: 3px solid var(--primary);">
+                <h3 style="margin-bottom: 1.5rem;">Why ${eraName} Homes in ${metroName} Cost More to Maintain</h3>
+                
+                <div style="display: grid; gap: 1.5rem;">
+                    <!-- Era-Specific Analysis -->
+                    <div style="padding: 1.25rem; background: var(--slate-50); border-radius: var(--radius-md);">
+                        <h4 style="font-size: 0.9rem; text-transform: uppercase; color: var(--slate-500); margin-bottom: 0.75rem; letter-spacing: 0.05em;">🏗️ Construction Era Analysis</h4>
+                        <p style="color: var(--slate-700); line-height: 1.8;">${eraFragment}</p>
+                    </div>
+                    
+                    <!-- Climate Impact -->
+                    <div style="padding: 1.25rem; background: var(--slate-50); border-radius: var(--radius-md);">
+                        <h4 style="font-size: 0.9rem; text-transform: uppercase; color: var(--slate-500); margin-bottom: 0.75rem; letter-spacing: 0.05em;">🌡️ Climate Impact on ${metroName} Homes</h4>
+                        <p style="color: var(--slate-700); line-height: 1.8;">${climateFragment}</p>
+                    </div>
+                    
+                    <!-- Cost Economics -->
+                    <div style="padding: 1.25rem; background: var(--slate-50); border-radius: var(--radius-md);">
+                        <h4 style="font-size: 0.9rem; text-transform: uppercase; color: var(--slate-500); margin-bottom: 0.75rem; letter-spacing: 0.05em;">💰 Local Repair Cost Economics</h4>
+                        <p style="color: var(--slate-700); line-height: 1.8;">${costFragment}</p>
+                    </div>
                 </div>
             </div>
             

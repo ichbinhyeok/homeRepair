@@ -15,14 +15,15 @@ class VerdictSeoServiceTest {
 
         VerdictSeoService.SeoVariant result = service.getStaticPageHeader(metro, era);
 
-        // Verify Informational Intent (No "Verdict" or "Risk" in H1)
-        assertThat(result.h1()).contains("What homeowners typically spend fixing");
+        // Verify Buyer-Pivot H1: "Hidden repair liabilities in {era} homes in {metro}"
+        assertThat(result.h1()).contains("Hidden repair liabilities in");
         assertThat(result.h1()).contains(metro);
         assertThat(result.h1()).contains(era);
 
-        // Verify Curiosity Gap in Title
-        assertThat(result.title()).contains("Home Repair Costs in");
-        assertThat(result.title()).contains("What to Expect (2026)");
+        // Verify CTR-Optimized Title: "Avoid Hidden Costs: {era} Homes in {metro} (2026
+        // Audit)"
+        assertThat(result.title()).contains("Avoid Hidden Costs:");
+        assertThat(result.title()).contains("(2026 Audit)");
     }
 
     @Test

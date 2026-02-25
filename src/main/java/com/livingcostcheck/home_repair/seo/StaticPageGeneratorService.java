@@ -125,11 +125,15 @@ public class StaticPageGeneratorService {
                 }
 
                 long seed = (metroCode + era).hashCode();
-                templateData.put("climateFragment", FragmentLibrary.selectClimateFragment(null, seed));
-                templateData.put("eraFragment", FragmentLibrary.selectEraFragment(era, seed + 1));
-                templateData.put("costFragment", FragmentLibrary.selectCostFragment(1.0, seed + 2));
 
                 DataMapping.MetroCityData mData = verdictEngineService.getMetroMasterData().getData().get(metroCode);
+
+                String actualClimateZone = (mData != null) ? mData.getClimateZone() : null;
+                double actualLaborMult = (mData != null && mData.getLaborMult() != null) ? mData.getLaborMult() : 1.0;
+                templateData.put("climateFragment", FragmentLibrary.selectClimateFragment(actualClimateZone, seed));
+                templateData.put("eraFragment", FragmentLibrary.selectEraFragment(era, seed + 1));
+                templateData.put("costFragment", FragmentLibrary.selectCostFragment(actualLaborMult, seed + 2));
+
                 if (mData != null) {
                         templateData.put("metroRisk", mData.getRisk());
                         templateData.put("climateZone", mData.getClimateZone());
@@ -260,6 +264,24 @@ public class StaticPageGeneratorService {
                                                 .map(VerdictDTOs.RiskAdjustedItem::getPrettyName)
                                                 .orElse("electrical panels")));
                 faqs.add(q3);
+
+                // Q4: Home Inspection (Long-tail: "should I get inspection before buying")
+                Map<String, String> q4 = new HashMap<>();
+                q4.put("question", String.format("Should I get a home inspection before buying a %s home in %s?",
+                                eraName.split("\\(")[0].trim(), metroName.split(",")[0].trim()));
+                q4.put("answer", String.format(
+                                "Absolutely. A professional inspection for %s-era homes is essential because building codes of that period often permitted materials and methods now considered substandard. In %s, focus the inspection on %s, which are the most likely sources of expensive surprises. Budget $300&ndash;$500 for a qualified inspector familiar with %s construction.",
+                                eraName.split("\\(")[0].trim(), metroName, riskList, eraName.split("\\(")[0].trim()));
+                faqs.add(q4);
+
+                // Q5: Timeline (Long-tail: "how long do repairs take")
+                Map<String, String> q5 = new HashMap<>();
+                q5.put("question", String.format("How long do major repairs typically take on a %s home?",
+                                eraName.split("\\(")[0].trim()));
+                q5.put("answer", String.format(
+                                "Timeline varies by scope, but for %s-era properties requiring %d critical system updates, expect 4&ndash;12 weeks of active work. In %s, contractor scheduling adds 2&ndash;6 weeks of lead time depending on season. Prioritize safety-critical items (electrical, structural) first, as these affect insurability and habitability.",
+                                eraName.split("\\(")[0].trim(), verdict.getPlan().getMustDo().size(), metroName));
+                faqs.add(q5);
 
                 return faqs;
         }

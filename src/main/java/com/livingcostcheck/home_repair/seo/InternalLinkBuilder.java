@@ -79,7 +79,7 @@ public class InternalLinkBuilder {
 
         private String buildVerdictUrl(String metro, String era) {
                 return "/home-repair/verdicts/" + metro.toLowerCase().replace("_", "-") + "/"
-                                + era.toLowerCase().replace("_", "-") + ".html";
+                                + era.toLowerCase().replace("_", "-");
         }
 
         private String buildRiskUrl(String metro, String era, String riskCode) {
