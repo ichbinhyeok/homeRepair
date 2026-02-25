@@ -54,35 +54,26 @@ public class InternalLinkBuilder {
                                 .collect(Collectors.toList());
         }
 
-        // Smart Regional Mapping: Use State-based matching instead of manual map
+        // Smart Regional Mapping: For "Nearby", return different markets to increase
+        // diversity
+        // Avoid pure same-state overlap with getRelatedCitiesInState
         public List<InternalLink> getNearbyMetrosInEra(String currentMetro, String currentEra,
                         Map<String, ?> allMetros) {
                 String state = extractStateCode(currentMetro);
-                if (state == null)
-                        return getDefaultNearbyMetros(currentMetro, currentEra);
 
-                return allMetros.keySet().stream()
-                                .filter(m -> m.endsWith("_" + state) && !m.equals(currentMetro))
+                // Shuffle all metros to find diverse neighbors (pseudo-nearby by taking other
+                // states)
+                List<String> keys = new ArrayList<>(allMetros.keySet());
+                Collections.shuffle(keys, new Random((currentMetro + currentEra + "nearby").hashCode()));
+
+                return keys.stream()
+                                .filter(m -> !m.equals(currentMetro))
+                                .filter(m -> state == null || !m.endsWith("_" + state)) // **핵심: 같은 주 제외하여 중복 방지**
                                 .limit(5)
                                 .map(metro -> new InternalLink(
-                                                "Local Comp: " + formatMetroName(metro) + " ("
+                                                "Explore: " + formatMetroName(metro) + " ("
                                                                 + formatEraText(currentEra) + ")",
                                                 buildVerdictUrl(metro, currentEra)))
-                                .collect(Collectors.toList());
-        }
-
-        private List<InternalLink> getDefaultNearbyMetros(String currentMetro, String era) {
-                List<String> majorMetros = Arrays.asList(
-                                "ATLANTA_SANDY_SPRINGS_GA", "BOSTON_CAMBRIDGE_MA", "CHICAGO_NAPERVILLE_IL",
-                                "DALLAS_FT_WORTH_ARLINGTON_TX", "HOUSTON_THE_WOODLANDS_TX", "LOS_ANGELES_LONG_BEACH_CA",
-                                "NEW_YORK_NEWARK_NJ", "SAN_FRANCISCO_OAKLAND_CA");
-
-                return majorMetros.stream()
-                                .filter(m -> !m.equals(currentMetro))
-                                .limit(5)
-                                .map(metro -> new InternalLink(
-                                                "Market Comparison: " + formatMetroName(metro),
-                                                buildVerdictUrl(metro, era)))
                                 .collect(Collectors.toList());
         }
 

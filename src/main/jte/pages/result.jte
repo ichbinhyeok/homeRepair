@@ -16,6 +16,22 @@
         <style>
             .bento-card { @apply bg-white rounded-2xl border border-slate-100 shadow-sm p-6 hover:shadow-md transition-shadow duration-300; }
             .hero-pattern { background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 20px 20px; opacity: 0.3; }
+            
+            /* PDF Print Styles for "Forensic Audit Report" Look */
+            @media print {
+                body { background: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+                header, footer, .print\\:hidden { display: none !important; }
+                .bg-black, .bg-slate-900 { background: white !important; color: black !important; border: 2px solid #000; }
+                .text-white { color: black !important; }
+                .shadow-2xl, .shadow-sm { shadow: none !important; box-shadow: none !important; }
+                .bento-card { border: 1px solid #ccc !important; break-inside: avoid; }
+                /* Stamp Effect */
+                .report-stamp { position: absolute; top: 20px; right: 20px; border: 3px solid #64748b; color: #64748b; padding: 10px; font-family: monospace; font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; transform: rotate(-5deg); opacity: 0.8; }
+                /* Replace visual buttons with textual links for print */
+                button { display: none !important; }
+                /* Reset Grid for Print */
+                .md\\:col-span-8, .md\\:col-span-4, .md\\:col-span-12 { grid-column: span 12 / span 12 !important; }
+            }
         </style>
     `,
     content = @`
@@ -39,9 +55,9 @@
                             @endif
                         </span>
                     </div>
-                    <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-2">
+                    <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-2 relative">
                         @if("BUYING".equals(history.getPurpose()))
-                            ${verdictH1 != null ? verdictH1 : "Risk Assessment Report"}
+                            Vendor-Agnostic Forensic Audit
                         @else
                             ${verdictH1 != null ? verdictH1 : (verdict.getHeadline().split("\\.")[0] + ".")}
                         @endif
@@ -73,12 +89,18 @@
                     <div class="absolute inset-0 bg-gradient-to-br from-slate-900 to-black"></div>
                     <div class="absolute right-0 bottom-0 w-64 h-64 bg-blue-600 rounded-full blur-[120px] opacity-20 group-hover:opacity-30 transition-opacity"></div>
                     
+                    <div class="report-stamp hidden print:block">
+                        OFFICIAL DATA REPORT<br>
+                        Ref: V-${history.getId().toString().substring(0,8)}<br>
+                        Generated: ${java.time.LocalDate.now().toString()}<br>
+                        Data Source: RSMeans/BLS
+                    </div>
                     <div class="relative z-10">
                         <h2 class="text-sm font-medium text-slate-400 uppercase tracking-widest mb-1">
                             @if("BUYING".equals(history.getPurpose()))
-                                Potential Liability (Risk)
+                                Deferred Maintenance Liability
                             @else
-                                Estimated Repair Budget
+                                Capital Expenditure Budget
                             @endif
                         </h2>
                         <div class="flex items-baseline gap-1 mt-4">
@@ -140,15 +162,44 @@
                                 Get a local ${catName} quote to back your negotiation &rarr;
                             </a>
                             
-                            <!-- 백업 CTA (이메일 수집 보험) -->
-                            <form onsubmit="event.preventDefault(); const form=this; fetch('/api/lead?verdictId=${history.getId().toString()}&email=' + this.email.value, {method: 'POST'}).then(r => r.text()).then(t => form.outerHTML = t);" class="mt-3 w-full">
-                                <div class="flex gap-2">
-                                    <input type="email" name="email" placeholder="Your email..." required class="flex-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
-                                    <button type="submit" class="px-3 py-2 bg-slate-100 text-slate-700 font-bold text-sm rounded-lg hover:bg-slate-200 transition-colors whitespace-nowrap">
-                                        Send Checklist
-                                    </button>
-                                </div>
-                            </form>
+                            <!-- 백업 CTA (이메일 수집 보험) + 언락 로직 -->
+                            <div id="lead-capture-container" class="mt-4 print:hidden">
+                                <form id="report-unlock-form" onsubmit="event.preventDefault(); window.unlockReport(this);" class="w-full">
+                                    <div class="mb-2 text-xs font-bold text-slate-500 uppercase">Unlock PDF Report & Script</div>
+                                    <div class="flex gap-2">
+                                        <input type="email" name="email" placeholder="Enter email to get PDF print rights..." required class="flex-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
+                                        <button type="submit" class="px-3 py-2 bg-slate-900 text-white font-bold text-sm rounded-lg hover:bg-slate-800 transition-colors whitespace-nowrap">
+                                            Unlock Free
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- 잠금 해제 후 보이는 섹션 -->
+                            <div id="unlocked-actions" class="hidden mt-4 pt-4 border-t border-slate-100">
+                                <div class="bg-emerald-50 text-emerald-800 text-xs p-2 rounded mb-3 font-medium">✅ Unlocked! You can now print the forensic PDF and copy the agent script.</div>
+                                <button onclick="navigator.clipboard.writeText('Dear Agent,\n\nPlease see the attached LifeVerdict Forensic Audit for this property. The analysis shows that systems are reaching actuarial depreciation limits.\n\nWe would like to request a Seller Credit of \\$${String.format("%,.0f", verdict.getExactCostEstimate())} strictly for these deferred maintenance liabilities before closing.\n\nThank you.'); alert('Negotiation script copied to clipboard!'); gtag('event', 'copy_script', {'event_category': 'engagement'});" class="w-full py-2.5 bg-slate-900 text-white font-semibold rounded-lg text-sm hover:bg-slate-700 transition-colors mb-2">
+                                    Copy Agent Negotiation Script
+                                </button>
+                                <button onclick="gtag('event', 'print_pdf', {'event_category': 'engagement'}); window.print();" class="w-full py-2.5 bg-white border border-slate-300 text-slate-700 font-semibold rounded-lg text-sm hover:bg-slate-50 transition-colors flex items-center justify-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 00-2 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                                    Print Official PDF Report
+                                </button>
+                            </div>
+                            
+                            <script>
+                                window.unlockReport = function(form) {
+                                    const email = form.email.value;
+                                    fetch('/api/lead?verdictId=${history.getId().toString()}&email=' + encodeURIComponent(email), {method: 'POST'})
+                                    .then(() => {
+                                        document.getElementById('lead-capture-container').classList.add('hidden');
+                                        document.getElementById('unlocked-actions').classList.remove('hidden');
+                                        gtag('event', 'generate_lead', {
+                                            'event_category': 'conversion',
+                                            'event_label': 'PDF_Unlock'
+                                        });
+                                    });
+                                };
+                            </script>
                         </div>
                     @else
                         <!-- OWNER MODE: Strategy -->
@@ -253,7 +304,7 @@
                             @if(verdict.getComparisonData().getCostDelta() > 0)
                                 Compared to a modern home (2010+) in this zip code, this property carries an additional 
                                 <span class="font-bold text-slate-900">$${String.format("%,.0f", verdict.getComparisonData().getCostDelta())}</span> 
-                                in statistical maintenance risk.
+                                in statistical maintenance liability and actuarial depreciation risk.
                             @else
                                 This property's estimated maintenance costs are 
                                 <span class="font-bold text-slate-900">$${String.format("%,.0f", Math.abs(verdict.getComparisonData().getCostDelta()))}</span> 
@@ -416,19 +467,15 @@
                     </div>
                 </div>
 
-                <!-- Share & Export -->
+                <!-- Share & Export (Moved to Unlock logic above for Buying mode, kept simple here for others) -->
                 <div class="bg-slate-900 text-white p-8 rounded-[32px] shadow-xl flex flex-col md:flex-row items-center justify-between gap-8 mb-12 print:hidden">
                     <div class="max-w-md">
-                        <h3 class="text-2xl font-bold mb-2">Take this report with you.</h3>
-                        <p class="text-slate-400 text-sm">Download the full forensic analysis or share it with your inspector/realtor to streamline negotiation.</p>
+                        <h3 class="text-2xl font-bold mb-2">Share this analysis.</h3>
+                        <p class="text-slate-400 text-sm">Send this link to your partner or contractor for a quick overview.</p>
                     </div>
                     <div class="flex flex-wrap gap-4">
-                        <button onclick="window.print()" class="px-6 py-3 bg-white text-slate-900 font-bold rounded-xl hover:bg-slate-100 transition flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 00-2 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                            Save as PDF / Print
-                        </button>
-                        <button onclick="navigator.clipboard.writeText(window.location.href); alert('Link copied!');" class="px-6 py-3 bg-slate-800 text-white font-bold rounded-xl border border-slate-700 hover:bg-slate-700 transition flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+                        <button onclick="navigator.clipboard.writeText(window.location.href); alert('Link copied!'); gtag('event', 'share', {'method': 'clipboard'});" class="px-6 py-3 bg-slate-800 text-white font-bold rounded-xl border border-slate-700 hover:bg-slate-700 transition flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
                             Copy Sharable Link
                         </button>
                     </div>

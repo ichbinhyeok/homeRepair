@@ -100,8 +100,6 @@ public class StaticPageGeneratorService {
 
                 String stateCode = extractStateCode(metroCode);
 
-                // templateData.put("faqSchema", generateFAQSchema(metroName, eraName,
-                // verdict)); // Replaced by dynamic schema below
                 templateData.put("howToSchema", generateHowToSchema(metroName, eraName));
                 templateData.put("breadcrumbSchema",
                                 generateBreadcrumbSchema(metroName, eraName, (String) templateData.get("canonicalUrl"),
@@ -111,18 +109,14 @@ public class StaticPageGeneratorService {
                 // Removed productSchema as requested to prevent false schema spam
                 templateData.put("productSchema", "");
 
-                // Updated InternalLinkBuilder Calls
+                // Explore Other Markets: Similar Labor Multiplier or broad state cities
                 templateData.put("stateLinks", internalLinkBuilder.getRelatedCitiesInState(metroCode, era,
                                 verdictEngineService.getMetroMasterData().getData().keySet()));
                 templateData.put("eraLinks", internalLinkBuilder.getOtherErasInCity(metroCode, era));
 
-                // Logic for Nearby Cities (Same State, different metros)
-                // Re-using getRelatedCitiesInState which logically provides "Nearby" in a pSEO
-                // context (State-level relevance)
-                // If distinctive "Nearby" logic is needed beyond state, it would require
-                // lat/lon data, but state-level is sufficient for SEO mesh.
-                templateData.put("cityLinks", internalLinkBuilder.getRelatedCitiesInState(metroCode, era,
-                                verdictEngineService.getMetroMasterData().getData().keySet()));
+                // Nearby Cities: Adjacent Metros (Different selection logic to avoid overlap)
+                templateData.put("cityLinks", internalLinkBuilder.getNearbyMetrosInEra(metroCode, era,
+                                verdictEngineService.getMetroMasterData().getData()));
 
                 if (stateCode != null) {
                         templateData.put("stateHubUrl",
