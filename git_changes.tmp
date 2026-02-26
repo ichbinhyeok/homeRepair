@@ -1,0 +1,82 @@
+warning: in the working copy of 'src/main/java/com/livingcostcheck/home_repair/web/RedirectFilter.java', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/ak.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/al.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/ar.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/az.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/ca.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/co.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/ct.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/fl.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/ga.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/hi.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/ia.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/id.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/il.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/in.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/ks.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/ky.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/la.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/ma.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/md.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/mi.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/mn.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/ms.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/nc.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/nj.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/nm.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/nv.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/ny.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/oh.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/ok.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/or.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/pa.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/ri.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/sc.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/tn.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/tx.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/ut.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/va.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/vt.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/wa.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/static/home-repair/verdicts/states/wi.html', LF will be replaced by CRLF the next time Git touches it
+M	src/main/java/com/livingcostcheck/home_repair/web/RedirectFilter.java
+M	src/main/resources/static/home-repair/verdicts/states/ak.html
+M	src/main/resources/static/home-repair/verdicts/states/al.html
+M	src/main/resources/static/home-repair/verdicts/states/ar.html
+M	src/main/resources/static/home-repair/verdicts/states/az.html
+M	src/main/resources/static/home-repair/verdicts/states/ca.html
+M	src/main/resources/static/home-repair/verdicts/states/co.html
+M	src/main/resources/static/home-repair/verdicts/states/ct.html
+M	src/main/resources/static/home-repair/verdicts/states/fl.html
+M	src/main/resources/static/home-repair/verdicts/states/ga.html
+M	src/main/resources/static/home-repair/verdicts/states/hi.html
+M	src/main/resources/static/home-repair/verdicts/states/ia.html
+M	src/main/resources/static/home-repair/verdicts/states/id.html
+M	src/main/resources/static/home-repair/verdicts/states/il.html
+M	src/main/resources/static/home-repair/verdicts/states/in.html
+M	src/main/resources/static/home-repair/verdicts/states/ks.html
+M	src/main/resources/static/home-repair/verdicts/states/ky.html
+M	src/main/resources/static/home-repair/verdicts/states/la.html
+M	src/main/resources/static/home-repair/verdicts/states/ma.html
+M	src/main/resources/static/home-repair/verdicts/states/md.html
+M	src/main/resources/static/home-repair/verdicts/states/mi.html
+M	src/main/resources/static/home-repair/verdicts/states/mn.html
+M	src/main/resources/static/home-repair/verdicts/states/ms.html
+M	src/main/resources/static/home-repair/verdicts/states/nc.html
+M	src/main/resources/static/home-repair/verdicts/states/nj.html
+M	src/main/resources/static/home-repair/verdicts/states/nm.html
+M	src/main/resources/static/home-repair/verdicts/states/nv.html
+M	src/main/resources/static/home-repair/verdicts/states/ny.html
+M	src/main/resources/static/home-repair/verdicts/states/oh.html
+M	src/main/resources/static/home-repair/verdicts/states/ok.html
+M	src/main/resources/static/home-repair/verdicts/states/or.html
+M	src/main/resources/static/home-repair/verdicts/states/pa.html
+M	src/main/resources/static/home-repair/verdicts/states/ri.html
+M	src/main/resources/static/home-repair/verdicts/states/sc.html
+M	src/main/resources/static/home-repair/verdicts/states/tn.html
+M	src/main/resources/static/home-repair/verdicts/states/tx.html
+M	src/main/resources/static/home-repair/verdicts/states/ut.html
+M	src/main/resources/static/home-repair/verdicts/states/va.html
+M	src/main/resources/static/home-repair/verdicts/states/vt.html
+M	src/main/resources/static/home-repair/verdicts/states/wa.html
+M	src/main/resources/static/home-repair/verdicts/states/wi.html
