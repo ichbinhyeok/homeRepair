@@ -18,9 +18,9 @@
     <title>About Us | Home Repair Verdict</title>
     <meta name="description" content="Learn about our mission to provide data-driven, transparent home repair cost analysis backed by RSMeans construction data and regional market research.">
     
-    <link rel="canonical" href="${baseUrl}/about">
+    <link rel="canonical" href="${baseUrl}/home-repair/about">
     <link rel="icon" href="/favicon.ico">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/seo-report.css">
     
     <style>
         .about-container {
@@ -122,8 +122,8 @@
             <div class="value-card">
                 <h3 style="margin-top: 0; color: #3b82f6;">🚫 No Conflicts of Interest</h3>
                 <p>
-                    We do not accept payments from contractors, material suppliers, or inspection services. 
-                    Our verdicts are never influenced by affiliate commissions or advertising relationships.
+                    Our analysis methodology and risk scoring are never influenced by commercial relationships. 
+                    To sustain free access, we may earn referral fees from partner services — but these do not affect which items appear, their risk ratings, or their cost estimates.
                 </p>
             </div>
             

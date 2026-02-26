@@ -15,7 +15,7 @@
     <title>Disclaimer & Terms | Home Repair Verdict</title>
     <meta name="description" content="Legal disclaimer and terms of use for the Home Repair Verdict cost estimation engine.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/seo-report.css">
     <style>
         .page-content {
             max-width: 800px;

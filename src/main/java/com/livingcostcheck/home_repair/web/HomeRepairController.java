@@ -150,11 +150,8 @@ public class HomeRepairController {
                         return "redirect:/home-repair/result/" + verdictHistory.getId();
                 } catch (Exception e) {
                         log.error("Error generating verdict", e);
-                        String stackTrace = java.util.Arrays.stream(e.getStackTrace())
-                                        .limit(5)
-                                        .map(StackTraceElement::toString)
-                                        .collect(java.util.stream.Collectors.joining("\n"));
-                        model.addAttribute("errorMessage", "DEBUG ERROR: " + e.toString() + "\nAT: " + stackTrace);
+                        model.addAttribute("errorMessage",
+                                        "An error occurred while generating your estimated repair costs. Please try again.");
                         return "error";
                 }
         }
@@ -373,7 +370,7 @@ public class HomeRepairController {
                 model.addAttribute("foundation", foundation);
 
                 // Internal Links (Simplified for Dynamic)
-                String parentUrl = "/home-repair/verdicts/" + metro + "/" + era;
+                String parentUrl = "/home-repair/verdicts/" + metro + "/" + era + ".html";
                 model.addAttribute("parentUrl", parentUrl);
                 model.addAttribute("canonicalUrl",
                                 "https://lifeverdict.com/home-repair/verdicts/" + metro + "/" + era + "/" + finalSlug);
@@ -458,20 +455,22 @@ public class HomeRepairController {
                 try {
                         java.io.File file = new java.io.File("data/leads.csv");
                         file.getParentFile().mkdirs();
-                        boolean isNew = !file.exists();
-                        try (java.io.FileWriter fw = new java.io.FileWriter(file, true);
-                                        java.io.PrintWriter pw = new java.io.PrintWriter(fw)) {
-                                if (isNew) {
-                                        pw.println("Timestamp,VerdictId,Email,MetroCode,Era");
+                        synchronized (this) {
+                                boolean isNew = !file.exists();
+                                try (java.io.FileWriter fw = new java.io.FileWriter(file, true);
+                                                java.io.PrintWriter pw = new java.io.PrintWriter(fw)) {
+                                        if (isNew) {
+                                                pw.println("Timestamp,VerdictId,Email,MetroCode,Era");
+                                        }
+                                        String timestamp = java.time.LocalDateTime.now()
+                                                        .format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                                        pw.printf("%s,%s,%s,%s,%s%n",
+                                                        timestamp,
+                                                        verdictId.toString(),
+                                                        email,
+                                                        history.getZipCode(),
+                                                        history.getDecade());
                                 }
-                                String timestamp = java.time.LocalDateTime.now()
-                                                .format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-                                pw.printf("%s,%s,%s,%s,%s%n",
-                                                timestamp,
-                                                verdictId.toString(),
-                                                email,
-                                                history.getZipCode(),
-                                                history.getDecade());
                         }
                 } catch (Exception e) {
                         log.error("Failed to write lead to CSV", e);
@@ -568,6 +567,46 @@ public class HomeRepairController {
                                         org.springframework.http.HttpStatus.NOT_FOUND);
                 }
 
+                java.util.List<java.util.Map<String, String>> faqList = new java.util.ArrayList<>();
+                if (riskSlug.equals("knob-and-tube-wiring")) {
+                        faqList.add(java.util.Map.of("q", "How much does Knob and Tube wiring replacement cost?", "a",
+                                        "Rewiring a home with K&T typically ranges from $5,000 to $15,000+, depending on the square footage and ease of access through walls."));
+                        faqList.add(java.util.Map.of("q", "Can I negotiate this during home buying?", "a",
+                                        "Yes. Since uninsurable K&T wiring is a major fire hazard and limits financing options, buyers should request a full seller credit or require replacement before closing."));
+                        faqList.add(java.util.Map.of("q", "How do inspectors check for this?", "a",
+                                        "Inspectors look for the characteristic ceramic knobs and tubes holding wires in the basement, attic, or exposed wall cavities."));
+                } else if (riskSlug.equals("polybutylene-pipes")) {
+                        faqList.add(java.util.Map.of("q", "How much does Polybutylene pipe replacement cost?", "a",
+                                        "Repiping a whole house to replace PB pipes generally costs between $4,000 and $10,000. Drywall repairs can add to the final bill."));
+                        faqList.add(java.util.Map.of("q", "Can I negotiate this during home buying?", "a",
+                                        "Absolutely. PB pipes have a history of catastrophic failure and ruptures. Most home insurers require them replaced, so you must negotiate a seller concession."));
+                        faqList.add(java.util.Map.of("q", "How do inspectors check for this?", "a",
+                                        "Inspectors look for grey, blue, or black plastic pipes stamped with 'PB2110', often found near the water heater or under sinks."));
+                } else if (riskSlug.equals("fpe-electrical-panel")) {
+                        faqList.add(java.util.Map.of("q", "How much does an FPE electrical panel upgrade cost?", "a",
+                                        "Replacing a Federal Pacific Electric (FPE) panel usually costs between $1,500 and $2,500 for a standard 200-amp service."));
+                        faqList.add(java.util.Map.of("q", "Can I negotiate this during home buying?", "a",
+                                        "Yes. FPE Stab-Lok panels are a known fire hazard because breakers fail to trip. You should demand a licensed electrician replace it as a condition of sale."));
+                        faqList.add(java.util.Map.of("q", "How do inspectors check for this?", "a",
+                                        "Inspectors identify the 'Federal Pacific' logo or 'Stab-Lok' breakers, which are easily recognized in the main electrical panel."));
+                } else if (riskSlug.equals("asbestos-risk")) {
+                        faqList.add(java.util.Map.of("q", "How much does Asbestos abatement cost?", "a",
+                                        "Asbestos removal costs between $1,500 and $3,000+ depending on the material (e.g., popcorn ceilings, VAT tiles or pipe insulation) and containment required."));
+                        faqList.add(java.util.Map.of("q", "Can I negotiate this during home buying?", "a",
+                                        "Yes. If materials are friable (easily crumbled), it is a severe health hazard. Buyers usually negotiate removal credits, though intact asbestos might just be documented."));
+                        faqList.add(java.util.Map.of("q", "How do inspectors check for this?", "a",
+                                        "Inspectors visually identify suspect materials common in pre-1980s homes, but confirmation requires sending a physical sample to a certified lab."));
+                } else {
+                        faqList.add(java.util.Map.of("q", "How much does Galvanized plumbing replacement cost?", "a",
+                                        "Whole-house repiping to replace galvanized steel pipes typically costs $3,000 to $8,000, depending on accessibility and the number of fixtures."));
+                        faqList.add(java.util.Map.of("q", "Can I negotiate this during home buying?", "a",
+                                        "Yes. Galvanized pipes corrode from the inside out, causing low water pressure and rust. Due to the impending need for total replacement, buyers should ask for a credit."));
+                        faqList.add(java.util.Map.of("q", "How do inspectors check for this?", "a",
+                                        "Inspectors use a magnet (which sticks to steel) and check for rust at joints or drop in water pressure when multiple fixtures run."));
+                }
+
+                model.addAttribute("faqItems", faqList);
+
                 model.addAttribute("riskSlug", riskSlug);
                 model.addAttribute("titleH1", titles.get(riskSlug));
                 model.addAttribute("l1Links", buildL1LinksForRiskHub());
@@ -579,39 +618,39 @@ public class HomeRepairController {
                 return java.util.Arrays.asList(
                                 new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
                                                 "Older Homes in Scranton, PA",
-                                                "/home-repair/verdicts/scranton-pa/pre-1950"),
+                                                "/home-repair/verdicts/scranton-pa/pre-1950.html"),
                                 new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
                                                 "Older Homes in Syracuse, NY",
-                                                "/home-repair/verdicts/syracuse-ny/pre-1950"),
+                                                "/home-repair/verdicts/syracuse-ny/pre-1950.html"),
                                 new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
                                                 "1950s Homes in Cleveland, OH",
-                                                "/home-repair/verdicts/cleveland-oh/1950-1970"),
+                                                "/home-repair/verdicts/cleveland-oh/1950-1970.html"),
                                 new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
                                                 "Mid-Century Homes in Kansas City, MO",
-                                                "/home-repair/verdicts/kansas-city-mo/1950-1970"),
+                                                "/home-repair/verdicts/kansas-city-mo/1950-1970.html"),
                                 new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
                                                 "1970s Homes in Albuquerque, NM",
-                                                "/home-repair/verdicts/albuquerque-nm/1970-1980"),
+                                                "/home-repair/verdicts/albuquerque-nm/1970-1980.html"),
                                 new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
                                                 "1970s Homes in Omaha, NE",
-                                                "/home-repair/verdicts/omaha-ne/1970-1980"),
+                                                "/home-repair/verdicts/omaha-ne/1970-1980.html"),
                                 new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
                                                 "1980s Homes in Tulsa, OK",
-                                                "/home-repair/verdicts/tulsa-ok/1980-1995"),
+                                                "/home-repair/verdicts/tulsa-ok/1980-1995.html"),
                                 new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
                                                 "1980s Homes in Wichita, KS",
-                                                "/home-repair/verdicts/wichita-ks/1980-1995"),
+                                                "/home-repair/verdicts/wichita-ks/1980-1995.html"),
                                 new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
                                                 "1990s Homes in Fresno, CA",
-                                                "/home-repair/verdicts/fresno-ca/1980-1995"),
+                                                "/home-repair/verdicts/fresno-ca/1980-1995.html"),
                                 new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
                                                 "1990s Homes in Des Moines, IA",
-                                                "/home-repair/verdicts/des-moines-ia/1980-1995"),
+                                                "/home-repair/verdicts/des-moines-ia/1980-1995.html"),
                                 new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
                                                 "Newer Homes in Boise, ID",
-                                                "/home-repair/verdicts/boise-city-id/1995-2010"),
+                                                "/home-repair/verdicts/boise-city-id/1995-2010.html"),
                                 new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
                                                 "Newer Homes in Provo, UT",
-                                                "/home-repair/verdicts/provo-orem-ut/1995-2010"));
+                                                "/home-repair/verdicts/provo-orem-ut/1995-2010.html"));
         }
 }

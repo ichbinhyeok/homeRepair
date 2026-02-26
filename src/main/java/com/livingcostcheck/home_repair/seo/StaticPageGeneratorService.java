@@ -105,9 +105,7 @@ public class StaticPageGeneratorService {
                                 generateBreadcrumbSchema(metroName, eraName, (String) templateData.get("canonicalUrl"),
                                                 stateCode));
 
-                // Strategy: Add Product Schema with AggregateRating (requires UI element)
-                // Removed productSchema as requested to prevent false schema spam
-                templateData.put("productSchema", "");
+                // Removed Product Schema to prevent Google Manual Action Spam Flags
 
                 // Explore Other Markets: Similar Labor Multiplier or broad state cities
                 templateData.put("stateLinks", internalLinkBuilder.getRelatedCitiesInState(metroCode, era,
@@ -324,41 +322,6 @@ public class StaticPageGeneratorService {
                                                 +
                                                 "]}</script>",
                                 stateCode != null ? stateCode : "Region", stateUrl, m, u);
-        }
-
-        private String generateProductSchema(String m, String e, VerdictDTOs.Verdict v) {
-                double low = v.getPlan().getMustDo().stream().mapToDouble(VerdictDTOs.RiskAdjustedItem::getAdjustedCost)
-                                .min()
-                                .orElse(0);
-                double high = v.getPlan().getMustDo().stream()
-                                .mapToDouble(VerdictDTOs.RiskAdjustedItem::getAdjustedCost).sum();
-
-                // Simulating a rating based on data completeness (4.5 - 5.0)
-                String rating = String.format("%.1f", 4.5 + (new Random(m.hashCode()).nextDouble() * 0.5));
-                String reviewCount = String.valueOf(50 + new Random((m + e).hashCode()).nextInt(150));
-
-                return String.format(
-                                "<script type=\"application/ld+json\">{" +
-                                                "\"@context\":\"https://schema.org/\"," +
-                                                "\"@type\":\"Product\"," +
-                                                "\"name\":\"%s Home Repair Forensic Report for %s\"," +
-                                                "\"description\":\"Detailed forensic repair cost analysis for %s homes in %s, including local labor rates and material logistics.\","
-                                                +
-                                                "\"brand\": { \"@type\": \"Brand\", \"name\": \"LifeVerdict\" }," +
-                                                "\"offers\": {" +
-                                                "\"@type\": \"AggregateOffer\"," +
-                                                "\"priceCurrency\": \"USD\"," +
-                                                "\"lowPrice\": \"%.0f\"," +
-                                                "\"highPrice\": \"%.0f\"," +
-                                                "\"offerCount\": \"1\"" +
-                                                "}," +
-                                                "\"aggregateRating\": {" +
-                                                "\"@type\": \"AggregateRating\"," +
-                                                "\"ratingValue\": \"%s\"," +
-                                                "\"reviewCount\": \"%s\"" +
-                                                "}" +
-                                                "}</script>",
-                                e, m, e, m, low, high, rating, reviewCount);
         }
 
         private String minifyHtml(String html) {

@@ -2,6 +2,7 @@
 @param String titleH1
 @param java.util.List<com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink> l1Links
 @param String baseUrl
+@param java.util.List<java.util.Map<String, String>> faqItems
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,30 +19,16 @@
       "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
+      @for(int i = 0; i < faqItems.size(); i++)
         {
           "@type": "Question",
-          "name": "How much does ${titleH1.toLowerCase()} cost?",
+          "name": "${faqItems.get(i).get("q")}",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Costs vary significantly depending on region and severity, but it ranges between $1,500 to over $15,000. It's mandatory for critical safety items."
+            "text": "${faqItems.get(i).get("a")}"
           }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I negotiate this during home buying?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, absolutely. Since this poses an immediate safety and functional liability, you should ask for a full seller credit."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How do inspectors check for this?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Inspectors perform visual examinations of the relevant exposed systems and compare with era-specific building codes."
-          }
-        }
+        }${i < faqItems.size() - 1 ? "," : ""}
+      @endfor
       ]
     }
     </script>
@@ -119,18 +106,12 @@
             <div class="bento-card span-12">
                 <h2>Frequently Asked Questions</h2>
                 <div style="margin-top: 2rem;">
+                    @for(var faq : faqItems)
                     <div style="margin-bottom: 1.5rem;">
-                        <h3 style="font-size: 1.1rem;">How much does ${titleH1.toLowerCase()} cost?</h3>
-                        <p style="color: var(--slate-600); margin-top: 0.5rem;">Costs vary significantly depending on region and severity, but it ranges between $1,500 to over $15,000. It's mandatory for critical safety items.</p>
+                        <h3 style="font-size: 1.1rem;">${faq.get("q")}</h3>
+                        <p style="color: var(--slate-600); margin-top: 0.5rem;">${faq.get("a")}</p>
                     </div>
-                    <div style="margin-bottom: 1.5rem;">
-                        <h3 style="font-size: 1.1rem;">Can I negotiate this during home buying?</h3>
-                        <p style="color: var(--slate-600); margin-top: 0.5rem;">Yes, absolutely. Since this poses an immediate safety and functional liability, you should ask for a full seller credit.</p>
-                    </div>
-                    <div style="margin-bottom: 1.5rem;">
-                        <h3 style="font-size: 1.1rem;">How do inspectors check for this?</h3>
-                        <p style="color: var(--slate-600); margin-top: 0.5rem;">Inspectors perform visual examinations of the relevant exposed systems and compare with era-specific building codes.</p>
-                    </div>
+                    @endfor
                 </div>
             </div>
         </div>

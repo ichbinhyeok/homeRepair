@@ -18,9 +18,9 @@
     <title>Editorial Policy | Home Repair Verdict</title>
     <meta name="description" content="Our editorial standards, fact-checking processes, and commitment to unbiased, evidence-based home repair cost analysis.">
     
-    <link rel="canonical" href="${baseUrl}/editorial-policy">
+    <link rel="canonical" href="${baseUrl}/home-repair/editorial-policy">
     <link rel="icon" href="/favicon.ico">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/seo-report.css">
     
     <style>
         .policy-container {

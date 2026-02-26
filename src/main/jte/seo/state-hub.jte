@@ -33,7 +33,7 @@
     
     <link rel="canonical" href="${canonicalUrl}">
     <link rel="icon" href="/favicon.ico">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/seo-report.css">
     
     <style>
         .state-hub-container {

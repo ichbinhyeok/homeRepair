@@ -29,7 +29,7 @@
 @param String foundation
 @param String avgHouseAge
 @param String howToSchema
-@param String productSchema
+
 @param String stateHubUrl = null
 @param String stateName = null
 @param String dateString
@@ -276,7 +276,7 @@
                             
                             <div class="risk-cost">
                                 <span class="amount">$${String.format("%,.0f", item.getAdjustedCost())}</span>
-                                <a href="/home-repair/verdicts/${metroCode.toLowerCase().replace("_", "-")}/${era.toLowerCase().replace("_", "-")}/${item.getItemCode().toLowerCase().replace("_", "-")}" class="action-link">
+                                <a href="/home-repair/verdicts/${metroCode.toLowerCase().replace("_", "-")}/${era.toLowerCase().replace("_", "-")}/${item.getSlug()}" class="action-link">
                                     View Details &rarr;
                                 </a>
                             </div>

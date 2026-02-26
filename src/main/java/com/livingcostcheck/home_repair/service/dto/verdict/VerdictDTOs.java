@@ -162,6 +162,12 @@ public class VerdictDTOs {
         private String definition;
         private String damageScenario;
         private Double remedyMultiplier;
+
+        public String getSlug() {
+            if (itemCode == null)
+                return "";
+            return itemCode.toLowerCase().replace("_", "-");
+        }
     }
 
     @Data
