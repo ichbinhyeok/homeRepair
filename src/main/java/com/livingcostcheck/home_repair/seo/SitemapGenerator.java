@@ -29,6 +29,12 @@ public class SitemapGenerator {
             "SAN_JOSE_SUNNYVALE_CA", "SEATTLE_TACOMA_BELLEVUE_WA", "WASHINGTON_ARLINGTON_DC_VA");
 
     private static final String BASE_URL = "https://lifeverdict.com";
+    private static final List<String> RISK_HUB_SLUGS = List.of(
+            "knob-and-tube-wiring",
+            "polybutylene-pipes",
+            "fpe-electrical-panel",
+            "asbestos-risk",
+            "galvanized-pipes");
 
     public int generateSitemap(String outputPath, List<String> extraUrls) throws IOException {
         log.info("Generating Strategic Seed Sitemap...");
@@ -51,6 +57,11 @@ public class SitemapGenerator {
         xml.append(buildUrlEntry(BASE_URL + "/home-repair/verdicts/states", lastMod, "weekly", "0.9"));
         xml.append(buildUrlEntry(BASE_URL + "/home-repair/risks", lastMod, "weekly", "0.9"));
         urlCount += 9;
+
+        for (String riskSlug : RISK_HUB_SLUGS) {
+            xml.append(buildUrlEntry(BASE_URL + "/home-repair/risks/" + riskSlug, lastMod, "weekly", "0.8"));
+            urlCount++;
+        }
 
         // 2. Generated Pages (All Static Seed Pages)
         // Includes State Hubs and Verdict Pages (L1)

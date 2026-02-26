@@ -13,10 +13,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.HtmlUtils;
 import org.springframework.web.servlet.view.RedirectView;
 import com.livingcostcheck.home_repair.util.TextUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -106,7 +109,7 @@ public class HomeRepairController {
                                         .metroCode(metroCode)
                                         .era(era)
                                         .budget(budget)
-                                        .sqft(sqft.intValue())
+                                        .sqft(sqft != null ? sqft.intValue() : 1800)
                                         .relationship(relationship)
                                         .history(history != null ? history : java.util.Collections.emptyList())
                                         .condition(condition)
@@ -478,7 +481,7 @@ public class HomeRepairController {
 
                 return ResponseEntity.ok(
                                 "<div class='p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg text-sm text-center font-medium'><strong>Success!</strong> Prepared checklist has been securely linked to "
-                                                + email
+                                                + HtmlUtils.htmlEscape(email)
                                                 + ".<br><span class='font-normal text-xs mt-1 block'>Next step: Use the 'Save as PDF' button below to keep a local copy for your records.</span></div>");
         }
 
@@ -530,12 +533,12 @@ public class HomeRepairController {
 
         @GetMapping("/verdicts/states")
         public String statesHub(Model model) {
-                List<String> states = java.util.Arrays.asList(
-                                "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
-                                "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
-                                "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
-                                "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
-                                "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "DC");
+                List<String> states = verdictEngineService.getMetroMasterData().getData().keySet().stream()
+                                .map(this::extractStateCode)
+                                .filter(Objects::nonNull)
+                                .distinct()
+                                .sorted()
+                                .toList();
                 model.addAttribute("states", states);
                 model.addAttribute("baseUrl", "https://lifeverdict.com");
                 return "seo/state-index";
@@ -615,42 +618,50 @@ public class HomeRepairController {
         }
 
         private List<com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink> buildL1LinksForRiskHub() {
-                return java.util.Arrays.asList(
-                                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
-                                                "Older Homes in Scranton, PA",
-                                                "/home-repair/verdicts/scranton-pa/pre-1950.html"),
-                                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
-                                                "Older Homes in Syracuse, NY",
-                                                "/home-repair/verdicts/syracuse-ny/pre-1950.html"),
-                                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
-                                                "1950s Homes in Cleveland, OH",
-                                                "/home-repair/verdicts/cleveland-oh/1950-1970.html"),
-                                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
-                                                "Mid-Century Homes in Kansas City, MO",
-                                                "/home-repair/verdicts/kansas-city-mo/1950-1970.html"),
-                                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
-                                                "1970s Homes in Albuquerque, NM",
-                                                "/home-repair/verdicts/albuquerque-nm/1970-1980.html"),
-                                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
-                                                "1970s Homes in Omaha, NE",
-                                                "/home-repair/verdicts/omaha-ne/1970-1980.html"),
-                                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
-                                                "1980s Homes in Tulsa, OK",
-                                                "/home-repair/verdicts/tulsa-ok/1980-1995.html"),
-                                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
-                                                "1980s Homes in Wichita, KS",
-                                                "/home-repair/verdicts/wichita-ks/1980-1995.html"),
-                                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
-                                                "1990s Homes in Fresno, CA",
-                                                "/home-repair/verdicts/fresno-ca/1980-1995.html"),
-                                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
-                                                "1990s Homes in Des Moines, IA",
-                                                "/home-repair/verdicts/des-moines-ia/1980-1995.html"),
-                                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
-                                                "Newer Homes in Boise, ID",
-                                                "/home-repair/verdicts/boise-city-id/1995-2010.html"),
-                                new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
-                                                "Newer Homes in Provo, UT",
-                                                "/home-repair/verdicts/provo-orem-ut/1995-2010.html"));
+                List<String> metroCodes = verdictEngineService.getMetroMasterData().getData().keySet().stream()
+                                .sorted()
+                                .toList();
+                if (metroCodes.isEmpty()) {
+                        return java.util.Collections.emptyList();
+                }
+
+                List<String> eraCycle = java.util.List.of(
+                                "PRE_1950",
+                                "1950_1970",
+                                "1970_1980",
+                                "1980_1995",
+                                "1995_2010",
+                                "2010_PRESENT");
+
+                int desiredCount = Math.min(12, metroCodes.size());
+                List<com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink> links = new ArrayList<>(
+                                desiredCount);
+
+                for (int i = 0; i < desiredCount; i++) {
+                        int metroIndex = (int) Math.floor(((double) i * metroCodes.size()) / desiredCount);
+                        String metroCode = metroCodes.get(metroIndex);
+                        String era = eraCycle.get(i % eraCycle.size());
+                        String metroSlug = metroCode.toLowerCase().replace("_", "-");
+                        String eraSlug = era.toLowerCase().replace("_", "-");
+                        String linkText = TextUtil.formatEraText(era) + " Homes in " + TextUtil.formatMetroName(metroCode);
+
+                        links.add(new com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink(
+                                        linkText,
+                                        "/home-repair/verdicts/" + metroSlug + "/" + eraSlug + ".html"));
+                }
+
+                return links;
+        }
+
+        private String extractStateCode(String metroCode) {
+                if (metroCode == null || metroCode.isBlank()) {
+                        return null;
+                }
+                String[] parts = metroCode.split("_");
+                if (parts.length == 0) {
+                        return null;
+                }
+                String maybeState = parts[parts.length - 1];
+                return maybeState.matches("[A-Z]{2}") ? maybeState : null;
         }
 }

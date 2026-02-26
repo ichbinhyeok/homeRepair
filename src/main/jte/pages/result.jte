@@ -189,7 +189,7 @@
                             <script>
                                 window.unlockReport = function(form) {
                                     const email = form.email.value;
-                                    fetch('/api/lead?verdictId=${history.getId().toString()}&email=' + encodeURIComponent(email), {method: 'POST'})
+                                    fetch('/home-repair/api/lead?verdictId=${history.getId().toString()}&email=' + encodeURIComponent(email), {method: 'POST'})
                                     .then(() => {
                                         document.getElementById('lead-capture-container').classList.add('hidden');
                                         document.getElementById('unlocked-actions').classList.remove('hidden');
@@ -391,10 +391,11 @@
                      <p class="text-indigo-700 mb-6 max-w-lg mx-auto">Property details like roof material and story count can change estimates by 30%+. Refine these details for precision.</p>
                      
                     <form action="/home-repair/verdict" method="post" class="w-full max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-sm border border-indigo-100 flex flex-col md:flex-row items-center gap-6">
-                        <input type="hidden" name="metroCode" value="ATLANTA_SANDY_SPRINGS_GA"> 
-                        <input type="hidden" name="sqft" value="2000"> 
-                        <input type="hidden" name="relationship" value="LIVING">
-                        <input type="hidden" name="budget" value="100000">
+                        <input type="hidden" name="metroCode" value="${history.getZipCode()}"> 
+                        <input type="hidden" name="era" value="${history.getDecade()}"> 
+                        <input type="hidden" name="sqft" value="1800"> 
+                        <input type="hidden" name="relationship" value="${history.getPurpose() != null ? history.getPurpose() : "LIVING"}">
+                        <input type="hidden" name="budget" value="${history.getBudget() != null && !"null".equalsIgnoreCase(history.getBudget()) ? history.getBudget() : "50000"}">
 
                         <div class="w-full md:flex-1 text-left">
                             <label class="block text-xs font-bold text-slate-500 mb-1 uppercase">Bathrooms</label>

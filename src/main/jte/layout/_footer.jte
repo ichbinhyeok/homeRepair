@@ -39,7 +39,7 @@
                 <div style="display: flex; flex-direction: column; gap: 8px;">
                     <a href="/privacy-policy" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">Privacy Policy</a>
                     <a href="/terms-of-service" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">Terms of Service</a>
-                    <a href="/disclaimer" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">Disclaimer</a>
+                    <a href="/home-repair/disclaimer" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">Disclaimer</a>
                 </div>
             </div>
         </div>
