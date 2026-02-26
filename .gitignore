@@ -92,5 +92,6 @@ jte-classes/
 
 *.log
 logs/
-data/
+/data/
 logs/
+!src/main/resources/data/
