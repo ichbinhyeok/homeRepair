@@ -17,52 +17,8 @@ build/
 ### Custom Logs & Temp ###
 *.log
 *.txt
+!src/main/resources/**/*.txt
 !SERVICE_OVERVIEW.md
-!HELP.md
-
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
-
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-
-### VS Code ###
-.vscode/
-HELP.md
-.gradle
-build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### Custom Logs & Temp ###
-*.log
-*.txt
-!SERVICE_OVERVIEW.md
-!HELP.md
 
 bin/
 !**/src/main/**/bin/
@@ -90,8 +46,9 @@ out/
 ### JTE ###
 jte-classes/
 
-*.log
+### Runtime ###
 logs/
 /data/
-logs/
+
+### Preserve resources ###
 !src/main/resources/data/
