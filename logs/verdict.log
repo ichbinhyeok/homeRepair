@@ -1,6 +1,0 @@
-2026-02-26T00:32:12.677+09:00  WARN 9292 --- [home-repair] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5h19m36s556ms293µs).
-2026-02-26T00:37:02.831+09:00  INFO 9292 --- [home-repair] [http-nio-8080-exec-1] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1970_1980 metro=ANCHORAGE_AK eligible=true missing=[]
-2026-02-26T00:37:02.832+09:00  INFO 9292 --- [home-repair] [http-nio-8080-exec-1] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=1970_1980 metro=ANCHORAGE_AK relationship=BUYING
-2026-02-26T00:37:02.880+09:00 DEBUG 9292 --- [home-repair] [http-nio-8080-exec-3] c.l.h.web.HomeRepairController           : Loading result for ID: 6f52eef4-7435-4af4-b6e4-6a63fed93d1c
-2026-02-26T00:37:02.880+09:00  INFO 9292 --- [home-repair] [http-nio-8080-exec-3] c.l.h.service.VerdictEngineService       : SAFETY_FLIP Eligibility | era=1970_1980 metro=ANCHORAGE_AK eligible=true missing=[]
-2026-02-26T00:37:02.882+09:00  INFO 9292 --- [home-repair] [http-nio-8080-exec-3] c.l.h.service.VerdictEngineService       : Strategy Selected | chosen=SAFETY_FLIP era=1970_1980 metro=ANCHORAGE_AK relationship=BUYING
