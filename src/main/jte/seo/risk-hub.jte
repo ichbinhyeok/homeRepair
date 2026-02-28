@@ -7,6 +7,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JV6YLYZHN8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-JV6YLYZHN8');
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${titleH1} - Expert Cost & Negotiation Guide</title>
@@ -94,11 +102,11 @@
                 <p style="color: var(--slate-400); margin-bottom: 1.5rem;">Review forensic benchmark data for specific cities.</p>
                 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">
                     @for(var link : l1Links)
-                        <a href="${link.getHref()}" style="color: #6ee7b7; text-decoration: none; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">${link.getText()} &rarr;</a>
+                        <a href="${link.getHref()}" style="color: #6ee7b7; text-decoration: none; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);" data-analytics-event="risk_hub_to_l1_click" data-analytics-category="navigation" data-analytics-label="${riskSlug}">${link.getText()} &rarr;</a>
                     @endfor
                 </div>
                 <div style="margin-top: 2rem;">
-                    <a href="/home-repair/verdicts/states" class="btn-outline" style="border-color: rgba(255,255,255,0.2); color: white;">Browse All States Hub</a>
+                    <a href="/home-repair/verdicts/states" class="btn-outline" style="border-color: rgba(255,255,255,0.2); color: white;" data-analytics-event="risk_hub_to_states_click" data-analytics-category="navigation" data-analytics-label="${riskSlug}">Browse All States Hub</a>
                 </div>
             </div>
             

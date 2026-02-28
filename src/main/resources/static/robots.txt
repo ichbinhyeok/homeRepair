@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /home-repair/api/
+Disallow: /home-repair/track
 
 Sitemap: https://lifeverdict.com/sitemap.xml

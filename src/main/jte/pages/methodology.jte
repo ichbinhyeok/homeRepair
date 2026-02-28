@@ -224,7 +224,7 @@
         
         <footer style="margin-top: 60px; padding-top: 40px; border-top: 2px solid #e5e7eb; text-align: center; color: #64748b;">
             <p>
-                <strong>Last Updated:</strong> January 2026<br>
+                <strong>Last Updated:</strong> February 2026<br>
                 <strong>Data Version:</strong> RSMeans 2026 Q1 | BLS OEWS May 2025
             </p>
             <p style="margin-top: 20px;">

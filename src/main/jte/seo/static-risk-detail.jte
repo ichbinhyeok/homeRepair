@@ -1,5 +1,6 @@
 @import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.*
 @import com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink
+@import com.livingcostcheck.home_repair.util.TextUtil
 @import java.util.List
 @import java.util.Map
 
@@ -7,6 +8,7 @@
 @param String h1Content
 @param String metroCode
 @param String metroName
+@param String msaName = null
 @param String era
 @param String eraName
 @param com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.RiskAdjustedItem item
@@ -19,6 +21,12 @@
 @param String breadcrumbSchema
 @param String dateString
 @param List<InternalLink> otherRisks
+@param String robotsDirective = "index,follow"
+@param Integer femaDisasterCount = null
+@param Double ownerOccupancyRate = null
+@param Integer medianYearBuilt = null
+@param Double repairPressureIndex = null
+@param String openDataCsvUrl = null
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,6 +45,7 @@
     
     <title>${title}</title>
     <meta name="description" content="Detailed cost analysis for ${item.getPrettyName()} in ${metroName}. Review repair costs, negotiation tactics, and safety risks before buying a ${eraName} home." />
+    <meta name="robots" content="${robotsDirective}" />
     
     <link rel="canonical" href="${canonicalUrl}" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -118,7 +127,7 @@
                  <div style="margin-bottom: 2rem;">
                     <h3 style="font-size: 1.1rem; color: var(--slate-900); margin-bottom: 0.5rem;">What is it?</h3>
                     <p style="font-size: 1.05rem; color: var(--slate-600); line-height: 1.7; margin-bottom: 1.5rem;">
-                        ${item.getDefinition() != null ? item.getDefinition() : item.getExplanation()}
+                        ${TextUtil.sanitizeUserFacingExplanation(item.getDefinition(), item.getExplanation())}
                     </p>
                     
                     <!-- AEO (Answer Engine Optimization) Snippet Table -->
@@ -156,6 +165,31 @@
                      <div class="insight-card" style="padding: 1.5rem; border: 1px solid var(--slate-200); border-radius: var(--radius-lg);">
                         ${regionalInsight}
                      </div>
+                    @if(femaDisasterCount != null || ownerOccupancyRate != null || medianYearBuilt != null || repairPressureIndex != null)
+                    <div style="margin-top: 1rem; padding: 1rem; background: #f8fafc; border: 1px solid var(--slate-200); border-radius: var(--radius-md);">
+                        <p style="font-size: 0.8rem; color: var(--slate-500); margin-bottom: 0.6rem; text-transform: uppercase;">Open Data Context</p>
+                        <div style="display: grid; gap: 0.4rem;">
+                            <p style="margin: 0; color: var(--slate-700);">Geography unit: <strong>${msaName != null ? msaName : (metroName + " MSA")}</strong></p>
+                            @if(femaDisasterCount != null)
+                            <p style="margin: 0; color: var(--slate-700);">FEMA major disasters since 2016 (state): <strong>${femaDisasterCount}</strong></p>
+                            @endif
+                            @if(ownerOccupancyRate != null)
+                            <p style="margin: 0; color: var(--slate-700);">State owner-occupancy rate: <strong>${String.format("%.1f", ownerOccupancyRate)}%</strong></p>
+                            @endif
+                            @if(medianYearBuilt != null)
+                            <p style="margin: 0; color: var(--slate-700);">State median year built: <strong>${medianYearBuilt}</strong></p>
+                            @endif
+                            @if(repairPressureIndex != null)
+                            <p style="margin: 0; color: var(--slate-700);">Repair pressure index: <strong>${String.format("%.1f", repairPressureIndex)} / 100</strong></p>
+                            @endif
+                        </div>
+                        @if(openDataCsvUrl != null)
+                        <p style="margin-top: 0.7rem; margin-bottom: 0; font-size: 0.8rem; color: var(--slate-500);">
+                            Source file: <a href="${openDataCsvUrl}" style="color: var(--primary);">metro_unique_signals_2026.csv</a> (unit: MSA)
+                        </p>
+                        @endif
+                    </div>
+                    @endif
                  </div>
             </div>
             
@@ -195,8 +229,8 @@
                     Every home is different. Add your property details to get a more precise estimate.
                 </p>
                 <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                    <a href="${parentUrl}" class="btn-outline">Back to Full Report</a>
-                    <a href="/home-repair" class="btn-primary">Customize Your Estimate &rarr;</a>
+                    <a href="${parentUrl}" class="btn-outline" data-analytics-event="l2_back_to_l1_click" data-analytics-category="navigation">Back to Full Report</a>
+                    <a href="/home-repair" class="btn-primary" data-analytics-event="cta_customize_estimate" data-analytics-category="conversion" data-analytics-label="l2_body">Customize Your Estimate &rarr;</a>
                 </div>
             </div>
 

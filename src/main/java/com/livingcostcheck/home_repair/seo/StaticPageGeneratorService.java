@@ -125,12 +125,24 @@ public class StaticPageGeneratorService {
                 long seed = (metroCode + era).hashCode();
 
                 DataMapping.MetroCityData mData = verdictEngineService.getMetroMasterData().getData().get(metroCode);
+                DataMapping.MetroUniqueSignal uniqueSignal = null;
+                if (verdictEngineService.getMetroUniqueSignalsData() != null
+                                && verdictEngineService.getMetroUniqueSignalsData().getData() != null) {
+                        uniqueSignal = verdictEngineService.getMetroUniqueSignalsData().getData().get(metroCode);
+                }
+                String msaName = TextUtil.formatMsaName(metroCode);
+                if (uniqueSignal != null && uniqueSignal.getMsaName() != null
+                                && !uniqueSignal.getMsaName().isBlank()) {
+                        msaName = uniqueSignal.getMsaName();
+                }
+                templateData.put("msaName", msaName);
 
                 String actualClimateZone = (mData != null) ? mData.getClimateZone() : null;
                 double actualLaborMult = (mData != null && mData.getLaborMult() != null) ? mData.getLaborMult() : 1.0;
                 templateData.put("climateFragment", FragmentLibrary.selectClimateFragment(actualClimateZone, seed));
                 templateData.put("eraFragment", FragmentLibrary.selectEraFragment(era, seed + 1));
                 templateData.put("costFragment", FragmentLibrary.selectCostFragment(actualLaborMult, seed + 2));
+                templateData.put("openDataCsvUrl", "/data/metro_unique_signals_2026.csv");
 
                 if (mData != null) {
                         templateData.put("metroRisk", mData.getRisk());
@@ -143,6 +155,23 @@ public class StaticPageGeneratorService {
                         templateData.put("regionalInsight", comparisonInsight + " " + FragmentLibrary
                                         .generateRegionalInsight(mData.getClimateZone(), era, mData.getLaborMult(),
                                                         metroName, seed + 3));
+                }
+
+                if (uniqueSignal != null) {
+                        templateData.put("femaDisasterCount", uniqueSignal.getFemaMajorDisaster10y());
+                        templateData.put("ownerOccupancyRate", uniqueSignal.getOwnerOccupancyRatePct());
+                        templateData.put("medianYearBuilt", uniqueSignal.getMedianYearBuilt());
+                        templateData.put("repairPressureIndex", uniqueSignal.getRepairPressureIndex());
+                        if (templateData.get("regionalInsight") != null) {
+                                String regionalInsight = (String) templateData.get("regionalInsight");
+                                templateData.put("regionalInsight",
+                                                regionalInsight + " Public records show "
+                                                                + uniqueSignal.getFemaMajorDisaster10y()
+                                                                + " major FEMA disaster declarations since 2016 in "
+                                                                + uniqueSignal.getStateCode()
+                                                                + ", with a statewide median home build year of "
+                                                                + uniqueSignal.getMedianYearBuilt() + ".");
+                        }
                 }
 
                 // Generate Dynamic, Unique FAQs to prevent "Thin Content" penalty
@@ -180,15 +209,15 @@ public class StaticPageGeneratorService {
 
                 if (laborMult > 1.1) {
                         context = String.format(
-                                        "A mathematical analysis of %s contractor rates reveals labor costs pacing <strong>%.1f%% higher</strong> than the national baseline. This structural premium forces savvy buyers to factor in mobilization fees heavily during negotiation.",
+                                        "A mathematical analysis of %s contractor rates reveals labor costs pacing %.1f%% higher than the national baseline. This structural premium forces savvy buyers to factor in mobilization fees heavily during negotiation.",
                                         metroName, deltaPct);
                 } else if (laborMult < 0.95) {
                         context = String.format(
-                                        "Due to localized supply/demand economics, %s benefits from a <strong>%.1f%% discount</strong> against average national repair labor rates. However, material shipping logistics into %s can sometimes offset these savings.",
+                                        "Due to localized supply/demand economics, %s benefits from a %.1f%% discount against average national repair labor rates. However, material shipping logistics into %s can sometimes offset these savings.",
                                         metroName, deltaPct, mData.getClimateZone());
                 } else {
                         context = String.format(
-                                        "Renovation labor economics in %s index within <strong>%.1f%%</strong> of the national median (1.0). This rare pricing stability makes quote validation and standard material comparisons highly reliable.",
+                                        "Renovation labor economics in %s index within %.1f%% of the national median (1.0). This rare pricing stability makes quote validation and standard material comparisons highly reliable.",
                                         metroName, deltaPct);
                 }
                 return context;
@@ -234,7 +263,7 @@ public class StaticPageGeneratorService {
                 q1.put("question", String.format("How much should I budget for repairs on a %s home in %s?",
                                 eraName.split("\\(")[0].trim(), metroName.split(",")[0].trim()));
                 q1.put("answer", String.format(
-                                "Based on localized %s labor indexes (%.2fx multiplier) and %s structural standards, forensic analysis suggests budgeting approximately <strong>$%,.0f</strong> to clear immediate liabilities. The top expenditure vector involves %s.",
+                                "Based on localized %s labor indexes (%.2fx multiplier) and %s structural standards, forensic analysis suggests budgeting approximately $%,.0f to clear immediate liabilities. The top expenditure vector involves %s.",
                                 metroName, (mData != null ? mData.getLaborMult() : 1.0), eraName.split("\\(")[0].trim(),
                                 totalCost, riskList));
                 faqs.add(q1);
@@ -245,7 +274,7 @@ public class StaticPageGeneratorService {
                         q2.put("question",
                                         String.format("What is the biggest hidden risk for homes in %s?", metroName));
                         q2.put("answer", String.format(
-                                        "In %s, the overarching regional hazard is <strong>%s</strong>, compounded by its %s climate classification. For %s properties, this actuarial risk directly translates to accelerated depreciation of the %s.",
+                                        "In %s, the overarching regional hazard is %s, compounded by its %s climate classification. For %s properties, this actuarial risk directly translates to accelerated depreciation of the %s.",
                                         metroName, mData.getRisk(), mData.getClimateZone(), eraName.split(" ")[0],
                                         mData.getFoundation().toLowerCase().contains("basement")
                                                         ? "foundation and subsurface drainage"

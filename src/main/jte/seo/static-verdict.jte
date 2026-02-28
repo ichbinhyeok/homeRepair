@@ -1,5 +1,6 @@
 @import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.*
 @import com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink
+@import com.livingcostcheck.home_repair.util.TextUtil
 @import java.util.List
 @import java.util.Map
 
@@ -7,6 +8,7 @@
 @param String h1Content
 @param String metroCode
 @param String metroName
+@param String msaName = null
 @param String era
 @param String eraName
 @param com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.Verdict verdict
@@ -29,6 +31,11 @@
 @param String foundation
 @param String avgHouseAge
 @param String howToSchema
+@param Integer femaDisasterCount = null
+@param Double ownerOccupancyRate = null
+@param Integer medianYearBuilt = null
+@param Double repairPressureIndex = null
+@param String openDataCsvUrl = null
 
 @param String stateHubUrl = null
 @param String stateName = null
@@ -96,11 +103,11 @@
             <p class="subtitle">A forensic analysis of hidden liabilities and repair costs for ${eraName} properties in the ${metroName} area (Updated ${dateString}).</p>
             
             <div style="margin-top: 2rem;">
-                <a href="/home-repair" class="btn-primary" style="background: white; color: var(--primary);">
+                <a href="/home-repair" class="btn-primary" style="background: white; color: var(--primary);" data-analytics-event="cta_customize_estimate" data-analytics-category="conversion" data-analytics-label="l1_header">
                     Customize Your Estimate &rarr;
                 </a>
                 <p style="margin-top: 1rem; font-size: 0.85rem; opacity: 0.7;">
-                    <span style="opacity: 0.8;">Data sources:</span> RSMeans, BLS, NAHB
+                    <span style="opacity: 0.8;">Data sources:</span> RSMeans, BLS, Census ACS, FEMA OpenFEMA
                 </p>
             </div>
         </div>
@@ -202,6 +209,46 @@
                         <p style="font-weight: 600; font-size: 1.1rem; color: var(--slate-900);">${foundation != null ? foundation : "Mixed Types"}</p>
                     </div>
                 </div>
+                @if(femaDisasterCount != null || ownerOccupancyRate != null || medianYearBuilt != null || repairPressureIndex != null)
+                <div style="margin-top: 1.5rem; padding: 1.25rem; background: #f8fafc; border: 1px solid var(--slate-200); border-radius: var(--radius-md);">
+                    <h4 style="font-size: 0.9rem; text-transform: uppercase; color: var(--slate-500); margin-bottom: 1rem;">Public Data Signals (2016-2026)</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
+                        <div>
+                            <p style="font-size: 0.8rem; color: var(--slate-500); margin-bottom: 0.2rem;">MSA Coverage</p>
+                            <p style="font-weight: 700; color: var(--slate-900);">${msaName != null ? msaName : (metroName + " MSA")}</p>
+                        </div>
+                        @if(femaDisasterCount != null)
+                        <div>
+                            <p style="font-size: 0.8rem; color: var(--slate-500); margin-bottom: 0.2rem;">FEMA Major Disasters</p>
+                            <p style="font-weight: 700; color: var(--slate-900);">${femaDisasterCount}</p>
+                        </div>
+                        @endif
+                        @if(ownerOccupancyRate != null)
+                        <div>
+                            <p style="font-size: 0.8rem; color: var(--slate-500); margin-bottom: 0.2rem;">Owner Occupancy (State)</p>
+                            <p style="font-weight: 700; color: var(--slate-900);">${String.format("%.1f", ownerOccupancyRate)}%</p>
+                        </div>
+                        @endif
+                        @if(medianYearBuilt != null)
+                        <div>
+                            <p style="font-size: 0.8rem; color: var(--slate-500); margin-bottom: 0.2rem;">Median Year Built (State)</p>
+                            <p style="font-weight: 700; color: var(--slate-900);">${medianYearBuilt}</p>
+                        </div>
+                        @endif
+                        @if(repairPressureIndex != null)
+                        <div>
+                            <p style="font-size: 0.8rem; color: var(--slate-500); margin-bottom: 0.2rem;">Repair Pressure Index</p>
+                            <p style="font-weight: 700; color: var(--slate-900);">${String.format("%.1f", repairPressureIndex)} / 100</p>
+                        </div>
+                        @endif
+                    </div>
+                    @if(openDataCsvUrl != null)
+                    <p style="margin-top: 0.85rem; font-size: 0.82rem; color: var(--slate-500);">
+                        Source file: <a href="${openDataCsvUrl}" style="color: var(--primary);">metro_unique_signals_2026.csv</a> (unit: MSA)
+                    </p>
+                    @endif
+                </div>
+                @endif
                 <div style="margin-top: 1.5rem; padding: 1.5rem; background: rgba(255,255,255,0.6); border-radius: var(--radius-lg);">
                     <p style="color: var(--slate-600); font-style: italic;">
                         "${regionalInsight}"
@@ -256,7 +303,7 @@
                                 
                                 <!-- Definition & Scenario (Phase 2 Data) -->
                                 <p class="text-sm text-slate-500 leading-snug" style="margin-bottom: 0.5rem;">
-                                    $unsafe{item.getExplanation() != null ? item.getExplanation() : item.getDefinition()}
+                                    ${TextUtil.sanitizeUserFacingExplanation(item.getExplanation(), item.getDefinition())}
                                 </p>
                                 
                                 <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
@@ -266,9 +313,9 @@
                                         </span>
                                     @endif
                                     
-                                    @for(String flag : item.getRiskFlags())
+                                    @for(String flag : TextUtil.toUserFacingRiskFlags(item.getRiskFlags()))
                                         <span style="font-size: 0.75rem; background: #fff1f2; color: #e11d48; padding: 0.25rem 0.5rem; border-radius: 4px; border: 1px solid #fecdd3;">
-                                            ${flag.replace("_", " ")}
+                                            ${flag}
                                         </span>
                                     @endfor
                                 </div>
@@ -276,7 +323,7 @@
                             
                             <div class="risk-cost">
                                 <span class="amount">$${String.format("%,.0f", item.getAdjustedCost())}</span>
-                                <a href="/home-repair/verdicts/${metroCode.toLowerCase().replace("_", "-")}/${era.toLowerCase().replace("_", "-")}/${item.getSlug()}" class="action-link">
+                                <a href="/home-repair/verdicts/${metroCode.toLowerCase().replace("_", "-")}/${era.toLowerCase().replace("_", "-")}/${item.getSlug()}" class="action-link" data-analytics-event="l1_view_detail_click" data-analytics-category="navigation" data-analytics-label="${item.getSlug()}">
                                     View Details &rarr;
                                 </a>
                             </div>
@@ -361,7 +408,7 @@
                 <p style="color: rgba(255,255,255,0.9); margin-bottom: 2rem;">
                     Generic era data is a starting point. Add your property details &mdash; bathrooms, stories, roof type &mdash; to refine the numbers.
                 </p>
-                <a href="/home-repair" class="btn-primary" style="background: white; color: var(--primary);">
+                <a href="/home-repair" class="btn-primary" style="background: white; color: var(--primary);" data-analytics-event="cta_customize_estimate" data-analytics-category="conversion" data-analytics-label="l1_body">
                     Customize Your Estimate &rarr;
                 </a>
             </div>
@@ -407,7 +454,7 @@
     <!-- Sticky Mobile CTA -->
     <div class="sticky-cta cta-floater">
         <span>Buying in ${metroName}?</span>
-        <a href="/home-repair" class="btn-sm">Get Your Estimate &rarr;</a>
+        <a href="/home-repair" class="btn-sm" data-analytics-event="cta_customize_estimate" data-analytics-category="conversion" data-analytics-label="l1_sticky">Get Your Estimate &rarr;</a>
     </div>
 
     @template.layout._footer()

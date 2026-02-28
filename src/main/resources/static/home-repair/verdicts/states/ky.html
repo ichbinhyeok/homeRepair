@@ -295,5 +295,37 @@
     </div>
 </footer>
 
+<script>
+    (function () {
+        document.addEventListener("click", function (event) {
+            var target = event.target;
+            if (!target || typeof target.closest !== "function") {
+                return;
+            }
+
+            var tracked = target.closest("[data-analytics-event]");
+            if (!tracked) {
+                return;
+            }
+
+            if (typeof window.gtag !== "function") {
+                return;
+            }
+
+            var eventName = tracked.getAttribute("data-analytics-event");
+            if (!eventName) {
+                return;
+            }
+
+            window.gtag("event", eventName, {
+                event_category: tracked.getAttribute("data-analytics-category") || "engagement",
+                event_label: tracked.getAttribute("data-analytics-label") || "",
+                page_path: window.location.pathname,
+                link_url: tracked.getAttribute("href") || ""
+            });
+        }, true);
+    })();
+</script>
+
 </body>
 </html>

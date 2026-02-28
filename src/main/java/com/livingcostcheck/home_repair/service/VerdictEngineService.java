@@ -28,9 +28,14 @@ public class VerdictEngineService {
     private RiskFactorsData riskFactorsData;
     private CostLibraryData costLibraryData;
     private LifespanData lifespanData;
+    private MetroUniqueSignalsData metroUniqueSignalsData;
 
     public MetroMasterData getMetroMasterData() {
         return metroMasterData;
+    }
+
+    public MetroUniqueSignalsData getMetroUniqueSignalsData() {
+        return metroUniqueSignalsData;
     }
 
     @PostConstruct
@@ -41,6 +46,8 @@ public class VerdictEngineService {
             costLibraryData = loadJson("classpath:data/2026_Integrated_Construction_Cost_Library.json",
                     CostLibraryData.class);
             lifespanData = loadJson("classpath:data/item_lifespan_db.json", LifespanData.class);
+            metroUniqueSignalsData = loadJson("classpath:data/external/metro_unique_signals_2026.json",
+                    MetroUniqueSignalsData.class);
             log.info("VerdictEngine Data Loaded Successfully.");
         } catch (Exception e) {
             log.error("Failed to load VerdictEngine Data", e);
@@ -1495,8 +1502,9 @@ public class VerdictEngineService {
                         mustDo.add(item);
                     } else if (isCatastrophic || isHighRiskCrash) {
                         // PROMOTION RULE: Catastrophic Financial Risk -> Must Do
-                        item.setExplanation("[FINANCIAL RISK PROMOTION] High liability detected ($"
-                                + String.format("%,.0f", item.getAdjustedCost()) + "). " + item.getExplanation());
+                        String baseExplanation = item.getExplanation() != null ? item.getExplanation() : "";
+                        item.setExplanation("High liability detected ($"
+                                + String.format("%,.0f", item.getAdjustedCost()) + "). " + baseExplanation);
                         item.setMandatory(true);
                         mustDo.add(item);
                     } else if (isStructural || isMechanical) {

@@ -27,7 +27,7 @@ sourceSets {
             srcDirs 'build/generated/jte' 
         }
         resources {
-            srcDirs 'src/main/jte'
+            setSrcDirs(['src/main/resources', 'src/main/jte'])
         }
     }
 }
@@ -54,16 +54,38 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'com.microsoft.playwright:playwright:1.49.0'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testRuntimeOnly 'com.h2database:h2'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+	useJUnitPlatform {
+		excludeTags 'playwright'
+	}
 	testLogging {
 		showStandardStreams = true
 		exceptionFormat = 'full'
 	}
+}
+
+tasks.register('playwrightInstall', JavaExec) {
+	group = 'verification'
+	description = 'Install Playwright browser binaries used by e2e tests'
+	classpath = sourceSets.test.runtimeClasspath
+	mainClass = 'com.microsoft.playwright.CLI'
+	args 'install', 'chromium'
+}
+
+tasks.register('playwrightTest', Test) {
+	group = 'verification'
+	description = 'Runs browser-based persona e2e tests'
+	useJUnitPlatform {
+		includeTags 'playwright'
+	}
+	testClassesDirs = sourceSets.test.output.classesDirs
+	classpath = sourceSets.test.runtimeClasspath
+	shouldRunAfter tasks.named('test')
 }
 
 tasks.withType(JavaCompile) {

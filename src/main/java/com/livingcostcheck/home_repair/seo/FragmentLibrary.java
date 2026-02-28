@@ -90,15 +90,9 @@ public class FragmentLibrary {
                         return "The local climate conditions require standard maintenance protocols for building envelope integrity.";
                 }
 
-                // Find matching zone (handle zones like "2A", "5A", etc.)
-                String zoneKey = climateZone.startsWith("1") ? "1"
-                                : climateZone.startsWith("2") ? "2A"
-                                                : climateZone.startsWith("3") ? "3"
-                                                                : climateZone.startsWith("5") ? "5A"
-                                                                                : climateZone.startsWith("6") ? "6"
-                                                                                                : climateZone.contains(
-                                                                                                                "B") ? "B"
-                                                                                                                                : "3";
+                // Keep dry zones (e.g. 2B/5B) on the dry-climate branch and avoid
+                // incorrectly mapping everything that starts with "2" to hot-humid 2A.
+                String zoneKey = getClimateKey(climateZone);
 
                 List<String> fragments = CLIMATE_FRAGMENTS.getOrDefault(zoneKey, CLIMATE_FRAGMENTS.get("3"));
                 return selectRandomFragment(fragments, seed);
@@ -197,9 +191,11 @@ public class FragmentLibrary {
 
                 // Fallback for combinations without specific insights
                 if (!hasClimateInsight) {
+                        String normalizedZone = normalizeClimateZone(climateZone);
+                        String zoneLabel = normalizedZone.isEmpty() ? climateZone : normalizedZone;
                         climatePart.append(String.format(
                                         "%s's climate conditions (Zone %s) create unique maintenance demands for %s-era construction. ",
-                                        metroName, climateZone, formatEraForNarrative(era)));
+                                        metroName, zoneLabel, formatEraForNarrative(era)));
                 }
 
                 insight.append(climatePart);
@@ -249,18 +245,28 @@ public class FragmentLibrary {
          * Helper: Normalize climate zone to key
          */
         private static String getClimateKey(String climateZone) {
-                if (climateZone.startsWith("1"))
-                        return "1";
-                if (climateZone.startsWith("2"))
-                        return "2A";
-                if (climateZone.startsWith("3"))
-                        return "3";
-                if (climateZone.startsWith("5"))
-                        return "5A";
-                if (climateZone.startsWith("6"))
-                        return "6";
-                if (climateZone.contains("B"))
+                String normalized = normalizeClimateZone(climateZone);
+                if (normalized.contains("B"))
                         return "B";
+                if (normalized.startsWith("1"))
+                        return "1";
+                if (normalized.startsWith("2"))
+                        return "2A";
+                if (normalized.startsWith("3"))
+                        return "3";
+                if (normalized.startsWith("5"))
+                        return "5A";
+                if (normalized.startsWith("6"))
+                        return "6";
                 return "3"; // default
+        }
+
+        private static String normalizeClimateZone(String climateZone) {
+                if (climateZone == null) {
+                        return "";
+                }
+                return climateZone.toUpperCase(Locale.ENGLISH)
+                                .replace("ZONE", "")
+                                .replaceAll("[^0-9AB]", "");
         }
 }

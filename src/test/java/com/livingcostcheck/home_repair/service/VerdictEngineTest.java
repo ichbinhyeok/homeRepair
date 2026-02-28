@@ -129,4 +129,15 @@ public class VerdictEngineTest {
                 Assertions.assertTrue(panelItem.getAdjustedCost() > 3000,
                                 "Panel cost should be elevated by forensic risk");
         }
+
+        @Test
+        public void testMetroUniqueSignalsLoaded() {
+                Assertions.assertNotNull(engineService.getMetroUniqueSignalsData(),
+                                "Metro unique signal dataset should be loaded");
+                Assertions.assertNotNull(engineService.getMetroUniqueSignalsData().getData(),
+                                "Metro unique signal data map should not be null");
+                Assertions.assertTrue(
+                                engineService.getMetroUniqueSignalsData().getData().containsKey("AUSTIN_ROUND_ROCK_TX"),
+                                "Expected metro key missing from unique signal dataset");
+        }
 }

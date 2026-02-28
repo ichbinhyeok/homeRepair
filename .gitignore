@@ -52,3 +52,12 @@ logs/
 
 ### Preserve resources ###
 !src/main/resources/data/
+
+### PC Bang specific ignores ###
+jdk*/
+pcbang_setup.ps1
+pcbang_setup.bat
+*.zip
+.env
+application-local.yml
+application-dev.yml

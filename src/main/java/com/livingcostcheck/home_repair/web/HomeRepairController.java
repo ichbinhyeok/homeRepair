@@ -5,6 +5,7 @@ import com.livingcostcheck.home_repair.domain.VerdictHistory;
 import com.livingcostcheck.home_repair.repository.EventLogRepository;
 import com.livingcostcheck.home_repair.repository.HomeRepairRepository;
 import com.livingcostcheck.home_repair.service.VerdictEngineService;
+import com.livingcostcheck.home_repair.service.dto.verdict.DataMapping;
 import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.*;
 import com.livingcostcheck.home_repair.seo.VerdictSeoService;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +19,13 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.livingcostcheck.home_repair.util.TextUtil;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 /**
  * Main controller for Home Repair Verdict Engine
@@ -30,6 +35,19 @@ import java.util.UUID;
 @RequestMapping("/home-repair")
 @RequiredArgsConstructor
 public class HomeRepairController {
+
+        private static final Pattern HTML_TAG_PATTERN = Pattern.compile("<[^>]+>");
+        private static final Pattern MULTI_SPACE_PATTERN = Pattern.compile("\\s{2,}");
+        private static final Pattern NON_ALNUM_PATTERN = Pattern.compile("[^a-z0-9]+");
+        private static final Pattern INTERNAL_MARKER_PATTERN = Pattern
+                        .compile("\\[[A-Z_ ]+\\]|ERA_RISK:|ERA_LABOR_ADJUSTMENT:");
+        private static final Set<String> SEO_STOPWORDS = Set.of(
+                        "the", "and", "for", "with", "from", "that", "this", "your", "into", "over",
+                        "when", "after", "before", "while", "without", "across", "under", "about",
+                        "home", "homes", "house", "houses", "system", "systems", "component", "components",
+                        "cost", "costs", "repair", "repairs", "replacement", "replacements", "local", "regional",
+                        "market", "estimated", "estimate", "safety", "risk", "risks", "data", "standard",
+                        "standards", "common", "critical");
 
         private final HomeRepairRepository repository;
         private final EventLogRepository eventLogRepository;
@@ -271,12 +289,14 @@ public class HomeRepairController {
         }
 
         @GetMapping("/data-sources")
-        public String dataSources() {
+        public String dataSources(Model model) {
+                model.addAttribute("baseUrl", "https://lifeverdict.com");
                 return "pages/data-sources";
         }
 
         @GetMapping("/disclaimer")
-        public String disclaimer() {
+        public String disclaimer(Model model) {
+                model.addAttribute("baseUrl", "https://lifeverdict.com");
                 return "pages/disclaimer";
         }
 
@@ -287,7 +307,8 @@ public class HomeRepairController {
         public Object viewRiskDetail(@PathVariable String metro,
                         @PathVariable String era,
                         @PathVariable String riskItem,
-                        Model model) {
+                        Model model,
+                        jakarta.servlet.http.HttpServletResponse response) {
 
                 String canonicalSlug = riskItem.trim().toLowerCase();
                 boolean needsRedirect = false;
@@ -337,6 +358,18 @@ public class HomeRepairController {
 
                 // Phase 2: Add Metro Metadata & Regional Insight
                 var metroData = verdictEngineService.getMetroMasterData().getData().get(context.getMetroCode());
+                DataMapping.MetroUniqueSignal uniqueSignal = null;
+                if (verdictEngineService.getMetroUniqueSignalsData() != null
+                                && verdictEngineService.getMetroUniqueSignalsData().getData() != null) {
+                        uniqueSignal = verdictEngineService.getMetroUniqueSignalsData().getData()
+                                        .get(context.getMetroCode());
+                }
+                String msaName = TextUtil.formatMsaName(context.getMetroCode());
+                if (uniqueSignal != null && uniqueSignal.getMsaName() != null
+                                && !uniqueSignal.getMsaName().isBlank()) {
+                        msaName = uniqueSignal.getMsaName();
+                }
+
                 String climateZone = "US-Standard";
                 String metroRisk = "Standard Risks";
                 String foundation = "Standard";
@@ -352,6 +385,14 @@ public class HomeRepairController {
                 long seed = (context.getMetroCode() + context.getEra()).hashCode();
                 String regionalInsight = com.livingcostcheck.home_repair.seo.FragmentLibrary.generateRegionalInsight(
                                 climateZone, context.getEra(), laborMult, metroName, seed);
+                if (uniqueSignal != null && uniqueSignal.getFemaMajorDisaster10y() != null
+                                && uniqueSignal.getMedianYearBuilt() != null && uniqueSignal.getStateCode() != null) {
+                        regionalInsight = regionalInsight + " Public records show "
+                                        + uniqueSignal.getFemaMajorDisaster10y()
+                                        + " major FEMA disaster declarations since 2016 in "
+                                        + uniqueSignal.getStateCode() + ", and statewide median housing stock built in "
+                                        + uniqueSignal.getMedianYearBuilt() + ".";
+                }
 
                 model.addAttribute("title",
                                 String.format("Don't Overpay: %s Cost in %s [2026 Data]",
@@ -362,6 +403,7 @@ public class HomeRepairController {
                 model.addAttribute("verdict", verdict);
                 model.addAttribute("metroCode", context.getMetroCode());
                 model.addAttribute("metroName", metroName);
+                model.addAttribute("msaName", msaName);
                 model.addAttribute("era", era);
                 model.addAttribute("eraName", eraName);
                 model.addAttribute("baseUrl", "https://lifeverdict.com");
@@ -371,6 +413,13 @@ public class HomeRepairController {
                 model.addAttribute("climateZone", climateZone);
                 model.addAttribute("metroRisk", metroRisk);
                 model.addAttribute("foundation", foundation);
+                model.addAttribute("openDataCsvUrl", "/data/metro_unique_signals_2026.csv");
+                if (uniqueSignal != null) {
+                        model.addAttribute("femaDisasterCount", uniqueSignal.getFemaMajorDisaster10y());
+                        model.addAttribute("ownerOccupancyRate", uniqueSignal.getOwnerOccupancyRatePct());
+                        model.addAttribute("medianYearBuilt", uniqueSignal.getMedianYearBuilt());
+                        model.addAttribute("repairPressureIndex", uniqueSignal.getRepairPressureIndex());
+                }
 
                 // Internal Links (Simplified for Dynamic)
                 String parentUrl = "/home-repair/verdicts/" + metro + "/" + era + ".html";
@@ -396,6 +445,15 @@ public class HomeRepairController {
                                                                 + i.getItemCode().toLowerCase().replace("_", "-")))
                                 .collect(java.util.stream.Collectors.toList());
                 model.addAttribute("otherRisks", otherRisks);
+
+                // L2 indexing gate: default to noindex unless minimum content-quality
+                // thresholds are met.
+                boolean shouldIndexRiskDetail = shouldIndexRiskDetail(targetItem, verdict, metroData);
+                String robotsDirective = shouldIndexRiskDetail ? "index,follow" : "noindex,follow";
+                model.addAttribute("robotsDirective", robotsDirective);
+                if (!shouldIndexRiskDetail) {
+                        response.setHeader("X-Robots-Tag", "noindex,follow");
+                }
 
                 // Helper Schemas (Dynamic)
                 String breadcrumbSchema = String.format(
@@ -651,6 +709,135 @@ public class HomeRepairController {
                 }
 
                 return links;
+        }
+
+        private boolean shouldIndexRiskDetail(RiskAdjustedItem item, Verdict verdict, Object metroData) {
+                if (item == null || verdict == null || verdict.getPlan() == null || verdict.getPlan().getMustDo() == null) {
+                        return false;
+                }
+
+                String definition = normalizeNarrative(item.getDefinition());
+                String scenario = normalizeNarrative(item.getDamageScenario());
+                String explanation = normalizeNarrative(item.getExplanation());
+                String combinedNarrative = String.join(" ", List.of(definition, scenario, explanation)).trim();
+                List<String> itemTokensList = tokenizeForSimilarity(combinedNarrative);
+                Set<String> uniqueItemTokens = new HashSet<>(itemTokensList);
+
+                boolean hasStrongDefinition = definition.length() >= 80;
+                boolean hasStrongScenario = scenario.length() >= 80;
+                boolean hasMeaningfulCost = item.getAdjustedCost() >= 1000.0;
+                boolean hasLocalData = metroData != null;
+                boolean hasComparisonSet = verdict.getPlan().getMustDo().size() >= 3;
+                boolean hasNarrativeDepth = combinedNarrative.length() >= 260 && itemTokensList.size() >= 45;
+                boolean hasNoInternalMarkers = !INTERNAL_MARKER_PATTERN.matcher(combinedNarrative).find();
+                boolean hasTokenDiversity = false;
+                if (!itemTokensList.isEmpty()) {
+                        double diversity = (double) uniqueItemTokens.size() / itemTokensList.size();
+                        hasTokenDiversity = uniqueItemTokens.size() >= 24 && diversity >= 0.40;
+                }
+
+                boolean hasItemAnchoring = hasItemAnchoring(item.getPrettyName(), uniqueItemTokens);
+                double maxSimilarity = maxSimilarityWithPeers(item, verdict.getPlan().getMustDo(), uniqueItemTokens);
+                boolean isDistinctFromPeers = maxSimilarity < 0.78;
+
+                return hasStrongDefinition && hasStrongScenario && hasMeaningfulCost && hasLocalData
+                                && hasComparisonSet && hasNarrativeDepth && hasNoInternalMarkers
+                                && hasTokenDiversity && hasItemAnchoring && isDistinctFromPeers;
+        }
+
+        private String normalizeNarrative(String raw) {
+                if (raw == null || raw.isBlank()) {
+                        return "";
+                }
+                String cleaned = HTML_TAG_PATTERN.matcher(raw).replaceAll(" ");
+                cleaned = cleaned.replace('\u00a0', ' ');
+                cleaned = MULTI_SPACE_PATTERN.matcher(cleaned).replaceAll(" ").trim();
+                return cleaned;
+        }
+
+        private List<String> tokenizeForSimilarity(String raw) {
+                if (raw == null || raw.isBlank()) {
+                        return List.of();
+                }
+                String normalized = NON_ALNUM_PATTERN.matcher(raw.toLowerCase(Locale.ENGLISH)).replaceAll(" ").trim();
+                if (normalized.isBlank()) {
+                        return List.of();
+                }
+
+                List<String> tokens = new ArrayList<>();
+                for (String token : normalized.split("\\s+")) {
+                        if (token.length() < 3 || SEO_STOPWORDS.contains(token)) {
+                                continue;
+                        }
+                        tokens.add(token);
+                }
+                return tokens;
+        }
+
+        private boolean hasItemAnchoring(String prettyName, Set<String> contentTokens) {
+                List<String> anchors = tokenizeForSimilarity(prettyName);
+                if (anchors.isEmpty()) {
+                        return false;
+                }
+                int matches = 0;
+                for (String anchor : anchors) {
+                        if (contentTokens.contains(anchor)) {
+                                matches++;
+                        }
+                }
+                int requiredMatches = anchors.size() >= 3 ? 2 : 1;
+                return matches >= requiredMatches;
+        }
+
+        private double maxSimilarityWithPeers(RiskAdjustedItem targetItem,
+                        List<RiskAdjustedItem> allItems,
+                        Set<String> targetTokens) {
+                if (allItems == null || allItems.isEmpty() || targetTokens.isEmpty()) {
+                        return 0.0;
+                }
+
+                double maxSimilarity = 0.0;
+                for (RiskAdjustedItem peer : allItems) {
+                        if (peer == null || peer.getItemCode() == null || targetItem.getItemCode() == null) {
+                                continue;
+                        }
+                        if (peer.getItemCode().equalsIgnoreCase(targetItem.getItemCode())) {
+                                continue;
+                        }
+
+                        String peerNarrative = String.join(" ",
+                                        List.of(
+                                                        normalizeNarrative(peer.getDefinition()),
+                                                        normalizeNarrative(peer.getDamageScenario()),
+                                                        normalizeNarrative(peer.getExplanation())))
+                                        .trim();
+
+                        Set<String> peerTokens = new HashSet<>(tokenizeForSimilarity(peerNarrative));
+                        if (peerTokens.isEmpty()) {
+                                continue;
+                        }
+
+                        double similarity = jaccardSimilarity(targetTokens, peerTokens);
+                        if (similarity > maxSimilarity) {
+                                maxSimilarity = similarity;
+                        }
+                }
+                return maxSimilarity;
+        }
+
+        private double jaccardSimilarity(Set<String> a, Set<String> b) {
+                if (a.isEmpty() || b.isEmpty()) {
+                        return 0.0;
+                }
+                Set<String> intersection = new HashSet<>(a);
+                intersection.retainAll(b);
+
+                Set<String> union = new HashSet<>(a);
+                union.addAll(b);
+                if (union.isEmpty()) {
+                        return 0.0;
+                }
+                return (double) intersection.size() / union.size();
         }
 
         private String extractStateCode(String metroCode) {

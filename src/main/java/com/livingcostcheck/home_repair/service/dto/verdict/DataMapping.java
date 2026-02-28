@@ -137,4 +137,49 @@ public class DataMapping {
         private Double low;
         private Double high;
     }
+
+    // --- External uniqueness signals (FEMA + Census + internal labor index) ---
+    @Data
+    @NoArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class MetroUniqueSignalsData {
+        private Map<String, Object> meta;
+        private Map<String, MetroUniqueSignal> data;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class MetroUniqueSignal {
+        @JsonProperty("metro_name")
+        private String metroName;
+        @JsonProperty("msa_name")
+        private String msaName;
+        @JsonProperty("state_code")
+        private String stateCode;
+        @JsonProperty("labor_mult")
+        private Double laborMult;
+        @JsonProperty("climate_zone")
+        private String climateZone;
+        @JsonProperty("regional_risk")
+        private String regionalRisk;
+        @JsonProperty("fema_major_disaster_10y")
+        private Integer femaMajorDisaster10y;
+        @JsonProperty("owner_occupancy_rate_pct")
+        private Double ownerOccupancyRatePct;
+        @JsonProperty("median_year_built")
+        private Integer medianYearBuilt;
+        @JsonProperty("legacy_housing_age_years")
+        private Integer legacyHousingAgeYears;
+        @JsonProperty("repair_pressure_index")
+        private Double repairPressureIndex;
+        @JsonProperty("source_fema")
+        private String sourceFema;
+        @JsonProperty("source_census_owner_occupancy")
+        private String sourceCensusOwnerOccupancy;
+        @JsonProperty("source_census_median_year_built")
+        private String sourceCensusMedianYearBuilt;
+        @JsonProperty("generated_at")
+        private String generatedAt;
+    }
 }

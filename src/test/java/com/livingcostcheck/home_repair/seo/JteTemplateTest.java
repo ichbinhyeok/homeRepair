@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JteTemplateTest {
@@ -31,7 +32,21 @@ public class JteTemplateTest {
                 verdict.setCostRangeLabel("$100 - $200");
 
                 VerdictDTOs.SortedPlan plan = new VerdictDTOs.SortedPlan();
-                plan.setMustDo(new ArrayList<>());
+                VerdictDTOs.RiskAdjustedItem sampleRisk = VerdictDTOs.RiskAdjustedItem.builder()
+                                .itemCode("ELECTRICAL_PANEL_UPGRADE")
+                                .prettyName("Electrical Panel Upgrade")
+                                .category("SAFETY")
+                                .adjustedCost(9200.0)
+                                .riskFlags(List.of(
+                                                "ERA_RISK: KNOB_AND_TUBE_WIRING",
+                                                "ERA_LABOR_ADJUSTMENT: 2.5x",
+                                                "CRITICAL_SEVERITY_SURCHARGE"))
+                                .mandatory(true)
+                                .explanation(
+                                                "[FINANCIAL RISK PROMOTION] High liability detected ($9,200). <strong>Legacy wiring risk detected.</strong>")
+                                .definition("Legacy wiring systems often require full panel upgrades.")
+                                .build();
+                plan.setMustDo(new ArrayList<>(List.of(sampleRisk)));
                 plan.setShouldDo(new ArrayList<>());
                 verdict.setPlan(plan);
                 verdict.setContextBriefing(new VerdictDTOs.ContextBriefing());
@@ -56,10 +71,26 @@ public class JteTemplateTest {
                 params.put("faqItems", new ArrayList<Map<String, String>>());
                 params.put("lowPrice", "100");
                 params.put("highPrice", "200");
+                params.put("breadcrumbSchema", "");
+                params.put("metroRisk", "Aging Infrastructure");
+                params.put("climateZone", "5A");
+                params.put("foundation", "FULL_BASEMENT");
+                params.put("avgHouseAge", "N/A");
+                params.put("howToSchema", "");
+                params.put("dateString", "February 2026");
 
                 StringOutput output = new StringOutput();
                 assertDoesNotThrow(() -> templateEngine.render("seo/static-verdict.jte", params, output),
                                 "static-verdict.jte should render without errors");
+
+                String html = output.toString();
+                assertFalse(html.contains("ERA_RISK"), "Template should not leak internal risk flags");
+                assertFalse(html.contains("CRITICAL_SEVERITY_SURCHARGE"),
+                                "Template should not leak internal surcharge flags");
+                assertFalse(html.contains("[FINANCIAL RISK PROMOTION]"),
+                                "Template should not leak internal explanation tokens");
+                assertTrue(html.contains("Era-specific hazard"),
+                                "Template should render user-facing risk labels");
 
                 System.out.println(
                                 "Static Output snippet: " + output.toString().substring(0,

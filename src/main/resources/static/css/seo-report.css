@@ -254,6 +254,18 @@ a:hover {
         padding: 1.5rem;
     }
 
+    .breadcrumbs {
+        white-space: normal;
+        overflow-x: visible;
+        flex-wrap: wrap;
+        row-gap: 0.35rem;
+    }
+
+    .breadcrumbs .current {
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
     .stat-val {
         font-size: 2rem;
     }
@@ -488,7 +500,8 @@ a:hover {
 /* Sticky CTA */
 .sticky-cta {
     margin: 2rem auto;
-    width: fit-content;
+    width: min(calc(100% - 2rem), 420px);
+    max-width: 420px;
     animation: slideUp 0.5s ease-out;
 }
 
@@ -507,30 +520,37 @@ a:hover {
 .cta-floater {
     background: var(--slate-900);
     color: white;
-    padding: 0.5rem 1.25rem;
-    /* Reduced vertical padding */
+    width: 100%;
+    padding: 0.5rem 0.85rem;
     border-radius: 100px;
     box-shadow: var(--shadow-lg);
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
     gap: 0.75rem;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .cta-floater span {
     font-weight: 500;
-    font-size: 0.85rem;
-    /* Slightly smaller text */
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    flex: 1;
+    min-width: 0;
 }
 
 .cta-floater .btn-sm {
     background: var(--accent);
     color: white;
     padding: 0.4rem 0.85rem;
-    /* Slimmer button */
     border-radius: 100px;
     font-weight: 700;
     font-size: 0.8rem;
+    flex-shrink: 0;
 }
 
 /* FAQ */
