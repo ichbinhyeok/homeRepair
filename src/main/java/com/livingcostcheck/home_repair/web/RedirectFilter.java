@@ -16,6 +16,8 @@ import java.util.regex.Pattern;
 @Component
 public class RedirectFilter implements Filter {
 
+    private static final Pattern VERDICT_REPEATED_EXTENSION = Pattern.compile(
+            "^/home-repair/verdicts/.+?(?:\\.(?:html?|HTML?)){2,}$");
     private static final Pattern RISK_TRAILING_EXTENSION = Pattern.compile(
             "^(/home-repair/verdicts/[^/]+/[^/]+/[^/]+?)(?:\\.(?:html?|HTML?))+$");
     private static final Pattern STATE_PAGE_WITH_EXTENSION = Pattern.compile(
@@ -34,6 +36,13 @@ public class RedirectFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         String uri = req.getRequestURI();
+
+        // Spider-trap hard cut: repeated .html variants should not be kept in crawl loops.
+        if (VERDICT_REPEATED_EXTENSION.matcher(uri).matches()) {
+            res.setStatus(HttpServletResponse.SC_GONE);
+            return;
+        }
+
         String canonicalUri = normalizeUri(uri);
 
         if (!canonicalUri.equals(uri)) {

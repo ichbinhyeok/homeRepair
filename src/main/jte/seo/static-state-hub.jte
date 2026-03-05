@@ -17,8 +17,8 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${page.stateName} Home Repair Costs: ${page.cities.size()} Cities Analyzed (2026)</title>
-    <meta name="description" content="Compare repair costs across ${page.cities.size()} cities in ${page.stateName}. Get 2026 pricing data for roofing, HVAC, plumbing & more. Free cost breakdown by home era.">
+    <title>${page.stateName} Home Repair Cost Guide (2026): ${page.cities.size()} City Benchmarks</title>
+    <meta name="description" content="City-by-city repair cost benchmarks for ${page.stateName}. Compare pre-1950 to modern homes, open metro reports by era, and plan inspection budgets before closing.">
     
     <link rel="canonical" href="${page.canonicalUrl}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -29,11 +29,43 @@
     
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Home Repair Costs in ${page.stateName} (2026)">
-    <meta property="og:description" content="View detailed repair cost indices for ${page.cities.size()} cities in ${page.stateName}.">
+    <meta property="og:title" content="${page.stateName} Home Repair Cost Guide (2026)">
+    <meta property="og:description" content="Compare ${page.cities.size()} city benchmarks in ${page.stateName} and drill into era-based repair liabilities.">
     <meta property="og:url" content="${page.canonicalUrl}">
 
     $unsafe{page.breadcrumbSchema}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How should I use this ${page.stateName} repair cost page?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Start with your nearest city, then open the home era that matches your property. Use that report to set inspection priorities and a seller credit target before closing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why are costs different across cities in ${page.stateName}?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Repair estimates vary by local labor rates, climate risk, and housing stock age. The city-level reports account for those market differences."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does this replace a home inspection?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Use these benchmarks to prepare, but confirm with a licensed inspector and contractor bids for the specific property."
+          }
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     @template.layout._header()
@@ -49,13 +81,25 @@
             </div>
             
             <span class="badge-market">State Index</span>
-            <h1 class="title-h1">${page.stateName} Market Report</h1>
-            <p class="subtitle">Select your metro area to view forensic cost analysis reports by building era.</p>
+            <h1 class="title-h1">${page.stateName} Home Repair Cost Map</h1>
+            <p class="subtitle">Compare ${page.cities.size()} metro markets, open era-specific reports, and build a realistic repair budget before you buy.</p>
         </div>
     </header>
 
     <main class="container" style="margin-top: -3rem; position: relative; z-index: 10;">
         <div class="bento-grid">
+
+            <div class="span-12" style="background: white; border-radius: var(--radius-xl); border: 1px solid var(--slate-100); box-shadow: var(--shadow-sm); padding: 1.5rem;">
+                <h2 style="margin-bottom: 0.75rem;">How To Use This State Report</h2>
+                <p style="color: var(--slate-600); line-height: 1.7; margin-bottom: 0.75rem;">
+                    This page is built for buyers comparing repair exposure across cities in ${page.stateName}. It helps you narrow where costs are likely to be higher before inspection.
+                </p>
+                <ol style="margin: 0; padding-left: 1.1rem; color: var(--slate-700); line-height: 1.8;">
+                    <li>Choose your target city below.</li>
+                    <li>Open the matching home era report (Pre-1950 through 2010-Present).</li>
+                    <li>Use the estimate range to set inspection focus and negotiation range.</li>
+                </ol>
+            </div>
             
             <!-- State Market Grid -->
             <div class="span-12 state-grid-container" style="background: white; border-radius: var(--radius-xl); box-shadow: var(--shadow-sm); border: 1px solid var(--slate-100);">
@@ -87,11 +131,26 @@
                     @endfor
                 </div>
             </div>
+
+            <div class="span-12" style="background: white; border-radius: var(--radius-xl); border: 1px solid var(--slate-100); box-shadow: var(--shadow-sm); padding: 1.5rem;">
+                <h2 style="margin-bottom: 0.75rem;">What Drives Differences Across ${page.stateName}</h2>
+                <p style="color: var(--slate-600); line-height: 1.7; margin-bottom: 0.75rem;">
+                    Repair liability changes by metro because labor pricing, weather stress, and average home age are not uniform statewide.
+                </p>
+                <ul style="margin: 0; padding-left: 1.1rem; color: var(--slate-700); line-height: 1.8;">
+                    <li>Labor and permit cost variation between metros.</li>
+                    <li>Different climate pressure on roofs, envelopes, and plumbing.</li>
+                    <li>Different mix of older housing stock and deferred maintenance.</li>
+                </ul>
+                <p style="color: var(--slate-600); line-height: 1.7; margin-top: 0.75rem;">
+                    For methodology and data sources, review <a href="/home-repair/methodology">Methodology</a> and <a href="/home-repair/data-sources">Data Sources</a>.
+                </p>
+            </div>
             
             <!-- CTA -->
              <div class="span-12" style="text-align: center; margin-top: 2rem; margin-bottom: 4rem;">
-                <p style="margin-bottom: 1.5rem; color: var(--slate-600);">Don't see your city? Try the global search.</p>
-                <a href="/home-repair" class="btn-primary">Search by Address &rarr;</a>
+                <p style="margin-bottom: 1.5rem; color: var(--slate-600);">Need a property-specific estimate beyond city averages?</p>
+                <a href="/home-repair" class="btn-primary">Start With Your Property &rarr;</a>
              </div>
 
         </div>

@@ -25,15 +25,13 @@ class RedirectFilterTest {
     }
 
     @Test
-    void shouldRedirectRiskWithRepeatedHtmlToExtensionlessCanonical() throws Exception {
+    void shouldReturnGoneForRiskWithRepeatedHtml() throws Exception {
         FilterResult result = execute(
                 "/home-repair/verdicts/erie-pa/1950-1970/water-heater-tankless-gas.html.html.html",
                 "utm_source=gsc");
 
-        assertEquals(301, result.statusCode);
-        assertEquals(
-                "/home-repair/verdicts/erie-pa/1950-1970/water-heater-tankless-gas?utm_source=gsc",
-                result.location);
+        assertEquals(410, result.statusCode);
+        assertEquals(null, result.location);
         assertFalse(result.chainInvoked);
     }
 
@@ -47,11 +45,20 @@ class RedirectFilterTest {
     }
 
     @Test
-    void shouldRedirectL1RepeatedHtmlToSingleHtml() throws Exception {
+    void shouldReturnGoneForL1RepeatedHtml() throws Exception {
         FilterResult result = execute("/home-repair/verdicts/mobile-al/1970-1980.html.html", null);
 
-        assertEquals(301, result.statusCode);
-        assertEquals("/home-repair/verdicts/mobile-al/1970-1980.html", result.location);
+        assertEquals(410, result.statusCode);
+        assertEquals(null, result.location);
+        assertFalse(result.chainInvoked);
+    }
+
+    @Test
+    void shouldReturnGoneForStateRepeatedHtml() throws Exception {
+        FilterResult result = execute("/home-repair/verdicts/states/ca.html.html", null);
+
+        assertEquals(410, result.statusCode);
+        assertEquals(null, result.location);
         assertFalse(result.chainInvoked);
     }
 
