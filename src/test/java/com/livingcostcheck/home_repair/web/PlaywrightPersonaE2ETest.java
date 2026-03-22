@@ -87,7 +87,7 @@ class PlaywrightPersonaE2ETest {
         page.waitForURL("**/home-repair/result/**");
         String bodyText = page.locator("body").innerText();
 
-        assertTrue(bodyText.contains("Vendor-Agnostic Forensic Audit"));
+        assertTrue(bodyText.contains("Inspection Budget & Credit Plan"));
         assertNoInternalLeak(bodyText);
 
         saveScreenshot("buyer-persona-result.png");
@@ -158,8 +158,8 @@ class PlaywrightPersonaE2ETest {
 
         Locator unlocked = page.locator("#unlocked-actions");
         unlocked.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-        assertTrue(unlocked.innerText().contains("Unlocked"));
-        assertTrue(unlocked.innerText().contains("Print Official PDF Report"));
+        assertTrue(unlocked.innerText().contains("Saved."));
+        assertTrue(unlocked.innerText().contains("Print Report"));
 
         saveScreenshot("buyer-unlock-flow.png");
     }
@@ -173,18 +173,14 @@ class PlaywrightPersonaE2ETest {
     }
 
     @Test
-    void riskDetailHtmlVariantRedirectsToCanonicalInBrowser() throws IOException {
-        page.navigate(url("/home-repair/verdicts/atlanta-sandy-springs-ga/1980-1995/hvac-heat-pump-central.html.html"));
-        page.waitForURL("**/home-repair/verdicts/atlanta-sandy-springs-ga/1980-1995/hvac-heat-pump-central");
+    void riskDetailHtmlVariantReturnsGoneInBrowser() throws IOException {
+        var response = page.navigate(url("/home-repair/verdicts/atlanta-sandy-springs-ga/1980-1995/hvac-heat-pump-central.html.html"));
 
-        String finalUrl = page.url();
-        String html = page.content();
+        assertTrue(response != null);
+        assertTrue(response.status() == 410);
+        assertTrue(page.url().endsWith("/home-repair/verdicts/atlanta-sandy-springs-ga/1980-1995/hvac-heat-pump-central.html.html"));
 
-        assertTrue(finalUrl.endsWith("/home-repair/verdicts/atlanta-sandy-springs-ga/1980-1995/hvac-heat-pump-central"));
-        assertTrue(html.contains("<link rel=\"canonical\""));
-        assertNoInternalLeak(html);
-
-        saveScreenshot("risk-detail-canonical.png");
+        saveScreenshot("risk-detail-gone.png");
     }
 
     private void completeStepOne(String relationship, String era) {
