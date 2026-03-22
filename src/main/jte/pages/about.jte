@@ -17,6 +17,7 @@
     
     <title>About Us | Home Repair Verdict</title>
     <meta name="description" content="Learn about our mission to provide data-driven, transparent home repair cost analysis backed by RSMeans construction data and regional market research.">
+    <meta name="robots" content="noindex,follow">
     
     <link rel="canonical" href="${baseUrl}/home-repair/about">
     <link rel="icon" href="/favicon.ico">

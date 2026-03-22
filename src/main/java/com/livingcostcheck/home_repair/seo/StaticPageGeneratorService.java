@@ -61,7 +61,7 @@ public class StaticPageGeneratorService {
                 });
 
                 try {
-                        generateStateHubPages(metroCodes, outputBasePath);
+                        writeStateHubPages(metroCodes, outputBasePath);
                         for (String state : getAllStates(metroCodes)) {
                                 allGeneratedUrls
                                                 .add("https://lifeverdict.com/home-repair/verdicts/states/"
@@ -96,11 +96,12 @@ public class StaticPageGeneratorService {
                 templateData.put("verdict", verdict);
                 templateData.put("baseUrl", "https://lifeverdict.com");
                 templateData.put("canonicalUrl", buildCanonicalUrl(metroCode, era));
+                templateData.put("calculatorUrl", buildCalculatorUrl(metroCode, era));
                 templateData.put("dateString", dateString);
 
                 String stateCode = extractStateCode(metroCode);
 
-                templateData.put("howToSchema", generateHowToSchema(metroName, eraName));
+                templateData.put("howToSchema", "");
                 templateData.put("breadcrumbSchema",
                                 generateBreadcrumbSchema(metroName, eraName, (String) templateData.get("canonicalUrl"),
                                                 stateCode));
@@ -174,7 +175,7 @@ public class StaticPageGeneratorService {
                         }
                 }
 
-                // Generate Dynamic, Unique FAQs to prevent "Thin Content" penalty
+                // Keep FAQs focused on the three highest-intent buyer questions.
                 List<Map<String, String>> dynamicFaqs = generateDynamicFAQ(metroName, eraName, verdict, mData);
                 templateData.put("faqItems", dynamicFaqs);
                 templateData.put("faqSchema", generateFAQSchemaFromItems(dynamicFaqs));
@@ -258,24 +259,27 @@ public class StaticPageGeneratorService {
                                 .map(VerdictDTOs.RiskAdjustedItem::getPrettyName).reduce((a, b) -> a + ", " + b)
                                 .orElse("aging systems");
 
+                RiskAdjustedItem firstRisk = verdict.getPlan().getMustDo().stream().findFirst().orElse(null);
+                String firstRiskName = firstRisk != null ? firstRisk.getPrettyName() : "the top repair item";
+
                 // Q1: Cost Specifics (Unique Data: Math Driven Cost + Era + Metro)
                 Map<String, String> q1 = new HashMap<>();
-                q1.put("question", String.format("How much should I budget for repairs on a %s home in %s?",
+                q1.put("question", String.format("How much should I budget from the inspection report for a %s home in %s?",
                                 eraName.split("\\(")[0].trim(), metroName.split(",")[0].trim()));
                 q1.put("answer", String.format(
-                                "Based on localized %s labor indexes (%.2fx multiplier) and %s structural standards, forensic analysis suggests budgeting approximately $%,.0f to clear immediate liabilities. The top expenditure vector involves %s.",
+                                "Based on localized %s labor indexes (%.2fx multiplier) and %s structural standards, forensic analysis suggests budgeting approximately $%,.0f for immediate post-inspection liabilities. The top expenditure vector involves %s.",
                                 metroName, (mData != null ? mData.getLaborMult() : 1.0), eraName.split("\\(")[0].trim(),
                                 totalCost, riskList));
                 faqs.add(q1);
 
-                // Q2: Regional Risk (Unique Entity Data: Climate/Soil/Risk)
+                // Q2: Inspection focus (Unique Entity Data: Climate/Soil/Risk)
                 if (mData != null) {
                         Map<String, String> q2 = new HashMap<>();
                         q2.put("question",
-                                        String.format("What is the biggest hidden risk for homes in %s?", metroName));
+                                        String.format("What should I ask the inspector to verify first in %s?", metroName));
                         q2.put("answer", String.format(
-                                        "In %s, the overarching regional hazard is %s, compounded by its %s climate classification. For %s properties, this actuarial risk directly translates to accelerated depreciation of the %s.",
-                                        metroName, mData.getRisk(), mData.getClimateZone(), eraName.split(" ")[0],
+                                        "Start with %s. In %s, the overarching regional hazard is %s, compounded by its %s climate classification. For %s properties, that combination usually accelerates deterioration in the %s and should be documented with photos, remaining-life notes, and contractor follow-up bids.",
+                                        firstRiskName, metroName, mData.getRisk(), mData.getClimateZone(), eraName.split(" ")[0],
                                         mData.getFoundation().toLowerCase().contains("basement")
                                                         ? "foundation and subsurface drainage"
                                                         : "roofing membrane and exterior envelope"));
@@ -284,31 +288,11 @@ public class StaticPageGeneratorService {
 
                 // Q3: Negotiation (Unique Data: Mathematical Leverage Logic)
                 Map<String, String> q3 = new HashMap<>();
-                q3.put("question", "Can I use these repair estimates to negotiate the home price?");
+                q3.put("question", "How much seller credit should I ask for after the inspection?");
                 q3.put("answer", String.format(
-                                "Yes. This analysis pinpoints $%,.0f in verifiable, deferred maintenance. Structuring a seller credit request of roughly %.1f%% of this total ($%,.0f) is a common tactic to offset the sudden capital expenditure required for critical items like %s.",
-                                totalCost, 80.0, totalCost * 0.8, verdict.getPlan().getMustDo().stream().findFirst()
-                                                .map(VerdictDTOs.RiskAdjustedItem::getPrettyName)
-                                                .orElse("electrical panels")));
+                                "A reasonable opening request is roughly %.1f%% of the documented repair burden: about $%,.0f on a $%,.0f estimate. Use the inspection notes plus at least one contractor quote to support the request, especially for items like %s.",
+                                80.0, totalCost * 0.8, totalCost, firstRiskName));
                 faqs.add(q3);
-
-                // Q4: Home Inspection (Long-tail: "should I get inspection before buying")
-                Map<String, String> q4 = new HashMap<>();
-                q4.put("question", String.format("Should I get a home inspection before buying a %s home in %s?",
-                                eraName.split("\\(")[0].trim(), metroName.split(",")[0].trim()));
-                q4.put("answer", String.format(
-                                "Absolutely. A professional inspection for %s-era homes is essential because building codes of that period often permitted materials and methods now considered substandard. In %s, focus the inspection on %s, which are the most likely sources of expensive surprises. Budget $300&ndash;$500 for a qualified inspector familiar with %s construction.",
-                                eraName.split("\\(")[0].trim(), metroName, riskList, eraName.split("\\(")[0].trim()));
-                faqs.add(q4);
-
-                // Q5: Timeline (Long-tail: "how long do repairs take")
-                Map<String, String> q5 = new HashMap<>();
-                q5.put("question", String.format("How long do major repairs typically take on a %s home?",
-                                eraName.split("\\(")[0].trim()));
-                q5.put("answer", String.format(
-                                "Timeline varies by scope, but for %s-era properties requiring %d critical system updates, expect 4&ndash;12 weeks of active work. In %s, contractor scheduling adds 2&ndash;6 weeks of lead time depending on season. Prioritize safety-critical items (electrical, structural) first, as these affect insurability and habitability.",
-                                eraName.split("\\(")[0].trim(), verdict.getPlan().getMustDo().size(), metroName));
-                faqs.add(q5);
 
                 return faqs;
         }
@@ -382,6 +366,10 @@ public class StaticPageGeneratorService {
                                 + e.toLowerCase().replace("_", "-") + ".html";
         }
 
+        private String buildCalculatorUrl(String metroCode, String era) {
+                return "/home-repair?metroCode=" + metroCode + "&era=" + era + "&relationship=BUYING";
+        }
+
         private static final Map<String, String> STATE_NAMES = Map.ofEntries(
                         Map.entry("AL", "Alabama"), Map.entry("AK", "Alaska"), Map.entry("AZ", "Arizona"),
                         Map.entry("AR", "Arkansas"),
@@ -405,7 +393,13 @@ public class StaticPageGeneratorService {
                         Map.entry("WA", "Washington"), Map.entry("WV", "West Virginia"), Map.entry("WI", "Wisconsin"),
                         Map.entry("WY", "Wyoming"), Map.entry("DC", "District of Columbia"));
 
-        private void generateStateHubPages(List<String> codes, String outputBasePath) throws IOException {
+        public int generateStateHubPages(String outputBasePath) throws IOException {
+                List<String> metroCodes = new ArrayList<>(verdictEngineService.getMetroMasterData().getData().keySet());
+                writeStateHubPages(metroCodes, outputBasePath);
+                return getAllStates(metroCodes).size();
+        }
+
+        private void writeStateHubPages(List<String> codes, String outputBasePath) throws IOException {
                 Map<String, List<String>> byState = new HashMap<>();
                 for (String c : codes) {
                         String s = extractStateCode(c);

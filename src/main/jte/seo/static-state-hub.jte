@@ -17,8 +17,8 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${page.stateName} Home Repair Cost Guide (2026): ${page.cities.size()} City Benchmarks</title>
-    <meta name="description" content="City-by-city repair cost benchmarks for ${page.stateName}. Compare pre-1950 to modern homes, open metro reports by era, and plan inspection budgets before closing.">
+    <title>${page.stateName} home repair costs by city and era (${page.cities.size()} metros)</title>
+    <meta name="description" content="Compare inspection repair budgets in ${page.stateName} by city and era. Open metro reports, review old-home red flags, and plan seller-credit requests before buying.">
     
     <link rel="canonical" href="${page.canonicalUrl}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -81,7 +81,7 @@
             </div>
             
             <span class="badge-market">State Index</span>
-            <h1 class="title-h1">${page.stateName} Home Repair Cost Map</h1>
+            <h1 class="title-h1">${page.stateName} home repair costs by city and era</h1>
             <p class="subtitle">Compare ${page.cities.size()} metro markets, open era-specific reports, and build a realistic repair budget before you buy.</p>
         </div>
     </header>
@@ -143,14 +143,14 @@
                     <li>Different mix of older housing stock and deferred maintenance.</li>
                 </ul>
                 <p style="color: var(--slate-600); line-height: 1.7; margin-top: 0.75rem;">
-                    For methodology and data sources, review <a href="/home-repair/methodology">Methodology</a> and <a href="/home-repair/data-sources">Data Sources</a>.
+                    Need documentation? Review <a href="/home-repair/methodology">Methodology</a> and <a href="/home-repair/data-sources">Data Sources</a> after you shortlist a market.
                 </p>
             </div>
             
             <!-- CTA -->
              <div class="span-12" style="text-align: center; margin-top: 2rem; margin-bottom: 4rem;">
                 <p style="margin-bottom: 1.5rem; color: var(--slate-600);">Need a property-specific estimate beyond city averages?</p>
-                <a href="/home-repair" class="btn-primary">Start With Your Property &rarr;</a>
+                <a href="/home-repair?relationship=BUYING" class="btn-primary">Start With Your Property &rarr;</a>
              </div>
 
         </div>

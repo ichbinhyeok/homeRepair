@@ -1,30 +1,32 @@
 package com.livingcostcheck.home_repair.seo;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-/**
- * Test to generate State Hub pages
- */
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
-public class StateHubGenerationTest {
+class StateHubGenerationTest {
 
     @Autowired
-    private StateHubGeneratorService stateHubGeneratorService;
+    private StaticPageGeneratorService staticPageGeneratorService;
 
     @Test
-    void generateAllStateHubs() {
-        System.out.println("Starting State Hub generation...");
+    void generateStaticStateHubsIntoTempOutput(@TempDir Path tempDir) throws IOException {
+        Path outputDir = tempDir.resolve("home-repair").resolve("verdicts");
 
-        int count = stateHubGeneratorService.generateAllStateHubs(
-                "src/main/resources/static/home-repair/verdicts");
+        int count = staticPageGeneratorService.generateStateHubPages(outputDir.toString());
 
-        System.out.println("✅ Successfully generated " + count + " State Hub pages!");
-        System.out.println("📁 Location: src/main/resources/static/home-repair/verdicts/states/");
-        System.out.println("🎯 Each hub includes:");
-        System.out.println("   - State-level cost statistics");
-        System.out.println("   - Climate analysis");
-        System.out.println("   - Links to all cities in the state");
+        assertThat(count).isGreaterThan(0);
+        assertThat(Files.exists(outputDir.resolve("states"))).isTrue();
+        try (var files = Files.list(outputDir.resolve("states"))) {
+            assertThat(files.findAny()).isPresent();
+        }
     }
 }

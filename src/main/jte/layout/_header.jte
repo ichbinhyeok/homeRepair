@@ -43,9 +43,6 @@
         
         <nav class="nav-links">
             <a href="/home-repair" style="font-size: 0.875rem; font-weight: 500; color: #64748b; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='#64748b'">Home</a>
-            <a href="/home-repair/methodology" style="font-size: 0.875rem; font-weight: 500; color: #64748b; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='#64748b'">Methodology</a>
-            <a href="/home-repair/about" style="font-size: 0.875rem; font-weight: 500; color: #64748b; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='#64748b'">About</a>
-            <a href="/home-repair/editorial-policy" style="font-size: 0.875rem; font-weight: 500; color: #64748b; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='#64748b'">Editorial Policy</a>
             <a href="/home-repair/verdicts/states" style="font-size: 0.875rem; font-weight: 600; color: #3b82f6; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#2563eb'" onmouseout="this.style.color='#3b82f6'">Browse by State</a>
         </nav>
     </div>

@@ -49,14 +49,9 @@ public class SitemapGenerator {
         // 1. Core Pages (Seed)
         xml.append(buildUrlEntry(BASE_URL + "/", lastMod, "daily", "1.0"));
         xml.append(buildUrlEntry(BASE_URL + "/home-repair", lastMod, "weekly", "0.9"));
-        xml.append(buildUrlEntry(BASE_URL + "/home-repair/methodology", lastMod, "monthly", "0.8"));
-        xml.append(buildUrlEntry(BASE_URL + "/home-repair/about", lastMod, "monthly", "0.7"));
-        xml.append(buildUrlEntry(BASE_URL + "/home-repair/editorial-policy", lastMod, "monthly", "0.7"));
-        xml.append(buildUrlEntry(BASE_URL + "/home-repair/disclaimer", lastMod, "monthly", "0.7"));
-        xml.append(buildUrlEntry(BASE_URL + "/home-repair/data-sources", lastMod, "monthly", "0.7"));
         xml.append(buildUrlEntry(BASE_URL + "/home-repair/verdicts/states", lastMod, "weekly", "0.9"));
         xml.append(buildUrlEntry(BASE_URL + "/home-repair/risks", lastMod, "weekly", "0.9"));
-        urlCount += 9;
+        urlCount += 4;
 
         for (String riskSlug : RISK_HUB_SLUGS) {
             xml.append(buildUrlEntry(BASE_URL + "/home-repair/risks/" + riskSlug, lastMod, "weekly", "0.8"));

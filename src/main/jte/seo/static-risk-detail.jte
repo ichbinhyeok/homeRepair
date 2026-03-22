@@ -21,7 +21,7 @@
 @param String breadcrumbSchema
 @param String dateString
 @param List<InternalLink> otherRisks
-@param String robotsDirective = "index,follow"
+@param String robotsDirective = "noindex,follow"
 @param Integer femaDisasterCount = null
 @param Double ownerOccupancyRate = null
 @param Integer medianYearBuilt = null

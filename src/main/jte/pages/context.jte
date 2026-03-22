@@ -40,13 +40,13 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">Renovation Budget ($)</label>
-                            <input type="number" name="budget" required min="1000" step="1" placeholder="e.g. 50000" class="w-full p-3 border border-slate-300 rounded-lg">
-                            <p class="text-xs text-slate-500 mt-1">Cash available for repairs</p>
+                            <input type="number" name="budget" min="1000" step="1" value="50000" placeholder="e.g. 50000" class="w-full p-3 border border-slate-300 rounded-lg">
+                            <p class="text-xs text-slate-500 mt-1">Start with a default and refine later if needed.</p>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">House Size (SqFt)</label>
-                            <input type="number" name="sqft" required min="500" max="10000" step="1" placeholder="e.g. 2000" class="w-full p-3 border border-slate-300 rounded-lg">
-                            <p class="text-xs text-slate-500 mt-1">Interior living area. (Unsure? Use 1800 for 3-Bed)</p>
+                            <input type="number" name="sqft" min="500" max="10000" step="1" value="1800" placeholder="e.g. 2000" class="w-full p-3 border border-slate-300 rounded-lg">
+                            <p class="text-xs text-slate-500 mt-1">Interior living area. If unsure, leave the default 1800.</p>
                         </div>
                     </div>
 

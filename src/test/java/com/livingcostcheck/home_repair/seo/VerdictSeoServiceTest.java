@@ -15,15 +15,16 @@ class VerdictSeoServiceTest {
 
         VerdictSeoService.SeoVariant result = service.getStaticPageHeader(metro, era);
 
-        // Verify Buyer-Pivot H1: "Hidden repair liabilities in {era} homes in {metro}"
-        assertThat(result.h1()).contains("Hidden repair liabilities in");
+        // Verify informational H1 aligned to city + era inspection-budget intent.
+        assertThat(result.h1()).contains("home inspection repair budget in");
         assertThat(result.h1()).contains(metro);
         assertThat(result.h1()).contains(era);
 
-        // Verify CTR-Optimized Title: "Avoid Hidden Costs: {era} Homes in {metro} (2026
-        // Audit)"
-        assertThat(result.title()).contains("Avoid Hidden Costs:");
-        assertThat(result.title()).contains("(2026 Audit)");
+        // Verify title emphasizes inspection budget + negotiation intent.
+        assertThat(result.title()).contains("costs");
+        assertThat(result.title()).contains("seller credit guide");
+        assertThat(result.title()).doesNotContain("Avoid Hidden Costs:");
+        assertThat(result.title()).doesNotContain("(2026 Audit)");
     }
 
     @Test
@@ -34,8 +35,8 @@ class VerdictSeoServiceTest {
 
         VerdictSeoService.SeoVariant result = service.getDynamicResultHeader(verdict, metro);
 
-        // Verify "Outlook" framing (No "High Risk" in H1)
-        assertThat(result.h1()).contains("Your home repair outlook");
+        // Verify inspection-budget framing (No "High Risk" in H1)
+        assertThat(result.h1()).contains("Your inspection repair budget");
         assertThat(result.h1()).contains(metro);
         assertThat(result.h1()).doesNotContain("High Risk");
         assertThat(result.h1()).doesNotContain("Analysis");

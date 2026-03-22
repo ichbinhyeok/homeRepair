@@ -55,7 +55,10 @@ public class HomeRepairController {
         private final com.livingcostcheck.home_repair.seo.VerdictSeoService verdictSeoService;
 
         @GetMapping
-        public String index(Model model) {
+        public String index(@RequestParam(value = "metroCode", required = false) String selectedMetroCode,
+                        @RequestParam(value = "era", required = false) String selectedEra,
+                        @RequestParam(value = "relationship", required = false) String selectedRelationship,
+                        Model model) {
                 // Step 1: Landing Page (Location & Era)
 
                 // Prepare Metros List
@@ -74,6 +77,9 @@ public class HomeRepairController {
 
                 model.addAttribute("metros", metros);
                 model.addAttribute("eras", eras);
+                model.addAttribute("selectedMetroCode", selectedMetroCode);
+                model.addAttribute("selectedEra", selectedEra);
+                model.addAttribute("selectedRelationship", selectedRelationship != null ? selectedRelationship : "BUYING");
                 model.addAttribute("title", "Buying a Fixer-Upper? Don't Sign Until You See This Verdict.");
 
                 return "pages/index";
@@ -451,9 +457,7 @@ public class HomeRepairController {
                 boolean shouldIndexRiskDetail = shouldIndexRiskDetail(targetItem, verdict, metroData);
                 String robotsDirective = shouldIndexRiskDetail ? "index,follow" : "noindex,follow";
                 model.addAttribute("robotsDirective", robotsDirective);
-                if (!shouldIndexRiskDetail) {
-                        response.setHeader("X-Robots-Tag", "noindex,follow");
-                }
+                response.setHeader("X-Robots-Tag", "noindex,follow");
 
                 // Helper Schemas (Dynamic)
                 String breadcrumbSchema = String.format(
@@ -712,37 +716,9 @@ public class HomeRepairController {
         }
 
         private boolean shouldIndexRiskDetail(RiskAdjustedItem item, Verdict verdict, Object metroData) {
-                if (item == null || verdict == null || verdict.getPlan() == null || verdict.getPlan().getMustDo() == null) {
-                        return false;
-                }
-
-                String definition = normalizeNarrative(item.getDefinition());
-                String scenario = normalizeNarrative(item.getDamageScenario());
-                String explanation = normalizeNarrative(item.getExplanation());
-                String combinedNarrative = String.join(" ", List.of(definition, scenario, explanation)).trim();
-                List<String> itemTokensList = tokenizeForSimilarity(combinedNarrative);
-                Set<String> uniqueItemTokens = new HashSet<>(itemTokensList);
-
-                boolean hasStrongDefinition = definition.length() >= 80;
-                boolean hasStrongScenario = scenario.length() >= 80;
-                boolean hasMeaningfulCost = item.getAdjustedCost() >= 1000.0;
-                boolean hasLocalData = metroData != null;
-                boolean hasComparisonSet = verdict.getPlan().getMustDo().size() >= 3;
-                boolean hasNarrativeDepth = combinedNarrative.length() >= 260 && itemTokensList.size() >= 45;
-                boolean hasNoInternalMarkers = !INTERNAL_MARKER_PATTERN.matcher(combinedNarrative).find();
-                boolean hasTokenDiversity = false;
-                if (!itemTokensList.isEmpty()) {
-                        double diversity = (double) uniqueItemTokens.size() / itemTokensList.size();
-                        hasTokenDiversity = uniqueItemTokens.size() >= 24 && diversity >= 0.40;
-                }
-
-                boolean hasItemAnchoring = hasItemAnchoring(item.getPrettyName(), uniqueItemTokens);
-                double maxSimilarity = maxSimilarityWithPeers(item, verdict.getPlan().getMustDo(), uniqueItemTokens);
-                boolean isDistinctFromPeers = maxSimilarity < 0.78;
-
-                return hasStrongDefinition && hasStrongScenario && hasMeaningfulCost && hasLocalData
-                                && hasComparisonSet && hasNarrativeDepth && hasNoInternalMarkers
-                                && hasTokenDiversity && hasItemAnchoring && isDistinctFromPeers;
+                // Keep all deep-item detail pages out of the index until the L1/L2 split is reworked.
+                // These pages can remain available to users as supporting notes without competing in search.
+                return false;
         }
 
         private String normalizeNarrative(String raw) {

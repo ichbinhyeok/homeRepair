@@ -11,16 +11,6 @@
                 </p>
             </div>
             
-            <!-- Resources -->
-            <div>
-                <h4 style="color: white; font-size: 1.1em; margin-bottom: 16px; font-weight: 600;">Resources</h4>
-                <div style="display: flex; flex-direction: column; gap: 8px;">
-                    <a href="/home-repair/methodology" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">Methodology</a>
-                    <a href="/home-repair/about" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">About Us</a>
-                    <a href="/home-repair/editorial-policy" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">Editorial Policy</a>
-                </div>
-            </div>
-            
             <!-- Browse by State -->
             <div>
                 <h4 style="color: white; font-size: 1.1em; margin-bottom: 16px; font-weight: 600;">Browse by State</h4>
@@ -33,13 +23,13 @@
                 </div>
             </div>
             
-            <!-- Legal -->
+            <!-- Documentation -->
             <div>
-                <h4 style="color: white; font-size: 1.1em; margin-bottom: 16px; font-weight: 600;">Legal</h4>
+                <h4 style="color: white; font-size: 1.1em; margin-bottom: 16px; font-weight: 600;">Documentation</h4>
                 <div style="display: flex; flex-direction: column; gap: 8px;">
-                    <a href="/privacy-policy" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">Privacy Policy</a>
-                    <a href="/terms-of-service" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">Terms of Service</a>
-                    <a href="/home-repair/disclaimer" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">Disclaimer</a>
+                    <a href="/home-repair/methodology" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">Methodology</a>
+                    <a href="/home-repair/data-sources" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">Data Sources</a>
+                    <a href="/home-repair/editorial-policy" style="color: #cbd5e1; text-decoration: none; font-size: 0.9em; transition: color 0.2s;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='#cbd5e1'">Editorial Policy</a>
                 </div>
             </div>
         </div>
@@ -48,6 +38,12 @@
         <div style="border-top: 1px solid #334155; padding-top: 30px; margin-top: 30px;">
             <p style="font-size: 0.85em; line-height: 1.7; color: #94a3b8; text-align: center;">
                 Estimates are informational only and based on regional averages. Actual contractor pricing may vary based on property layout, condition, and market factors. This site does not provide professional engineering or contractor services.
+            </p>
+            <p style="font-size: 0.8em; line-height: 1.7; color: #94a3b8; text-align: center; margin-top: 12px;">
+                Supporting pages: <a href="/home-repair/about" style="color: #cbd5e1;">About</a>,
+                <a href="/home-repair/disclaimer" style="color: #cbd5e1;">Disclaimer</a>,
+                <a href="/privacy-policy" style="color: #cbd5e1;">Privacy Policy</a>,
+                <a href="/terms-of-service" style="color: #cbd5e1;">Terms of Service</a>
             </p>
         </div>
         

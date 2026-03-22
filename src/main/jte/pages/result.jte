@@ -57,7 +57,7 @@
                     </div>
                     <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-2 relative">
                         @if("BUYING".equals(history.getPurpose()))
-                            Vendor-Agnostic Forensic Audit
+                            Inspection Budget & Credit Plan
                         @else
                             ${verdictH1 != null ? verdictH1 : (verdict.getHeadline().split("\\.")[0] + ".")}
                         @endif
@@ -147,7 +147,7 @@
                                 <span class="w-2 h-2 rounded-full bg-amber-500"></span>
                                 <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Negotiation</span>
                             </div>
-                            <h3 class="text-xl font-bold text-slate-900 mb-2">Ask for Credit.</h3>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Build the credit request.</h3>
                             <div class="bg-amber-50 p-3 rounded-lg border border-amber-100 text-xs font-mono text-slate-600 mb-2">
                                 "Request seller credit of $${String.format("%,.0f", verdict.getExactCostEstimate())} for ${verdict.getPrimaryCostDriver() != null ? verdict.getPrimaryCostDriver().replace("Primary Cost Driver:", "").trim() : "repairs"}..."
                             </div>
@@ -165,9 +165,9 @@
                             <!-- 백업 CTA (이메일 수집 보험) + 언락 로직 -->
                             <div id="lead-capture-container" class="mt-4 print:hidden">
                                 <form id="report-unlock-form" onsubmit="event.preventDefault(); window.unlockReport(this);" class="w-full">
-                                    <div class="mb-2 text-xs font-bold text-slate-500 uppercase">Unlock PDF Report & Script</div>
+                                <div class="mb-2 text-xs font-bold text-slate-500 uppercase">Save credit script + print access</div>
                                     <div class="flex gap-2">
-                                        <input type="email" name="email" placeholder="Enter email to get PDF print rights..." required class="flex-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
+                                        <input type="email" name="email" placeholder="Enter email to save this report and enable printing..." required class="flex-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
                                         <button type="submit" class="px-3 py-2 bg-slate-900 text-white font-bold text-sm rounded-lg hover:bg-slate-800 transition-colors whitespace-nowrap">
                                             Unlock Free
                                         </button>
@@ -176,13 +176,13 @@
                             </div>
                             <!-- 잠금 해제 후 보이는 섹션 -->
                             <div id="unlocked-actions" class="hidden mt-4 pt-4 border-t border-slate-100">
-                                <div class="bg-emerald-50 text-emerald-800 text-xs p-2 rounded mb-3 font-medium">✅ Unlocked! You can now print the forensic PDF and copy the agent script.</div>
+                                <div class="bg-emerald-50 text-emerald-800 text-xs p-2 rounded mb-3 font-medium">✅ Saved. You can now print this forensic report and copy the agent script.</div>
                                 <button onclick="navigator.clipboard.writeText('Dear Agent,\n\nPlease see the attached LifeVerdict Forensic Audit for this property. The analysis shows that systems are reaching actuarial depreciation limits.\n\nWe would like to request a Seller Credit of \\$${String.format("%,.0f", verdict.getExactCostEstimate())} strictly for these deferred maintenance liabilities before closing.\n\nThank you.'); alert('Negotiation script copied to clipboard!'); gtag('event', 'copy_script', {'event_category': 'engagement'});" class="w-full py-2.5 bg-slate-900 text-white font-semibold rounded-lg text-sm hover:bg-slate-700 transition-colors mb-2">
                                     Copy Agent Negotiation Script
                                 </button>
                                 <button onclick="gtag('event', 'print_pdf', {'event_category': 'engagement'}); window.print();" class="w-full py-2.5 bg-white border border-slate-300 text-slate-700 font-semibold rounded-lg text-sm hover:bg-slate-50 transition-colors flex items-center justify-center gap-2">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 00-2 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                                    Print Official PDF Report
+                                    Print Report
                                 </button>
                             </div>
                             
@@ -195,7 +195,7 @@
                                         document.getElementById('unlocked-actions').classList.remove('hidden');
                                         gtag('event', 'generate_lead', {
                                             'event_category': 'conversion',
-                                            'event_label': 'PDF_Unlock'
+                                            'event_label': 'print_access_unlock'
                                         });
                                     });
                                 };
@@ -387,8 +387,8 @@
 
                 <!-- Refine Analysis CTA -->
                 <div class="bg-indigo-50 border border-indigo-100 p-8 rounded-[32px] text-center mb-12">
-                     <h3 class="text-xl font-bold text-indigo-900 mb-2">Not accurate? Customize this estimate.</h3>
-                     <p class="text-indigo-700 mb-6 max-w-lg mx-auto">Property details like roof material and story count can change estimates by 30%+. Refine these details for precision.</p>
+                     <h3 class="text-xl font-bold text-indigo-900 mb-2">Need a tighter credit range?</h3>
+                     <p class="text-indigo-700 mb-6 max-w-lg mx-auto">Property details like roof material and story count can change the repair ask by 30%+. Refine these details before you negotiate.</p>
                      
                     <form action="/home-repair/verdict" method="post" class="w-full max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-sm border border-indigo-100 flex flex-col md:flex-row items-center gap-6">
                         <input type="hidden" name="metroCode" value="${history.getZipCode()}"> 

@@ -14,7 +14,6 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 class HomeRepairControllerIndexGateTest {
@@ -39,7 +38,7 @@ class HomeRepairControllerIndexGateTest {
     }
 
     @Test
-    void shouldRejectNearDuplicateRiskNarratives() throws Exception {
+    void shouldKeepRiskDetailsNoindexedEvenWhenNarrativesAreWeak() throws Exception {
         String sharedDefinition = repeat(
                 "Asphalt shingle roof systems from legacy construction eras often present brittle underlayment, flashing fatigue, and hidden nail line lift that is not visible from curb-side walkthroughs.",
                 2);
@@ -78,7 +77,7 @@ class HomeRepairControllerIndexGateTest {
     }
 
     @Test
-    void shouldAllowDistinctHighDepthNarrative() throws Exception {
+    void shouldKeepRiskDetailsNoindexedEvenWhenNarrativesAreStrong() throws Exception {
         RiskAdjustedItem target = buildItem(
                 "PLUMBING_MAIN_SEWER_REPLACEMENT",
                 "Cast Iron Sewer Line Replacement",
@@ -121,7 +120,7 @@ class HomeRepairControllerIndexGateTest {
         Verdict verdict = buildVerdict(target, peerOne, peerTwo);
         boolean shouldIndex = invokeGate(target, verdict, new Object());
 
-        assertTrue(shouldIndex);
+        assertFalse(shouldIndex);
     }
 
     private boolean invokeGate(RiskAdjustedItem item, Verdict verdict, Object metroData) throws Exception {

@@ -17,6 +17,7 @@
     
     <title>Research Methodology | Home Repair Cost Analysis</title>
     <meta name="description" content="Detailed explanation of our RSMeans-based cost calculation methodology, including regional labor adjustments, climate zone analysis, and era-specific risk modeling.">
+    <meta name="robots" content="noindex,follow">
     
     <link rel="canonical" href="${baseUrl}/home-repair/methodology">
     <link rel="icon" href="/favicon.ico">

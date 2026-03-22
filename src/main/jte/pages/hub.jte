@@ -2,7 +2,7 @@
 @param List<String> metros
 
 @template.layout(
-    title = "LifeVerdict Home Repair | The Real Cost of Buying a Fixer-Upper",
+    title = "LifeVerdict | Inspection Budget and Seller Credit Planner",
     showHeader = true,
     content = @`
     <div class="max-w-4xl mx-auto px-4 py-12">
@@ -10,10 +10,10 @@
         <!-- Hero Section -->
         <div class="text-center mb-16">
             <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-4">
-                The <span class="text-blue-600">Real Cost</span> of<br>Renovating in 2026.
+                Build the <span class="text-blue-600">Inspection Budget</span><br>Before You Close.
             </h1>
             <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-8">
-                Stop guessing. Get forensic repair cost estimates based on your home's age, location, and condition.
+                Turn age, location, and inspection risk into a buyer budget and seller-credit plan.
             </p>
 
             <!-- Calculator Form (Same as Index) -->
@@ -65,7 +65,7 @@
                     </div>
 
                     <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl mt-4">
-                        Check Hidden Costs &rarr;
+                        Build Buyer Budget &rarr;
                     </button>
                 </form>
             </div>
@@ -75,18 +75,18 @@
         <div class="grid md:grid-cols-3 gap-8 py-12 border-t border-slate-200">
             <div class="text-center">
                 <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600 font-bold text-xl">1</div>
-                <h3 class="font-bold text-slate-900 mb-2">Forensic Data</h3>
-                <p class="text-sm text-slate-600">We analyze 45+ specific risk factors based on the exact year the home was built.</p>
+                <h3 class="font-bold text-slate-900 mb-2">Inspection-First</h3>
+                <p class="text-sm text-slate-600">We focus on the systems most likely to show up in due diligence and post-inspection negotiations.</p>
             </div>
             <div class="text-center">
                 <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600 font-bold text-xl">2</div>
-                <h3 class="font-bold text-slate-900 mb-2">Local Material Pricing</h3>
-                <p class="text-sm text-slate-600">Costs are adjusted for your specific metro area's supply chain and taxes.</p>
+                <h3 class="font-bold text-slate-900 mb-2">Localized Budget</h3>
+                <p class="text-sm text-slate-600">Costs are adjusted for your metro area's labor market, supply chain, and climate wear patterns.</p>
             </div>
             <div class="text-center">
                 <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600 font-bold text-xl">3</div>
                 <h3 class="font-bold text-slate-900 mb-2">Negotiation Leverage</h3>
-                <p class="text-sm text-slate-600">Get a PDF report you can use to negotiate a lower purchase price.</p>
+                <p class="text-sm text-slate-600">Save a print-friendly summary and a credit request script you can use after inspection.</p>
             </div>
         </div>
     </div>

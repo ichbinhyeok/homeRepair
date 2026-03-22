@@ -23,12 +23,11 @@ public class VerdictSeoService {
      * framing.
      */
     public SeoVariant getStaticPageHeader(String metroName, String eraName) {
-        // H1: Informational, descriptive (what this page is about)
-        String h1 = String.format("Hidden repair liabilities in %s homes in %s", eraName, metroName);
-
-        // Title: CTR-Optimized (Curiosity Gap + Urgency + Year)
-        // Pattern: "[Era] Home in [City]: $XX,XXX Hidden Costs? (2026)"
-        String title = String.format("Avoid Hidden Costs: %s Homes in %s (2026 Audit)", eraName, metroName);
+        // Static pages now target the inspection-budget gap:
+        // city + era repair budget + what a buyer should verify and negotiate.
+        String h1 = String.format("%s home inspection repair budget in %s", eraName, metroName);
+        String title = String.format("%s home inspection repair budget in %s: costs, risks, seller credit guide",
+                eraName, metroName);
 
         return new SeoVariant(title, h1);
     }
@@ -38,12 +37,8 @@ public class VerdictSeoService {
      * Constraint: Must be "Outlook" or "Context Opener". NO "Verdict: High Risk".
      */
     public SeoVariant getDynamicResultHeader(VerdictDTOs.Verdict verdict, String metroName) {
-        // Title: Personal & Authoritative
-        String title = "Your Home Repair Outlook | LifeVerdict";
-
-        // H1: Context Opener
-        // "Your home repair outlook in [City]"
-        String h1 = String.format("Your home repair outlook in %s", metroName);
+        String title = "Your Inspection Repair Budget | LifeVerdict";
+        String h1 = String.format("Your inspection repair budget in %s", metroName);
 
         return new SeoVariant(title, h1);
     }

@@ -46,7 +46,7 @@ class HomeRepairJourneySmokeTest {
         mockMvc.perform(get(resultUrl))
                 .andExpect(status().isOk())
                 .andExpect(header().string("X-Robots-Tag", containsString("noindex")))
-                .andExpect(content().string(containsString("Vendor-Agnostic Forensic Audit")))
+                .andExpect(content().string(containsString("Inspection Budget & Credit Plan")))
                 .andExpect(content().string(not(containsString("[FINANCIAL RISK PROMOTION]"))))
                 .andExpect(content().string(not(containsString("ERA_RISK:"))))
                 .andExpect(content().string(not(containsString("ERA_LABOR_ADJUSTMENT:"))));

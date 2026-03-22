@@ -143,12 +143,11 @@ public class SeoVerificationTest {
 
         // 3. Check JSON-LD Schema (with spaces handling)
         assertTrue(content.contains("\"@type\":\"FAQPage\""), "FAQ Schema check");
-        assertTrue(content.contains("\"@type\":\"HowTo\""), "HowTo Schema check");
         assertTrue(content.contains("3,000"), "Price Low check");
         assertTrue(content.contains("11,000"), "Price High check");
 
         // 4. Check Visible FAQ Section
-        assertTrue(content.contains("Frequently Asked Questions"), "FAQ Section check");
+        assertTrue(content.contains("Buyer Questions After Inspection"), "FAQ Section check");
 
         // 5. Check FragmentLibrary (Null Safety)
         // Verify regional insight contains part of the strategy

@@ -16,6 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Sources & Standards | Home Repair Verdict</title>
     <meta name="description" content="Our home repair estimates are powered by RSMeans Construction Data and U.S. Bureau of Labor Statistics findings for 2026.">
+    <meta name="robots" content="noindex,follow">
     <link rel="canonical" href="${baseUrl}/home-repair/data-sources">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="stylesheet" href="/css/seo-report.css">
