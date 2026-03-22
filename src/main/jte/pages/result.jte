@@ -14,8 +14,58 @@
         <meta name="robots" content="noindex">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
         <style>
-            .bento-card { @apply bg-white rounded-2xl border border-slate-100 shadow-sm p-6 hover:shadow-md transition-shadow duration-300; }
-            .hero-pattern { background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 20px 20px; opacity: 0.3; }
+            .analysis-shell {
+                position: relative;
+            }
+            .analysis-shell::before {
+                content: "";
+                position: absolute;
+                inset: 0 auto auto 0;
+                width: 280px;
+                height: 280px;
+                border-radius: 9999px;
+                background: rgba(21, 94, 117, 0.08);
+                filter: blur(70px);
+                pointer-events: none;
+            }
+            .bento-card {
+                @apply rounded-[28px] border p-6 transition-all duration-300;
+                background: rgba(255, 255, 255, 0.84);
+                border-color: rgba(15, 23, 42, 0.08);
+                box-shadow: 0 20px 70px rgba(15, 23, 42, 0.08);
+                backdrop-filter: blur(14px);
+            }
+            .bento-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 24px 80px rgba(15, 23, 42, 0.12);
+            }
+            .result-banner {
+                border: 1px solid rgba(15, 23, 42, 0.08);
+                background: rgba(255, 255, 255, 0.72);
+                backdrop-filter: blur(12px);
+                box-shadow: 0 18px 60px rgba(15, 23, 42, 0.07);
+            }
+            .micro-kicker {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                padding: 0.55rem 0.8rem;
+                border-radius: 9999px;
+                background: rgba(21, 94, 117, 0.08);
+                color: #155e75;
+                font-size: 0.74rem;
+                font-weight: 800;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+            }
+            .micro-kicker::before {
+                content: "";
+                width: 8px;
+                height: 8px;
+                border-radius: 9999px;
+                background: #c7792c;
+                box-shadow: 0 0 0 5px rgba(199, 121, 44, 0.14);
+            }
             
             /* PDF Print Styles for "Forensic Audit Report" Look */
             @media print {
@@ -35,25 +85,34 @@
         </style>
     `,
     content = @`
+        !{
+            double exactEstimate = verdict.getExactCostEstimate();
+            double defendableAsk = Math.max(1000, Math.round(exactEstimate * 0.65 / 500.0) * 500.0);
+            double targetAsk = Math.max(defendableAsk, Math.round(exactEstimate * 0.85 / 500.0) * 500.0);
+            double stretchAsk = Math.max(targetAsk, Math.round(exactEstimate * 1.05 / 500.0) * 500.0);
+        }
         <%-- WRAPPED CONTENT --%>
-        <div class="max-w-6xl mx-auto px-6 py-10">
+        <div class="analysis-shell max-w-6xl mx-auto px-6 py-10">
         
             <%-- 2. STATUS HEADER (Minimalist) --%>
-            <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-12">
+            <div class="result-banner rounded-[34px] p-6 md:p-8 flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-12">
                 <div>
                     <div class="flex items-center gap-2 mb-3">
-                        <span class="w-2.5 h-2.5 rounded-full 
+                        <span class="micro-kicker">
+                            @if("BUYING".equals(history.getPurpose()))
+                                Pre-purchase due diligence
+                            @else
+                                Home health check complete
+                            @endif
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="w-2.5 h-2.5 rounded-full
                             ${"LOW_RISK".equals(verdict.getTier()) ? "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]" : 
                               "CONDITIONAL".equals(verdict.getTier()) ? "bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.4)]" : 
                               verdict.isDealKiller() ? "bg-red-600 shadow-[0_0_8px_rgba(220,38,38,0.4)]" : "bg-rose-500"}">
                         </span>
-                        <span class="text-xs font-bold uppercase tracking-widest text-slate-500">
-                            @if("BUYING".equals(history.getPurpose()))
-                                Pre-Purchase Due Diligence
-                            @else
-                                Home Health Check Complete
-                            @endif
-                        </span>
+                        <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Signal quality check</span>
                     </div>
                     <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-2 relative">
                         @if("BUYING".equals(history.getPurpose()))
@@ -85,9 +144,10 @@
             <div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-16">
 
                 <%-- CARD 1: COST ESTIMATE (Large Card) --%>
-                <div class="md:col-span-8 bg-black rounded-[32px] p-8 text-white relative overflow-hidden shadow-2xl flex flex-col justify-between group">
-                    <div class="absolute inset-0 bg-gradient-to-br from-slate-900 to-black"></div>
-                    <div class="absolute right-0 bottom-0 w-64 h-64 bg-blue-600 rounded-full blur-[120px] opacity-20 group-hover:opacity-30 transition-opacity"></div>
+                <div class="md:col-span-8 rounded-[36px] p-8 text-white relative overflow-hidden shadow-[0_30px_100px_rgba(15,23,42,0.22)] flex flex-col justify-between group border border-slate-800/30">
+                    <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-900"></div>
+                    <div class="absolute right-0 bottom-0 w-64 h-64 bg-cyan-500 rounded-full blur-[120px] opacity-20 group-hover:opacity-30 transition-opacity"></div>
+                    <div class="absolute left-10 top-10 w-32 h-32 bg-amber-400/20 rounded-full blur-[90px]"></div>
                     
                     <div class="report-stamp hidden print:block">
                         OFFICIAL DATA REPORT<br>
@@ -124,7 +184,7 @@
                 </div>
 
                 <%-- CARD 2: ACTION PLAN (Strategy) --%>
-                <div class="md:col-span-4 bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between">
+                <div class="md:col-span-4 rounded-[32px] p-8 border border-amber-100/80 bg-[linear-gradient(180deg,rgba(255,249,240,0.98),rgba(255,255,255,0.94))] shadow-[0_20px_60px_rgba(15,23,42,0.08)] hover:shadow-[0_24px_70px_rgba(15,23,42,0.10)] transition-all flex flex-col justify-between">
                     !{
                         String primary = verdict.getPrimaryCostDriver() != null ? verdict.getPrimaryCostDriver().toLowerCase() : "general";
                         String cat = "general";
@@ -147,27 +207,28 @@
                                 <span class="w-2 h-2 rounded-full bg-amber-500"></span>
                                 <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Negotiation</span>
                             </div>
-                            <h3 class="text-xl font-bold text-slate-900 mb-2">Build the credit request.</h3>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Send a clean repair ask.</h3>
                             <div class="bg-amber-50 p-3 rounded-lg border border-amber-100 text-xs font-mono text-slate-600 mb-2">
-                                "Request seller credit of $${String.format("%,.0f", verdict.getExactCostEstimate())} for ${verdict.getPrimaryCostDriver() != null ? verdict.getPrimaryCostDriver().replace("Primary Cost Driver:", "").trim() : "repairs"}..."
+                                "Request a seller credit of $${String.format("%,.0f", targetAsk)} for ${verdict.getPrimaryCostDriver() != null ? verdict.getPrimaryCostDriver().replace("Primary Cost Driver:", "").trim() : "inspection-related repairs"} before closing..."
                             </div>
+                            <p class="text-xs text-slate-500">Lead with the target ask. Use contractor bids later only if the seller pushes back.</p>
                         </div>
                         <div>
-                            <button onclick="navigator.clipboard.writeText('Request seller credit of $${String.format("%,.0f", verdict.getExactCostEstimate())} for immediate repairs.'); alert('Copied to clipboard!');" class="mt-4 w-full py-3 bg-slate-900 text-white font-semibold rounded-xl text-sm hover:bg-slate-700 transition-colors">
-                                Copy Email Text
+                            <button onclick="navigator.clipboard.writeText('Request a seller credit of $${String.format("%,.0f", targetAsk)} for immediate inspection-related repairs before closing.'); alert('Copied to clipboard!');" class="mt-4 w-full py-3 bg-slate-900 text-white font-semibold rounded-xl text-sm hover:bg-slate-700 transition-colors">
+                                Copy Seller Credit Summary
                             </button>
                             
                             <!-- 메인 CTA (BUYING) -->
-                            <a href="${trackPrefix}${buyingTarget}&cat=${cat}&src=buying" target="_blank" rel="nofollow sponsored noopener" class="mt-3 w-full py-3 bg-blue-600 text-white font-bold rounded-xl text-center text-sm hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200 block">
-                                Get a local ${catName} quote to back your negotiation &rarr;
+                            <a href="${trackPrefix}${buyingTarget}&cat=${cat}&src=buying" target="_blank" rel="nofollow sponsored noopener" class="mt-3 w-full py-3 bg-white border border-slate-300 text-slate-700 font-semibold rounded-xl text-center text-sm hover:bg-slate-50 transition-colors block">
+                                Optional: get a local ${catName} quote &rarr;
                             </a>
                             
                             <!-- 백업 CTA (이메일 수집 보험) + 언락 로직 -->
                             <div id="lead-capture-container" class="mt-4 print:hidden">
                                 <form id="report-unlock-form" onsubmit="event.preventDefault(); window.unlockReport(this);" class="w-full">
-                                <div class="mb-2 text-xs font-bold text-slate-500 uppercase">Save credit script + print access</div>
+                                <div class="mb-2 text-xs font-bold text-slate-500 uppercase">Save negotiation packet + print access</div>
                                     <div class="flex gap-2">
-                                        <input type="email" name="email" placeholder="Enter email to save this report and enable printing..." required class="flex-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
+                                        <input type="email" name="email" placeholder="Enter email to save this packet and enable printing..." required class="flex-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
                                         <button type="submit" class="px-3 py-2 bg-slate-900 text-white font-bold text-sm rounded-lg hover:bg-slate-800 transition-colors whitespace-nowrap">
                                             Unlock Free
                                         </button>
@@ -176,8 +237,8 @@
                             </div>
                             <!-- 잠금 해제 후 보이는 섹션 -->
                             <div id="unlocked-actions" class="hidden mt-4 pt-4 border-t border-slate-100">
-                                <div class="bg-emerald-50 text-emerald-800 text-xs p-2 rounded mb-3 font-medium">✅ Saved. You can now print this forensic report and copy the agent script.</div>
-                                <button onclick="navigator.clipboard.writeText('Dear Agent,\n\nPlease see the attached LifeVerdict Forensic Audit for this property. The analysis shows that systems are reaching actuarial depreciation limits.\n\nWe would like to request a Seller Credit of \\$${String.format("%,.0f", verdict.getExactCostEstimate())} strictly for these deferred maintenance liabilities before closing.\n\nThank you.'); alert('Negotiation script copied to clipboard!'); gtag('event', 'copy_script', {'event_category': 'engagement'});" class="w-full py-2.5 bg-slate-900 text-white font-semibold rounded-lg text-sm hover:bg-slate-700 transition-colors mb-2">
+                                <div class="bg-emerald-50 text-emerald-800 text-xs p-2 rounded mb-3 font-medium">Saved. You can now print this negotiation packet and copy the agent script.</div>
+                                <button onclick="navigator.clipboard.writeText('Dear Agent,\n\nPlease see the attached LifeVerdict inspection budget for this property. Based on the inspection-related repair burden, we would like to request a seller credit of \\$${String.format("%,.0f", targetAsk)} before closing.\n\nPriority items: ${verdict.getPrimaryCostDriver() != null ? verdict.getPrimaryCostDriver().replace("Primary Cost Driver:", "").trim() : "inspection-related repairs"}.\n\nThank you.'); alert('Negotiation script copied to clipboard!'); gtag('event', 'copy_script', {'event_category': 'engagement'});" class="w-full py-2.5 bg-slate-900 text-white font-semibold rounded-lg text-sm hover:bg-slate-700 transition-colors mb-2">
                                     Copy Agent Negotiation Script
                                 </button>
                                 <button onclick="gtag('event', 'print_pdf', {'event_category': 'engagement'}); window.print();" class="w-full py-2.5 bg-white border border-slate-300 text-slate-700 font-semibold rounded-lg text-sm hover:bg-slate-50 transition-colors flex items-center justify-center gap-2">
@@ -235,7 +296,7 @@
                 <div class="md:col-span-12 grid grid-cols-1 md:grid-cols-3 gap-6">
                     
                     <!-- Regional Risk -->
-                    <div class="bg-white rounded-[24px] p-6 border border-slate-100 shadow-sm">
+                    <div class="bento-card">
                          <div class="flex items-center justify-between mb-4">
                             <span class="text-xs font-bold text-slate-400 uppercase">Context Risk</span>
                             <span class="text-xl">🌍</span>
@@ -243,7 +304,7 @@
                          @if(verdict.getContextBriefing() != null)
                             <div class="text-2xl font-bold text-slate-900 mb-1">${verdict.getContextBriefing().getRegionalRisk()}</div>
                             <div class="w-full bg-slate-100 h-1.5 rounded-full mb-3 overflow-hidden">
-                               <div class="bg-blue-500 h-full rounded-full" style="width: 75%"></div>
+                               <div class="bg-cyan-700 h-full rounded-full" style="width: 75%"></div>
                             </div>
                             <p class="text-xs text-slate-500">${verdict.getContextBriefing().getRegionalRiskReason()}</p>
                          @else
@@ -253,7 +314,7 @@
                     </div>
 
                     <!-- Labor Market -->
-                    <div class="bg-white rounded-[24px] p-6 border border-slate-100 shadow-sm">
+                    <div class="bento-card">
                          <div class="flex items-center justify-between mb-4">
                             <span class="text-xs font-bold text-slate-400 uppercase">Labor Rates</span>
                             <span class="text-xl">🔨</span>
@@ -261,7 +322,7 @@
                          @if(verdict.getContextBriefing() != null)
                             <div class="text-2xl font-bold text-slate-900 mb-1">${verdict.getContextBriefing().getLaborMarketRate()}</div>
                             <div class="w-full bg-slate-100 h-1.5 rounded-full mb-3 overflow-hidden">
-                               <div class="bg-indigo-500 h-full rounded-full" style="width: 85%"></div>
+                               <div class="bg-amber-600 h-full rounded-full" style="width: 85%"></div>
                             </div>
                             <p class="text-xs text-slate-500">${verdict.getContextBriefing().getLaborMarketRateReason()}</p>
                          @else
@@ -271,14 +332,33 @@
                     </div>
 
                     <!-- Leverage -->
-                    <div class="bg-gradient-to-br from-slate-50 to-white rounded-[24px] p-6 border border-slate-100 shadow-sm relative overflow-hidden group">
+                    <div class="bento-card bg-gradient-to-br from-slate-50 to-white relative overflow-hidden group">
                          <div class="absolute right-0 top-0 p-3 opacity-10 font-black text-6xl text-slate-900 select-none">$</div>
                          <div class="relative z-10">
-                            <span class="text-xs font-bold text-slate-400 uppercase">Repair Allowance Estimate</span>
-                            <div class="text-3xl font-bold text-slate-900 mt-2 tracking-tight">$${String.format("%,.0f", verdict.getExactCostEstimate() * 1.5)}</div>
-                            <p class="text-xs text-slate-500 mt-2 font-medium bg-white/50 inline-block px-2 py-1 rounded">
-                                Suggested allowance request (+50% buffer)
-                            </p>
+                            @if("BUYING".equals(history.getPurpose()))
+                                <span class="text-xs font-bold text-slate-400 uppercase">Seller Credit Range</span>
+                                <div class="space-y-3 mt-4">
+                                    <div class="flex items-center justify-between bg-white/80 border border-slate-200 rounded-xl px-3 py-2">
+                                        <span class="text-xs font-semibold text-slate-500 uppercase">Defensible</span>
+                                        <span class="text-lg font-bold text-slate-900">$${String.format("%,.0f", defendableAsk)}</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-amber-50 border border-amber-200 rounded-xl px-3 py-2">
+                                        <span class="text-xs font-semibold text-amber-700 uppercase">Target Ask</span>
+                                        <span class="text-lg font-bold text-amber-900">$${String.format("%,.0f", targetAsk)}</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-white/80 border border-slate-200 rounded-xl px-3 py-2">
+                                        <span class="text-xs font-semibold text-slate-500 uppercase">Stretch</span>
+                                        <span class="text-lg font-bold text-slate-900">$${String.format("%,.0f", stretchAsk)}</span>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500 mt-3">Use the target ask first. Drop to defensible only if the seller wants fast certainty.</p>
+                            @else
+                                <span class="text-xs font-bold text-slate-400 uppercase">Repair Allowance Estimate</span>
+                                <div class="text-3xl font-bold text-slate-900 mt-2 tracking-tight">$${String.format("%,.0f", verdict.getExactCostEstimate() * 1.5)}</div>
+                                <p class="text-xs text-slate-500 mt-2 font-medium bg-white/50 inline-block px-2 py-1 rounded">
+                                    Suggested allowance request (+50% buffer)
+                                </p>
+                            @endif
                          </div>
                     </div>
 
@@ -387,8 +467,8 @@
 
                 <!-- Refine Analysis CTA -->
                 <div class="bg-indigo-50 border border-indigo-100 p-8 rounded-[32px] text-center mb-12">
-                     <h3 class="text-xl font-bold text-indigo-900 mb-2">Need a tighter credit range?</h3>
-                     <p class="text-indigo-700 mb-6 max-w-lg mx-auto">Property details like roof material and story count can change the repair ask by 30%+. Refine these details before you negotiate.</p>
+                     <h3 class="text-xl font-bold text-indigo-900 mb-2">Need a tighter seller-credit range?</h3>
+                     <p class="text-indigo-700 mb-6 max-w-lg mx-auto">Property details like roof material and story count can change the repair ask by 30%+. Tighten the packet before you negotiate.</p>
                      
                     <form action="/home-repair/verdict" method="post" class="w-full max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-sm border border-indigo-100 flex flex-col md:flex-row items-center gap-6">
                         <input type="hidden" name="metroCode" value="${history.getZipCode()}"> 

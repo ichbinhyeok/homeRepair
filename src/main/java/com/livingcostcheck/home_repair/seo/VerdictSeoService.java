@@ -25,8 +25,8 @@ public class VerdictSeoService {
     public SeoVariant getStaticPageHeader(String metroName, String eraName) {
         // Static pages now target the inspection-budget gap:
         // city + era repair budget + what a buyer should verify and negotiate.
-        String h1 = String.format("%s home inspection repair budget in %s", eraName, metroName);
-        String title = String.format("%s home inspection repair budget in %s: costs, risks, seller credit guide",
+        String h1 = String.format("%s home inspection seller credit range in %s", eraName, metroName);
+        String title = String.format("%s home inspection seller credit range in %s: repair costs and priorities",
                 eraName, metroName);
 
         return new SeoVariant(title, h1);
@@ -37,8 +37,8 @@ public class VerdictSeoService {
      * Constraint: Must be "Outlook" or "Context Opener". NO "Verdict: High Risk".
      */
     public SeoVariant getDynamicResultHeader(VerdictDTOs.Verdict verdict, String metroName) {
-        String title = "Your Inspection Repair Budget | LifeVerdict";
-        String h1 = String.format("Your inspection repair budget in %s", metroName);
+        String title = "Your Seller Credit Plan | LifeVerdict";
+        String h1 = String.format("Your seller credit plan in %s", metroName);
 
         return new SeoVariant(title, h1);
     }

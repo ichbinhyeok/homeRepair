@@ -55,7 +55,7 @@
         @template.layout._header()
     @endif
 
-    <div class="w-full min-h-screen pt-4 pb-12">
+    <div class="site-stage w-full min-h-screen pt-4 pb-12">
         <!-- AD_SLOT_TOP (Hidden for now to keep design clean) -->
         
         <main class="w-full">

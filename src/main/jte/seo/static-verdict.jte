@@ -58,7 +58,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <title>${title}</title>
-    <meta name="description" content="Estimate the inspection repair budget for ${eraName} homes in ${metroName}. See likely costs ($${lowPrice}-$${highPrice}), top red flags, and seller-credit talking points before you buy." />
+    <meta name="description" content="Estimate the inspection repair budget for ${eraName} homes in ${metroName}. See likely costs ($${lowPrice}-$${highPrice}), what to verify first, and what belongs in a seller-credit request before you buy." />
     
     <link rel="canonical" href="${canonicalUrl}" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -90,7 +90,7 @@
             <div class="breadcrumbs">
                 <a href="/">Home</a> 
                 <span class="separator">/</span>
-                <a href="/home-repair">Market Data</a>
+                <a href="/home-repair">Inspection Negotiation</a> 
                 <span class="separator">/</span>
                 @if(stateHubUrl != null)
                     <a href="${stateHubUrl}">${stateName}</a>
@@ -99,13 +99,13 @@
                 <span class="current">${metroName}</span>
             </div>
             
-            <span class="badge-market">Market Data: ${dateString}</span>
+            <span class="badge-market">Buyer Negotiation Guide: ${dateString}</span>
             <h1 class="title-h1">${h1Content}</h1>
-            <p class="subtitle">Estimate the inspection repair budget, biggest red flags, and seller-credit talking points for ${eraName} properties in the ${metroName} area (Updated ${dateString}).</p>
+            <p class="subtitle">Estimate the inspection repair budget, biggest red flags, and what to verify before asking for seller credit on ${eraName} properties in the ${metroName} area (Updated ${dateString}).</p>
             
             <div style="margin-top: 2rem;">
                 <a href="${calculatorUrl}" class="btn-primary" style="background: white; color: var(--primary);" data-analytics-event="cta_customize_estimate" data-analytics-category="conversion" data-analytics-label="l1_header">
-                    Build Your Buyer Budget &rarr;
+                    Start Seller Credit Plan &rarr;
                 </a>
                 <p style="margin-top: 1rem; font-size: 0.85rem; opacity: 0.7;">
                     <span style="opacity: 0.8;">Data sources:</span> RSMeans, BLS, Census ACS, FEMA OpenFEMA
@@ -136,7 +136,7 @@
                 <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--slate-100); text-align: center;">
                      <p style="color: var(--slate-500); margin-bottom: 1rem;">
                         Repair costs vary widely by property condition and bids in <strong>${metroName}</strong>.
-                        Use these benchmarks to frame the inspection, collect quotes, and decide what credit to request before closing.
+                        Use these benchmarks to decide what belongs in the repair request, what to quote first, and what credit to request before closing.
                      </p>
                 </div>
             </div>
@@ -335,7 +335,7 @@
 
             <!-- EDITORIAL ANALYSIS: Era + Climate + Cost Context (HCU Differentiation) -->
             <div class="bento-card span-12" style="border-top: 3px solid var(--primary);">
-                <h3 style="margin-bottom: 1.5rem;">Why ${eraName} Homes in ${metroName} Create Negotiation Pressure</h3>
+                <h3 style="margin-bottom: 1.5rem;">Why ${eraName} Homes in ${metroName} Create Seller-Credit Pressure</h3>
                 
                 <div style="display: grid; gap: 1.5rem;">
                     <!-- Era-Specific Analysis -->
@@ -359,7 +359,7 @@
             </div>
             
             <div class="bento-card span-12 insight-card" style="margin-bottom: 2rem;">
-                <h3 style="margin-bottom: 1rem;">Inspection Red Flags for ${eraName}</h3>
+                <h3 style="margin-bottom: 1rem;">Inspection Red Flags Worth Pushing on for ${eraName}</h3>
                 <ul style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; list-style: none; padding: 0;">
                     <li><a href="/home-repair/risks/knob-and-tube-wiring" class="action-link" style="color: var(--primary);">Knob and Tube Wiring &rarr;</a></li>
                     <li><a href="/home-repair/risks/polybutylene-pipes" class="action-link" style="color: var(--primary);">Polybutylene Pipes &rarr;</a></li>
@@ -405,12 +405,12 @@
             
             <!-- 6. PRE-EMPTIVE CTA -->
             <div class="bento-card span-6" style="background: var(--primary); color: white; display: flex; flex-direction: column; justify-content: center; text-align: center;">
-                <h3 style="color: white; margin-bottom: 1rem;">Build a Stronger Credit Request</h3>
+                <h3 style="color: white; margin-bottom: 1rem;">Turn This Market Data Into a Real Credit Ask</h3>
                 <p style="color: rgba(255,255,255,0.9); margin-bottom: 2rem;">
-                    Generic era data is the starting point. Add property details to tighten the budget before you talk numbers with the seller.
+                    Generic era data is the starting point. Add property details to tighten the budget, narrow the ask, and prep a cleaner negotiation.
                 </p>
                 <a href="${calculatorUrl}" class="btn-primary" style="background: white; color: var(--primary);" data-analytics-event="cta_customize_estimate" data-analytics-category="conversion" data-analytics-label="l1_body">
-                    Tighten My Credit Range &rarr;
+                    Build My Credit Range &rarr;
                 </a>
             </div>
 
@@ -435,7 +435,7 @@
 
         <!-- 8. INTERNAL LINKS HUB -->
         <div class="bento-card span-12" style="margin-top: 4rem; background: transparent; border: none; box-shadow: none;">
-            <h3 style="margin-bottom: 1.5rem;">Explore Other Markets</h3>
+            <h3 style="margin-bottom: 1.5rem;">Explore Similar Negotiation Markets</h3>
             <div class="link-hub" style="display: flex; flex-wrap: wrap; gap: 1rem;">
                 <!-- State Links (Priority) -->
                 @for(var link : stateLinks)

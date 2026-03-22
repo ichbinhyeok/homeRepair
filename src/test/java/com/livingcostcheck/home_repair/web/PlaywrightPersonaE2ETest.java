@@ -102,7 +102,7 @@ class PlaywrightPersonaE2ETest {
         page.fill("input[name='sqft']", "1600");
         page.locator("input[name='condition'][value='MINOR']")
                 .check(new Locator.CheckOptions().setForce(true));
-        page.locator("summary:has-text('Advanced Specs')").click();
+        page.locator("summary:has-text('Tighten the estimate')").click();
         page.locator("label:has(input[name='roofType'][value='METAL'])").click();
         page.check("input[name='history'][value='PLUMBING']");
         page.locator("form[action='/home-repair/verdict'] button[type='submit']").click();
@@ -179,6 +179,8 @@ class PlaywrightPersonaE2ETest {
         assertTrue(response != null);
         assertTrue(response.status() == 410);
         assertTrue(page.url().endsWith("/home-repair/verdicts/atlanta-sandy-springs-ga/1980-1995/hvac-heat-pump-central.html.html"));
+        assertTrue(page.locator("body").innerText().contains("This URL is no longer part of the site."));
+        assertTrue(page.locator("a[href='/home-repair']").first().isVisible());
 
         saveScreenshot("risk-detail-gone.png");
     }

@@ -33,6 +33,8 @@ class RedirectFilterTest {
         assertEquals(410, result.statusCode);
         assertEquals(null, result.location);
         assertFalse(result.chainInvoked);
+        assertTrue(result.body.contains("This URL is no longer part of the site."));
+        assertTrue(result.body.contains("Open seller credit planner"));
     }
 
     @Test
@@ -51,6 +53,7 @@ class RedirectFilterTest {
         assertEquals(410, result.statusCode);
         assertEquals(null, result.location);
         assertFalse(result.chainInvoked);
+        assertTrue(result.body.contains("410 Gone"));
     }
 
     @Test
@@ -60,6 +63,7 @@ class RedirectFilterTest {
         assertEquals(410, result.statusCode);
         assertEquals(null, result.location);
         assertFalse(result.chainInvoked);
+        assertTrue(result.body.contains("Browse markets"));
     }
 
     @Test
@@ -100,18 +104,20 @@ class RedirectFilterTest {
         FilterChain chain = (req, res) -> chainInvoked.set(true);
 
         filter.doFilter(request, response, chain);
-        return new FilterResult(response.getStatus(), response.getHeader("Location"), chainInvoked.get());
+        return new FilterResult(response.getStatus(), response.getHeader("Location"), chainInvoked.get(), response.getContentAsString());
     }
 
     private static class FilterResult {
         private final int statusCode;
         private final String location;
         private final boolean chainInvoked;
+        private final String body;
 
-        private FilterResult(int statusCode, String location, boolean chainInvoked) {
+        private FilterResult(int statusCode, String location, boolean chainInvoked, String body) {
             this.statusCode = statusCode;
             this.location = location;
             this.chainInvoked = chainInvoked;
+            this.body = body;
         }
     }
 }

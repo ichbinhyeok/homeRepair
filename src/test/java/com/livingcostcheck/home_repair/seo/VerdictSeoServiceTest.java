@@ -16,13 +16,13 @@ class VerdictSeoServiceTest {
         VerdictSeoService.SeoVariant result = service.getStaticPageHeader(metro, era);
 
         // Verify informational H1 aligned to city + era inspection-budget intent.
-        assertThat(result.h1()).contains("home inspection repair budget in");
+        assertThat(result.h1()).contains("home inspection seller credit range in");
         assertThat(result.h1()).contains(metro);
         assertThat(result.h1()).contains(era);
 
         // Verify title emphasizes inspection budget + negotiation intent.
-        assertThat(result.title()).contains("costs");
-        assertThat(result.title()).contains("seller credit guide");
+        assertThat(result.title()).contains("repair costs");
+        assertThat(result.title()).contains("priorities");
         assertThat(result.title()).doesNotContain("Avoid Hidden Costs:");
         assertThat(result.title()).doesNotContain("(2026 Audit)");
     }
@@ -36,7 +36,7 @@ class VerdictSeoServiceTest {
         VerdictSeoService.SeoVariant result = service.getDynamicResultHeader(verdict, metro);
 
         // Verify inspection-budget framing (No "High Risk" in H1)
-        assertThat(result.h1()).contains("Your inspection repair budget");
+        assertThat(result.h1()).contains("Your seller credit plan");
         assertThat(result.h1()).contains(metro);
         assertThat(result.h1()).doesNotContain("High Risk");
         assertThat(result.h1()).doesNotContain("Analysis");
