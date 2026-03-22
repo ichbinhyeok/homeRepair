@@ -4,6 +4,19 @@
 
 @param Verdict verdict
 @param VerdictHistory history
+@param java.util.List<String> inspectionFindings = java.util.Collections.emptyList()
+@param java.util.List<String> mustFixNow = java.util.Collections.emptyList()
+@param java.util.List<String> verifyNext = java.util.Collections.emptyList()
+@param java.util.List<String> deferLater = java.util.Collections.emptyList()
+@param String quoteSupport = "NONE"
+@param String quoteSupportLabel = ""
+@param String closingWindow = "FLEXIBLE"
+@param String closingWindowLabel = ""
+@param String negotiationEvidenceNote = ""
+@param String sellerCreditSummary = ""
+@param String sellerCreditSummaryJs = ""
+@param String agentNegotiationScript = ""
+@param String agentNegotiationScriptJs = ""
 
 @param String title = "Verdict | LifeVerdict"
 @param String verdictH1 = null
@@ -209,12 +222,12 @@
                             </div>
                             <h3 class="text-xl font-bold text-slate-900 mb-2">Send a clean repair ask.</h3>
                             <div class="bg-amber-50 p-3 rounded-lg border border-amber-100 text-xs font-mono text-slate-600 mb-2">
-                                "Request a seller credit of $${String.format("%,.0f", targetAsk)} for ${verdict.getPrimaryCostDriver() != null ? verdict.getPrimaryCostDriver().replace("Primary Cost Driver:", "").trim() : "inspection-related repairs"} before closing..."
+                                "${sellerCreditSummary}"
                             </div>
-                            <p class="text-xs text-slate-500">Lead with the target ask. Use contractor bids later only if the seller pushes back.</p>
+                            <p class="text-xs text-slate-500">${negotiationEvidenceNote}</p>
                         </div>
                         <div>
-                            <button onclick="navigator.clipboard.writeText('Request a seller credit of $${String.format("%,.0f", targetAsk)} for immediate inspection-related repairs before closing.'); alert('Copied to clipboard!');" class="mt-4 w-full py-3 bg-slate-900 text-white font-semibold rounded-xl text-sm hover:bg-slate-700 transition-colors">
+                            <button onclick="navigator.clipboard.writeText('${sellerCreditSummaryJs}'); alert('Copied to clipboard!');" class="mt-4 w-full py-3 bg-slate-900 text-white font-semibold rounded-xl text-sm hover:bg-slate-700 transition-colors">
                                 Copy Seller Credit Summary
                             </button>
                             
@@ -238,7 +251,7 @@
                             <!-- 잠금 해제 후 보이는 섹션 -->
                             <div id="unlocked-actions" class="hidden mt-4 pt-4 border-t border-slate-100">
                                 <div class="bg-emerald-50 text-emerald-800 text-xs p-2 rounded mb-3 font-medium">Saved. You can now print this negotiation packet and copy the agent script.</div>
-                                <button onclick="navigator.clipboard.writeText('Dear Agent,\n\nPlease see the attached LifeVerdict inspection budget for this property. Based on the inspection-related repair burden, we would like to request a seller credit of \\$${String.format("%,.0f", targetAsk)} before closing.\n\nPriority items: ${verdict.getPrimaryCostDriver() != null ? verdict.getPrimaryCostDriver().replace("Primary Cost Driver:", "").trim() : "inspection-related repairs"}.\n\nThank you.'); alert('Negotiation script copied to clipboard!'); gtag('event', 'copy_script', {'event_category': 'engagement'});" class="w-full py-2.5 bg-slate-900 text-white font-semibold rounded-lg text-sm hover:bg-slate-700 transition-colors mb-2">
+                                <button onclick="navigator.clipboard.writeText('${agentNegotiationScriptJs}'); alert('Negotiation script copied to clipboard!'); gtag('event', 'copy_script', {'event_category': 'engagement'});" class="w-full py-2.5 bg-slate-900 text-white font-semibold rounded-lg text-sm hover:bg-slate-700 transition-colors mb-2">
                                     Copy Agent Negotiation Script
                                 </button>
                                 <button onclick="gtag('event', 'print_pdf', {'event_category': 'engagement'}); window.print();" class="w-full py-2.5 bg-white border border-slate-300 text-slate-700 font-semibold rounded-lg text-sm hover:bg-slate-50 transition-colors flex items-center justify-center gap-2">
@@ -362,6 +375,52 @@
                          </div>
                     </div>
 
+                    @if("BUYING".equals(history.getPurpose()))
+                    <div class="md:col-span-12 bento-card">
+                        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
+                            <div>
+                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Inspection-to-Credit Builder</span>
+                                <h3 class="text-2xl font-bold text-slate-900 mt-2">Turn the report into a seller-credit packet.</h3>
+                            </div>
+                            <div class="text-sm text-slate-500">
+                                <strong class="text-slate-700">${quoteSupportLabel}</strong> | <strong class="text-slate-700">${closingWindowLabel}</strong>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+                            <div class="rounded-2xl border border-rose-100 bg-rose-50/80 p-4">
+                                <div class="text-xs font-bold uppercase tracking-widest text-rose-700 mb-3">Must fix now</div>
+                                @for(var finding : mustFixNow)
+                                    <div class="text-sm text-slate-800 mb-2 last:mb-0">• ${finding}</div>
+                                @endfor
+                            </div>
+                            <div class="rounded-2xl border border-amber-100 bg-amber-50/80 p-4">
+                                <div class="text-xs font-bold uppercase tracking-widest text-amber-700 mb-3">Verify next</div>
+                                @for(var finding : verifyNext)
+                                    <div class="text-sm text-slate-800 mb-2 last:mb-0">• ${finding}</div>
+                                @endfor
+                            </div>
+                            <div class="rounded-2xl border border-emerald-100 bg-emerald-50/80 p-4">
+                                <div class="text-xs font-bold uppercase tracking-widest text-emerald-700 mb-3">Can defer</div>
+                                @for(var finding : deferLater)
+                                    <div class="text-sm text-slate-800 mb-2 last:mb-0">• ${finding}</div>
+                                @endfor
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                                <div class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Seller credit summary</div>
+                                <p class="text-sm text-slate-700 leading-relaxed">${sellerCreditSummary}</p>
+                            </div>
+                            <div class="rounded-2xl border border-slate-200 bg-white p-5">
+                                <div class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Agent-ready request</div>
+                                <p class="text-sm text-slate-700 leading-relaxed">${agentNegotiationScript}</p>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+
                 </div>
             </div>
 
@@ -476,6 +535,11 @@
                         <input type="hidden" name="sqft" value="1800"> 
                         <input type="hidden" name="relationship" value="${history.getPurpose() != null ? history.getPurpose() : "LIVING"}">
                         <input type="hidden" name="budget" value="${history.getBudget() != null && !"null".equalsIgnoreCase(history.getBudget()) ? history.getBudget() : "50000"}">
+                        <input type="hidden" name="quoteSupport" value="${quoteSupport}">
+                        <input type="hidden" name="closingWindow" value="${closingWindow}">
+                        @for(var finding : inspectionFindings)
+                            <input type="hidden" name="inspectionFinding" value="${finding}">
+                        @endfor
 
                         <div class="w-full md:flex-1 text-left">
                             <label class="block text-xs font-bold text-slate-500 mb-1 uppercase">Bathrooms</label>

@@ -76,6 +76,10 @@ class PlaywrightPersonaE2ETest {
 
         page.fill("input[name='budget']", "68000");
         page.fill("input[name='sqft']", "2100");
+        page.locator("input[name='inspectionFinding']").nth(0).fill("Active roof leak above the garage");
+        page.locator("input[name='inspectionFinding']").nth(1).fill("Federal Pacific panel flagged by inspector");
+        page.selectOption("select[name='quoteSupport']", "HAS_ONE");
+        page.selectOption("select[name='closingWindow']", "SEVEN_TO_TWENTY_ONE_DAYS");
         page.locator("input[name='condition'][value='SEVERE']")
                 .check(new Locator.CheckOptions().setForce(true));
         page.check("input[name='isFpePanel']");
@@ -88,6 +92,8 @@ class PlaywrightPersonaE2ETest {
         String bodyText = page.locator("body").innerText();
 
         assertTrue(bodyText.contains("Inspection Budget & Credit Plan"));
+        assertTrue(bodyText.contains("Turn the report into a seller-credit packet."));
+        assertTrue(bodyText.contains("Active roof leak above the garage"));
         assertNoInternalLeak(bodyText);
 
         saveScreenshot("buyer-persona-result.png");

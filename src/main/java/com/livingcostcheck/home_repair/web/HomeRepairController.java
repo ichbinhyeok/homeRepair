@@ -18,8 +18,12 @@ import org.springframework.web.util.HtmlUtils;
 import org.springframework.web.servlet.view.RedirectView;
 import com.livingcostcheck.home_repair.util.TextUtil;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -41,6 +45,9 @@ public class HomeRepairController {
         private static final Pattern NON_ALNUM_PATTERN = Pattern.compile("[^a-z0-9]+");
         private static final Pattern INTERNAL_MARKER_PATTERN = Pattern
                         .compile("\\[[A-Z_ ]+\\]|ERA_RISK:|ERA_LABOR_ADJUSTMENT:");
+        private static final String INSPECTION_MARKER = "__INSPECTION:";
+        private static final String QUOTE_SUPPORT_MARKER = "__QUOTE_SUPPORT:";
+        private static final String CLOSING_WINDOW_MARKER = "__CLOSING_WINDOW:";
         private static final Set<String> SEO_STOPWORDS = Set.of(
                         "the", "and", "for", "with", "from", "that", "this", "your", "into", "over",
                         "when", "after", "before", "while", "without", "across", "under", "about",
@@ -117,6 +124,9 @@ public class HomeRepairController {
                         @RequestParam(value = "bathrooms", required = false) Integer bathrooms,
                         @RequestParam(value = "stories", required = false) Integer stories,
                         @RequestParam(value = "roofType", defaultValue = "ASPHALT") String roofType,
+                        @RequestParam(value = "inspectionFinding", required = false) List<String> inspectionFindings,
+                        @RequestParam(value = "quoteSupport", defaultValue = "NONE") String quoteSupport,
+                        @RequestParam(value = "closingWindow", defaultValue = "FLEXIBLE") String closingWindow,
                         @RequestParam(value = "userEmail", defaultValue = "anonymous") String userEmail,
                         Model model) {
 
@@ -164,7 +174,8 @@ public class HomeRepairController {
                         }
 
                         // Save detailed context for re-generation
-                        String historyStr = context.getHistory() != null ? String.join(",", context.getHistory()) : "";
+                        String historyStr = buildStoredRepairContext(context.getHistory(), inspectionFindings,
+                                        quoteSupport, closingWindow);
                         verdictHistory.setRepairContext(historyStr, context.getCondition());
                         verdictHistory.setForensicClues(
                                         context.getIsFpePanel(),
@@ -214,10 +225,8 @@ public class HomeRepairController {
                         }
 
                         // Split history string back into lists (Simple parsing for MVP)
-                        List<String> combinedHistory = history.getRepairHistory() != null
-                                        && !history.getRepairHistory().isEmpty()
-                                                        ? java.util.Arrays.asList(history.getRepairHistory().split(","))
-                                                        : java.util.Collections.emptyList();
+                        ParsedRepairContext parsedRepairContext = parseStoredRepairContext(history.getRepairHistory());
+                        List<String> combinedHistory = parsedRepairContext.historyItems();
 
                         // Distribute based on known prefixes or lists
                         List<String> coreHistory = new java.util.ArrayList<>();
@@ -257,11 +266,25 @@ public class HomeRepairController {
                         // Use VerdictSeoService for "Outlook" headers (Contextual)
                         VerdictSeoService.SeoVariant seoVariant = verdictSeoService.getDynamicResultHeader(verdict,
                                         city);
+                        NegotiationPacket packet = buildNegotiationPacket(verdict, city, parsedRepairContext);
 
                         model.addAttribute("title", seoVariant.title());
                         model.addAttribute("verdictH1", seoVariant.h1());
                         model.addAttribute("verdict", verdict);
                         model.addAttribute("history", history);
+                        model.addAttribute("inspectionFindings", parsedRepairContext.inspectionFindings());
+                        model.addAttribute("quoteSupport", parsedRepairContext.quoteSupport());
+                        model.addAttribute("quoteSupportLabel", packet.quoteSupportLabel());
+                        model.addAttribute("closingWindow", parsedRepairContext.closingWindow());
+                        model.addAttribute("closingWindowLabel", packet.closingWindowLabel());
+                        model.addAttribute("mustFixNow", packet.mustFixNow());
+                        model.addAttribute("verifyNext", packet.verifyNext());
+                        model.addAttribute("deferLater", packet.deferLater());
+                        model.addAttribute("negotiationEvidenceNote", packet.evidenceNote());
+                        model.addAttribute("sellerCreditSummary", packet.sellerCreditSummary());
+                        model.addAttribute("sellerCreditSummaryJs", escapeJs(packet.sellerCreditSummary()));
+                        model.addAttribute("agentNegotiationScript", packet.agentNegotiationScript());
+                        model.addAttribute("agentNegotiationScriptJs", escapeJs(packet.agentNegotiationScript()));
                         return "pages/result";
                 } catch (Exception e) {
                         log.error("Error displaying result page", e);
@@ -719,6 +742,226 @@ public class HomeRepairController {
                 // Keep all deep-item detail pages out of the index until the L1/L2 split is reworked.
                 // These pages can remain available to users as supporting notes without competing in search.
                 return false;
+        }
+
+        private String buildStoredRepairContext(List<String> history,
+                        List<String> inspectionFindings,
+                        String quoteSupport,
+                        String closingWindow) {
+                List<String> values = new ArrayList<>();
+                if (history != null) {
+                        values.addAll(history.stream()
+                                        .filter(Objects::nonNull)
+                                        .map(String::trim)
+                                        .filter(s -> !s.isBlank())
+                                        .toList());
+                }
+                if (inspectionFindings != null) {
+                        inspectionFindings.stream()
+                                        .filter(Objects::nonNull)
+                                        .map(String::trim)
+                                        .filter(s -> !s.isBlank())
+                                        .limit(3)
+                                        .map(this::encodeMarkerValue)
+                                        .map(encoded -> INSPECTION_MARKER + encoded)
+                                        .forEach(values::add);
+                }
+                if (quoteSupport != null && !quoteSupport.isBlank()) {
+                        values.add(QUOTE_SUPPORT_MARKER + encodeMarkerValue(quoteSupport));
+                }
+                if (closingWindow != null && !closingWindow.isBlank()) {
+                        values.add(CLOSING_WINDOW_MARKER + encodeMarkerValue(closingWindow));
+                }
+                return String.join(",", values);
+        }
+
+        private ParsedRepairContext parseStoredRepairContext(String storedRepairHistory) {
+                if (storedRepairHistory == null || storedRepairHistory.isBlank()) {
+                        return new ParsedRepairContext(List.of(), List.of(), "NONE", "FLEXIBLE");
+                }
+
+                List<String> historyItems = new ArrayList<>();
+                List<String> inspectionFindings = new ArrayList<>();
+                String quoteSupport = "NONE";
+                String closingWindow = "FLEXIBLE";
+
+                for (String rawEntry : storedRepairHistory.split(",")) {
+                        String entry = rawEntry.trim();
+                        if (entry.isBlank()) {
+                                continue;
+                        }
+                        if (entry.startsWith(INSPECTION_MARKER)) {
+                                inspectionFindings.add(decodeMarkerValue(entry.substring(INSPECTION_MARKER.length())));
+                                continue;
+                        }
+                        if (entry.startsWith(QUOTE_SUPPORT_MARKER)) {
+                                quoteSupport = decodeMarkerValue(entry.substring(QUOTE_SUPPORT_MARKER.length()));
+                                continue;
+                        }
+                        if (entry.startsWith(CLOSING_WINDOW_MARKER)) {
+                                closingWindow = decodeMarkerValue(entry.substring(CLOSING_WINDOW_MARKER.length()));
+                                continue;
+                        }
+                        historyItems.add(entry);
+                }
+
+                return new ParsedRepairContext(historyItems, inspectionFindings, quoteSupport, closingWindow);
+        }
+
+        private NegotiationPacket buildNegotiationPacket(Verdict verdict, String city,
+                        ParsedRepairContext parsedRepairContext) {
+                List<String> sourceFindings = new ArrayList<>(parsedRepairContext.inspectionFindings());
+                if (sourceFindings.isEmpty() && verdict.getPlan() != null && verdict.getPlan().getMustDo() != null) {
+                        verdict.getPlan().getMustDo().stream()
+                                        .map(RiskAdjustedItem::getPrettyName)
+                                        .filter(Objects::nonNull)
+                                        .limit(3)
+                                        .forEach(sourceFindings::add);
+                }
+
+                LinkedHashSet<String> mustFixNow = new LinkedHashSet<>();
+                LinkedHashSet<String> verifyNext = new LinkedHashSet<>();
+                LinkedHashSet<String> deferLater = new LinkedHashSet<>();
+
+                for (String finding : sourceFindings) {
+                        String cleanFinding = cleanFindingLabel(finding);
+                        if (cleanFinding.isBlank()) {
+                                continue;
+                        }
+                        String normalized = cleanFinding.toLowerCase(Locale.ENGLISH);
+                        if (containsAny(normalized, "panel", "electric", "wiring", "aluminum", "fpe",
+                                        "stab-lok", "zinsco", "roof leak", "leak", "foundation", "struct",
+                                        "mold", "asbestos", "polybutylene", "sewer", "crack", "water intrusion",
+                                        "active leak")) {
+                                mustFixNow.add(cleanFinding);
+                        } else if (containsAny(normalized, "roof", "hvac", "furnace", "water heater",
+                                        "plumbing", "window", "chimney", "drain", "grading", "gutter",
+                                        "moisture", "insulation")) {
+                                verifyNext.add(cleanFinding);
+                        } else {
+                                deferLater.add(cleanFinding);
+                        }
+                }
+
+                if (mustFixNow.isEmpty() && verdict.getPrimaryCostDriver() != null) {
+                        mustFixNow.add(cleanFindingLabel(verdict.getPrimaryCostDriver()));
+                }
+                if (verifyNext.isEmpty() && verdict.getPlan() != null && verdict.getPlan().getShouldDo() != null) {
+                        verdict.getPlan().getShouldDo().stream()
+                                        .map(RiskAdjustedItem::getPrettyName)
+                                        .filter(Objects::nonNull)
+                                        .limit(2)
+                                        .forEach(verifyNext::add);
+                }
+                if (deferLater.isEmpty()) {
+                        deferLater.add("Cosmetic updates and non-safety finishes");
+                }
+
+                String focusSummary = joinForSentence(mustFixNow.stream().limit(2).toList());
+                String quoteSupportLabel = switch (parsedRepairContext.quoteSupport()) {
+                        case "HAS_ONE" -> "one outside quote already supports the ask";
+                        case "MULTIPLE" -> "multiple contractor quotes support the ask";
+                        default -> "inspection notes are doing most of the work";
+                };
+                String closingWindowLabel = switch (parsedRepairContext.closingWindow()) {
+                        case "UNDER_7_DAYS" -> "closing inside 7 days";
+                        case "SEVEN_TO_TWENTY_ONE_DAYS" -> "closing in the next 1-3 weeks";
+                        case "TWENTY_ONE_TO_FORTY_FIVE_DAYS" -> "closing in the next 3-6 weeks";
+                        default -> "a flexible closing timeline";
+                };
+                String evidenceNote = switch (parsedRepairContext.quoteSupport()) {
+                        case "HAS_ONE" -> "One quote is enough to anchor the target ask. Keep the defensible range ready if the seller pushes back.";
+                        case "MULTIPLE" -> "Multiple quotes strengthen the packet. Hold the target ask unless the seller can close faster with certainty.";
+                        default -> "Start with the inspection notes and the target ask. Add one contractor quote only if the seller challenges scope or timing.";
+                };
+
+                String sellerCreditSummary = String.format(
+                                "Request a seller credit of $%,.0f to cover high-priority inspection items in %s, led by %s. This packet assumes %s and %s.",
+                                Math.round(verdict.getExactCostEstimate() * 0.85 / 500.0) * 500.0,
+                                city,
+                                focusSummary,
+                                quoteSupportLabel,
+                                closingWindowLabel.toLowerCase(Locale.ENGLISH));
+
+                String agentNegotiationScript = String.format(
+                                "We are requesting a seller credit of $%,.0f before closing. The ask is driven by %s, with secondary verification items including %s. We are not asking the seller to solve every cosmetic issue, only the items that materially affect near-term repair risk in %s.",
+                                Math.round(verdict.getExactCostEstimate() * 0.85 / 500.0) * 500.0,
+                                focusSummary,
+                                joinForSentence(verifyNext.stream().limit(2).toList()),
+                                city);
+
+                return new NegotiationPacket(
+                                new ArrayList<>(mustFixNow),
+                                new ArrayList<>(verifyNext),
+                                new ArrayList<>(deferLater),
+                                quoteSupportLabel,
+                                closingWindowLabel,
+                                evidenceNote,
+                                sellerCreditSummary,
+                                agentNegotiationScript);
+        }
+
+        private boolean containsAny(String value, String... fragments) {
+                for (String fragment : fragments) {
+                        if (value.contains(fragment)) {
+                                return true;
+                        }
+                }
+                return false;
+        }
+
+        private String cleanFindingLabel(String rawValue) {
+                if (rawValue == null) {
+                        return "";
+                }
+                return rawValue.replace("Primary Cost Driver:", "")
+                                .replaceAll("\\s+", " ")
+                                .trim();
+        }
+
+        private String joinForSentence(List<String> values) {
+                if (values == null || values.isEmpty()) {
+                        return "the highest-risk inspection items";
+                }
+                if (values.size() == 1) {
+                        return values.get(0);
+                }
+                return String.join(" and ", values);
+        }
+
+        private String encodeMarkerValue(String value) {
+                return URLEncoder.encode(value, StandardCharsets.UTF_8);
+        }
+
+        private String decodeMarkerValue(String value) {
+                return URLDecoder.decode(value, StandardCharsets.UTF_8);
+        }
+
+        private String escapeJs(String value) {
+                if (value == null) {
+                        return "";
+                }
+                return value
+                                .replace("\\", "\\\\")
+                                .replace("'", "\\'")
+                                .replace("\r", "")
+                                .replace("\n", "\\n");
+        }
+
+        private record ParsedRepairContext(List<String> historyItems,
+                        List<String> inspectionFindings,
+                        String quoteSupport,
+                        String closingWindow) {
+        }
+
+        private record NegotiationPacket(List<String> mustFixNow,
+                        List<String> verifyNext,
+                        List<String> deferLater,
+                        String quoteSupportLabel,
+                        String closingWindowLabel,
+                        String evidenceNote,
+                        String sellerCreditSummary,
+                        String agentNegotiationScript) {
         }
 
         private String normalizeNarrative(String raw) {

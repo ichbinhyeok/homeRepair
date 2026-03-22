@@ -85,10 +85,53 @@
                     </div>
                 </div>
 
+                <div class="workflow-card border-l-4 border-l-cyan-700">
+                    <div class="section-kicker">Step 2</div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">2. Paste the top inspection findings</h3>
+                    <p class="text-sm text-slate-600 mb-4">Keep it short. These notes are used to decide what belongs in the seller-credit request and what can wait.</p>
+
+                    <div class="grid grid-cols-1 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Finding 1</label>
+                            <input type="text" name="inspectionFinding" value="Roof leak called out above garage" placeholder="e.g. Active roof leak above rear bedroom" class="w-full p-3 border border-slate-300 rounded-xl bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Finding 2</label>
+                            <input type="text" name="inspectionFinding" value="Older electrical panel flagged for review" placeholder="e.g. Federal Pacific panel flagged by inspector" class="w-full p-3 border border-slate-300 rounded-xl bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Finding 3</label>
+                            <input type="text" name="inspectionFinding" placeholder="Optional third finding" class="w-full p-3 border border-slate-300 rounded-xl bg-white">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Outside quote support</label>
+                            <select name="quoteSupport" class="w-full p-3 border border-slate-300 rounded-xl bg-white">
+                                <option value="NONE" selected>No contractor quotes yet</option>
+                                <option value="HAS_ONE">One quote in hand</option>
+                                <option value="MULTIPLE">Multiple quotes in hand</option>
+                            </select>
+                            <p class="text-xs text-slate-500 mt-1">This changes how aggressively the packet should hold the target ask.</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Closing timeline</label>
+                            <select name="closingWindow" class="w-full p-3 border border-slate-300 rounded-xl bg-white">
+                                <option value="UNDER_7_DAYS">Under 7 days</option>
+                                <option value="SEVEN_TO_TWENTY_ONE_DAYS" selected>7-21 days</option>
+                                <option value="TWENTY_ONE_TO_FORTY_FIVE_DAYS">21-45 days</option>
+                                <option value="FLEXIBLE">Flexible / not under contract</option>
+                            </select>
+                            <p class="text-xs text-slate-500 mt-1">Shorter timelines usually favor cleaner credits over longer repair negotiations.</p>
+                        </div>
+                    </div>
+                </div>
+
                 <details class="group workflow-card open:ring-2 open:ring-cyan-100">
                     <summary class="flex justify-between items-center cursor-pointer list-none select-none">
                         <div class="flex items-center gap-3">
-                            <span class="flex items-center justify-center w-8 h-8 rounded-full bg-cyan-50 text-cyan-700 font-bold text-sm">2</span>
+                            <span class="flex items-center justify-center w-8 h-8 rounded-full bg-cyan-50 text-cyan-700 font-bold text-sm">3</span>
                             <div>
                                 <h3 class="text-lg font-bold text-slate-900">Tighten the estimate (Optional)</h3>
                                 <p class="text-xs text-slate-500">Add layout details if you want a narrower credit range</p>
@@ -151,8 +194,8 @@
                 </details>
 
                 <div class="workflow-card border-l-4 border-l-amber-500">
-                    <div class="section-kicker">Step 3</div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">3. Confirm inspection red flags</h3>
+                    <div class="section-kicker">Step 4</div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">4. Confirm inspection red flags</h3>
                     <p class="text-sm text-slate-600 mb-4">Check only what you already saw in the inspection summary, disclosures, or showing notes.</p>
 
                     <div class="space-y-3">
@@ -191,8 +234,8 @@
                 </div>
 
                 <div class="workflow-card">
-                    <div class="section-kicker">Step 4</div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">4. Already-updated systems</h3>
+                    <div class="section-kicker">Step 5</div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">5. Already-updated systems</h3>
                     <p class="text-sm text-slate-600 mb-4">Only check items explicitly listed as new or recently replaced. This prevents over-asking on your credit request.</p>
 
                     <div class="grid grid-cols-2 gap-3">

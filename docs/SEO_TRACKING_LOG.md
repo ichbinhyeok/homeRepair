@@ -81,6 +81,13 @@ Track Search Console outcomes after SEO/code changes so we can decide whether to
     - what the buyer should verify first,
     - what seller credit to request,
   - dynamic buyer result pages now use `Inspection Budget & Credit Plan` framing instead of generic audit framing,
+  - intake flow now captures top inspection findings, quote support, and closing timeline,
+  - result pages now build an `inspection-to-credit` packet with:
+    - must-fix now,
+    - verify next,
+    - can defer,
+    - copy-ready seller credit summary,
+    - copy-ready agent request script,
   - state hub descriptions now align to inspection-budget and negotiation language,
   - duplicate state hub generation logic was removed so only one generator owns `states/*.html`.
 - Rewrote root, state hub, and verdict metadata toward budget/risk/inspection intent instead of generic “audit” copy.
