@@ -17,6 +17,7 @@
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,follow" />
     <title>${titleH1} - Expert Cost & Negotiation Guide</title>
     <meta name="description" content="Complete guide on ${titleH1}: inspection checklist, typical costs, and negotiation strategies." />
     <link rel="canonical" href="${baseUrl}/home-repair/risks/${riskSlug}" />

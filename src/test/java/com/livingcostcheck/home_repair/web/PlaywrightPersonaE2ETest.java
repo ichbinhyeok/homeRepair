@@ -76,6 +76,7 @@ class PlaywrightPersonaE2ETest {
 
         page.fill("input[name='budget']", "68000");
         page.fill("input[name='sqft']", "2100");
+        page.selectOption("select[name='loanType']", "FHA");
         page.locator("input[name='inspectionFinding']").nth(0).fill("Active roof leak above the garage");
         page.locator("input[name='inspectionFinding']").nth(1).fill("Federal Pacific panel flagged by inspector");
         page.selectOption("select[name='quoteSupport']", "HAS_ONE");
@@ -92,8 +93,12 @@ class PlaywrightPersonaE2ETest {
         String bodyText = page.locator("body").innerText();
 
         assertTrue(bodyText.contains("Inspection Budget & Credit Plan"));
-        assertTrue(bodyText.contains("Turn the report into a seller-credit packet."));
+        assertTrue(bodyText.contains("FHA financing"));
+        assertTrue(bodyText.contains("Keep the negotiation packet tight."));
         assertTrue(bodyText.contains("Active roof leak above the garage"));
+        assertFalse(bodyText.contains("12-Month Security Calendar"));
+        assertFalse(bodyText.contains("Component Health"));
+        assertFalse(bodyText.contains("Share this analysis."));
         assertNoInternalLeak(bodyText);
 
         saveScreenshot("buyer-persona-result.png");
@@ -108,7 +113,7 @@ class PlaywrightPersonaE2ETest {
         page.fill("input[name='sqft']", "1600");
         page.locator("input[name='condition'][value='MINOR']")
                 .check(new Locator.CheckOptions().setForce(true));
-        page.locator("summary:has-text('Tighten the estimate')").click();
+        page.locator("summary:has-text('Tighten the packet')").click();
         page.locator("label:has(input[name='roofType'][value='METAL'])").click();
         page.check("input[name='history'][value='PLUMBING']");
         page.locator("form[action='/home-repair/verdict'] button[type='submit']").click();
@@ -165,7 +170,7 @@ class PlaywrightPersonaE2ETest {
         Locator unlocked = page.locator("#unlocked-actions");
         unlocked.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
         assertTrue(unlocked.innerText().contains("Saved."));
-        assertTrue(unlocked.innerText().contains("Print Report"));
+        assertTrue(unlocked.innerText().contains("Print Packet"));
 
         saveScreenshot("buyer-unlock-flow.png");
     }

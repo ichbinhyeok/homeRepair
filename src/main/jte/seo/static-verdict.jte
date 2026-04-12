@@ -17,6 +17,7 @@
 @param String baseUrl
 @param String canonicalUrl
 @param String calculatorUrl = "/home-repair"
+@param String robotsDirective = "index,follow"
 @param String faqSchema
 @param List<InternalLink> stateLinks
 @param String climateFragment
@@ -58,7 +59,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <title>${title}</title>
-    <meta name="description" content="Estimate the inspection repair budget for ${eraName} homes in ${metroName}. See likely costs ($${lowPrice}-$${highPrice}), what to verify first, and what belongs in a seller-credit request before you buy." />
+    <meta name="description" content="Get a seller credit range after inspection for ${eraName} homes in ${metroName}. See likely repair costs ($${lowPrice}-$${highPrice}), what to verify first, and what belongs in the repair request before you close." />
+    <meta name="robots" content="${robotsDirective}" />
     
     <link rel="canonical" href="${canonicalUrl}" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -75,7 +77,7 @@
     <!-- Open Graph -->
     <meta property="og:type" content="article" />
     <meta property="og:title" content="${title}" />
-    <meta property="og:description" content="Inspection repair budget and seller-credit guide for ${eraName} homes in ${metroName}." />
+    <meta property="og:description" content="Seller credit range after inspection for ${eraName} homes in ${metroName}." />
     <meta property="og:url" content="${canonicalUrl}" />
     
     $unsafe{faqSchema}
@@ -99,9 +101,9 @@
                 <span class="current">${metroName}</span>
             </div>
             
-            <span class="badge-market">Buyer Negotiation Guide: ${dateString}</span>
+            <span class="badge-market">Seller-credit packet guide: ${dateString}</span>
             <h1 class="title-h1">${h1Content}</h1>
-            <p class="subtitle">Estimate the inspection repair budget, biggest red flags, and what to verify before asking for seller credit on ${eraName} properties in the ${metroName} area (Updated ${dateString}).</p>
+            <p class="subtitle">Use local repair math and inspection priorities to decide what belongs in the seller-credit request, what to verify first, and how hard to push before closing on a ${eraName} property in ${metroName} (Updated ${dateString}).</p>
             
             <div style="margin-top: 2rem;">
                 <a href="${calculatorUrl}" class="btn-primary" style="background: white; color: var(--primary);" data-analytics-event="cta_customize_estimate" data-analytics-category="conversion" data-analytics-label="l1_header">
@@ -149,7 +151,7 @@
                     <!-- Background gradient effect -->
                     <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at top right, rgba(255,255,255,0.05), transparent 60%); pointer-events: none;"></div>
                     
-                    <span class="stat-label" style="color: var(--slate-400);">VS. Modern Homes</span>
+                    <span class="stat-label" style="color: var(--slate-400);">Negotiation Context</span>
                     
                     <h3 class="text-delta-responsive" style="color: white; margin: 1rem 0;">
                         @if(verdict.getComparisonData().getCostDelta() > 0)
@@ -175,8 +177,8 @@
             @else
                 <!-- Fallback if no comparison data -->
                 <div class="bento-card span-4">
-                    <span class="stat-label">Market Intelligence</span>
-                    <p style="margin-top: 1rem;">Detailed cost comparison data is processing.</p>
+                    <span class="stat-label">Negotiation Context</span>
+                    <p style="margin-top: 1rem;">Local leverage data is still processing for this market.</p>
                 </div>
             @endif
 
@@ -184,7 +186,7 @@
             <div class="bento-card span-12 insight-card">
                 <div class="insight-header">
                     <span class="insight-icon">🌍</span>
-                    <h3>Local Market Factors: ${metroName}</h3>
+                    <h3>What Changes The Ask In ${metroName}</h3>
                 </div>
                 <!-- Responsive Grid for Insight -->
                 <style>
@@ -212,7 +214,7 @@
                 </div>
                 @if(femaDisasterCount != null || ownerOccupancyRate != null || medianYearBuilt != null || repairPressureIndex != null)
                 <div style="margin-top: 1.5rem; padding: 1.25rem; background: #f8fafc; border: 1px solid var(--slate-200); border-radius: var(--radius-md);">
-                    <h4 style="font-size: 0.9rem; text-transform: uppercase; color: var(--slate-500); margin-bottom: 1rem;">Public Data Signals (2016-2026)</h4>
+                    <h4 style="font-size: 0.9rem; text-transform: uppercase; color: var(--slate-500); margin-bottom: 1rem;">Local negotiation signals (2016-2026)</h4>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
                         <div>
                             <p style="font-size: 0.8rem; color: var(--slate-500); margin-bottom: 0.2rem;">MSA Coverage</p>
@@ -324,9 +326,9 @@
                             
                             <div class="risk-cost">
                                 <span class="amount">$${String.format("%,.0f", item.getAdjustedCost())}</span>
-                                <a href="/home-repair/verdicts/${metroCode.toLowerCase().replace("_", "-")}/${era.toLowerCase().replace("_", "-")}/${item.getSlug()}" class="action-link" style="font-size: 0.85rem;" data-analytics-event="l1_view_detail_click" data-analytics-category="navigation" data-analytics-label="${item.getSlug()}">
-                                    Inspection notes &rarr;
-                                </a>
+                                <span style="font-size: 0.85rem; color: var(--slate-500);">
+                                    Use the inspection report and one quote to support this line item.
+                                </span>
                             </div>
                         </div>
                     @endfor
@@ -352,21 +354,28 @@
                     
                     <!-- Cost Economics -->
                     <div style="padding: 1.25rem; background: var(--slate-50); border-radius: var(--radius-md);">
-                        <h4 style="font-size: 0.9rem; text-transform: uppercase; color: var(--slate-500); margin-bottom: 0.75rem; letter-spacing: 0.05em;">💰 Local Repair Cost Economics</h4>
+                        <h4 style="font-size: 0.9rem; text-transform: uppercase; color: var(--slate-500); margin-bottom: 0.75rem; letter-spacing: 0.05em;">💰 Local negotiation economics</h4>
                         <p style="color: var(--slate-700); line-height: 1.8;">${costFragment}</p>
                     </div>
                 </div>
             </div>
             
             <div class="bento-card span-12 insight-card" style="margin-bottom: 2rem;">
-                <h3 style="margin-bottom: 1rem;">Inspection Red Flags Worth Pushing on for ${eraName}</h3>
-                <ul style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; list-style: none; padding: 0;">
-                    <li><a href="/home-repair/risks/knob-and-tube-wiring" class="action-link" style="color: var(--primary);">Knob and Tube Wiring &rarr;</a></li>
-                    <li><a href="/home-repair/risks/polybutylene-pipes" class="action-link" style="color: var(--primary);">Polybutylene Pipes &rarr;</a></li>
-                    <li><a href="/home-repair/risks/fpe-electrical-panel" class="action-link" style="color: var(--primary);">FPE Electrical Panel &rarr;</a></li>
-                    <li><a href="/home-repair/risks/asbestos-risk" class="action-link" style="color: var(--primary);">Asbestos Risk &rarr;</a></li>
-                    <li><a href="/home-repair/risks/galvanized-pipes" class="action-link" style="color: var(--primary);">Galvanized Pipes &rarr;</a></li>
-                </ul>
+                <h3 style="margin-bottom: 1rem;">What Belongs In The Repair Request</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem;">
+                    <div style="padding: 1rem; background: white; border-radius: var(--radius-md); border: 1px solid var(--slate-200);">
+                        <strong style="display: block; margin-bottom: 0.35rem;">Safety and financing blockers</strong>
+                        <span style="color: var(--slate-600); font-size: 0.92rem;">Electrical, active leaks, structural movement, plumbing failures, and anything a lender or insurer will flag.</span>
+                    </div>
+                    <div style="padding: 1rem; background: white; border-radius: var(--radius-md); border: 1px solid var(--slate-200);">
+                        <strong style="display: block; margin-bottom: 0.35rem;">Quote-backed system repairs</strong>
+                        <span style="color: var(--slate-600); font-size: 0.92rem;">Use one contractor quote to anchor the ask for big-ticket systems rather than stacking every cosmetic item.</span>
+                    </div>
+                    <div style="padding: 1rem; background: white; border-radius: var(--radius-md); border: 1px solid var(--slate-200);">
+                        <strong style="display: block; margin-bottom: 0.35rem;">Defer cosmetic upgrades</strong>
+                        <span style="color: var(--slate-600); font-size: 0.92rem;">Paint, finishes, and elective updates should stay out of the main seller-credit packet unless they hide a safety issue.</span>
+                    </div>
+                </div>
             </div>
             
             <!-- 5. TIMELINE (VISUAL) -->
@@ -405,9 +414,9 @@
             
             <!-- 6. PRE-EMPTIVE CTA -->
             <div class="bento-card span-6" style="background: var(--primary); color: white; display: flex; flex-direction: column; justify-content: center; text-align: center;">
-                <h3 style="color: white; margin-bottom: 1rem;">Turn This Market Data Into a Real Credit Ask</h3>
+                <h3 style="color: white; margin-bottom: 1rem;">Turn This Inspection Context Into A Real Credit Ask</h3>
                 <p style="color: rgba(255,255,255,0.9); margin-bottom: 2rem;">
-                    Generic era data is the starting point. Add property details to tighten the budget, narrow the ask, and prep a cleaner negotiation.
+                    This guide is only the framing layer. Add the actual inspection findings to tighten the ask, narrow the fallback, and build a cleaner seller-credit packet.
                 </p>
                 <a href="${calculatorUrl}" class="btn-primary" style="background: white; color: var(--primary);" data-analytics-event="cta_customize_estimate" data-analytics-category="conversion" data-analytics-label="l1_body">
                     Build My Credit Range &rarr;
@@ -434,22 +443,27 @@
         </section>
 
         <!-- 8. INTERNAL LINKS HUB -->
-        <div class="bento-card span-12" style="margin-top: 4rem; background: transparent; border: none; box-shadow: none;">
-            <h3 style="margin-bottom: 1.5rem;">Explore Similar Negotiation Markets</h3>
-            <div class="link-hub" style="display: flex; flex-wrap: wrap; gap: 1rem;">
-                <!-- State Links (Priority) -->
-                @for(var link : stateLinks)
-                     <a href="${link.getHref()}" class="btn-outline" style="font-size: 0.85rem; padding: 0.5rem 1rem;">${link.getText()}</a>
-                @endfor
+        @if(!stateLinks.isEmpty() || !cityLinks.isEmpty())
+            <div class="bento-card span-12" style="margin-top: 4rem; background: transparent; border: none; box-shadow: none;">
+                <h3 style="margin-bottom: 1.5rem;">Explore Similar Negotiation Markets</h3>
+                @if(!stateLinks.isEmpty())
+                    <div class="link-hub" style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                        @for(var link : stateLinks)
+                             <a href="${link.getHref()}" class="btn-outline" style="font-size: 0.85rem; padding: 0.5rem 1rem;">${link.getText()}</a>
+                        @endfor
+                    </div>
+                @endif
+                
+                @if(!cityLinks.isEmpty())
+                    <h4 style="margin: 2rem 0 1rem; color: var(--slate-500); font-size: 1rem; text-transform: uppercase;">Related Regional Markets</h4>
+                    <div class="link-hub" style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                        @for(var link : cityLinks)
+                             <a href="${link.getHref()}" style="color: var(--slate-500); font-size: 0.9rem;">${link.getText()}</a>
+                        @endfor
+                    </div>
+                @endif
             </div>
-            
-            <h4 style="margin: 2rem 0 1rem; color: var(--slate-500); font-size: 1rem; text-transform: uppercase;">Related Regional Markets</h4>
-             <div class="link-hub" style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
-                @for(var link : cityLinks)
-                     <a href="${link.getHref()}" style="color: var(--slate-500); font-size: 0.9rem;">${link.getText()}</a>
-                @endfor
-            </div>
-        </div>
+        @endif
     </main>
     
     <!-- Sticky Mobile CTA -->

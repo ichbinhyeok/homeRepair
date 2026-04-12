@@ -48,6 +48,7 @@ public class HomeRepairController {
         private static final String INSPECTION_MARKER = "__INSPECTION:";
         private static final String QUOTE_SUPPORT_MARKER = "__QUOTE_SUPPORT:";
         private static final String CLOSING_WINDOW_MARKER = "__CLOSING_WINDOW:";
+        private static final String LOAN_TYPE_MARKER = "__LOAN_TYPE:";
         private static final Set<String> SEO_STOPWORDS = Set.of(
                         "the", "and", "for", "with", "from", "that", "this", "your", "into", "over",
                         "when", "after", "before", "while", "without", "across", "under", "about",
@@ -127,6 +128,7 @@ public class HomeRepairController {
                         @RequestParam(value = "inspectionFinding", required = false) List<String> inspectionFindings,
                         @RequestParam(value = "quoteSupport", defaultValue = "NONE") String quoteSupport,
                         @RequestParam(value = "closingWindow", defaultValue = "FLEXIBLE") String closingWindow,
+                        @RequestParam(value = "loanType", defaultValue = "CONVENTIONAL") String loanTypeStr,
                         @RequestParam(value = "userEmail", defaultValue = "anonymous") String userEmail,
                         Model model) {
 
@@ -138,6 +140,12 @@ public class HomeRepairController {
                         } catch (Exception e) {
                                 log.warn("Invalid relationship param: {}", relationshipStr);
                         }
+                        LoanType loanType = LoanType.CONVENTIONAL;
+                        try {
+                                loanType = LoanType.valueOf(loanTypeStr);
+                        } catch (Exception e) {
+                                log.warn("Invalid loanType param: {}", loanTypeStr);
+                        }
 
                         UserContext context = UserContext.builder()
                                         .metroCode(metroCode)
@@ -145,6 +153,7 @@ public class HomeRepairController {
                                         .budget(budget)
                                         .sqft(sqft != null ? sqft.intValue() : 1800)
                                         .relationship(relationship)
+                                        .loanType(loanType)
                                         .history(history != null ? history : java.util.Collections.emptyList())
                                         .condition(condition)
                                         .isFpePanel(isFpePanel)
@@ -175,7 +184,7 @@ public class HomeRepairController {
 
                         // Save detailed context for re-generation
                         String historyStr = buildStoredRepairContext(context.getHistory(), inspectionFindings,
-                                        quoteSupport, closingWindow);
+                                        quoteSupport, closingWindow, context.getLoanType());
                         verdictHistory.setRepairContext(historyStr, context.getCondition());
                         verdictHistory.setForensicClues(
                                         context.getIsFpePanel(),
@@ -246,6 +255,7 @@ public class HomeRepairController {
                                         .era(history.getDecade())
                                         .budget(parsedBudget)
                                         .relationship(relationship)
+                                        .loanType(parsedRepairContext.loanType())
                                         .purpose(history.getPurpose()) // Deprecated but populated
                                         .history(combinedHistory) // Keep deprecated for compat
                                         .coreSystemHistory(coreHistory)
@@ -272,15 +282,24 @@ public class HomeRepairController {
                         model.addAttribute("verdictH1", seoVariant.h1());
                         model.addAttribute("verdict", verdict);
                         model.addAttribute("history", history);
-                        model.addAttribute("inspectionFindings", parsedRepairContext.inspectionFindings());
+                        model.addAttribute("inspectionFindings", parsedRepairContext.inspectionFindings().toArray(String[]::new));
                         model.addAttribute("quoteSupport", parsedRepairContext.quoteSupport());
                         model.addAttribute("quoteSupportLabel", packet.quoteSupportLabel());
                         model.addAttribute("closingWindow", parsedRepairContext.closingWindow());
                         model.addAttribute("closingWindowLabel", packet.closingWindowLabel());
-                        model.addAttribute("mustFixNow", packet.mustFixNow());
-                        model.addAttribute("verifyNext", packet.verifyNext());
-                        model.addAttribute("deferLater", packet.deferLater());
+                        model.addAttribute("loanType", parsedRepairContext.loanType().name());
+                        model.addAttribute("loanTypeLabel", packet.loanTypeLabel());
+                        model.addAttribute("loanTypeNote", packet.loanTypeNote());
+                        model.addAttribute("mustFixNow", packet.mustFixNow().toArray(String[]::new));
+                        model.addAttribute("verifyNext", packet.verifyNext().toArray(String[]::new));
+                        model.addAttribute("deferLater", packet.deferLater().toArray(String[]::new));
                         model.addAttribute("negotiationEvidenceNote", packet.evidenceNote());
+                        model.addAttribute("defendableAsk", packet.defendableAsk());
+                        model.addAttribute("defendableAskLabel", String.format("%,.0f", packet.defendableAsk()));
+                        model.addAttribute("targetAsk", packet.targetAsk());
+                        model.addAttribute("targetAskLabel", String.format("%,.0f", packet.targetAsk()));
+                        model.addAttribute("stretchAsk", packet.stretchAsk());
+                        model.addAttribute("stretchAskLabel", String.format("%,.0f", packet.stretchAsk()));
                         model.addAttribute("sellerCreditSummary", packet.sellerCreditSummary());
                         model.addAttribute("sellerCreditSummaryJs", escapeJs(packet.sellerCreditSummary()));
                         model.addAttribute("agentNegotiationScript", packet.agentNegotiationScript());
@@ -490,7 +509,7 @@ public class HomeRepairController {
                                                 "\"itemListElement\":[" +
                                                 "{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Home\",\"item\":\"https://lifeverdict.com/\"},"
                                                 +
-                                                "{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Market Data\",\"item\":\"https://lifeverdict.com/home-repair\"},"
+                                                "{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Inspection Negotiation\",\"item\":\"https://lifeverdict.com/home-repair\"},"
                                                 +
                                                 "{\"@type\":\"ListItem\",\"position\":3,\"name\":\"%s %s\",\"item\":\"https://lifeverdict.com"
                                                 + parentUrl + "\"},"
@@ -630,7 +649,8 @@ public class HomeRepairController {
         }
 
         @GetMapping("/risks")
-        public String riskIndex(Model model) {
+        public String riskIndex(Model model, jakarta.servlet.http.HttpServletResponse response) {
+                response.setHeader("X-Robots-Tag", "noindex,follow");
                 List<String> hubs = java.util.Arrays.asList(
                                 "knob-and-tube-wiring",
                                 "polybutylene-pipes",
@@ -642,7 +662,9 @@ public class HomeRepairController {
         }
 
         @GetMapping("/risks/{riskSlug}")
-        public Object riskHub(@PathVariable String riskSlug, Model model) {
+        public Object riskHub(@PathVariable String riskSlug, Model model,
+                        jakarta.servlet.http.HttpServletResponse response) {
+                response.setHeader("X-Robots-Tag", "noindex,follow");
                 java.util.Map<String, String> titles = java.util.Map.of(
                                 "knob-and-tube-wiring", "Knob and Tube Wiring Replacement Guide",
                                 "polybutylene-pipes", "Polybutylene Pipe Replacement Guide",
@@ -747,7 +769,8 @@ public class HomeRepairController {
         private String buildStoredRepairContext(List<String> history,
                         List<String> inspectionFindings,
                         String quoteSupport,
-                        String closingWindow) {
+                        String closingWindow,
+                        LoanType loanType) {
                 List<String> values = new ArrayList<>();
                 if (history != null) {
                         values.addAll(history.stream()
@@ -772,18 +795,22 @@ public class HomeRepairController {
                 if (closingWindow != null && !closingWindow.isBlank()) {
                         values.add(CLOSING_WINDOW_MARKER + encodeMarkerValue(closingWindow));
                 }
+                if (loanType != null) {
+                        values.add(LOAN_TYPE_MARKER + encodeMarkerValue(loanType.name()));
+                }
                 return String.join(",", values);
         }
 
         private ParsedRepairContext parseStoredRepairContext(String storedRepairHistory) {
                 if (storedRepairHistory == null || storedRepairHistory.isBlank()) {
-                        return new ParsedRepairContext(List.of(), List.of(), "NONE", "FLEXIBLE");
+                        return new ParsedRepairContext(List.of(), List.of(), "NONE", "FLEXIBLE", LoanType.CONVENTIONAL);
                 }
 
                 List<String> historyItems = new ArrayList<>();
                 List<String> inspectionFindings = new ArrayList<>();
                 String quoteSupport = "NONE";
                 String closingWindow = "FLEXIBLE";
+                LoanType loanType = LoanType.CONVENTIONAL;
 
                 for (String rawEntry : storedRepairHistory.split(",")) {
                         String entry = rawEntry.trim();
@@ -802,10 +829,19 @@ public class HomeRepairController {
                                 closingWindow = decodeMarkerValue(entry.substring(CLOSING_WINDOW_MARKER.length()));
                                 continue;
                         }
+                        if (entry.startsWith(LOAN_TYPE_MARKER)) {
+                                try {
+                                        loanType = LoanType.valueOf(
+                                                        decodeMarkerValue(entry.substring(LOAN_TYPE_MARKER.length())));
+                                } catch (IllegalArgumentException ignored) {
+                                        loanType = LoanType.CONVENTIONAL;
+                                }
+                                continue;
+                        }
                         historyItems.add(entry);
                 }
 
-                return new ParsedRepairContext(historyItems, inspectionFindings, quoteSupport, closingWindow);
+                return new ParsedRepairContext(historyItems, inspectionFindings, quoteSupport, closingWindow, loanType);
         }
 
         private NegotiationPacket buildNegotiationPacket(Verdict verdict, String city,
@@ -863,31 +899,79 @@ public class HomeRepairController {
                         case "MULTIPLE" -> "multiple contractor quotes support the ask";
                         default -> "inspection notes are doing most of the work";
                 };
+                String loanTypeLabel = switch (parsedRepairContext.loanType()) {
+                        case FHA -> "FHA financing";
+                        case VA -> "VA financing";
+                        case CASH -> "cash offer";
+                        case INVESTOR -> "investor financing";
+                        default -> "conventional financing";
+                };
                 String closingWindowLabel = switch (parsedRepairContext.closingWindow()) {
                         case "UNDER_7_DAYS" -> "closing inside 7 days";
                         case "SEVEN_TO_TWENTY_ONE_DAYS" -> "closing in the next 1-3 weeks";
                         case "TWENTY_ONE_TO_FORTY_FIVE_DAYS" -> "closing in the next 3-6 weeks";
                         default -> "a flexible closing timeline";
                 };
+                String loanTypeNote = switch (parsedRepairContext.loanType()) {
+                        case FHA -> "Keep the ask tightly documented around safety, habitability, and lender-visible defects.";
+                        case VA -> "Lead with safety and system issues that could slow underwriting or appraisal sign-off.";
+                        case CASH -> "You can hold a wider ask because lender overlays are not constraining the request.";
+                        case INVESTOR -> "Keep the packet tied to rent-ready systems and near-term capex, not cosmetic polish.";
+                        default -> "A conventional loan gives room for a clean credit ask, but the strongest leverage still comes from documented defects.";
+                };
                 String evidenceNote = switch (parsedRepairContext.quoteSupport()) {
                         case "HAS_ONE" -> "One quote is enough to anchor the target ask. Keep the defensible range ready if the seller pushes back.";
                         case "MULTIPLE" -> "Multiple quotes strengthen the packet. Hold the target ask unless the seller can close faster with certainty.";
                         default -> "Start with the inspection notes and the target ask. Add one contractor quote only if the seller challenges scope or timing.";
                 };
+                double targetMultiplier = switch (parsedRepairContext.loanType()) {
+                        case FHA, VA -> 0.80;
+                        case CASH -> 0.90;
+                        case INVESTOR -> 0.78;
+                        default -> 0.85;
+                };
+                double defendableMultiplier = switch (parsedRepairContext.loanType()) {
+                        case FHA, VA -> 0.62;
+                        case CASH -> 0.70;
+                        case INVESTOR -> 0.60;
+                        default -> 0.65;
+                };
+                double stretchMultiplier = switch (parsedRepairContext.loanType()) {
+                        case FHA, VA -> 0.92;
+                        case CASH -> 1.10;
+                        case INVESTOR -> 0.95;
+                        default -> 1.05;
+                };
+                if ("UNDER_7_DAYS".equals(parsedRepairContext.closingWindow())) {
+                        targetMultiplier -= 0.03;
+                        stretchMultiplier -= 0.05;
+                }
+                if ("MULTIPLE".equals(parsedRepairContext.quoteSupport())) {
+                        targetMultiplier += 0.03;
+                        stretchMultiplier += 0.05;
+                } else if ("HAS_ONE".equals(parsedRepairContext.quoteSupport())) {
+                        targetMultiplier += 0.01;
+                }
+                double exactEstimate = verdict.getExactCostEstimate() != null ? verdict.getExactCostEstimate() : 0.0;
+                double defendableAsk = Math.max(1000, Math.round(exactEstimate * defendableMultiplier / 500.0) * 500.0);
+                double targetAsk = Math.max(defendableAsk, Math.round(exactEstimate * targetMultiplier / 500.0) * 500.0);
+                double stretchAsk = Math.max(targetAsk, Math.round(exactEstimate * stretchMultiplier / 500.0) * 500.0);
 
                 String sellerCreditSummary = String.format(
-                                "Request a seller credit of $%,.0f to cover high-priority inspection items in %s, led by %s. This packet assumes %s and %s.",
-                                Math.round(verdict.getExactCostEstimate() * 0.85 / 500.0) * 500.0,
+                                "Start at $%,.0f in seller credits for %s, led by %s. This packet assumes %s, %s, and %s.",
+                                targetAsk,
                                 city,
                                 focusSummary,
+                                loanTypeLabel,
                                 quoteSupportLabel,
                                 closingWindowLabel.toLowerCase(Locale.ENGLISH));
 
                 String agentNegotiationScript = String.format(
-                                "We are requesting a seller credit of $%,.0f before closing. The ask is driven by %s, with secondary verification items including %s. We are not asking the seller to solve every cosmetic issue, only the items that materially affect near-term repair risk in %s.",
-                                Math.round(verdict.getExactCostEstimate() * 0.85 / 500.0) * 500.0,
+                                "We are requesting a seller credit of $%,.0f before closing. The ask is driven by %s, with secondary verification items including %s. Because this deal is using %s, we are focusing on near-term defects that materially affect repair risk in %s rather than every cosmetic item.",
+                                targetAsk,
                                 focusSummary,
                                 joinForSentence(verifyNext.stream().limit(2).toList()),
+                                loanTypeLabel,
                                 city);
 
                 return new NegotiationPacket(
@@ -896,7 +980,12 @@ public class HomeRepairController {
                                 new ArrayList<>(deferLater),
                                 quoteSupportLabel,
                                 closingWindowLabel,
+                                loanTypeLabel,
+                                loanTypeNote,
                                 evidenceNote,
+                                defendableAsk,
+                                targetAsk,
+                                stretchAsk,
                                 sellerCreditSummary,
                                 agentNegotiationScript);
         }
@@ -951,7 +1040,8 @@ public class HomeRepairController {
         private record ParsedRepairContext(List<String> historyItems,
                         List<String> inspectionFindings,
                         String quoteSupport,
-                        String closingWindow) {
+                        String closingWindow,
+                        LoanType loanType) {
         }
 
         private record NegotiationPacket(List<String> mustFixNow,
@@ -959,7 +1049,12 @@ public class HomeRepairController {
                         List<String> deferLater,
                         String quoteSupportLabel,
                         String closingWindowLabel,
+                        String loanTypeLabel,
+                        String loanTypeNote,
                         String evidenceNote,
+                        double defendableAsk,
+                        double targetAsk,
+                        double stretchAsk,
                         String sellerCreditSummary,
                         String agentNegotiationScript) {
         }

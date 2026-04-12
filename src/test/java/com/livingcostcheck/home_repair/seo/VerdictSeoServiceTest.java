@@ -15,14 +15,14 @@ class VerdictSeoServiceTest {
 
         VerdictSeoService.SeoVariant result = service.getStaticPageHeader(metro, era);
 
-        // Verify informational H1 aligned to city + era inspection-budget intent.
-        assertThat(result.h1()).contains("home inspection seller credit range in");
+        // Verify informational H1 aligned to seller-credit-after-inspection intent.
+        assertThat(result.h1()).contains("Seller credit after inspection");
         assertThat(result.h1()).contains(metro);
         assertThat(result.h1()).contains(era);
 
-        // Verify title emphasizes inspection budget + negotiation intent.
-        assertThat(result.title()).contains("repair costs");
-        assertThat(result.title()).contains("priorities");
+        // Verify title emphasizes seller-credit-after-inspection intent.
+        assertThat(result.title()).contains("seller credit after inspection");
+        assertThat(result.title()).contains("LifeVerdict");
         assertThat(result.title()).doesNotContain("Avoid Hidden Costs:");
         assertThat(result.title()).doesNotContain("(2026 Audit)");
     }

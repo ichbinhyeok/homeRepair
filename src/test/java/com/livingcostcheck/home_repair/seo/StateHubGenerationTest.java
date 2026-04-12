@@ -22,11 +22,17 @@ class StateHubGenerationTest {
         Path outputDir = tempDir.resolve("home-repair").resolve("verdicts");
 
         int count = staticPageGeneratorService.generateStateHubPages(outputDir.toString());
+        Path statesDir = outputDir.resolve("states");
 
         assertThat(count).isGreaterThan(0);
-        assertThat(Files.exists(outputDir.resolve("states"))).isTrue();
-        try (var files = Files.list(outputDir.resolve("states"))) {
+        assertThat(Files.exists(statesDir)).isTrue();
+        try (var files = Files.list(statesDir)) {
             assertThat(files.findAny()).isPresent();
         }
+
+        String txHtml = Files.readString(statesDir.resolve("tx.html"));
+        String caHtml = Files.readString(statesDir.resolve("ca.html"));
+        assertThat(txHtml).contains("<meta name=\"robots\" content=\"index,follow\">");
+        assertThat(caHtml).contains("<meta name=\"robots\" content=\"noindex,follow\">");
     }
 }

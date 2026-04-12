@@ -12,8 +12,8 @@
 
         <nav class="header-nav">
             <a href="/home-repair" class="header-link">Planner</a>
-            <a href="/home-repair/verdicts/states" class="header-link">Markets</a>
-            <span class="header-pill">Inspection to credit plan</span>
+            <a href="/home-repair?relationship=BUYING" class="header-link">Build packet</a>
+            <span class="header-pill">Inspection findings to seller credit</span>
         </nav>
     </div>
 </header>

@@ -1,6 +1,7 @@
 package com.livingcostcheck.home_repair.seo;
 
 import com.livingcostcheck.home_repair.service.VerdictEngineService;
+import com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink;
 import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs;
 import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.*;
 import com.livingcostcheck.home_repair.service.dto.verdict.StateHubPage;
@@ -32,6 +33,12 @@ public class StaticPageGeneratorService {
 
         private static final List<String> ALL_ERAS = Arrays.asList(
                         "PRE_1950", "1950_1970", "1970_1980", "1980_1995", "1995_2010", "2010_PRESENT");
+        private static final Set<String> INDEXABLE_STATE_CODES = Set.of("TX", "FL");
+        private static final Set<String> INDEXABLE_VERDICT_KEYS = Set.of(
+                        verdictKey("PITTSBURGH_PA", "PRE_1950"),
+                        verdictKey("TULSA_OK", "PRE_1950"),
+                        verdictKey("LITTLE_ROCK_NORTH_LITTLE_ROCK_AR", "1950_1970"),
+                        verdictKey("CHICAGO_NAPERVILLE_IL", "1950_1970"));
 
         private static final double DEFAULT_BUDGET = -1.0;
         private static final String DEFAULT_PURPOSE = "LIVING";
@@ -62,7 +69,7 @@ public class StaticPageGeneratorService {
 
                 try {
                         writeStateHubPages(metroCodes, outputBasePath);
-                        for (String state : getAllStates(metroCodes)) {
+                        for (String state : INDEXABLE_STATE_CODES) {
                                 allGeneratedUrls
                                                 .add("https://lifeverdict.com/home-repair/verdicts/states/"
                                                                 + state.toLowerCase() + ".html");
@@ -77,6 +84,7 @@ public class StaticPageGeneratorService {
         private List<String> generateSinglePage(String metroCode, String era, String outputBasePath, String dateString)
                         throws IOException {
                 List<String> generatedUrls = new ArrayList<>();
+                boolean indexablePage = isIndexableVerdictPage(metroCode, era);
                 VerdictDTOs.UserContext context = VerdictDTOs.UserContext.builder().metroCode(metroCode).era(era)
                                 .budget(DEFAULT_BUDGET).purpose(DEFAULT_PURPOSE).build();
                 VerdictDTOs.Verdict verdict = verdictEngineService.generateVerdict(context);
@@ -86,7 +94,6 @@ public class StaticPageGeneratorService {
                 VerdictSeoService.SeoVariant seoVariant = verdictSeoService.getStaticPageHeader(metroName, eraName);
 
                 Map<String, Object> templateData = new HashMap<>();
-                // Clever Strategy 4: Dynamic Freshness in Title
                 templateData.put("title", seoVariant.title() + " (" + dateString + ")");
                 templateData.put("h1Content", seoVariant.h1());
                 templateData.put("metroCode", metroCode);
@@ -98,6 +105,7 @@ public class StaticPageGeneratorService {
                 templateData.put("canonicalUrl", buildCanonicalUrl(metroCode, era));
                 templateData.put("calculatorUrl", buildCalculatorUrl(metroCode, era));
                 templateData.put("dateString", dateString);
+                templateData.put("robotsDirective", indexablePage ? "index,follow" : "noindex,follow");
 
                 String stateCode = extractStateCode(metroCode);
 
@@ -109,13 +117,13 @@ public class StaticPageGeneratorService {
                 // Removed Product Schema to prevent Google Manual Action Spam Flags
 
                 // Explore Other Markets: Similar Labor Multiplier or broad state cities
-                templateData.put("stateLinks", internalLinkBuilder.getRelatedCitiesInState(metroCode, era,
-                                verdictEngineService.getMetroMasterData().getData().keySet()));
+                templateData.put("stateLinks", keepIndexableLinks(internalLinkBuilder.getRelatedCitiesInState(metroCode,
+                                era, verdictEngineService.getMetroMasterData().getData().keySet())));
                 templateData.put("eraLinks", internalLinkBuilder.getOtherErasInCity(metroCode, era));
 
                 // Nearby Cities: Adjacent Metros (Different selection logic to avoid overlap)
-                templateData.put("cityLinks", internalLinkBuilder.getNearbyMetrosInEra(metroCode, era,
-                                verdictEngineService.getMetroMasterData().getData()));
+                templateData.put("cityLinks", keepIndexableLinks(internalLinkBuilder.getNearbyMetrosInEra(metroCode, era,
+                                verdictEngineService.getMetroMasterData().getData())));
 
                 if (stateCode != null) {
                         templateData.put("stateHubUrl",
@@ -191,7 +199,9 @@ public class StaticPageGeneratorService {
                 Files.createDirectories(filePath.getParent());
                 Files.writeString(filePath, minifyHtml(output.toString()));
 
-                generatedUrls.add((String) templateData.get("canonicalUrl"));
+                if (indexablePage) {
+                        generatedUrls.add((String) templateData.get("canonicalUrl"));
+                }
 
                 // STRATEGY UPDATE:
                 // L2 Detail Pages (Risk Items) are now handled DYNAMICALLY by
@@ -210,15 +220,15 @@ public class StaticPageGeneratorService {
 
                 if (laborMult > 1.1) {
                         context = String.format(
-                                        "A mathematical analysis of %s contractor rates reveals labor costs pacing %.1f%% higher than the national baseline. This structural premium forces savvy buyers to factor in mobilization fees heavily during negotiation.",
+                                        "%s contractor rates run about %.1f%% above the national baseline. Buyers should expect sellers to push back unless the packet stays anchored to lender-visible or quote-backed issues.",
                                         metroName, deltaPct);
                 } else if (laborMult < 0.95) {
                         context = String.format(
-                                        "Due to localized supply/demand economics, %s benefits from a %.1f%% discount against average national repair labor rates. However, material shipping logistics into %s can sometimes offset these savings.",
-                                        metroName, deltaPct, mData.getClimateZone());
+                                        "%s labor runs about %.1f%% below the national baseline. That can make a seller credit more defensible, but only if the ask stays focused on inspection items that are easy to document.",
+                                        metroName, deltaPct);
                 } else {
                         context = String.format(
-                                        "Renovation labor economics in %s index within %.1f%% of the national median (1.0). This rare pricing stability makes quote validation and standard material comparisons highly reliable.",
+                                        "%s labor is within %.1f%% of the national median. In this kind of market, buyers usually win by presenting a cleaner packet rather than inflating every repair line.",
                                         metroName, deltaPct);
                 }
                 return context;
@@ -267,7 +277,7 @@ public class StaticPageGeneratorService {
                 q1.put("question", String.format("How much should I budget from the inspection report for a %s home in %s?",
                                 eraName.split("\\(")[0].trim(), metroName.split(",")[0].trim()));
                 q1.put("answer", String.format(
-                                "Based on localized %s labor indexes (%.2fx multiplier) and %s structural standards, forensic analysis suggests budgeting approximately $%,.0f for immediate post-inspection liabilities. The top expenditure vector involves %s.",
+                                "Based on localized %s labor indexes (%.2fx multiplier) and %s housing stock patterns, a buyer should expect roughly $%,.0f in repair burden after inspection. Use that number to frame the seller credit request around %s first.",
                                 metroName, (mData != null ? mData.getLaborMult() : 1.0), eraName.split("\\(")[0].trim(),
                                 totalCost, riskList));
                 faqs.add(q1);
@@ -278,7 +288,7 @@ public class StaticPageGeneratorService {
                         q2.put("question",
                                         String.format("What should I ask the inspector to verify first in %s?", metroName));
                         q2.put("answer", String.format(
-                                        "Start with %s. In %s, the overarching regional hazard is %s, compounded by its %s climate classification. For %s properties, that combination usually accelerates deterioration in the %s and should be documented with photos, remaining-life notes, and contractor follow-up bids.",
+                                        "Start with %s. In %s, the regional pressure is %s, compounded by its %s climate classification. For %s properties, that combination usually accelerates deterioration in the %s and should be documented with photos, remaining-life notes, and contractor follow-up bids before you ask for credit.",
                                         firstRiskName, metroName, mData.getRisk(), mData.getClimateZone(), eraName.split(" ")[0],
                                         mData.getFoundation().toLowerCase().contains("basement")
                                                         ? "foundation and subsurface drainage"
@@ -290,7 +300,8 @@ public class StaticPageGeneratorService {
                 Map<String, String> q3 = new HashMap<>();
                 q3.put("question", "How much seller credit should I ask for after the inspection?");
                 q3.put("answer", String.format(
-                                "A reasonable opening request is roughly %.1f%% of the documented repair burden: about $%,.0f on a $%,.0f estimate. Use the inspection notes plus at least one contractor quote to support the request, especially for items like %s.",
+                                "A reasonable opening request in %s is roughly %.1f%% of the documented repair burden: about $%,.0f on a $%,.0f estimate. Use the inspection notes plus at least one contractor quote to support the request, especially for items like %s.",
+                                metroName,
                                 80.0, totalCost * 0.8, totalCost, firstRiskName));
                 faqs.add(q3);
 
@@ -302,13 +313,13 @@ public class StaticPageGeneratorService {
                                 "<script type=\"application/ld+json\">{" +
                                                 "\"@context\":\"https://schema.org\"," +
                                                 "\"@type\":\"HowTo\"," +
-                                                "\"name\":\"Evaluating %s home repair costs in %s\"," +
+                                                "\"name\":\"Preparing a seller credit request for %s homes in %s\"," +
                                                 "\"step\":[" +
-                                                "{\"@type\":\"HowToStep\",\"text\":\"Identify era-specific risks for %s builds.\"},"
+                                                "{\"@type\":\"HowToStep\",\"text\":\"Identify inspection items that should be included in the seller credit request for %s builds.\"},"
                                                 +
-                                                "{\"@type\":\"HowToStep\",\"text\":\"Apply %s regional labor multipliers.\"},"
+                                                "{\"@type\":\"HowToStep\",\"text\":\"Apply %s regional labor multipliers to size a defensible ask.\"},"
                                                 +
-                                                "{\"@type\":\"HowToStep\",\"text\":\"Calculate total estimated liability before closing.\"}"
+                                                "{\"@type\":\"HowToStep\",\"text\":\"Turn the inspection notes into a seller credit range before closing.\"}"
                                                 +
                                                 "]}</script>",
                                 e, m, e, m);
@@ -327,7 +338,7 @@ public class StaticPageGeneratorService {
                                                 "\"itemListElement\":[" +
                                                 "{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Home\",\"item\":\"https://lifeverdict.com/\"},"
                                                 +
-                                                "{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Market Data\",\"item\":\"https://lifeverdict.com/home-repair\"},"
+                                                "{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Inspection Negotiation\",\"item\":\"https://lifeverdict.com/home-repair\"},"
                                                 +
                                                 "{\"@type\":\"ListItem\",\"position\":3,\"name\":\"%s\",\"item\":\"%s\"},"
                                                 +
@@ -408,6 +419,7 @@ public class StaticPageGeneratorService {
                 }
                 for (var entry : byState.entrySet()) {
                         String stateCode = entry.getKey();
+                        boolean indexableStateHub = isIndexableStateHub(stateCode);
                         String fullStateName = STATE_NAMES.getOrDefault(stateCode, stateCode);
                         String url = "https://lifeverdict.com/home-repair/verdicts/states/" + stateCode.toLowerCase()
                                         + ".html";
@@ -415,11 +427,17 @@ public class StaticPageGeneratorService {
                         List<StateHubPage.CityData> cities = new ArrayList<>();
                         for (String cityCode : entry.getValue()) {
                                 List<InternalLinkBuilder.InternalLink> links = new ArrayList<>();
-                                for (String era : ALL_ERAS)
-                                        links.add(new InternalLinkBuilder.InternalLink(TextUtil.formatEraText(era),
-                                                        buildCanonicalUrl(cityCode, era)
-                                                                        .replace("https://lifeverdict.com", "")));
-                                cities.add(new StateHubPage.CityData(TextUtil.formatMetroName(cityCode), links));
+                                for (String era : ALL_ERAS) {
+                                        if (isIndexableVerdictPage(cityCode, era)) {
+                                                links.add(new InternalLinkBuilder.InternalLink(
+                                                                TextUtil.formatEraText(era),
+                                                                buildCanonicalUrl(cityCode, era)
+                                                                                .replace("https://lifeverdict.com", "")));
+                                        }
+                                }
+                                if (!links.isEmpty()) {
+                                        cities.add(new StateHubPage.CityData(TextUtil.formatMetroName(cityCode), links));
+                                }
                         }
 
                         String breadcrumbSchema = String.format(
@@ -429,14 +447,21 @@ public class StaticPageGeneratorService {
                                                         "\"itemListElement\":[" +
                                                         "{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Home\",\"item\":\"https://lifeverdict.com/\"},"
                                                         +
-                                                        "{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Market Data\",\"item\":\"https://lifeverdict.com/home-repair\"},"
+                                                        "{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Inspection Negotiation\",\"item\":\"https://lifeverdict.com/home-repair\"},"
                                                         +
                                                         "{\"@type\":\"ListItem\",\"position\":3,\"name\":\"%s\",\"item\":\"%s\"}"
                                                         +
                                                         "]}</script>",
                                         fullStateName, url);
 
-                        StateHubPage page = new StateHubPage(stateCode, fullStateName, url, breadcrumbSchema, cities);
+                        StateHubPage page = new StateHubPage(
+                                        stateCode,
+                                        fullStateName,
+                                        url,
+                                        breadcrumbSchema,
+                                        indexableStateHub ? "index,follow" : "noindex,follow",
+                                        indexableStateHub,
+                                        cities);
 
                         StringOutput output = new StringOutput();
                         templateEngine.render("seo/static-state-hub.jte", Collections.singletonMap("page", page),
@@ -456,5 +481,46 @@ public class StaticPageGeneratorService {
                                 states.add(s);
                 }
                 return states;
+        }
+
+        private static String verdictKey(String metroCode, String era) {
+                return metroCode + "|" + era;
+        }
+
+        private boolean isIndexableVerdictPage(String metroCode, String era) {
+                return INDEXABLE_VERDICT_KEYS.contains(verdictKey(metroCode, era));
+        }
+
+        private boolean isIndexableStateHub(String stateCode) {
+                return INDEXABLE_STATE_CODES.contains(stateCode);
+        }
+
+        private List<InternalLink> keepIndexableLinks(List<InternalLink> links) {
+                if (links == null || links.isEmpty()) {
+                        return List.of();
+                }
+                return links.stream()
+                                .filter(link -> link != null && isIndexableLink(link.getHref()))
+                                .toList();
+        }
+
+        private boolean isIndexableLink(String href) {
+                if (href == null || href.isBlank()) {
+                        return false;
+                }
+                if (href.contains("/home-repair/verdicts/states/")) {
+                        String stateSlug = href.substring(href.lastIndexOf('/') + 1)
+                                        .replace(".html", "")
+                                        .toUpperCase(Locale.ENGLISH);
+                        return isIndexableStateHub(stateSlug);
+                }
+
+                String[] segments = href.split("/");
+                if (segments.length < 5) {
+                        return false;
+                }
+                String metroCode = segments[3].toUpperCase(Locale.ENGLISH).replace("-", "_");
+                String eraCode = segments[4].replace(".html", "").toUpperCase(Locale.ENGLISH).replace("-", "_");
+                return isIndexableVerdictPage(metroCode, eraCode);
         }
 }

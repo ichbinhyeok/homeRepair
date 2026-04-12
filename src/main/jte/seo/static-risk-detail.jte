@@ -76,14 +76,14 @@
             <div class="breadcrumbs">
                 <a href="/">Home</a> 
                 <span class="separator">/</span>
-                <a href="/home-repair">Market Data</a>
+                <a href="/home-repair">Inspection Negotiation</a>
                 <span class="separator">/</span>
                 <a href="${parentUrl}">${metroName} ${eraName}</a>
                 <span class="separator">/</span>
                 <span class="current">${item.getPrettyName()}</span>
             </div>
             
-            <span class="badge-market">Market Data: ${dateString}</span>
+            <span class="badge-market">Inspection note: ${dateString}</span>
             <h1 class="title-h1">${h1Content}</h1>
             <p class="subtitle">Detailed breakdown of repair liabilities for ${item.getPrettyName()} in ${metroName} (Updated ${dateString}).</p>
         </div>

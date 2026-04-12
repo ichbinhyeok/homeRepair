@@ -14,6 +14,7 @@
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,follow" />
     <title>Critical Home Repair Risks</title>
     <meta name="description" content="Explore major home repair risks and inspection concerns." />
     <link rel="canonical" href="https://lifeverdict.com/home-repair/risks" />

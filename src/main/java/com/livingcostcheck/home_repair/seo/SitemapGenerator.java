@@ -9,7 +9,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Generates Strategic Seed Sitemap for pSEO
@@ -18,23 +20,14 @@ import java.util.*;
 @Service
 public class SitemapGenerator {
 
-    private static final List<String> ALL_ERAS = Arrays.asList(
-            "PRE_1950", "1950_1970", "1970_1980", "1980_1995", "1995_2010", "2010_PRESENT");
-
-    private static final Set<String> TIER_1_METROS = Set.of(
-            "ATLANTA_SANDY_SPRINGS_GA", "BOSTON_CAMBRIDGE_MA", "CHICAGO_NAPERVILLE_IL",
-            "DALLAS_FT_WORTH_ARLINGTON_TX", "HOUSTON_THE_WOODLANDS_TX", "LOS_ANGELES_LONG_BEACH_CA",
-            "MIAMI_FT_LAUDERDALE_FL", "PHILADELPHIA_PA_NJ", "PHOENIX_MESA_CHANDLER_AZ",
-            "SAN_ANTONIO_NEW_BRAUNFELS_TX", "SAN_DIEGO_CHULA_VISTA_CA", "SAN_FRANCISCO_OAKLAND_CA",
-            "SAN_JOSE_SUNNYVALE_CA", "SEATTLE_TACOMA_BELLEVUE_WA", "WASHINGTON_ARLINGTON_DC_VA");
-
     private static final String BASE_URL = "https://lifeverdict.com";
-    private static final List<String> RISK_HUB_SLUGS = List.of(
-            "knob-and-tube-wiring",
-            "polybutylene-pipes",
-            "fpe-electrical-panel",
-            "asbestos-risk",
-            "galvanized-pipes");
+    private static final Set<String> INDEXABLE_URLS = Set.of(
+            BASE_URL + "/home-repair/verdicts/states/tx.html",
+            BASE_URL + "/home-repair/verdicts/states/fl.html",
+            BASE_URL + "/home-repair/verdicts/pittsburgh-pa/pre-1950.html",
+            BASE_URL + "/home-repair/verdicts/tulsa-ok/pre-1950.html",
+            BASE_URL + "/home-repair/verdicts/little-rock-north-little-rock-ar/1950-1970.html",
+            BASE_URL + "/home-repair/verdicts/chicago-naperville-il/1950-1970.html");
 
     public int generateSitemap(String outputPath, List<String> extraUrls) throws IOException {
         log.info("Generating Strategic Seed Sitemap...");
@@ -49,20 +42,15 @@ public class SitemapGenerator {
         // 1. Core Pages (Seed)
         xml.append(buildUrlEntry(BASE_URL + "/", lastMod, "daily", "1.0"));
         xml.append(buildUrlEntry(BASE_URL + "/home-repair", lastMod, "weekly", "0.9"));
-        xml.append(buildUrlEntry(BASE_URL + "/home-repair/verdicts/states", lastMod, "weekly", "0.9"));
-        xml.append(buildUrlEntry(BASE_URL + "/home-repair/risks", lastMod, "weekly", "0.9"));
-        urlCount += 4;
+        urlCount += 2;
 
-        for (String riskSlug : RISK_HUB_SLUGS) {
-            xml.append(buildUrlEntry(BASE_URL + "/home-repair/risks/" + riskSlug, lastMod, "weekly", "0.8"));
-            urlCount++;
-        }
-
-        // 2. Generated Pages (All Static Seed Pages)
-        // Includes State Hubs and Verdict Pages (L1)
+        // 2. Generated Pages (Winner-only)
         if (extraUrls != null) {
             Set<String> uniqueUrls = new HashSet<>(extraUrls); // Deduplicate just in case
             for (String url : uniqueUrls) {
+                if (!INDEXABLE_URLS.contains(url)) {
+                    continue;
+                }
                 // Determine priority based on type
                 String priority = "0.8";
                 String freq = "monthly";
@@ -85,20 +73,6 @@ public class SitemapGenerator {
 
         log.info("Sitemap generated successfully: {} URLs (Seed Strategy applied)", urlCount);
         return urlCount;
-    }
-
-    private boolean isTier1Url(String url) {
-        for (String metro : TIER_1_METROS) {
-            if (url.contains(metro.toLowerCase().replace("_", "-")))
-                return true;
-        }
-        return false;
-    }
-
-    private String buildVerdictUrl(String metroCode, String era) {
-        String metroSlug = metroCode.toLowerCase().replace("_", "-");
-        String eraSlug = era.toLowerCase().replace("_", "-");
-        return BASE_URL + "/home-repair/verdicts/" + metroSlug + "/" + eraSlug + ".html";
     }
 
     private String buildUrlEntry(String loc, String lastMod, String changeFreq, String priority) {

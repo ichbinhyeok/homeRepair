@@ -2,40 +2,40 @@
 @param List<String> metros
 
 @template.layout(
-    title = "LifeVerdict | Inspection Report Seller Credit Planner",
+    title = "LifeVerdict | Seller-credit packet builder",
     showHeader = true,
     content = @`
     <div class="app-shell py-10 md:py-14">
         <section class="tool-hero">
             <div class="hero-panel">
-                <div class="hero-eyebrow">Inspection negotiation planner</div>
-                <h1 class="hero-title">
-                    Build the <span class="hero-accent">Seller Credit Plan</span> Before You Close.
-                </h1>
-                <p class="hero-copy">
-                    Use age, metro, and visible inspection pressure to figure out what needs a quote first, what belongs in the ask, and how hard to push before the deal moves on without you.
-                </p>
+                <div class="hero-eyebrow">Inspection negotiation packet</div>
+                    <h1 class="hero-title">
+                        Build the <span class="hero-accent">seller-credit packet</span> before you close.
+                    </h1>
+                    <p class="hero-copy">
+                    This is for buyers under inspection contingency who need one clear ask, one fallback number, and one script to send.
+                    </p>
 
                 <div class="hero-bullet-grid">
                     <div class="hero-bullet">
-                        <strong>Under-contract workflow</strong>
-                        <span>Built for buyers reacting to inspection findings, not generic renovation budgeting.</span>
+                        <strong>One persona</strong>
+                        <span>Buyers reacting to inspection findings, not broad browsers.</span>
                     </div>
                     <div class="hero-bullet">
-                        <strong>Localized leverage</strong>
-                        <span>Metro labor rates and climate pressure change what a fair credit request looks like.</span>
+                        <strong>One artifact</strong>
+                        <span>A packet with the ask, fallback, and agent wording in one place.</span>
                     </div>
                     <div class="hero-bullet">
-                        <strong>Negotiation packet</strong>
-                        <span>Keep the math, the priorities, and the wording in one place before you talk to the seller.</span>
+                        <strong>One CTA</strong>
+                        <span>Finish the packet, copy the request, and move the deal forward.</span>
                     </div>
                 </div>
             </div>
 
             <div class="tool-form-panel">
-                <div class="panel-kicker">Start the buyer flow</div>
-                <h2 class="panel-title">Choose the market and era.</h2>
-                <p class="panel-note">The planner is strongest when you already know the city and have a rough inspection summary in hand.</p>
+                <div class="panel-kicker">Start the packet</div>
+                <h2 class="panel-title">Build the seller-credit packet.</h2>
+                <p class="panel-note">Best when you already have inspection findings and need to turn them into a seller-credit ask quickly.</p>
 
                 <form action="/home-repair/step-2" method="post" class="space-y-4 mt-6">
                     <div>
@@ -61,9 +61,10 @@
 
                     <div>
                         <div class="flex items-center justify-between mb-1">
-                            <label class="block text-left text-sm font-semibold text-slate-700">What is your goal?</label>
-                            <span class="text-xs font-semibold text-cyan-800 bg-cyan-50 border border-cyan-100 px-2 py-1 rounded-full">Buying recommended</span>
+                            <label class="block text-left text-sm font-semibold text-slate-700">Primary workflow</label>
+                            <span class="text-xs font-semibold text-cyan-800 bg-cyan-50 border border-cyan-100 px-2 py-1 rounded-full">Buyer flow first</span>
                         </div>
+                        <p class="text-left text-xs text-slate-500 mb-3">Buying is the main product here. Living and investing remain available as lighter planning modes.</p>
                         <div class="grid grid-cols-3 gap-2">
                             <label class="cursor-pointer">
                                 <input type="radio" name="relationship" value="LIVING" class="peer sr-only">
@@ -86,8 +87,8 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="w-full bg-cyan-800 hover:bg-cyan-900 text-white font-bold py-4 rounded-2xl transition-all shadow-lg hover:shadow-xl mt-4">
-                        Start Buyer Credit Plan &rarr;
+                    <button type="submit" data-analytics-event="start_packet" data-analytics-category="acquisition" data-analytics-label="hub_primary" class="w-full bg-cyan-800 hover:bg-cyan-900 text-white font-bold py-4 rounded-2xl transition-all shadow-lg hover:shadow-xl mt-4">
+                        Start Seller Credit Planner &rarr;
                     </button>
                 </form>
             </div>
@@ -96,18 +97,18 @@
         <section class="signal-grid">
             <div class="signal-card">
                 <div class="signal-step">1</div>
-                <h3>Inspection triage</h3>
-                <p>Focus the conversation on findings that actually matter in due diligence and negotiation.</p>
+                <h3>Findings</h3>
+                <p>Only the issues that change the credit ask belong here.</p>
             </div>
             <div class="signal-card">
                 <div class="signal-step">2</div>
-                <h3>Localized range</h3>
-                <p>Labor market, supply pressure, and climate wear move the credit range more than generic national averages.</p>
+                <h3>Credit range</h3>
+                <p>Localized labor pressure and loan posture shape the ask.</p>
             </div>
             <div class="signal-card">
                 <div class="signal-step">3</div>
-                <h3>Agent-ready packet</h3>
-                <p>Save a print-friendly summary and a script you can reuse when the inspection response window is tight.</p>
+                <h3>Packet</h3>
+                <p>Save a print-friendly summary and a script you can reuse right away.</p>
             </div>
         </section>
     </div>

@@ -1,23 +1,30 @@
 @import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.Verdict
 @import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.RiskAdjustedItem
 @import com.livingcostcheck.home_repair.domain.VerdictHistory
-
 @param Verdict verdict
 @param VerdictHistory history
-@param java.util.List<String> inspectionFindings = java.util.Collections.emptyList()
-@param java.util.List<String> mustFixNow = java.util.Collections.emptyList()
-@param java.util.List<String> verifyNext = java.util.Collections.emptyList()
-@param java.util.List<String> deferLater = java.util.Collections.emptyList()
+@param String[] inspectionFindings = new String[0]
+@param String[] mustFixNow = new String[0]
+@param String[] verifyNext = new String[0]
+@param String[] deferLater = new String[0]
 @param String quoteSupport = "NONE"
 @param String quoteSupportLabel = ""
 @param String closingWindow = "FLEXIBLE"
 @param String closingWindowLabel = ""
+@param String loanType = "CONVENTIONAL"
+@param String loanTypeLabel = ""
+@param String loanTypeNote = ""
 @param String negotiationEvidenceNote = ""
+@param Double defendableAsk = 0.0
+@param String defendableAskLabel = ""
+@param Double targetAsk = 0.0
+@param String targetAskLabel = ""
+@param Double stretchAsk = 0.0
+@param String stretchAskLabel = ""
 @param String sellerCreditSummary = ""
 @param String sellerCreditSummaryJs = ""
 @param String agentNegotiationScript = ""
 @param String agentNegotiationScriptJs = ""
-
 @param String title = "Verdict | LifeVerdict"
 @param String verdictH1 = null
 
@@ -98,12 +105,6 @@
         </style>
     `,
     content = @`
-        !{
-            double exactEstimate = verdict.getExactCostEstimate();
-            double defendableAsk = Math.max(1000, Math.round(exactEstimate * 0.65 / 500.0) * 500.0);
-            double targetAsk = Math.max(defendableAsk, Math.round(exactEstimate * 0.85 / 500.0) * 500.0);
-            double stretchAsk = Math.max(targetAsk, Math.round(exactEstimate * 1.05 / 500.0) * 500.0);
-        }
         <%-- WRAPPED CONTENT --%>
         <div class="analysis-shell max-w-6xl mx-auto px-6 py-10">
         
@@ -214,53 +215,90 @@
                     }
 
                     @if("BUYING".equals(history.getPurpose()))
-                        <!-- BUYER MODE: Negotiation Tactic -->
+                        <!-- BUYER MODE: Negotiation Packet -->
                         <div>
                              <div class="flex items-center gap-2 mb-6">
                                 <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Negotiation</span>
+                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Negotiation packet</span>
                             </div>
-                            <h3 class="text-xl font-bold text-slate-900 mb-2">Send a clean repair ask.</h3>
-                            <div class="bg-amber-50 p-3 rounded-lg border border-amber-100 text-xs font-mono text-slate-600 mb-2">
-                                "${sellerCreditSummary}"
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">This is the packet to send.</h3>
+                            <div class="rounded-2xl border border-amber-200 bg-amber-50 p-4 mb-3">
+                                <div class="text-[11px] font-bold uppercase tracking-[0.18em] text-amber-800 mb-2">Start here</div>
+                                <div class="text-3xl font-bold text-slate-900">$${targetAskLabel}</div>
+                                <p class="text-xs text-slate-600 mt-2">${sellerCreditSummary}</p>
                             </div>
-                            <p class="text-xs text-slate-500">${negotiationEvidenceNote}</p>
+                            <div class="rounded-2xl border border-slate-200 bg-white p-4">
+                                <div class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500 mb-2">Loan posture</div>
+                                <div class="text-sm font-semibold text-slate-900">${loanTypeLabel}</div>
+                                <p class="text-xs text-slate-500 mt-2">${loanTypeNote}</p>
+                            </div>
                         </div>
                         <div>
-                            <button onclick="navigator.clipboard.writeText('${sellerCreditSummaryJs}'); alert('Copied to clipboard!');" class="mt-4 w-full py-3 bg-slate-900 text-white font-semibold rounded-xl text-sm hover:bg-slate-700 transition-colors">
-                                Copy Seller Credit Summary
+                            <button onclick="window.copyNegotiationPacket();" data-analytics-event="copy_packet" data-analytics-category="engagement" data-analytics-label="buying_primary" class="mt-4 w-full py-3 bg-slate-900 text-white font-semibold rounded-xl text-sm hover:bg-slate-700 transition-colors">
+                                Copy Full Negotiation Packet
                             </button>
-                            
-                            <!-- 메인 CTA (BUYING) -->
-                            <a href="${trackPrefix}${buyingTarget}&cat=${cat}&src=buying" target="_blank" rel="nofollow sponsored noopener" class="mt-3 w-full py-3 bg-white border border-slate-300 text-slate-700 font-semibold rounded-xl text-center text-sm hover:bg-slate-50 transition-colors block">
-                                Optional: get a local ${catName} quote &rarr;
-                            </a>
+                            <button onclick="window.copyAgentRequest();" data-analytics-event="copy_agent_request" data-analytics-category="engagement" data-analytics-label="buying_secondary" class="mt-3 w-full py-3 bg-white border border-slate-300 text-slate-700 font-semibold rounded-xl text-sm hover:bg-slate-50 transition-colors">
+                                Copy Agent Request
+                            </button>
+                            <button onclick="window.copyAskSummary();" data-analytics-event="copy_ask_summary" data-analytics-category="engagement" data-analytics-label="buying_summary" class="mt-3 w-full py-3 bg-white border border-slate-300 text-slate-700 font-semibold rounded-xl text-sm hover:bg-slate-50 transition-colors">
+                                Copy Ask Summary
+                            </button>
+                            <div class="mt-3 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                                <div class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500 mb-2">Defensible fallback</div>
+                                <div class="text-lg font-bold text-slate-900">$${defendableAskLabel}</div>
+                                <p class="text-xs text-slate-500 mt-2">${negotiationEvidenceNote}</p>
+                            </div>
                             
                             <!-- 백업 CTA (이메일 수집 보험) + 언락 로직 -->
                             <div id="lead-capture-container" class="mt-4 print:hidden">
                                 <form id="report-unlock-form" onsubmit="event.preventDefault(); window.unlockReport(this);" class="w-full">
-                                <div class="mb-2 text-xs font-bold text-slate-500 uppercase">Save negotiation packet + print access</div>
+                                <div class="mb-2 text-xs font-bold text-slate-500 uppercase">Save packet + unlock print</div>
                                     <div class="flex gap-2">
                                         <input type="email" name="email" placeholder="Enter email to save this packet and enable printing..." required class="flex-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
                                         <button type="submit" class="px-3 py-2 bg-slate-900 text-white font-bold text-sm rounded-lg hover:bg-slate-800 transition-colors whitespace-nowrap">
-                                            Unlock Free
+                                            Save Packet
                                         </button>
                                     </div>
                                 </form>
                             </div>
                             <!-- 잠금 해제 후 보이는 섹션 -->
                             <div id="unlocked-actions" class="hidden mt-4 pt-4 border-t border-slate-100">
-                                <div class="bg-emerald-50 text-emerald-800 text-xs p-2 rounded mb-3 font-medium">Saved. You can now print this negotiation packet and copy the agent script.</div>
-                                <button onclick="navigator.clipboard.writeText('${agentNegotiationScriptJs}'); alert('Negotiation script copied to clipboard!'); gtag('event', 'copy_script', {'event_category': 'engagement'});" class="w-full py-2.5 bg-slate-900 text-white font-semibold rounded-lg text-sm hover:bg-slate-700 transition-colors mb-2">
-                                    Copy Agent Negotiation Script
-                                </button>
-                                <button onclick="gtag('event', 'print_pdf', {'event_category': 'engagement'}); window.print();" class="w-full py-2.5 bg-white border border-slate-300 text-slate-700 font-semibold rounded-lg text-sm hover:bg-slate-50 transition-colors flex items-center justify-center gap-2">
+                                <div class="bg-emerald-50 text-emerald-800 text-xs p-2 rounded mb-3 font-medium">Saved. You can now print this negotiation packet.</div>
+                                <button onclick="window.printNegotiationPacket();" data-analytics-event="print_packet" data-analytics-category="engagement" data-analytics-label="buying_unlocked" class="w-full py-2.5 bg-white border border-slate-300 text-slate-700 font-semibold rounded-lg text-sm hover:bg-slate-50 transition-colors flex items-center justify-center gap-2">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 00-2 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                                    Print Report
+                                    Print Packet
                                 </button>
                             </div>
                             
                             <script>
+                                window.sendPacketEvent = function(eventName, label) {
+                                    if (typeof window.gtag === "function") {
+                                        window.gtag("event", eventName, {
+                                            event_category: "engagement",
+                                            event_label: label || "buying_packet"
+                                        });
+                                    }
+                                };
+                                window.copyNegotiationPacket = function() {
+                                    const packet = '${sellerCreditSummaryJs}' + '\n\n' + '${agentNegotiationScriptJs}';
+                                    navigator.clipboard.writeText(packet);
+                                    alert('Negotiation packet copied to clipboard!');
+                                    window.sendPacketEvent('copy_packet', 'full_packet');
+                                };
+                                window.copyAgentRequest = function() {
+                                    navigator.clipboard.writeText('${agentNegotiationScriptJs}');
+                                    alert('Agent request copied to clipboard!');
+                                    window.sendPacketEvent('copy_agent_request', 'agent_request');
+                                };
+                                window.copyAskSummary = function() {
+                                    navigator.clipboard.writeText('${sellerCreditSummaryJs}');
+                                    alert('Ask summary copied to clipboard!');
+                                    window.sendPacketEvent('copy_ask_summary', 'ask_summary');
+                                };
+                                window.printNegotiationPacket = function() {
+                                    window.sendPacketEvent('print_packet', 'print_packet');
+                                    window.print();
+                                };
                                 window.unlockReport = function(form) {
                                     const email = form.email.value;
                                     fetch('/home-repair/api/lead?verdictId=${history.getId().toString()}&email=' + encodeURIComponent(email), {method: 'POST'})
@@ -273,6 +311,7 @@
                                         });
                                     });
                                 };
+                                window.sendPacketEvent('packet_generated', 'buying_packet');
                             </script>
                         </div>
                     @else
@@ -364,7 +403,7 @@
                                         <span class="text-lg font-bold text-slate-900">$${String.format("%,.0f", stretchAsk)}</span>
                                     </div>
                                 </div>
-                                <p class="text-xs text-slate-500 mt-3">Use the target ask first. Drop to defensible only if the seller wants fast certainty.</p>
+                                <p class="text-xs text-slate-500 mt-3">${loanTypeLabel}: ${loanTypeNote}</p>
                             @else
                                 <span class="text-xs font-bold text-slate-400 uppercase">Repair Allowance Estimate</span>
                                 <div class="text-3xl font-bold text-slate-900 mt-2 tracking-tight">$${String.format("%,.0f", verdict.getExactCostEstimate() * 1.5)}</div>
@@ -380,10 +419,10 @@
                         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
                             <div>
                                 <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Inspection-to-Credit Builder</span>
-                                <h3 class="text-2xl font-bold text-slate-900 mt-2">Turn the report into a seller-credit packet.</h3>
+                                <h3 class="text-2xl font-bold text-slate-900 mt-2">Keep the negotiation packet tight.</h3>
                             </div>
                             <div class="text-sm text-slate-500">
-                                <strong class="text-slate-700">${quoteSupportLabel}</strong> | <strong class="text-slate-700">${closingWindowLabel}</strong>
+                                <strong class="text-slate-700">${loanTypeLabel}</strong> | <strong class="text-slate-700">${quoteSupportLabel}</strong> | <strong class="text-slate-700">${closingWindowLabel}</strong>
                             </div>
                         </div>
 
@@ -391,30 +430,30 @@
                             <div class="rounded-2xl border border-rose-100 bg-rose-50/80 p-4">
                                 <div class="text-xs font-bold uppercase tracking-widest text-rose-700 mb-3">Must fix now</div>
                                 @for(var finding : mustFixNow)
-                                    <div class="text-sm text-slate-800 mb-2 last:mb-0">• ${finding}</div>
+                                    <div class="text-sm text-slate-800 mb-2 last:mb-0">- ${finding}</div>
                                 @endfor
                             </div>
                             <div class="rounded-2xl border border-amber-100 bg-amber-50/80 p-4">
                                 <div class="text-xs font-bold uppercase tracking-widest text-amber-700 mb-3">Verify next</div>
                                 @for(var finding : verifyNext)
-                                    <div class="text-sm text-slate-800 mb-2 last:mb-0">• ${finding}</div>
+                                    <div class="text-sm text-slate-800 mb-2 last:mb-0">- ${finding}</div>
                                 @endfor
                             </div>
                             <div class="rounded-2xl border border-emerald-100 bg-emerald-50/80 p-4">
-                                <div class="text-xs font-bold uppercase tracking-widest text-emerald-700 mb-3">Can defer</div>
+                                <div class="text-xs font-bold uppercase tracking-widest text-emerald-700 mb-3">Can defer / do not lead with this ask</div>
                                 @for(var finding : deferLater)
-                                    <div class="text-sm text-slate-800 mb-2 last:mb-0">• ${finding}</div>
+                                    <div class="text-sm text-slate-800 mb-2 last:mb-0">- ${finding}</div>
                                 @endfor
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                             <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-                                <div class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Seller credit summary</div>
+                                <div class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Request summary</div>
                                 <p class="text-sm text-slate-700 leading-relaxed">${sellerCreditSummary}</p>
                             </div>
                             <div class="rounded-2xl border border-slate-200 bg-white p-5">
-                                <div class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Agent-ready request</div>
+                                <div class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Copy-ready request</div>
                                 <p class="text-sm text-slate-700 leading-relaxed">${agentNegotiationScript}</p>
                             </div>
                         </div>
@@ -425,7 +464,7 @@
             </div>
 
                 <!-- Market Benchmark (Redesigned) -->
-                @if(verdict.getComparisonData() != null)
+                @if(!"BUYING".equals(history.getPurpose()) && verdict.getComparisonData() != null)
                 <div class="bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm mb-12 flex flex-col md:flex-row items-center gap-8">
                     <div class="flex-1">
                         <div class="inline-flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-full mb-4">
@@ -476,7 +515,7 @@
                 @endif
 
                 <!-- System Integrity Timeline -->
-                @if(verdict.getPlan() != null && verdict.getPlan().getMustDo() != null)
+                @if(!"BUYING".equals(history.getPurpose()) && verdict.getPlan() != null && verdict.getPlan().getMustDo() != null)
                 <div class="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm mb-12">
                     <div class="flex items-center gap-4 mb-8">
                         <div class="p-3 bg-blue-50 rounded-2xl text-blue-600">
@@ -535,6 +574,7 @@
                         <input type="hidden" name="sqft" value="1800"> 
                         <input type="hidden" name="relationship" value="${history.getPurpose() != null ? history.getPurpose() : "LIVING"}">
                         <input type="hidden" name="budget" value="${history.getBudget() != null && !"null".equalsIgnoreCase(history.getBudget()) ? history.getBudget() : "50000"}">
+                        <input type="hidden" name="loanType" value="${loanType}">
                         <input type="hidden" name="quoteSupport" value="${quoteSupport}">
                         <input type="hidden" name="closingWindow" value="${closingWindow}">
                         @for(var finding : inspectionFindings)
@@ -567,8 +607,10 @@
                         </div>
                     </form>
                 </div>
+                @endif
 
                 <!-- 12-Month Post-Purchase Action Plan -->
+                @if(!"BUYING".equals(history.getPurpose()))
                 <div class="bg-white p-8 rounded-[32px] border border-slate-200 shadow-sm mb-12">
                     <div class="flex items-center gap-3 mb-6">
                         <div class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center text-white text-xl">📅</div>
@@ -611,8 +653,10 @@
                         </div>
                     </div>
                 </div>
+                @endif
 
                 <!-- Share & Export (Moved to Unlock logic above for Buying mode, kept simple here for others) -->
+                @if(!"BUYING".equals(history.getPurpose()))
                 <div class="bg-slate-900 text-white p-8 rounded-[32px] shadow-xl flex flex-col md:flex-row items-center justify-between gap-8 mb-12 print:hidden">
                     <div class="max-w-md">
                         <h3 class="text-2xl font-bold mb-2">Share this analysis.</h3>

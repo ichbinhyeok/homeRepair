@@ -70,6 +70,14 @@ public class VerdictDTOs {
         INVESTING // Flip/Rental (ROI/Risk)
     }
 
+    public enum LoanType {
+        CONVENTIONAL,
+        FHA,
+        VA,
+        CASH,
+        INVESTOR
+    }
+
     @Data
     @Builder
     @NoArgsConstructor
@@ -80,6 +88,7 @@ public class VerdictDTOs {
         private String metroCode;
         private String era; // PRE_1950, 1950_1970, etc.
         private RelationshipToHouse relationship; // New Primary Context
+        private LoanType loanType; // Financing posture for negotiation outputs
         private String purpose; // DEPRECATED: Kept for backward compat until full refactor
         // Context-Aware History (Phases 5 & 6)
         private List<String> coreSystemHistory; // Roof, HVAC, Elec, Plumbing (Safety/Risk)

@@ -25,12 +25,13 @@ public class InternalLinkBuilder {
                         "PRE_1950", "1950_1970", "1970_1980", "1980_1995", "1995_2010", "2010_PRESENT");
 
         private static final List<String> ERA_LINK_PREFIXES = Arrays.asList(
-                        "View repair costs for", "Analysis: ", "Renovation guide: ", "Estimated costs for",
-                        "Market data for", "Expected upkeep for", "Valuation impact of", "Maintenance index: ");
+                        "Seller-credit guide for", "Inspection plan for", "Negotiation view for",
+                        "Repair request guide for", "What to ask after inspection for",
+                        "Buyer checklist for", "Inspection leverage for", "Credit pressure in");
 
         private static final List<String> RISK_LINK_PREFIXES = Arrays.asList(
-                        "Check details for", "Audit: ", "Forensic view: ", "Inspection points for",
-                        "Critical data: ", "Market benchmarks for");
+                        "Verify", "Inspection note:", "Quote check for", "Buyer flag for",
+                        "Credit item:", "Ask support for");
 
         public List<InternalLink> getOtherRisksInSameHome(String metroCode, String era, String currentRiskCode) {
                 List<String> categories = Arrays.asList("ROOFING", "PLUMBING", "HVAC", "ELECTRICAL", "FOUNDATION");
@@ -142,7 +143,7 @@ public class InternalLinkBuilder {
                                 .sorted()
                                 .limit(5)
                                 .map(metro -> new InternalLink(
-                                                "Regional Data: " + formatMetroName(metro) + " (" + formatEraText(era)
+                                                "Related negotiation market: " + formatMetroName(metro) + " (" + formatEraText(era)
                                                                 + ")",
                                                 buildVerdictUrl(metro, era)))
                                 .collect(Collectors.toList());

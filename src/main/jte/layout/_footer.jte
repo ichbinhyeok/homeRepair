@@ -9,23 +9,22 @@
             </div>
 
             <div class="footer-panel">
-                <h4>Browse</h4>
+                <h4>Packet</h4>
                 <div class="footer-links-stack">
                     <a href="/home-repair">Start planner</a>
-                    <a href="/home-repair/verdicts/states/tx.html">Texas</a>
-                    <a href="/home-repair/verdicts/states/fl.html">Florida</a>
-                    <a href="/home-repair/verdicts/states/ca.html">California</a>
-                    <a href="/home-repair/verdicts/states/il.html">Illinois</a>
+                    <a href="/home-repair?relationship=BUYING">Build seller-credit packet</a>
+                    <a href="/home-repair?relationship=BUYING&loanType=CONVENTIONAL">Conventional buyer</a>
+                    <a href="/home-repair?relationship=BUYING&loanType=FHA">FHA buyer</a>
                 </div>
             </div>
 
             <div class="footer-panel">
-                <h4>Method</h4>
+                <h4>Loan path</h4>
                 <div class="footer-links-stack">
-                    <a href="/home-repair/methodology">Methodology</a>
-                    <a href="/home-repair/data-sources">Data sources</a>
-                    <a href="/home-repair/editorial-policy">Editorial policy</a>
-                    <a href="/privacy-policy">Privacy policy</a>
+                    <a href="/home-repair?relationship=BUYING&loanType=VA">VA buyer</a>
+                    <a href="/home-repair?relationship=BUYING&loanType=CASH">Cash offer</a>
+                    <a href="/home-repair?relationship=BUYING&loanType=INVESTOR">Investor offer</a>
+                    <a href="/home-repair?relationship=BUYING">Seller-credit packet</a>
                 </div>
             </div>
         </div>
@@ -35,10 +34,10 @@
                 Estimates are informational only and based on regional averages. Actual contractor pricing varies by layout, condition, and market timing. LifeVerdict does not provide engineering, legal, or contractor services.
             </p>
             <p class="footer-meta" style="margin-top: 10px;">
-                Supporting pages:
-                <a href="/home-repair/about">About</a>,
-                <a href="/home-repair/disclaimer">Disclaimer</a>,
-                <a href="/terms-of-service">Terms of Service</a>
+                Legal and support:
+                <a href="/privacy-policy">Privacy policy</a>,
+                <a href="/terms-of-service">Terms of Service</a>,
+                <a href="/home-repair/disclaimer">Disclaimer</a>
             </p>
             <p class="footer-meta" style="margin-top: 14px; opacity: 0.7;">(c) 2026 LifeVerdict. All rights reserved.</p>
         </div>

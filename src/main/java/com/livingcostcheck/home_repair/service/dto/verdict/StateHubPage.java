@@ -12,6 +12,8 @@ public class StateHubPage {
     public String stateName;
     public String canonicalUrl;
     public String breadcrumbSchema;
+    public String robotsDirective;
+    public boolean indexable;
     public List<CityData> cities;
 
     @Data

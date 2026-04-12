@@ -31,6 +31,7 @@ class HomeRepairJourneySmokeTest {
                         .param("metroCode", "ATLANTA_SANDY_SPRINGS_GA")
                         .param("era", "1980_1995")
                         .param("relationship", "BUYING")
+                        .param("loanType", "FHA")
                         .param("budget", "65000")
                         .param("sqft", "1900")
                         .param("condition", "SEVERE")
@@ -47,6 +48,8 @@ class HomeRepairJourneySmokeTest {
                 .andExpect(status().isOk())
                 .andExpect(header().string("X-Robots-Tag", containsString("noindex")))
                 .andExpect(content().string(containsString("Inspection Budget & Credit Plan")))
+                .andExpect(content().string(containsString("FHA financing")))
+                .andExpect(content().string(not(containsString("12-Month Security Calendar"))))
                 .andExpect(content().string(not(containsString("[FINANCIAL RISK PROMOTION]"))))
                 .andExpect(content().string(not(containsString("ERA_RISK:"))))
                 .andExpect(content().string(not(containsString("ERA_LABOR_ADJUSTMENT:"))));

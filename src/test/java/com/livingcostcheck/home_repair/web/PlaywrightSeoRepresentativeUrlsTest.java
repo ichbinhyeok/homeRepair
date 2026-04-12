@@ -137,7 +137,9 @@ class PlaywrightSeoRepresentativeUrlsTest {
         }
 
         if (path.matches("^/home-repair/verdicts/[^/]+/[^/]+\\.html$")) {
-            assertTrue(lower.contains("public data signals"), "missing Public Data Signals block on " + path);
+            assertTrue(
+                    lower.contains("public data signals") || lower.contains("local negotiation signals"),
+                    "missing public-data / negotiation-signals block on " + path);
             assertTrue(lower.contains("fema major disasters"), "missing FEMA metric on " + path);
             assertTrue(lower.contains("owner occupancy"), "missing owner occupancy metric on " + path);
             assertTrue(lower.contains("median year built"), "missing median year metric on " + path);
