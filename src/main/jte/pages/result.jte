@@ -114,7 +114,7 @@
                     <div class="flex items-center gap-2 mb-3">
                         <span class="micro-kicker">
                             @if("BUYING".equals(history.getPurpose()))
-                                Pre-purchase due diligence
+                                Send in the next 24-72 hours
                             @else
                                 Home health check complete
                             @endif
@@ -130,7 +130,7 @@
                     </div>
                     <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-2 relative">
                         @if("BUYING".equals(history.getPurpose()))
-                            Inspection Budget & Credit Plan
+                            Ready-To-Send Seller Credit Packet
                         @else
                             ${verdictH1 != null ? verdictH1 : (verdict.getHeadline().split("\\.")[0] + ".")}
                         @endif
@@ -217,11 +217,11 @@
                     @if("BUYING".equals(history.getPurpose()))
                         <!-- BUYER MODE: Negotiation Packet -->
                         <div>
-                             <div class="flex items-center gap-2 mb-6">
+                            <div class="flex items-center gap-2 mb-6">
                                 <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Negotiation packet</span>
+                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Send-today packet</span>
                             </div>
-                            <h3 class="text-xl font-bold text-slate-900 mb-2">This is the packet to send.</h3>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">This is the packet to send next.</h3>
                             <div class="rounded-2xl border border-amber-200 bg-amber-50 p-4 mb-3">
                                 <div class="text-[11px] font-bold uppercase tracking-[0.18em] text-amber-800 mb-2">Start here</div>
                                 <div class="text-3xl font-bold text-slate-900">$${targetAskLabel}</div>
@@ -235,7 +235,7 @@
                         </div>
                         <div>
                             <button onclick="window.copyNegotiationPacket();" data-analytics-event="copy_packet" data-analytics-category="engagement" data-analytics-label="buying_primary" class="mt-4 w-full py-3 bg-slate-900 text-white font-semibold rounded-xl text-sm hover:bg-slate-700 transition-colors">
-                                Copy Full Negotiation Packet
+                                Copy Full Send-Today Packet
                             </button>
                             <button onclick="window.copyAgentRequest();" data-analytics-event="copy_agent_request" data-analytics-category="engagement" data-analytics-label="buying_secondary" class="mt-3 w-full py-3 bg-white border border-slate-300 text-slate-700 font-semibold rounded-xl text-sm hover:bg-slate-50 transition-colors">
                                 Copy Agent Request
@@ -254,7 +254,7 @@
                                 <form id="report-unlock-form" onsubmit="event.preventDefault(); window.unlockReport(this);" class="w-full">
                                 <div class="mb-2 text-xs font-bold text-slate-500 uppercase">Save packet + unlock print</div>
                                     <div class="flex gap-2">
-                                        <input type="email" name="email" placeholder="Enter email to save this packet and enable printing..." required class="flex-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
+                                        <input type="email" name="email" placeholder="Enter email to save this send-today packet and enable printing..." required class="flex-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
                                         <button type="submit" class="px-3 py-2 bg-slate-900 text-white font-bold text-sm rounded-lg hover:bg-slate-800 transition-colors whitespace-nowrap">
                                             Save Packet
                                         </button>
@@ -263,7 +263,7 @@
                             </div>
                             <!-- 잠금 해제 후 보이는 섹션 -->
                             <div id="unlocked-actions" class="hidden mt-4 pt-4 border-t border-slate-100">
-                                <div class="bg-emerald-50 text-emerald-800 text-xs p-2 rounded mb-3 font-medium">Saved. You can now print this negotiation packet.</div>
+                                <div class="bg-emerald-50 text-emerald-800 text-xs p-2 rounded mb-3 font-medium">Saved. You can now print this send-today packet.</div>
                                 <button onclick="window.printNegotiationPacket();" data-analytics-event="print_packet" data-analytics-category="engagement" data-analytics-label="buying_unlocked" class="w-full py-2.5 bg-white border border-slate-300 text-slate-700 font-semibold rounded-lg text-sm hover:bg-slate-50 transition-colors flex items-center justify-center gap-2">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 00-2 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                                     Print Packet
@@ -282,7 +282,7 @@
                                 window.copyNegotiationPacket = function() {
                                     const packet = '${sellerCreditSummaryJs}' + '\n\n' + '${agentNegotiationScriptJs}';
                                     navigator.clipboard.writeText(packet);
-                                    alert('Negotiation packet copied to clipboard!');
+                                    alert('Send-today packet copied to clipboard!');
                                     window.sendPacketEvent('copy_packet', 'full_packet');
                                 };
                                 window.copyAgentRequest = function() {
@@ -419,7 +419,7 @@
                         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
                             <div>
                                 <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Inspection-to-Credit Builder</span>
-                                <h3 class="text-2xl font-bold text-slate-900 mt-2">Keep the negotiation packet tight.</h3>
+                                <h3 class="text-2xl font-bold text-slate-900 mt-2">Keep this send-today packet tight.</h3>
                             </div>
                             <div class="text-sm text-slate-500">
                                 <strong class="text-slate-700">${loanTypeLabel}</strong> | <strong class="text-slate-700">${quoteSupportLabel}</strong> | <strong class="text-slate-700">${closingWindowLabel}</strong>
@@ -566,7 +566,7 @@
                 <!-- Refine Analysis CTA -->
                 <div class="bg-indigo-50 border border-indigo-100 p-8 rounded-[32px] text-center mb-12">
                      <h3 class="text-xl font-bold text-indigo-900 mb-2">Need a tighter seller-credit range?</h3>
-                     <p class="text-indigo-700 mb-6 max-w-lg mx-auto">Property details like roof material and story count can change the repair ask by 30%+. Tighten the packet before you negotiate.</p>
+                     <p class="text-indigo-700 mb-6 max-w-lg mx-auto">Property details like roof material and story count can change the repair ask by 30%+. Tighten the send-today packet before you negotiate.</p>
                      
                     <form action="/home-repair/verdict" method="post" class="w-full max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-sm border border-indigo-100 flex flex-col md:flex-row items-center gap-6">
                         <input type="hidden" name="metroCode" value="${history.getZipCode()}"> 

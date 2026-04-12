@@ -2,18 +2,18 @@
 @param List<String> metros
 
 @template.layout(
-    title = "LifeVerdict | Seller-credit packet builder",
+    title = "LifeVerdict | Ready-to-send seller credit request builder",
     showHeader = true,
     content = @`
     <div class="app-shell py-10 md:py-14">
         <section class="tool-hero">
             <div class="hero-panel">
-                <div class="hero-eyebrow">Inspection negotiation packet</div>
+                <div class="hero-eyebrow">Inspection response window</div>
                     <h1 class="hero-title">
-                        Build the <span class="hero-accent">seller-credit packet</span> before you close.
+                        Build the <span class="hero-accent">seller-credit request</span> before the response window closes.
                     </h1>
                     <p class="hero-copy">
-                    This is for buyers under inspection contingency who need one clear ask, one fallback number, and one script to send.
+                    This is for buyers under inspection contingency who need one clear ask, one fallback number, and one script to send in the next 24-72 hours.
                     </p>
 
                 <div class="hero-bullet-grid">
@@ -23,18 +23,18 @@
                     </div>
                     <div class="hero-bullet">
                         <strong>One artifact</strong>
-                        <span>A packet with the ask, fallback, and agent wording in one place.</span>
+                        <span>A send-today request with the ask, fallback, and agent wording in one place.</span>
                     </div>
                     <div class="hero-bullet">
                         <strong>One CTA</strong>
-                        <span>Finish the packet, copy the request, and move the deal forward.</span>
+                        <span>Finish the request, copy the message, and move the deal forward.</span>
                     </div>
                 </div>
             </div>
 
             <div class="tool-form-panel">
-                <div class="panel-kicker">Start the packet</div>
-                <h2 class="panel-title">Build the seller-credit packet.</h2>
+                <div class="panel-kicker">Start the send-today packet</div>
+                <h2 class="panel-title">Build the request you need to send next.</h2>
                 <p class="panel-note">Best when you already have inspection findings and need to turn them into a seller-credit ask quickly.</p>
 
                 <form action="/home-repair/step-2" method="post" class="space-y-4 mt-6">
@@ -88,7 +88,7 @@
                     </div>
 
                     <button type="submit" data-analytics-event="start_packet" data-analytics-category="acquisition" data-analytics-label="hub_primary" class="w-full bg-cyan-800 hover:bg-cyan-900 text-white font-bold py-4 rounded-2xl transition-all shadow-lg hover:shadow-xl mt-4">
-                        Start Seller Credit Planner &rarr;
+                        Start Ready-To-Send Planner &rarr;
                     </button>
                 </form>
             </div>
@@ -105,12 +105,12 @@
                 <h3>Credit range</h3>
                 <p>Localized labor pressure and loan posture shape the ask.</p>
             </div>
-            <div class="signal-card">
-                <div class="signal-step">3</div>
-                <h3>Packet</h3>
-                <p>Save a print-friendly summary and a script you can reuse right away.</p>
-            </div>
-        </section>
+                <div class="signal-card">
+                    <div class="signal-step">3</div>
+                    <h3>Send</h3>
+                    <p>Save a print-friendly summary and a script you can reuse right away.</p>
+                </div>
+            </section>
     </div>
     `
 )

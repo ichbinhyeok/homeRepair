@@ -5,18 +5,18 @@
 @param String selectedRelationship = "BUYING"
 
 @template.layout(
-    title = "Home inspection seller credit calculator | LifeVerdict",
-    description = "Calculate a seller credit after inspection, tighten the repair request, and build a buyer-side packet before you close.",
+    title = "Seller credit request after inspection | LifeVerdict",
+    description = "Turn an inspection report into a seller credit request you can send today, with one ask, one fallback, and one agent-ready packet.",
     content = @`
         <div class="app-shell py-10 md:py-14">
             <section class="tool-hero">
                 <div class="hero-panel">
-                    <div class="hero-eyebrow">Buyer under inspection contingency</div>
+                    <div class="hero-eyebrow">Inspection is back. Response window is open.</div>
                     <h1 class="hero-title">
-                        Turn inspection findings into a <span class="hero-accent">seller-credit packet</span>.
+                        Turn your inspection report into a <span class="hero-accent">seller-credit request you can send today</span>.
                     </h1>
                     <p class="hero-copy">
-                        Use this when the inspection is back and you need one defensible ask, one fallback, and one script to send.
+                        Use this when you have 24-72 hours to respond and need one defensible ask, one fallback, and one script your agent can send without rewriting.
                     </p>
 
                     <div class="hero-bullet-grid">
@@ -25,21 +25,21 @@
                             <span>Built for buyers under contract, not broad renovation browsing.</span>
                         </div>
                         <div class="hero-bullet">
-                            <strong>One artifact</strong>
-                            <span>Leave with a seller-credit packet, not a pile of notes.</span>
+                            <strong>One send</strong>
+                            <span>Leave with a ready-to-send request, not a pile of notes.</span>
                         </div>
                         <div class="hero-bullet">
-                            <strong>One CTA</strong>
-                            <span>Build the packet, copy the request, and move the deal forward.</span>
+                            <strong>One deadline</strong>
+                            <span>Build the packet, copy the request, and respond before the window closes.</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="tool-form-panel">
-                    <div class="panel-kicker">Start the packet</div>
-                    <h2 class="panel-title">Build a seller-credit packet.</h2>
+                    <div class="panel-kicker">Start the send-today packet</div>
+                    <h2 class="panel-title">Build the request you need to send next.</h2>
                     <p class="panel-note">
-                        Best when the inspection report is in hand and you need a fast ask before the response window closes.
+                        Best when the inspection report is in hand and you need a clean ask before the response window closes.
                     </p>
 
                     <form action="/home-repair/step-2" method="post" class="space-y-4 mt-6">
@@ -133,14 +133,14 @@
                         </div>
 
                         <button type="submit" data-analytics-event="start_packet" data-analytics-category="acquisition" data-analytics-label="home_primary" class="w-full bg-cyan-800 hover:bg-cyan-900 text-white font-bold py-4 rounded-2xl transition-all shadow-lg hover:shadow-xl mt-4">
-                            Build Seller-Credit Packet &rarr;
+                            Build Ready-To-Send Packet &rarr;
                         </button>
                     </form>
 
                     <ul class="tool-panel-list">
                         <li>Size the seller-credit ask from inspection findings.</li>
-                        <li>Keep the repair request focused on what matters now.</li>
-                        <li>Leave with a copy-ready packet for your agent.</li>
+                        <li>Keep the request focused on what can move the deal now.</li>
+                        <li>Leave with a copy-ready packet for your agent today.</li>
                     </ul>
                 </div>
             </section>
@@ -158,8 +158,8 @@
                 </div>
                 <div class="signal-card">
                     <div class="signal-step">3</div>
-                    <h3>Packet</h3>
-                    <p>Copy the request your agent can send without rewriting the deal from scratch.</p>
+                    <h3>Send</h3>
+                    <p>Copy the request your agent can send without rebuilding the deal from scratch.</p>
                 </div>
             </section>
 
@@ -169,17 +169,17 @@
                     <h2 class="text-3xl font-bold text-slate-900 mt-3">Most inspection reports do not tell you what to ask for.</h2>
                     <ul>
                         <li>They list issues without separating negotiation leverage from noise.</li>
-                        <li>They do not turn the report into a seller-credit packet.</li>
+                        <li>They do not turn the report into a ready-to-send seller-credit request.</li>
                         <li>They leave timing and wording to the buyer.</li>
                     </ul>
                 </div>
                 <div class="spotlight-panel cool">
                     <div class="section-kicker">What you leave with</div>
-                    <h2 class="text-3xl font-bold text-slate-900 mt-3">A packet your agent can use immediately.</h2>
+                    <h2 class="text-3xl font-bold text-slate-900 mt-3">A request your agent can send immediately.</h2>
                     <ul>
                         <li><strong>Target ask:</strong> a starting number tied to the inspection.</li>
                         <li><strong>Defensible fallback:</strong> the lower bound if the seller pushes back.</li>
-                        <li><strong>Agent script:</strong> copy-ready language for the response window.</li>
+                        <li><strong>Agent script:</strong> copy-ready language for the next 24-72 hours.</li>
                     </ul>
                 </div>
             </section>

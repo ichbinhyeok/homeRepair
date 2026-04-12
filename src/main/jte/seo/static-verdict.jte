@@ -59,7 +59,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <title>${title}</title>
-    <meta name="description" content="Get a seller credit range after inspection for ${eraName} homes in ${metroName}. See likely repair costs ($${lowPrice}-$${highPrice}), what to verify first, and what belongs in the repair request before you close." />
+    <meta name="description" content="Build a seller credit request after inspection for ${eraName} homes in ${metroName}. See likely repair costs ($${lowPrice}-$${highPrice}), what to verify first, and what to send before the response window closes." />
     <meta name="robots" content="${robotsDirective}" />
     
     <link rel="canonical" href="${canonicalUrl}" />
@@ -77,7 +77,7 @@
     <!-- Open Graph -->
     <meta property="og:type" content="article" />
     <meta property="og:title" content="${title}" />
-    <meta property="og:description" content="Seller credit range after inspection for ${eraName} homes in ${metroName}." />
+    <meta property="og:description" content="Seller credit request after inspection for ${eraName} homes in ${metroName}." />
     <meta property="og:url" content="${canonicalUrl}" />
     
     $unsafe{faqSchema}
@@ -101,13 +101,13 @@
                 <span class="current">${metroName}</span>
             </div>
             
-            <span class="badge-market">Seller-credit packet guide: ${dateString}</span>
+            <span class="badge-market">Ready-to-send credit packet guide: ${dateString}</span>
             <h1 class="title-h1">${h1Content}</h1>
-            <p class="subtitle">Use local repair math and inspection priorities to decide what belongs in the seller-credit request, what to verify first, and how hard to push before closing on a ${eraName} property in ${metroName} (Updated ${dateString}).</p>
+            <p class="subtitle">Use local repair math and inspection priorities to decide what belongs in the seller-credit request, what to verify first, and what to send in the next 24-72 hours on a ${eraName} property in ${metroName} (Updated ${dateString}).</p>
             
             <div style="margin-top: 2rem;">
                 <a href="${calculatorUrl}" class="btn-primary" style="background: white; color: var(--primary);" data-analytics-event="cta_customize_estimate" data-analytics-category="conversion" data-analytics-label="l1_header">
-                    Start Seller Credit Plan &rarr;
+                    Start Ready-To-Send Packet &rarr;
                 </a>
                 <p style="margin-top: 1rem; font-size: 0.85rem; opacity: 0.7;">
                     <span style="opacity: 0.8;">Data sources:</span> RSMeans, BLS, Census ACS, FEMA OpenFEMA
@@ -138,7 +138,7 @@
                 <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--slate-100); text-align: center;">
                      <p style="color: var(--slate-500); margin-bottom: 1rem;">
                         Repair costs vary widely by property condition and bids in <strong>${metroName}</strong>.
-                        Use these benchmarks to decide what belongs in the repair request, what to quote first, and what credit to request before closing.
+                        Use these benchmarks to decide what belongs in the request, what to quote first, and what to send before the response window closes.
                      </p>
                 </div>
             </div>
@@ -373,7 +373,7 @@
                     </div>
                     <div style="padding: 1rem; background: white; border-radius: var(--radius-md); border: 1px solid var(--slate-200);">
                         <strong style="display: block; margin-bottom: 0.35rem;">Defer cosmetic upgrades</strong>
-                        <span style="color: var(--slate-600); font-size: 0.92rem;">Paint, finishes, and elective updates should stay out of the main seller-credit packet unless they hide a safety issue.</span>
+                        <span style="color: var(--slate-600); font-size: 0.92rem;">Paint, finishes, and elective updates should stay out of the send-today seller-credit packet unless they hide a safety issue.</span>
                     </div>
                 </div>
             </div>
@@ -414,9 +414,9 @@
             
             <!-- 6. PRE-EMPTIVE CTA -->
             <div class="bento-card span-6" style="background: var(--primary); color: white; display: flex; flex-direction: column; justify-content: center; text-align: center;">
-                <h3 style="color: white; margin-bottom: 1rem;">Turn This Inspection Context Into A Real Credit Ask</h3>
+                <h3 style="color: white; margin-bottom: 1rem;">Turn This Inspection Context Into A Send-Today Credit Ask</h3>
                 <p style="color: rgba(255,255,255,0.9); margin-bottom: 2rem;">
-                    This guide is only the framing layer. Add the actual inspection findings to tighten the ask, narrow the fallback, and build a cleaner seller-credit packet.
+                    This guide is only the framing layer. Add the actual inspection findings to tighten the ask, narrow the fallback, and build a send-today seller-credit packet.
                 </p>
                 <a href="${calculatorUrl}" class="btn-primary" style="background: white; color: var(--primary);" data-analytics-event="cta_customize_estimate" data-analytics-category="conversion" data-analytics-label="l1_body">
                     Build My Credit Range &rarr;

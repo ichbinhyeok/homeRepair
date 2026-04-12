@@ -47,7 +47,7 @@ class HomeRepairJourneySmokeTest {
         mockMvc.perform(get(resultUrl))
                 .andExpect(status().isOk())
                 .andExpect(header().string("X-Robots-Tag", containsString("noindex")))
-                .andExpect(content().string(containsString("Inspection Budget & Credit Plan")))
+                .andExpect(content().string(containsString("Ready-To-Send Seller Credit Packet")))
                 .andExpect(content().string(containsString("FHA financing")))
                 .andExpect(content().string(not(containsString("12-Month Security Calendar"))))
                 .andExpect(content().string(not(containsString("[FINANCIAL RISK PROMOTION]"))))

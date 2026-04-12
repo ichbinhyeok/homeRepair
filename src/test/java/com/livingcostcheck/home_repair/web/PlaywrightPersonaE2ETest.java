@@ -92,9 +92,9 @@ class PlaywrightPersonaE2ETest {
         page.waitForURL("**/home-repair/result/**");
         String bodyText = page.locator("body").innerText();
 
-        assertTrue(bodyText.contains("Inspection Budget & Credit Plan"));
+        assertTrue(bodyText.contains("Ready-To-Send Seller Credit Packet"));
         assertTrue(bodyText.contains("FHA financing"));
-        assertTrue(bodyText.contains("Keep the negotiation packet tight."));
+        assertTrue(bodyText.contains("Keep this send-today packet tight."));
         assertTrue(bodyText.contains("Active roof leak above the garage"));
         assertFalse(bodyText.contains("12-Month Security Calendar"));
         assertFalse(bodyText.contains("Component Health"));
@@ -113,7 +113,7 @@ class PlaywrightPersonaE2ETest {
         page.fill("input[name='sqft']", "1600");
         page.locator("input[name='condition'][value='MINOR']")
                 .check(new Locator.CheckOptions().setForce(true));
-        page.locator("summary:has-text('Tighten the packet')").click();
+        page.locator("summary:has-text('Tighten the send-today packet')").click();
         page.locator("label:has(input[name='roofType'][value='METAL'])").click();
         page.check("input[name='history'][value='PLUMBING']");
         page.locator("form[action='/home-repair/verdict'] button[type='submit']").click();

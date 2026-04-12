@@ -4,7 +4,7 @@
             <div class="footer-panel">
                 <div class="footer-brand">LifeVerdict</div>
                 <p>
-                    A buyer-side inspection planning tool that turns home-age risk, metro labor rates, and inspection findings into a cleaner seller-credit request.
+                    A buyer-side inspection response tool that turns home-age risk, metro labor rates, and inspection findings into a request your agent can send today.
                 </p>
             </div>
 
@@ -12,7 +12,7 @@
                 <h4>Packet</h4>
                 <div class="footer-links-stack">
                     <a href="/home-repair">Start planner</a>
-                    <a href="/home-repair?relationship=BUYING">Build seller-credit packet</a>
+                    <a href="/home-repair?relationship=BUYING">Build send-today packet</a>
                     <a href="/home-repair?relationship=BUYING&loanType=CONVENTIONAL">Conventional buyer</a>
                     <a href="/home-repair?relationship=BUYING&loanType=FHA">FHA buyer</a>
                 </div>
@@ -24,7 +24,7 @@
                     <a href="/home-repair?relationship=BUYING&loanType=VA">VA buyer</a>
                     <a href="/home-repair?relationship=BUYING&loanType=CASH">Cash offer</a>
                     <a href="/home-repair?relationship=BUYING&loanType=INVESTOR">Investor offer</a>
-                    <a href="/home-repair?relationship=BUYING">Seller-credit packet</a>
+                    <a href="/home-repair?relationship=BUYING">Ready-to-send request</a>
                 </div>
             </div>
         </div>

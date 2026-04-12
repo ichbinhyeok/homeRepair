@@ -394,9 +394,80 @@ Track Search Console outcomes after SEO/code changes so we can decide whether to
   - re-submit `https://lifeverdict.com/sitemap.xml`
   - request indexing for `/home-repair`
   - request indexing for `/home-repair/verdicts/states/tx.html`
-  - request indexing for `/home-repair/verdicts/states/fl.html`
-  - request indexing for `/home-repair/verdicts/pittsburgh-pa/pre-1950.html`
-  - request indexing for `/home-repair/verdicts/chicago-naperville-il/1950-1970.html`
+- request indexing for `/home-repair/verdicts/states/fl.html`
+- request indexing for `/home-repair/verdicts/pittsburgh-pa/pre-1950.html`
+- request indexing for `/home-repair/verdicts/chicago-naperville-il/1950-1970.html`
+
+## Entry: 2026-04-12 (Wedge Narrowing Phase 2)
+### Scope
+- Property: `sc-domain:lifeverdict.com`
+- Focus path: `/home-repair*`
+- Strategic frame before change: `inspection findings -> seller credit negotiation packet`
+- Strategic frame after change: `inspection is back -> send a seller credit request in the next 24-72 hours`
+
+### Why Another Narrowing Was Needed
+- The prior pivot improved CTR and reduced junk impressions, but it still left too much semantic room for Google to interpret the site as:
+  - generic repair-cost education
+  - broad inspection budgeting
+  - generic seller-credit advice
+- The missing piece was the `moment of use`.
+- The new bet is narrower and more concrete:
+  - persona: buyer under contract
+  - moment: inspection response window is open
+  - job: turn findings into a request the buyer or agent can send now
+  - output: one ready-to-send packet, not a broad planning dashboard
+
+### Product / SEO Changes Implemented
+- Repositioned the root page from broad `budget / plan` framing to `send-today seller credit request` framing.
+- Repositioned the hub page around the `response window` and `next 24-72 hours` deadline.
+- Repositioned BUYING result pages from `seller credit plan` to `Ready-To-Send Seller Credit Packet`.
+- Reworded CTAs, labels, and supporting copy to reinforce:
+  - one send
+  - one deadline
+  - one agent-ready output
+- Updated static verdict titles and H1s from `seller credit after inspection` to `seller credit request after inspection`.
+- Updated state-hub metadata and summaries so indexed pages reinforce the send-now workflow instead of generic inspection research.
+- Regenerated static pages and sitemap after the copy shift.
+- Updated unit and Playwright expectations to lock the narrower wedge into tests.
+
+### Validation Completed
+- `./gradlew test` passed on `2026-04-12`
+- `./gradlew playwrightTest` passed on `2026-04-12`
+- Interpretation: the narrowed narrative is implemented consistently across root, hub, result, static verdict, and state-hub flows.
+
+### What This Change Is Trying To Prove
+- Whether a tighter promise improves click intent quality, not just rank quality.
+- Whether Google begins associating winner pages with:
+  - `seller credit request after inspection`
+  - `repair request after inspection`
+  - `what to ask for after home inspection`
+  - related buyer-side negotiation phrasing
+- Whether users interact more with packet actions when the output is framed as something to send immediately.
+
+### Risks
+- This is still a demand-shaping bet, not proven demand.
+- If buyers do not search in this more concrete language, the site may become clearer but smaller without adding clicks.
+- If stale snippets persist on winner pages, Search Console may lag the new positioning even if the site copy is corrected.
+
+### Required Manual Re-Crawl After Deploy
+- Re-submit `https://lifeverdict.com/sitemap.xml`
+- Request indexing for `https://lifeverdict.com/home-repair`
+- Request indexing for `https://lifeverdict.com/home-repair/verdicts/states/tx.html`
+- Request indexing for `https://lifeverdict.com/home-repair/verdicts/states/fl.html`
+- Request indexing for `https://lifeverdict.com/home-repair/verdicts/pittsburgh-pa/pre-1950.html`
+- Request indexing for `https://lifeverdict.com/home-repair/verdicts/chicago-naperville-il/1950-1970.html`
+
+### Decision Rule For The Next Review
+- Keep this wedge only if the next 2-6 weeks show:
+  - `/home-repair*` CTR stays above `0.20%`
+  - clicks move above `6`
+  - query rows begin showing explicit buyer-side negotiation phrasing
+  - packet-copy / print / save events increase in product analytics
+- Kill or re-pivot again if:
+  - clicks remain flat while impressions continue shrinking
+  - top queries still look like generic component-cost lookups
+  - state winners hold rankings but still do not attract buyer-intent queries
+  - the send-today framing does not change user behavior
 
 ## Reusable Weekly Template
 ```

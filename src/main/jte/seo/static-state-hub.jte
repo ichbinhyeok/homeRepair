@@ -17,8 +17,8 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${page.stateName} seller credit after inspection by city and era</title>
-    <meta name="description" content="Compare buyer-side seller credit pressure in ${page.stateName} by city and era. Open focused metro pages and build a property-specific packet after inspection.">
+    <title>${page.stateName} seller credit request after inspection by city and era</title>
+    <meta name="description" content="Compare buyer-side seller credit request pressure in ${page.stateName} by city and era. Open focused metro pages and build a send-today packet after inspection.">
     <meta name="robots" content="${page.robotsDirective}">
     
     <link rel="canonical" href="${page.canonicalUrl}">
@@ -30,8 +30,8 @@
     
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="${page.stateName} seller credit after inspection guide">
-    <meta property="og:description" content="See which ${page.stateName} markets are worth opening after inspection and move into a seller-credit packet when a property is under contract.">
+    <meta property="og:title" content="${page.stateName} seller credit request after inspection guide">
+    <meta property="og:description" content="See which ${page.stateName} markets are worth opening after inspection and move into a send-today seller-credit packet when a property is under contract.">
     <meta property="og:url" content="${page.canonicalUrl}">
 
     $unsafe{page.breadcrumbSchema}
@@ -82,8 +82,8 @@
             </div>
             
             <span class="badge-market">${page.indexable ? "State landing" : "Reference landing"}</span>
-            <h1 class="title-h1">${page.stateName} seller credit after inspection by city and era</h1>
-            <p class="subtitle">Use this ${page.stateName} landing to anchor a buyer-side inspection budget, decide whether the market needs a tighter credit ask, and jump into the calculator when you have a property in hand.</p>
+            <h1 class="title-h1">${page.stateName} seller credit request after inspection by city and era</h1>
+            <p class="subtitle">Use this ${page.stateName} landing to anchor a buyer-side inspection response, decide whether the market needs a tighter credit ask, and jump into the calculator when you have a property in hand.</p>
         </div>
     </header>
 
@@ -93,7 +93,7 @@
             <div class="span-12" style="background: white; border-radius: var(--radius-xl); border: 1px solid var(--slate-100); box-shadow: var(--shadow-sm); padding: 1.5rem;">
                 <h2 style="margin-bottom: 0.75rem;">How To Use This State Landing</h2>
                 <p style="color: var(--slate-600); line-height: 1.7; margin-bottom: 0.75rem;">
-                    This page is built for buyers comparing repair exposure across ${page.stateName}. Treat it as a state-level framing page, then move into a property-specific seller-credit plan when you have an inspection report or a short list of findings.
+                    This page is built for buyers comparing repair exposure across ${page.stateName}. Treat it as a state-level framing page, then move into a property-specific send-today seller-credit plan when you have an inspection report or a short list of findings.
                 </p>
                 <ol style="margin: 0; padding-left: 1.1rem; color: var(--slate-700); line-height: 1.8;">
                     <li>Use this page to decide whether the state-level repair environment is friendly or defensive.</li>
@@ -134,7 +134,7 @@
                 @else
                     <h2 style="margin-bottom: 1rem;">This Page Now Funnels To The Calculator</h2>
                     <p style="color: var(--slate-600); line-height: 1.8; margin-bottom: 1rem;">
-                        Search Console shows that broad state directories attract the wrong traffic. This landing now stays focused on the buyer workflow: get the state context here, then build a property-specific seller-credit packet once you have inspection findings.
+                        Search Console shows that broad state directories attract the wrong traffic. This landing now stays focused on the buyer workflow: get the state context here, then build a property-specific send-today seller-credit packet once you have inspection findings.
                     </p>
                     <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
                         <span class="btn-outline" style="pointer-events: none;">State-level repair pressure</span>

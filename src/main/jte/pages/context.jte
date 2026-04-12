@@ -6,12 +6,12 @@
 
 @template.layout(
     title = "Inspection Intake | LifeVerdict",
-    description = "Paste inspection findings to build a seller-credit request.",
+    description = "Paste inspection findings to build a seller-credit request you can send before the response window closes.",
     content = @`
         <div class="app-shell narrow-shell py-8 md:py-10">
             <div class="briefing-card mb-8">
                 <div class="section-kicker">Inspection intake</div>
-                <h2 class="text-3xl font-bold text-slate-900 mt-3">Turn the report into a seller-credit request.</h2>
+                <h2 class="text-3xl font-bold text-slate-900 mt-3">Turn the report into a send-today seller-credit request.</h2>
                 <p class="panel-note mt-3">
                     Start with the inspection summary, visible disclosures, or showing notes. The goal is not perfect scope. The goal is one defensible ask before the response window closes.
                 </p>
@@ -42,7 +42,7 @@
                 <div class="workflow-card">
                     <div class="section-kicker">Step 1</div>
                     <h3 class="text-xl font-bold text-slate-900 mb-2">1. Set the buyer posture</h3>
-                    <p class="text-sm text-slate-600 mb-4">These inputs only shape the seller-credit packet. If you are unsure, keep the defaults and move on.</p>
+                    <p class="text-sm text-slate-600 mb-4">These inputs only shape the request you need to send. If you are unsure, keep the defaults and move on.</p>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div>
@@ -54,7 +54,7 @@
                                 <option value="CASH">Cash offer</option>
                                 <option value="INVESTOR">Investor / DSCR</option>
                             </select>
-                            <p class="text-xs text-slate-500 mt-1">This changes how tightly the packet should stay focused on lender-visible issues.</p>
+                            <p class="text-xs text-slate-500 mt-1">This changes how tightly the send-today request should stay focused on lender-visible issues.</p>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">Repair budget ceiling ($)</label>
@@ -124,7 +124,7 @@
                                 <option value="HAS_ONE">One quote in hand</option>
                                 <option value="MULTIPLE">Multiple quotes in hand</option>
                             </select>
-                            <p class="text-xs text-slate-500 mt-1">This changes how aggressively the packet should hold the target ask.</p>
+                            <p class="text-xs text-slate-500 mt-1">This changes how aggressively the request should hold the target ask.</p>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">Closing timeline</label>
@@ -144,7 +144,7 @@
                         <div class="flex items-center gap-3">
                             <span class="flex items-center justify-center w-8 h-8 rounded-full bg-cyan-50 text-cyan-700 font-bold text-sm">3</span>
                             <div>
-                                <h3 class="text-lg font-bold text-slate-900">Tighten the packet (Optional)</h3>
+                                <h3 class="text-lg font-bold text-slate-900">Tighten the send-today packet (Optional)</h3>
                                 <p class="text-xs text-slate-500">Add layout details if you want a narrower credit range.</p>
                             </div>
                         </div>
@@ -247,7 +247,7 @@
                 <div class="workflow-card">
                     <div class="section-kicker">Step 5</div>
                     <h3 class="text-xl font-bold text-slate-900 mb-2">5. Already verified systems</h3>
-                    <p class="text-sm text-slate-600 mb-4">Only check items explicitly listed as new or recently replaced. This keeps the packet from over-asking.</p>
+                    <p class="text-sm text-slate-600 mb-4">Only check items explicitly listed as new or recently replaced. This keeps the request from over-asking.</p>
 
                     <div class="grid grid-cols-2 gap-3">
                         <label class="flex items-center gap-2"><input type="checkbox" name="history" value="ROOFING" class="rounded"> Roof</label>
@@ -261,7 +261,7 @@
 
                 <div class="pt-2">
                     <button type="submit" data-analytics-event="build_packet" data-analytics-category="engagement" data-analytics-label="intake_submit" class="w-full bg-cyan-800 hover:bg-cyan-900 text-white font-bold py-4 rounded-2xl transition-all shadow-lg text-lg">
-                        Build Seller-Credit Packet &rarr;
+                        Build Ready-To-Send Packet &rarr;
                     </button>
                     <p class="text-center text-xs text-slate-500 mt-4">
                         This is a negotiation estimate, not a professional inspection or contractor quote.

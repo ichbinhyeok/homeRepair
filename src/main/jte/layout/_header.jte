@@ -12,8 +12,8 @@
 
         <nav class="header-nav">
             <a href="/home-repair" class="header-link">Planner</a>
-            <a href="/home-repair?relationship=BUYING" class="header-link">Build packet</a>
-            <span class="header-pill">Inspection findings to seller credit</span>
+            <a href="/home-repair?relationship=BUYING" class="header-link">Send-today packet</a>
+            <span class="header-pill">Inspection report to seller request</span>
         </nav>
     </div>
 </header>
