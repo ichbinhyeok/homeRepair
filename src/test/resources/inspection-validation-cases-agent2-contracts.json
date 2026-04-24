@@ -1,0 +1,2145 @@
+{
+  "meta": {
+    "created": "2026-04-24",
+    "basis": "100 synthetic domain validation cases rewritten from internet research on inspection-related contract workflows, deadlines, written amendment requirements, and attorney-review practices. The cases are not copied from source text and are designed to stress state-specific workflow handling rather than repair-cost estimation.",
+    "warning": "Synthetic validation cases only; not legal advice, broker supervision, lending advice, or verified customer interviews.",
+    "sources": [
+      "https://www.trec.texas.gov/special-links/frequently-asked-questions/",
+      "https://trerc.tamu.edu/article/option-period-basics-2360/",
+      "https://www.trec.texas.gov/forms/amendment-contract-1",
+      "https://dre.colorado.gov/sites/dre/files/documents/Contract%20to%20Buy%20and%20Sell%20Real%20Estate%20%28Residential%29%20%28Fillable%29.pdf",
+      "https://dre.colorado.gov/sites/dre/files/documents/Inspection%20Objection%20Notice%20%28fillable%29_for%20use%20on%20or%20after%20January%201%2C%202026.pdf",
+      "https://www.floridarealtors.org/sites/default/files/2024-08/FloridaRealtors-FloridaBar-ASIS-6xx_redlined%5B2%5D.pdf",
+      "https://www.floridarealtors.org/news-media/news-articles/2021/09/florida-realtors-updates-frbar-contracts-and-riders",
+      "https://srcar.org/wp-content/uploads/2021/11/CCSPA-2021-VERSION-31-REDLINE.pdf",
+      "https://www.ellisposner.com/blog/2024/1/10/what-is-a-request-for-repair-in-a-real-estate-purchase",
+      "https://www.homelight.com/blog/contingency-removal-form/",
+      "https://www.nj.gov/dobi/division_consumers/pdf/buyingahome.pdf",
+      "https://chicagorealtor.com/wp-content/uploads/2024/12/CAR-Residential-Contract_Fillable.pdf"
+    ]
+  },
+  "cases": [
+    {
+      "id": "K001",
+      "sourceBasis": "TREC and TRERC guidance: Texas inspection leverage depends on a live option period and written notice or amendment workflow.",
+      "persona": "Texas buyer agent",
+      "state": "TX",
+      "deal": "Option period expires at 5 p.m. today and the seller has not answered the repair request.",
+      "findings": [
+        "foundation movement noted by inspector",
+        "seller silence before option deadline",
+        "loose interior trim"
+      ],
+      "expectedLeadScope": [
+        "foundation movement",
+        "same-day terminate or signed amendment decision"
+      ],
+      "expectedExclusions": [
+        "loose interior trim"
+      ],
+      "requiredGate": "Texas option-period alive and written decision before deadline",
+      "riskIfWrong": "Buyer may assume negotiation is still protective after the unrestricted termination window closes."
+    },
+    {
+      "id": "K002",
+      "sourceBasis": "TREC FAQ: option fee timing and stated amount can affect whether the Texas unrestricted termination right exists.",
+      "persona": "Transaction coordinator",
+      "state": "TX",
+      "deal": "Contract says option period, but the file shows no option fee receipt and the inspection found major issues.",
+      "findings": [
+        "option fee delivery not confirmed",
+        "active roof leak",
+        "minor paint scuffs"
+      ],
+      "expectedLeadScope": [
+        "option fee status",
+        "active roof leak"
+      ],
+      "expectedExclusions": [
+        "minor paint scuffs"
+      ],
+      "requiredGate": "confirm option consideration before treating termination right as available",
+      "riskIfWrong": "Packet may tell the agent to exercise leverage the buyer may not actually have."
+    },
+    {
+      "id": "K003",
+      "sourceBasis": "TREC amendment form research: repair agreements should be captured as contract changes, not left in email threads.",
+      "persona": "Buyer agent",
+      "state": "TX",
+      "deal": "Seller texted that they will give a credit, but no amendment is signed and the option period ends tomorrow.",
+      "findings": [
+        "seller text promise of 4000 credit",
+        "amendment not signed",
+        "water heater leaking"
+      ],
+      "expectedLeadScope": [
+        "signed amendment status",
+        "water heater leak"
+      ],
+      "expectedExclusions": [
+        "text promise as final agreement"
+      ],
+      "requiredGate": "signed amendment before option deadline",
+      "riskIfWrong": "Buyer relies on a side promise that does not show up in the contract file."
+    },
+    {
+      "id": "K004",
+      "sourceBasis": "TRERC option-period discussion: inspections can occur without an option period, but termination leverage changes materially.",
+      "persona": "Texas listing agent",
+      "state": "TX",
+      "deal": "Buyer waived option period to win a multiple-offer deal and now wants repairs after inspection.",
+      "findings": [
+        "no option period in executed contract",
+        "HVAC not cooling",
+        "dated carpet"
+      ],
+      "expectedLeadScope": [
+        "HVAC failure",
+        "rights review before demand"
+      ],
+      "expectedExclusions": [
+        "dated carpet"
+      ],
+      "requiredGate": "no-option-period warning",
+      "riskIfWrong": "Product frames the request like a normal option-period ask and overstates buyer leverage."
+    },
+    {
+      "id": "K005",
+      "sourceBasis": "TREC amendment workflow: extending a Texas option period needs proper written handling, not an informal promise.",
+      "persona": "Team lead reviewing a junior agent",
+      "state": "TX",
+      "deal": "Sewer scope cannot happen until after the option deadline unless the parties extend in writing.",
+      "findings": [
+        "sewer cleanout inaccessible",
+        "sewer scope scheduled after deadline",
+        "seller verbally okayed extension"
+      ],
+      "expectedLeadScope": [
+        "sewer scope delay",
+        "written option extension"
+      ],
+      "expectedExclusions": [
+        "verbal extension reliance"
+      ],
+      "requiredGate": "extension amendment and fee/status check",
+      "riskIfWrong": "Buyer spends money on a late scope after losing the clean walk-away path."
+    },
+    {
+      "id": "K006",
+      "sourceBasis": "TREC materials distinguish inspection negotiation from lender-required repair allocation.",
+      "persona": "Loan officer and buyer agent pair",
+      "state": "TX",
+      "deal": "FHA appraisal may require repairs while buyer also wants an option-period credit.",
+      "findings": [
+        "missing stair handrail",
+        "peeling exterior paint",
+        "buyer asks seller credit only"
+      ],
+      "expectedLeadScope": [
+        "handrail safety",
+        "paint and lender repair review"
+      ],
+      "expectedExclusions": [
+        "credit-only solution without lender review"
+      ],
+      "requiredGate": "separate inspection ask from financing-required repair path",
+      "riskIfWrong": "Packet may negotiate a credit that cannot cure a lender-visible closing condition."
+    },
+    {
+      "id": "K007",
+      "sourceBasis": "TREC option-period guidance: buyer must deliver written termination during the option period when choosing to walk away.",
+      "persona": "First-time Texas buyer",
+      "state": "TX",
+      "deal": "Buyer says they want to cancel but has only told their agent by phone with two hours left.",
+      "findings": [
+        "buyer verbal cancel instruction",
+        "foundation engineer recommends further evaluation",
+        "option deadline in two hours"
+      ],
+      "expectedLeadScope": [
+        "foundation risk",
+        "written termination instruction"
+      ],
+      "expectedExclusions": [
+        "phone call as notice"
+      ],
+      "requiredGate": "written termination notice before deadline",
+      "riskIfWrong": "Buyer may miss the deadline because the product treats intent as effective notice."
+    },
+    {
+      "id": "K008",
+      "sourceBasis": "TREC/TAR-style repair negotiation relies on contract amendment after seller counter, not a revised informal wishlist.",
+      "persona": "Buyer agent in counter stage",
+      "state": "TX",
+      "deal": "Seller countered with a small credit and refused repairs; option period still open until tomorrow.",
+      "findings": [
+        "seller countered 1000 credit",
+        "electrical panel double taps",
+        "old working appliances"
+      ],
+      "expectedLeadScope": [
+        "electrical panel safety",
+        "counter comparison and amendment decision"
+      ],
+      "expectedExclusions": [
+        "old working appliances"
+      ],
+      "requiredGate": "counter acceptance, counteroffer, or terminate before option deadline",
+      "riskIfWrong": "Buyer may continue negotiating past the window instead of making a contract decision."
+    },
+    {
+      "id": "K009",
+      "sourceBasis": "Texas option-period research: an accepted repair agreement still needs clear completion and documentation terms.",
+      "persona": "Transaction coordinator",
+      "state": "TX",
+      "deal": "Seller agreed to repair roof leak but amendment omits who completes it and when receipts are due.",
+      "findings": [
+        "roof leak at rear slope",
+        "amendment says repair roof",
+        "no contractor or receipt standard"
+      ],
+      "expectedLeadScope": [
+        "roof leak",
+        "completion proof before closing"
+      ],
+      "expectedExclusions": [
+        "vague repair roof wording"
+      ],
+      "requiredGate": "specific amendment-ready repair terms",
+      "riskIfWrong": "Buyer closes with an ambiguous seller obligation and weak enforcement posture."
+    },
+    {
+      "id": "K010",
+      "sourceBasis": "TREC FAQ and amendment form: negotiated contract changes require broker/legal boundary awareness.",
+      "persona": "Broker-owner",
+      "state": "TX",
+      "deal": "Agent drafted custom legal language about structural warranty after inspection.",
+      "findings": [
+        "foundation crack",
+        "agent-written warranty clause",
+        "seller agrees only to cosmetic patch"
+      ],
+      "expectedLeadScope": [
+        "foundation crack",
+        "broker or attorney review"
+      ],
+      "expectedExclusions": [
+        "agent-written legal warranty"
+      ],
+      "requiredGate": "form-safe amendment or attorney handoff",
+      "riskIfWrong": "Product encourages unauthorized or unenforceable drafting instead of a safe contract handoff."
+    },
+    {
+      "id": "K011",
+      "sourceBasis": "Texas option-period workflow: seller backup pressure changes negotiation posture but not deadline mechanics.",
+      "persona": "Buyer agent in multiple-offer market",
+      "state": "TX",
+      "deal": "Listing agent says a backup offer is waiting if buyer asks for too much.",
+      "findings": [
+        "active plumbing leak",
+        "unsafe electrical splice",
+        "seller has backup offer"
+      ],
+      "expectedLeadScope": [
+        "plumbing leak",
+        "electrical safety",
+        "minimal high-leverage ask"
+      ],
+      "expectedExclusions": [
+        "broad repair list"
+      ],
+      "requiredGate": "deadline-safe fallback strategy",
+      "riskIfWrong": "Buyer may lose the deal by sending a maximal demand instead of preserving exit leverage."
+    },
+    {
+      "id": "K012",
+      "sourceBasis": "TREC option-period guidance: seller non-response before option expiration should trigger buyer decision logic.",
+      "persona": "Operations manager for buyer-agent team",
+      "state": "TX",
+      "deal": "Team wants a workflow rule for seller silence on repair asks.",
+      "findings": [
+        "no seller response",
+        "foundation elevation variance",
+        "roof hail damage estimate pending"
+      ],
+      "expectedLeadScope": [
+        "foundation variance",
+        "roof damage estimate",
+        "silence does not extend deadline"
+      ],
+      "expectedExclusions": [
+        "assumption that silence preserves rights"
+      ],
+      "requiredGate": "automated no-response deadline escalation",
+      "riskIfWrong": "Team misses repeat option deadlines because the tool treats open negotiation as safe."
+    },
+    {
+      "id": "K013",
+      "sourceBasis": "Texas amendment source: changing price, repairs, closing date, or option terms belongs in the amendment path.",
+      "persona": "Investor buyer",
+      "state": "TX",
+      "deal": "Investor wants a price reduction rather than seller-performed repairs before option expiration.",
+      "findings": [
+        "cast iron drain failure",
+        "seller prefers price reduction",
+        "investor wants post-close rehab"
+      ],
+      "expectedLeadScope": [
+        "drain failure",
+        "price-change amendment path"
+      ],
+      "expectedExclusions": [
+        "seller-performed rehab list"
+      ],
+      "requiredGate": "price reduction amendment and lender impact check",
+      "riskIfWrong": "Packet drafts repair language when the negotiated term is a price change."
+    },
+    {
+      "id": "K014",
+      "sourceBasis": "Texas option-period and amendment research: extension requests should not hide unresolved specialist inspections.",
+      "persona": "Rural property buyer agent",
+      "state": "TX",
+      "deal": "Water well and septic inspections are incomplete on the last option day.",
+      "findings": [
+        "septic report unavailable",
+        "well pressure test incomplete",
+        "minor fence damage"
+      ],
+      "expectedLeadScope": [
+        "septic report",
+        "well pressure verification",
+        "option extension or terminate"
+      ],
+      "expectedExclusions": [
+        "minor fence damage"
+      ],
+      "requiredGate": "specialist inspection deadline plan",
+      "riskIfWrong": "Buyer proceeds without rural system evidence or a preserved walk-away right."
+    },
+    {
+      "id": "K015",
+      "sourceBasis": "TREC guidance: repair negotiations during option period must be separated from inspection report sharing and disclosure consequences.",
+      "persona": "Listing agent",
+      "state": "TX",
+      "deal": "Buyer sent the entire inspection report with broad demands during option period.",
+      "findings": [
+        "inspection report includes 90 minor comments",
+        "active roof leak",
+        "loose door stops"
+      ],
+      "expectedLeadScope": [
+        "roof leak",
+        "targeted response to buyer request"
+      ],
+      "expectedExclusions": [
+        "loose door stops",
+        "full report as demand list"
+      ],
+      "requiredGate": "seller-side counter or reject posture",
+      "riskIfWrong": "Seller may overreact to a report dump rather than isolate negotiable defects."
+    },
+    {
+      "id": "K016",
+      "sourceBasis": "TREC amendment form: an accepted repair credit should be checked against closing-cost and financing mechanics.",
+      "persona": "Buyer agent",
+      "state": "TX",
+      "deal": "Seller offers a large credit instead of repairing roof and electrical items.",
+      "findings": [
+        "roof leak",
+        "ungrounded outlets",
+        "seller offers 12000 credit"
+      ],
+      "expectedLeadScope": [
+        "roof leak",
+        "electrical safety",
+        "credit usability check"
+      ],
+      "expectedExclusions": [
+        "credit amount accepted without lender review"
+      ],
+      "requiredGate": "signed amendment plus lender/closing-cost review",
+      "riskIfWrong": "Buyer negotiates a concession that cannot be fully used or does not solve required repairs."
+    },
+    {
+      "id": "K017",
+      "sourceBasis": "Texas workflow: post-option repair discoveries are not equivalent to option-period inspection leverage.",
+      "persona": "Buyer agent",
+      "state": "TX",
+      "deal": "Option period expired yesterday; buyer now found a new roof leak after heavy rain.",
+      "findings": [
+        "option period expired",
+        "new roof leak after storm",
+        "buyer wants fresh repair demand"
+      ],
+      "expectedLeadScope": [
+        "rights and casualty/disclosure review",
+        "roof leak advisory"
+      ],
+      "expectedExclusions": [
+        "normal option-period repair demand"
+      ],
+      "requiredGate": "not sendable as first inspection ask after expired option",
+      "riskIfWrong": "Product tells agent to send a standard request after the strongest deadline has passed."
+    },
+    {
+      "id": "K018",
+      "sourceBasis": "Texas option-period guidance: buyer walk-away, seller counter, and amendment signing must be sequenced before deadline.",
+      "persona": "Transaction coordinator",
+      "state": "TX",
+      "deal": "Seller counter arrives 30 minutes before option deadline and buyer is traveling.",
+      "findings": [
+        "late seller counter",
+        "foundation crack",
+        "buyer unreachable"
+      ],
+      "expectedLeadScope": [
+        "foundation crack",
+        "client decision proof",
+        "termination backup"
+      ],
+      "expectedExclusions": [
+        "agent decision without buyer authorization"
+      ],
+      "requiredGate": "buyer authorization and timed notice workflow",
+      "riskIfWrong": "Agent may miss authority or timing, exposing the buyer and brokerage."
+    },
+    {
+      "id": "K019",
+      "sourceBasis": "Texas TREC form source: amendment terms may address repairs, lender-required repairs, option extension, and closing date differently.",
+      "persona": "Broker compliance reviewer",
+      "state": "TX",
+      "deal": "One draft amendment mixes inspection repairs, lender conditions, and closing extension in a single vague paragraph.",
+      "findings": [
+        "electrical panel unsafe",
+        "appraiser may require repair",
+        "closing date likely delayed"
+      ],
+      "expectedLeadScope": [
+        "electrical panel",
+        "lender-required repair allocation",
+        "closing date amendment"
+      ],
+      "expectedExclusions": [
+        "single vague catchall paragraph"
+      ],
+      "requiredGate": "separate contract-change categories",
+      "riskIfWrong": "Parties sign unclear terms that do not match the actual financing and closing problem."
+    },
+    {
+      "id": "K020",
+      "sourceBasis": "Texas option-period research: repair request tools should recognize when buyer should walk away rather than optimize an ask.",
+      "persona": "Buyer agent advising cautious buyer",
+      "state": "TX",
+      "deal": "Engineer says more testing is needed and seller will not extend the option period.",
+      "findings": [
+        "possible foundation failure",
+        "seller refuses option extension",
+        "cosmetic drywall cracks"
+      ],
+      "expectedLeadScope": [
+        "foundation failure risk",
+        "walk-away decision"
+      ],
+      "expectedExclusions": [
+        "cosmetic drywall cracks"
+      ],
+      "requiredGate": "terminate-or-accept-risk framing",
+      "riskIfWrong": "Product pushes a repair ask when the buyer needs a binary risk decision before expiration."
+    },
+    {
+      "id": "K021",
+      "sourceBasis": "Colorado DRE contract: buyer must choose inspection termination or written inspection objection by the applicable deadline.",
+      "persona": "Colorado buyer agent",
+      "state": "CO",
+      "deal": "Inspection termination deadline is today, but buyer is considering an objection instead.",
+      "findings": [
+        "sewer line belly",
+        "radon test pending",
+        "scratched hardwood"
+      ],
+      "expectedLeadScope": [
+        "sewer line defect",
+        "termination versus objection choice"
+      ],
+      "expectedExclusions": [
+        "scratched hardwood"
+      ],
+      "requiredGate": "Colorado termination/objection path selected before deadline",
+      "riskIfWrong": "Buyer may file the wrong notice and lose the desired walk-away path."
+    },
+    {
+      "id": "K022",
+      "sourceBasis": "Colorado DRE contract and objection notice: delivering an inspection objection changes the buyer's termination path and starts resolution logic.",
+      "persona": "Transaction coordinator",
+      "state": "CO",
+      "deal": "Buyer already delivered an Inspection Objection and now wants to terminate before the resolution deadline.",
+      "findings": [
+        "inspection objection delivered",
+        "foundation engineer concern",
+        "seller has not responded"
+      ],
+      "expectedLeadScope": [
+        "foundation concern",
+        "resolution deadline",
+        "withdraw or terminate review"
+      ],
+      "expectedExclusions": [
+        "new first-notice draft"
+      ],
+      "requiredGate": "Colorado post-objection workflow state",
+      "riskIfWrong": "Packet drafts the wrong document for a file already in resolution posture."
+    },
+    {
+      "id": "K023",
+      "sourceBasis": "Colorado objection notice: if written settlement is not reached by resolution deadline, termination risk must be surfaced.",
+      "persona": "Colorado team lead",
+      "state": "CO",
+      "deal": "Resolution deadline is tomorrow and seller verbally accepted a sewer credit.",
+      "findings": [
+        "seller verbally accepted 3500 sewer credit",
+        "written resolution not signed",
+        "sewer scope root intrusion"
+      ],
+      "expectedLeadScope": [
+        "sewer root intrusion",
+        "written resolution status"
+      ],
+      "expectedExclusions": [
+        "verbal acceptance as settlement"
+      ],
+      "requiredGate": "signed inspection resolution before deadline",
+      "riskIfWrong": "Contract may terminate despite everyone believing the sewer credit was agreed."
+    },
+    {
+      "id": "K024",
+      "sourceBasis": "Colorado DRE form distinguishes inspection report attachment from written description of unsatisfactory conditions.",
+      "persona": "Junior buyer agent",
+      "state": "CO",
+      "deal": "Agent plans to attach only the full report as the objection.",
+      "findings": [
+        "full inspection report with many comments",
+        "electrical panel overheating",
+        "minor cabinet adjustment"
+      ],
+      "expectedLeadScope": [
+        "electrical panel safety",
+        "specific objection description"
+      ],
+      "expectedExclusions": [
+        "minor cabinet adjustment",
+        "report-only objection"
+      ],
+      "requiredGate": "specific Colorado objection content",
+      "riskIfWrong": "Seller cannot tell what must be corrected and the objection may fail the workflow need."
+    },
+    {
+      "id": "K025",
+      "sourceBasis": "Colorado contract: unresolved inspection objection can terminate unless buyer withdraws it before the deadline.",
+      "persona": "Buyer agent",
+      "state": "CO",
+      "deal": "Buyer wants to keep the property even though seller refuses the objection.",
+      "findings": [
+        "seller refuses roof credit",
+        "inspection resolution deadline today",
+        "buyer still wants to proceed"
+      ],
+      "expectedLeadScope": [
+        "roof condition",
+        "withdrawal of objection decision"
+      ],
+      "expectedExclusions": [
+        "assumption contract stays alive automatically"
+      ],
+      "requiredGate": "withdrawal or written resolution before automatic termination risk",
+      "riskIfWrong": "Buyer unintentionally loses the contract by doing nothing."
+    },
+    {
+      "id": "K026",
+      "sourceBasis": "Colorado inspection objection workflow: seller counter should be evaluated against the already-delivered objection and resolution deadline.",
+      "persona": "Colorado transaction coordinator",
+      "state": "CO",
+      "deal": "Seller counters only one of three objected items with 24 hours left.",
+      "findings": [
+        "seller counters radon mitigation only",
+        "sewer repair still unresolved",
+        "roof leak still unresolved"
+      ],
+      "expectedLeadScope": [
+        "sewer repair",
+        "roof leak",
+        "partial counter comparison"
+      ],
+      "expectedExclusions": [
+        "new unrelated demands"
+      ],
+      "requiredGate": "counter-to-objection mapping before resolution deadline",
+      "riskIfWrong": "Buyer signs a partial resolution believing all objected items were handled."
+    },
+    {
+      "id": "K027",
+      "sourceBasis": "Colorado DRE contract includes broad property-condition concerns, but objection must still be timely and focused.",
+      "persona": "Mountain property buyer agent",
+      "state": "CO",
+      "deal": "Buyer wants to object to noise, road project, and roof leak after inspections.",
+      "findings": [
+        "planned road expansion nearby",
+        "roof leak at valley",
+        "old kitchen finishes"
+      ],
+      "expectedLeadScope": [
+        "road project impact",
+        "roof leak"
+      ],
+      "expectedExclusions": [
+        "old kitchen finishes"
+      ],
+      "requiredGate": "timely written objection for property-condition concerns",
+      "riskIfWrong": "Packet narrows Colorado objection rights too much or bloats it with cosmetics."
+    },
+    {
+      "id": "K028",
+      "sourceBasis": "Colorado objection notice: report may or may not be provided, but the product should flag disclosure and strategy consequences.",
+      "persona": "Listing-side agent",
+      "state": "CO",
+      "deal": "Buyer provided an objection but withheld the inspection report.",
+      "findings": [
+        "objection lists structural settlement",
+        "inspection report not provided",
+        "seller wants report pages"
+      ],
+      "expectedLeadScope": [
+        "structural settlement",
+        "report-sharing decision"
+      ],
+      "expectedExclusions": [
+        "demand for entire report without strategy review"
+      ],
+      "requiredGate": "report attachment and disclosure strategy check",
+      "riskIfWrong": "Seller-side response may be underinformed or create avoidable disclosure friction."
+    },
+    {
+      "id": "K029",
+      "sourceBasis": "Colorado contract: buyer-paid inspections and damage/liens from invasive testing need workflow guardrails.",
+      "persona": "Buyer agent",
+      "state": "CO",
+      "deal": "Buyer wants destructive mold testing before the inspection deadline.",
+      "findings": [
+        "mold-like staining behind cabinet",
+        "inspector wants to open drywall",
+        "seller has not authorized invasive testing"
+      ],
+      "expectedLeadScope": [
+        "mold specialist review",
+        "seller authorization for invasive test"
+      ],
+      "expectedExclusions": [
+        "unauthorized destructive testing"
+      ],
+      "requiredGate": "inspection access and damage responsibility check",
+      "riskIfWrong": "Buyer creates a property-damage dispute while trying to preserve inspection rights."
+    },
+    {
+      "id": "K030",
+      "sourceBasis": "Colorado resolution workflow: negotiated repairs can alter contract terms and should be handled as formal resolution.",
+      "persona": "Broker reviewer",
+      "state": "CO",
+      "deal": "Seller and buyer agree to extend closing and perform repairs after resolution talks.",
+      "findings": [
+        "roof repair needs permit",
+        "closing date must move",
+        "resolution draft only says seller to handle"
+      ],
+      "expectedLeadScope": [
+        "roof repair",
+        "closing-date effect",
+        "formal resolution terms"
+      ],
+      "expectedExclusions": [
+        "seller to handle vague wording"
+      ],
+      "requiredGate": "inspection resolution and contract-term change review",
+      "riskIfWrong": "Repair obligations and closing timing are not actually aligned in the contract."
+    },
+    {
+      "id": "K031",
+      "sourceBasis": "Colorado contract: buyer's right to terminate under inspection termination expires once an objection is delivered.",
+      "persona": "Buyer agent",
+      "state": "CO",
+      "deal": "Agent sent an objection yesterday, then buyer asks to use inspection termination today.",
+      "findings": [
+        "objection already delivered",
+        "seller counter is weak",
+        "foundation crack"
+      ],
+      "expectedLeadScope": [
+        "foundation crack",
+        "post-objection exit options"
+      ],
+      "expectedExclusions": [
+        "inspection termination as if no objection was sent"
+      ],
+      "requiredGate": "Colorado sequence-aware rights check",
+      "riskIfWrong": "Product invokes a termination route that may no longer be available."
+    },
+    {
+      "id": "K032",
+      "sourceBasis": "Colorado objection/resolution deadlines should drive whether to ask, counter, withdraw, or walk away.",
+      "persona": "Relocation buyer agent",
+      "state": "CO",
+      "deal": "Remote buyer is unavailable on the resolution deadline because of travel.",
+      "findings": [
+        "sewer replacement estimate pending",
+        "seller offers home warranty",
+        "buyer unavailable on deadline"
+      ],
+      "expectedLeadScope": [
+        "sewer replacement estimate",
+        "client authorization before resolution deadline"
+      ],
+      "expectedExclusions": [
+        "home warranty as sewer replacement"
+      ],
+      "requiredGate": "client decision and written resolution timing",
+      "riskIfWrong": "Agent cannot get authority in time and the contract outcome is accidental."
+    },
+    {
+      "id": "K033",
+      "sourceBasis": "Colorado inspection objection notice centers unsatisfactory conditions the buyer requires seller to correct.",
+      "persona": "Buyer agent",
+      "state": "CO",
+      "deal": "Buyer wants a price reduction but the objection draft reads like a repair list.",
+      "findings": [
+        "HVAC heat exchanger concern",
+        "buyer prefers price reduction",
+        "loose towel bars"
+      ],
+      "expectedLeadScope": [
+        "HVAC safety",
+        "credit or price resolution strategy"
+      ],
+      "expectedExclusions": [
+        "loose towel bars"
+      ],
+      "requiredGate": "objection-to-resolution strategy distinction",
+      "riskIfWrong": "Seller focuses on performing repairs when buyer's actual acceptable outcome is economic."
+    },
+    {
+      "id": "K034",
+      "sourceBasis": "Colorado DRE contract: deadlines around disclosures and inspection objections are separate but can interact.",
+      "persona": "Transaction coordinator",
+      "state": "CO",
+      "deal": "Seller property disclosure arrived late after buyer already objected.",
+      "findings": [
+        "late seller disclosure reveals prior basement flooding",
+        "existing objection covers sump pump failure",
+        "resolution deadline approaching"
+      ],
+      "expectedLeadScope": [
+        "basement flooding disclosure",
+        "sump pump failure",
+        "deadline interaction review"
+      ],
+      "expectedExclusions": [
+        "ignoring late disclosure"
+      ],
+      "requiredGate": "Colorado disclosure and objection timeline check",
+      "riskIfWrong": "Buyer may resolve known items without addressing a newly disclosed material issue."
+    },
+    {
+      "id": "K035",
+      "sourceBasis": "Colorado resolution workflow: mutual termination can be separate from waiting for resolution deadline.",
+      "persona": "Listing agent",
+      "state": "CO",
+      "deal": "Both sides want to end the deal after inspection without waiting for the resolution deadline.",
+      "findings": [
+        "buyer objects to structural movement",
+        "seller refuses all repairs",
+        "both parties want release"
+      ],
+      "expectedLeadScope": [
+        "structural movement",
+        "mutual termination or release path"
+      ],
+      "expectedExclusions": [
+        "waiting by default without release review"
+      ],
+      "requiredGate": "mutual termination/release workflow",
+      "riskIfWrong": "File sits in limbo while earnest money and relisting timing remain unresolved."
+    },
+    {
+      "id": "K036",
+      "sourceBasis": "Colorado inspection workflow: objection deadlines do not excuse vague asks unsupported by specialist evidence.",
+      "persona": "Buyer agent",
+      "state": "CO",
+      "deal": "Buyer wants to demand a full foundation rebuild before engineer review.",
+      "findings": [
+        "diagonal foundation crack",
+        "engineer appointment after objection deadline",
+        "buyer wants full rebuild"
+      ],
+      "expectedLeadScope": [
+        "foundation crack",
+        "engineer-needed objection framing"
+      ],
+      "expectedExclusions": [
+        "full rebuild demand without engineer scope"
+      ],
+      "requiredGate": "quote/specialist caveat in objection",
+      "riskIfWrong": "Seller dismisses the objection as exaggerated and no extension is secured."
+    },
+    {
+      "id": "K037",
+      "sourceBasis": "Colorado objection notice requires buyer signature and deadline-aware written handling.",
+      "persona": "Transaction coordinator",
+      "state": "CO",
+      "deal": "Agent prepared the objection but buyer has not signed before the evening deadline.",
+      "findings": [
+        "unsigned objection notice",
+        "active roof leak",
+        "buyer traveling internationally"
+      ],
+      "expectedLeadScope": [
+        "roof leak",
+        "buyer signature or authorization"
+      ],
+      "expectedExclusions": [
+        "unsigned notice as complete"
+      ],
+      "requiredGate": "signed/timely delivery confirmation",
+      "riskIfWrong": "The team believes the objection is preserved when it was never properly delivered."
+    },
+    {
+      "id": "K038",
+      "sourceBasis": "Colorado inspection resolution: withdrawal keeps the contract alive but can waive the objection leverage.",
+      "persona": "Buyer agent",
+      "state": "CO",
+      "deal": "Buyer considers withdrawing objection to avoid termination, but roof issue remains unresolved.",
+      "findings": [
+        "roof leak unresolved",
+        "seller refuses credit",
+        "buyer fears losing low interest rate"
+      ],
+      "expectedLeadScope": [
+        "roof leak",
+        "withdrawal consequences"
+      ],
+      "expectedExclusions": [
+        "withdrawal without buyer risk acknowledgement"
+      ],
+      "requiredGate": "walk-away versus proceed-as-is decision",
+      "riskIfWrong": "Buyer keeps the deal but loses negotiation leverage without understanding the exposure."
+    },
+    {
+      "id": "K039",
+      "sourceBasis": "C.A.R.-style California workflow: buyer investigation, repair request, contingency removal, and cancellation are sequenced in writing.",
+      "persona": "California buyer agent",
+      "state": "CA",
+      "deal": "Investigation contingency deadline is tomorrow and seller has not responded to a Request for Repair.",
+      "findings": [
+        "sewer root intrusion",
+        "seller non-response to request",
+        "dated bathroom tile"
+      ],
+      "expectedLeadScope": [
+        "sewer root intrusion",
+        "contingency removal or cancellation decision"
+      ],
+      "expectedExclusions": [
+        "dated bathroom tile"
+      ],
+      "requiredGate": "California RR response not treated as automatic contingency removal",
+      "riskIfWrong": "Buyer may wait for a seller response and miss the contingency decision point."
+    },
+    {
+      "id": "K040",
+      "sourceBasis": "California sources: seller may be asked for repairs, but no response or refusal generally leaves buyer with contingency choices.",
+      "persona": "Buyer agent",
+      "state": "CA",
+      "deal": "Seller refuses all repairs but buyer still has the investigation contingency.",
+      "findings": [
+        "HVAC not cooling",
+        "roof leak",
+        "seller refuses Request for Repair"
+      ],
+      "expectedLeadScope": [
+        "HVAC failure",
+        "roof leak",
+        "cancel or remove contingency decision"
+      ],
+      "expectedExclusions": [
+        "assuming seller must respond"
+      ],
+      "requiredGate": "buyer contingency choice after seller refusal",
+      "riskIfWrong": "Packet implies the seller owes repairs merely because the request was sent."
+    },
+    {
+      "id": "K041",
+      "sourceBasis": "California contingency-removal research: contingencies are not safely treated as gone unless the required written removal occurs.",
+      "persona": "Listing agent",
+      "state": "CA",
+      "deal": "Inspection contingency date passed, but buyer has not signed contingency removal.",
+      "findings": [
+        "deadline passed",
+        "no signed contingency removal",
+        "buyer still negotiating plumbing credit"
+      ],
+      "expectedLeadScope": [
+        "plumbing credit status",
+        "notice-to-perform or contingency removal workflow"
+      ],
+      "expectedExclusions": [
+        "automatic removal assumption"
+      ],
+      "requiredGate": "California signed contingency-removal status",
+      "riskIfWrong": "Seller assumes buyer is locked in and fails to use the proper cure/cancellation workflow."
+    },
+    {
+      "id": "K042",
+      "sourceBasis": "California request-for-repair guidance: repair requests should be specific and supported, not every inspection comment.",
+      "persona": "Junior California buyer agent",
+      "state": "CA",
+      "deal": "Agent drafted a Request for Repair using every summary item from the inspection report.",
+      "findings": [
+        "water heater leaking",
+        "GFCI missing at kitchen",
+        "paint touchups",
+        "loose cabinet pulls"
+      ],
+      "expectedLeadScope": [
+        "water heater leak",
+        "electrical safety"
+      ],
+      "expectedExclusions": [
+        "paint touchups",
+        "loose cabinet pulls"
+      ],
+      "requiredGate": "scope discipline before California RR",
+      "riskIfWrong": "Seller rejects a valid safety request because it is packaged as a cosmetic punch list."
+    },
+    {
+      "id": "K043",
+      "sourceBasis": "California form research: repair agreement can be tied to contingency removal, so the sequence must be explicit.",
+      "persona": "Transaction coordinator",
+      "state": "CA",
+      "deal": "Seller agreed to a credit, but buyer has not decided whether to remove the investigation contingency.",
+      "findings": [
+        "seller agrees 5000 credit",
+        "contingency removal unsigned",
+        "roof leak documented"
+      ],
+      "expectedLeadScope": [
+        "roof leak",
+        "credit agreement and contingency removal sequence"
+      ],
+      "expectedExclusions": [
+        "credit agreement as automatic removal"
+      ],
+      "requiredGate": "signed response and CR sequencing",
+      "riskIfWrong": "File treats economic agreement and contingency waiver as the same event when they are not."
+    },
+    {
+      "id": "K044",
+      "sourceBasis": "California investigation contingency source: seller documents delivered late can alter review timing in form-driven workflows.",
+      "persona": "California buyer agent",
+      "state": "CA",
+      "deal": "HOA documents arrive after buyer already removed physical inspection contingency.",
+      "findings": [
+        "late HOA minutes disclose balcony litigation",
+        "physical inspection contingency removed",
+        "balcony waterproofing concern"
+      ],
+      "expectedLeadScope": [
+        "HOA document review",
+        "balcony waterproofing concern"
+      ],
+      "expectedExclusions": [
+        "reviving removed physical inspection contingency"
+      ],
+      "requiredGate": "which California contingency remains open",
+      "riskIfWrong": "Buyer may invoke the wrong contingency and lose a valid document-review issue."
+    },
+    {
+      "id": "K045",
+      "sourceBasis": "California request-for-repair guidance: seller credit should be checked against lender and closing-cost use limits.",
+      "persona": "Buyer agent",
+      "state": "CA",
+      "deal": "Seller offers a credit larger than buyer's remaining closing costs.",
+      "findings": [
+        "sewer lateral repair needed",
+        "seller offers 15000 credit",
+        "buyer has low remaining closing costs"
+      ],
+      "expectedLeadScope": [
+        "sewer lateral repair",
+        "credit usability review"
+      ],
+      "expectedExclusions": [
+        "credit amount accepted without lender review"
+      ],
+      "requiredGate": "lender and escrow credit check before RR response",
+      "riskIfWrong": "Buyer negotiates money they cannot actually receive or apply."
+    },
+    {
+      "id": "K046",
+      "sourceBasis": "California investigation source: buyer inspections generally need access and cannot assume destructive testing without authorization.",
+      "persona": "Buyer agent",
+      "state": "CA",
+      "deal": "Mold contractor wants to cut drywall during inspection period.",
+      "findings": [
+        "moisture behind shower wall",
+        "destructive mold test proposed",
+        "seller authorization missing"
+      ],
+      "expectedLeadScope": [
+        "moisture source",
+        "authorized specialist inspection"
+      ],
+      "expectedExclusions": [
+        "unauthorized drywall opening"
+      ],
+      "requiredGate": "inspection access and property-damage permission",
+      "riskIfWrong": "Buyer creates a breach or damage dispute while investigating the defect."
+    },
+    {
+      "id": "K047",
+      "sourceBasis": "California contingency-removal research: seller may need to prompt performance rather than assume deadlines self-execute.",
+      "persona": "Listing-side transaction coordinator",
+      "state": "CA",
+      "deal": "Buyer missed the investigation deadline and has not removed contingencies or canceled.",
+      "findings": [
+        "investigation deadline passed",
+        "no contingency removal",
+        "buyer asks for roof credit"
+      ],
+      "expectedLeadScope": [
+        "roof credit request",
+        "seller notice-to-perform review"
+      ],
+      "expectedExclusions": [
+        "treating silence as waiver"
+      ],
+      "requiredGate": "seller-side California contingency enforcement path",
+      "riskIfWrong": "Seller loses leverage by assuming the buyer's rights disappeared automatically."
+    },
+    {
+      "id": "K048",
+      "sourceBasis": "California request-for-repair practice: requests should separate broken systems from upgrades and future remodel preferences.",
+      "persona": "First-time buyer",
+      "state": "CA",
+      "deal": "Buyer wants seller to replace aged but working systems before removing contingency.",
+      "findings": [
+        "HVAC old but operational",
+        "electrical subpanel unsafe",
+        "buyer wants new flooring"
+      ],
+      "expectedLeadScope": [
+        "electrical subpanel safety",
+        "HVAC verification only"
+      ],
+      "expectedExclusions": [
+        "HVAC old but operational",
+        "new flooring"
+      ],
+      "requiredGate": "defect versus upgrade boundary in RR",
+      "riskIfWrong": "Buyer weakens a real safety issue by bundling it with improvement demands."
+    },
+    {
+      "id": "K049",
+      "sourceBasis": "California repair request workflow: if buyer cancels, it should be handled as cancellation under remaining contingency, not as another counter.",
+      "persona": "Buyer agent",
+      "state": "CA",
+      "deal": "Seller counters with a small credit and buyer wants to walk away before contingency removal.",
+      "findings": [
+        "foundation settlement concern",
+        "seller offers 1000 credit",
+        "buyer wants cancellation"
+      ],
+      "expectedLeadScope": [
+        "foundation settlement",
+        "cancellation under active contingency"
+      ],
+      "expectedExclusions": [
+        "more repair-counter drafting"
+      ],
+      "requiredGate": "active contingency and cancellation form handoff",
+      "riskIfWrong": "Product continues negotiation when the buyer's intended outcome is termination."
+    },
+    {
+      "id": "K050",
+      "sourceBasis": "California RR guidance: request expiration and contingency deadlines are separate timing risks.",
+      "persona": "Transaction coordinator",
+      "state": "CA",
+      "deal": "Request for Repair expiration is later than the investigation contingency deadline.",
+      "findings": [
+        "Request for Repair expires in three days",
+        "investigation contingency ends tomorrow",
+        "active plumbing leak"
+      ],
+      "expectedLeadScope": [
+        "plumbing leak",
+        "RR expiration versus contingency deadline"
+      ],
+      "expectedExclusions": [
+        "assuming RR expiration extends contingency"
+      ],
+      "requiredGate": "two-clock deadline check",
+      "riskIfWrong": "Buyer waits on the RR response and misses the actual contingency deadline."
+    },
+    {
+      "id": "K051",
+      "sourceBasis": "California request-for-repair sources: seller-requested repairs and lender/appraisal repairs should not be conflated.",
+      "persona": "FHA buyer agent",
+      "state": "CA",
+      "deal": "Buyer wants a credit for items that the appraiser may require to be repaired before closing.",
+      "findings": [
+        "missing handrail",
+        "peeling paint on pre-1978 exterior",
+        "seller offers closing credit"
+      ],
+      "expectedLeadScope": [
+        "handrail safety",
+        "paint lender/appraisal review"
+      ],
+      "expectedExclusions": [
+        "credit-only fix without lender clearance"
+      ],
+      "requiredGate": "lender-visible repair caveat in California RR",
+      "riskIfWrong": "Packet solves negotiation optics but not loan closing risk."
+    },
+    {
+      "id": "K052",
+      "sourceBasis": "California contingency-removal research: buyers who waive inspection contingencies shift the product from request drafting to risk advisory.",
+      "persona": "Luxury-market buyer agent",
+      "state": "CA",
+      "deal": "Buyer waived investigation contingency to win and now wants credits after reviewing disclosures.",
+      "findings": [
+        "investigation contingency waived",
+        "seller disclosure mentions prior roof leak",
+        "buyer wants post-acceptance credit"
+      ],
+      "expectedLeadScope": [
+        "roof leak disclosure review",
+        "rights advisory"
+      ],
+      "expectedExclusions": [
+        "standard RR leverage framing"
+      ],
+      "requiredGate": "waived-contingency warning",
+      "riskIfWrong": "Product tells agent to send a normal RR when buyer may have no contingency leverage."
+    },
+    {
+      "id": "K053",
+      "sourceBasis": "California workflow: repair response should preserve broker review when the wording could create legal obligations.",
+      "persona": "Broker-owner",
+      "state": "CA",
+      "deal": "Agent drafted seller warranty language for future sewer failure after a sewer scope.",
+      "findings": [
+        "sewer line offset",
+        "agent-written future warranty clause",
+        "seller willing to credit only"
+      ],
+      "expectedLeadScope": [
+        "sewer line offset",
+        "broker/form review"
+      ],
+      "expectedExclusions": [
+        "agent-written future warranty clause"
+      ],
+      "requiredGate": "state form and legal-language handoff",
+      "riskIfWrong": "Broker sees the tool as unauthorized legal drafting rather than transaction support."
+    },
+    {
+      "id": "K054",
+      "sourceBasis": "California request-for-repair best practice: supporting documentation should be scoped and attached deliberately.",
+      "persona": "Buyer agent",
+      "state": "CA",
+      "deal": "Buyer wants to ask for a roof credit using only a verbal roofer opinion.",
+      "findings": [
+        "verbal roofer estimate",
+        "roof leak visible in attic",
+        "no written quote"
+      ],
+      "expectedLeadScope": [
+        "roof leak",
+        "written quote needed"
+      ],
+      "expectedExclusions": [
+        "verbal estimate as sole proof"
+      ],
+      "requiredGate": "evidence attachment before RR amount",
+      "riskIfWrong": "Seller rejects the dollar amount as invented and buyer wastes the contingency window."
+    },
+    {
+      "id": "K055",
+      "sourceBasis": "California workflow: removal of some contingencies does not necessarily remove every remaining contingency.",
+      "persona": "Transaction coordinator",
+      "state": "CA",
+      "deal": "Buyer removed loan contingency but not investigation contingency and now has inspection concerns.",
+      "findings": [
+        "loan contingency removed",
+        "investigation contingency still unsigned",
+        "electrical panel safety issue"
+      ],
+      "expectedLeadScope": [
+        "electrical panel safety",
+        "which contingency remains active"
+      ],
+      "expectedExclusions": [
+        "all-contingencies-removed assumption"
+      ],
+      "requiredGate": "contingency-by-contingency status check",
+      "riskIfWrong": "Product wrongly blocks a valid inspection response or wrongly says buyer is protected."
+    },
+    {
+      "id": "K056",
+      "sourceBasis": "California request-for-repair guidance: buyers should not equate seller pre-list inspections with completing their own investigation.",
+      "persona": "Bay Area buyer agent",
+      "state": "CA",
+      "deal": "Buyer relied on seller reports and has two days left to decide whether to inspect independently.",
+      "findings": [
+        "seller pre-list inspection only",
+        "crawlspace moisture disclosure",
+        "buyer has not done own inspection"
+      ],
+      "expectedLeadScope": [
+        "crawlspace moisture",
+        "independent inspection decision"
+      ],
+      "expectedExclusions": [
+        "assuming seller report completes investigation"
+      ],
+      "requiredGate": "investigation completeness before contingency removal",
+      "riskIfWrong": "Buyer removes contingency without validating a known moisture risk."
+    },
+    {
+      "id": "K057",
+      "sourceBasis": "Florida Realtors/Florida Bar AS IS contract research: inspection period creates cancellation leverage but not a default seller repair duty.",
+      "persona": "Florida buyer agent",
+      "state": "FL",
+      "deal": "AS IS inspection period ends tonight and buyer wants seller to repair everything.",
+      "findings": [
+        "active roof leak",
+        "failed GFCI outlets",
+        "old but working appliances"
+      ],
+      "expectedLeadScope": [
+        "roof leak",
+        "electrical safety",
+        "cancel or renegotiate before deadline"
+      ],
+      "expectedExclusions": [
+        "old but working appliances"
+      ],
+      "requiredGate": "Florida AS IS inspection-period alive",
+      "riskIfWrong": "Packet implies seller is obligated to repair under AS IS rather than framing buyer leverage correctly."
+    },
+    {
+      "id": "K058",
+      "sourceBasis": "Florida AS IS source: buyer cancellation must be timely and in writing within the inspection period.",
+      "persona": "First-time Florida buyer",
+      "state": "FL",
+      "deal": "Buyer says by phone they want to cancel with one hour left in the inspection period.",
+      "findings": [
+        "buyer verbal cancellation",
+        "polybutylene piping concern",
+        "insurance quote unavailable"
+      ],
+      "expectedLeadScope": [
+        "plumbing risk",
+        "written cancellation before inspection deadline"
+      ],
+      "expectedExclusions": [
+        "phone call as cancellation"
+      ],
+      "requiredGate": "timely written cancellation/notice path",
+      "riskIfWrong": "Buyer may lose deposit protection by failing to deliver proper notice on time."
+    },
+    {
+      "id": "K059",
+      "sourceBasis": "Florida AS IS workflow: repair request does not automatically extend the inspection period.",
+      "persona": "Transaction coordinator",
+      "state": "FL",
+      "deal": "Buyer sent a repair request yesterday and thinks the inspection period paused.",
+      "findings": [
+        "repair request pending",
+        "inspection period expires today",
+        "roof insurability concern"
+      ],
+      "expectedLeadScope": [
+        "roof insurability",
+        "extension or cancellation decision"
+      ],
+      "expectedExclusions": [
+        "assuming pending request pauses deadline"
+      ],
+      "requiredGate": "AS IS deadline continues unless extended in writing",
+      "riskIfWrong": "Buyer waits for a seller response and loses the clean cancellation right."
+    },
+    {
+      "id": "K060",
+      "sourceBasis": "Florida AS IS practice: seller may renegotiate, but written addendum is needed for agreed credit or repair terms.",
+      "persona": "Florida buyer agent",
+      "state": "FL",
+      "deal": "Seller verbally agrees to a credit for electrical repairs during inspection period.",
+      "findings": [
+        "seller verbal credit agreement",
+        "electrical panel unsafe",
+        "no signed addendum"
+      ],
+      "expectedLeadScope": [
+        "electrical panel safety",
+        "signed addendum before deadline"
+      ],
+      "expectedExclusions": [
+        "verbal credit as final agreement"
+      ],
+      "requiredGate": "written AS IS addendum or cancellation backup",
+      "riskIfWrong": "Buyer lets the inspection period expire while relying on a non-final concession."
+    },
+    {
+      "id": "K061",
+      "sourceBasis": "Florida AS IS contract research: buyer may inspect as desired within the period, including insurance-sensitive systems.",
+      "persona": "Florida insurance-aware buyer agent",
+      "state": "FL",
+      "deal": "Four-point inspection is delayed until after the inspection period.",
+      "findings": [
+        "four-point inspection pending",
+        "roof older than insurer threshold",
+        "water heater at end of useful life"
+      ],
+      "expectedLeadScope": [
+        "roof insurability",
+        "water heater verification",
+        "inspection extension decision"
+      ],
+      "expectedExclusions": [
+        "proceeding without four-point results"
+      ],
+      "requiredGate": "insurance inspection complete or written extension",
+      "riskIfWrong": "Buyer closes into an insurance problem that should have been resolved during AS IS due diligence."
+    },
+    {
+      "id": "K062",
+      "sourceBasis": "Florida AS IS workflow: cancellation leverage is time-limited; post-period repair requests are materially different.",
+      "persona": "Listing agent",
+      "state": "FL",
+      "deal": "Inspection period expired three days ago and buyer now asks for a roof credit.",
+      "findings": [
+        "inspection period expired",
+        "buyer requests roof credit",
+        "roof leak noted in report"
+      ],
+      "expectedLeadScope": [
+        "roof leak advisory",
+        "post-period rights review"
+      ],
+      "expectedExclusions": [
+        "normal AS IS cancellation leverage"
+      ],
+      "requiredGate": "expired AS IS inspection-period warning",
+      "riskIfWrong": "Seller or buyer acts as though the original cancellation right remains open."
+    },
+    {
+      "id": "K063",
+      "sourceBasis": "Florida AS IS: seller repair obligation is limited unless separately agreed, so repair quality needs written specs if accepted.",
+      "persona": "Buyer agent",
+      "state": "FL",
+      "deal": "Seller agrees to fix a plumbing leak before closing but refuses to name a licensed plumber.",
+      "findings": [
+        "active plumbing leak",
+        "seller says handyman will repair",
+        "no receipt requirement"
+      ],
+      "expectedLeadScope": [
+        "plumbing leak",
+        "licensed repair and proof terms"
+      ],
+      "expectedExclusions": [
+        "handyman promise without proof"
+      ],
+      "requiredGate": "specific signed repair addendum",
+      "riskIfWrong": "Buyer accepts a vague repair promise and discovers poor work at walkthrough."
+    },
+    {
+      "id": "K064",
+      "sourceBasis": "Florida AS IS practice: buyer can request concessions but should be ready to cancel if seller refuses before the deadline.",
+      "persona": "Buyer agent in seller market",
+      "state": "FL",
+      "deal": "Seller says no repairs and no credits with two days left in inspection period.",
+      "findings": [
+        "seller refuses all concessions",
+        "cast iron drain corrosion",
+        "dated countertops"
+      ],
+      "expectedLeadScope": [
+        "drain corrosion",
+        "walk-away decision"
+      ],
+      "expectedExclusions": [
+        "dated countertops"
+      ],
+      "requiredGate": "accept AS IS or timely cancel",
+      "riskIfWrong": "Buyer keeps bargaining until the cancellation window expires."
+    },
+    {
+      "id": "K065",
+      "sourceBasis": "Florida AS IS contract timing: time calculations and delivery dates matter for notice and contract performance.",
+      "persona": "Transaction coordinator",
+      "state": "FL",
+      "deal": "Inspection period ends on a weekend and the team is unsure whether the deadline rolls.",
+      "findings": [
+        "deadline falls on Sunday",
+        "roof leak found Friday",
+        "agent plans Monday notice"
+      ],
+      "expectedLeadScope": [
+        "roof leak",
+        "contract time calculation"
+      ],
+      "expectedExclusions": [
+        "Monday notice assumption"
+      ],
+      "requiredGate": "Florida time-calculation confirmation",
+      "riskIfWrong": "Notice may be late because the tool guesses deadline treatment."
+    },
+    {
+      "id": "K066",
+      "sourceBasis": "Florida AS IS: condo/shared component issues require responsibility checks before making seller repair demands.",
+      "persona": "Condo buyer agent",
+      "state": "FL",
+      "deal": "Inspection finds balcony and roof issues in a condo during AS IS period.",
+      "findings": [
+        "balcony waterproofing may be association responsibility",
+        "interior ceiling stain",
+        "roof maintained by condo association"
+      ],
+      "expectedLeadScope": [
+        "interior water damage",
+        "association responsibility check"
+      ],
+      "expectedExclusions": [
+        "full roof demand to seller"
+      ],
+      "requiredGate": "seller versus association obligation check",
+      "riskIfWrong": "Buyer asks the wrong party for common-element repairs and misses the cancellation deadline."
+    },
+    {
+      "id": "K067",
+      "sourceBasis": "Florida AS IS: buyer due diligence can include additional inspections, but deadlines should drive specialist scheduling.",
+      "persona": "Buyer agent",
+      "state": "FL",
+      "deal": "Mold assessor cannot return lab results until after the inspection period.",
+      "findings": [
+        "mold-like staining at air handler",
+        "lab results after deadline",
+        "seller will not extend"
+      ],
+      "expectedLeadScope": [
+        "mold specialist risk",
+        "cancel or accept uncertainty"
+      ],
+      "expectedExclusions": [
+        "waiting for late lab results without extension"
+      ],
+      "requiredGate": "specialist-results deadline decision",
+      "riskIfWrong": "Buyer loses the AS IS exit while waiting for evidence."
+    },
+    {
+      "id": "K068",
+      "sourceBasis": "Florida AS IS: seller disclosure duties and inspection rights are separate from negotiated repairs.",
+      "persona": "Broker reviewer",
+      "state": "FL",
+      "deal": "Buyer alleges seller hid a prior roof leak during inspection-period negotiations.",
+      "findings": [
+        "prior roof leak disclosed by neighbor",
+        "active attic staining",
+        "seller denies knowledge"
+      ],
+      "expectedLeadScope": [
+        "roof leak evidence",
+        "broker/legal disclosure review"
+      ],
+      "expectedExclusions": [
+        "accusatory repair demand"
+      ],
+      "requiredGate": "disclosure concern and AS IS cancellation strategy",
+      "riskIfWrong": "Product escalates factual allegations without evidence and misses the practical deadline."
+    },
+    {
+      "id": "K069",
+      "sourceBasis": "Florida AS IS: cancellation and release of deposit can be procedurally distinct from repair negotiation.",
+      "persona": "Buyer agent",
+      "state": "FL",
+      "deal": "Buyer timely cancels in inspection period, but seller refuses to sign release.",
+      "findings": [
+        "timely cancellation notice delivered",
+        "seller refuses release",
+        "septic failure found"
+      ],
+      "expectedLeadScope": [
+        "septic failure",
+        "cancellation versus release status"
+      ],
+      "expectedExclusions": [
+        "new repair negotiation after cancellation"
+      ],
+      "requiredGate": "deposit release escalation path",
+      "riskIfWrong": "Agent confuses cancellation effectiveness with escrow release mechanics."
+    },
+    {
+      "id": "K070",
+      "sourceBasis": "Florida AS IS: inspection period should be used to decide whether a repair addendum, price change, or cancellation is the right path.",
+      "persona": "Investor buyer",
+      "state": "FL",
+      "deal": "Investor wants a price cut for post-closing cast iron replacement before AS IS period expires.",
+      "findings": [
+        "cast iron pipe deterioration",
+        "investor plans post-close replacement",
+        "seller prefers price reduction"
+      ],
+      "expectedLeadScope": [
+        "cast iron pipe deterioration",
+        "price reduction addendum"
+      ],
+      "expectedExclusions": [
+        "seller-managed replacement demand"
+      ],
+      "requiredGate": "economic concession documented before deadline",
+      "riskIfWrong": "Packet produces repair language instead of the agreed economic term."
+    },
+    {
+      "id": "K071",
+      "sourceBasis": "Florida AS IS: repair negotiations should account for lender and insurance repair requirements in addition to buyer preference.",
+      "persona": "Florida buyer agent",
+      "state": "FL",
+      "deal": "Buyer wants a credit for roof age, but insurer may require replacement before binding coverage.",
+      "findings": [
+        "roof near end of life",
+        "insurance binder conditional",
+        "seller offers small credit"
+      ],
+      "expectedLeadScope": [
+        "roof insurability",
+        "insurance condition review"
+      ],
+      "expectedExclusions": [
+        "small credit accepted without insurance clearance"
+      ],
+      "requiredGate": "insurance and financing clearance before AS IS deadline",
+      "riskIfWrong": "Buyer accepts a concession and later cannot insure or close."
+    },
+    {
+      "id": "K072",
+      "sourceBasis": "Florida AS IS: sending the whole inspection report is not the same as a signed buyer request or cancellation notice.",
+      "persona": "Listing-side transaction coordinator",
+      "state": "FL",
+      "deal": "Buyer agent forwarded the inspection report with no signed repair request.",
+      "findings": [
+        "inspection report forwarded",
+        "active kitchen leak",
+        "no buyer-signed request"
+      ],
+      "expectedLeadScope": [
+        "kitchen leak",
+        "signed request or cancellation status"
+      ],
+      "expectedExclusions": [
+        "report forwarding as formal ask"
+      ],
+      "requiredGate": "formal buyer instruction/document check",
+      "riskIfWrong": "Listing side treats informal report delivery as a binding repair demand."
+    },
+    {
+      "id": "K073",
+      "sourceBasis": "Florida AS IS: buyers can walk away during the inspection period, but must avoid post-deadline regret framing.",
+      "persona": "Buyer agent",
+      "state": "FL",
+      "deal": "Buyer is emotionally attached and wants to sleep on a major structural issue until after deadline.",
+      "findings": [
+        "structural beam rot",
+        "deadline at midnight",
+        "buyer wants one more day"
+      ],
+      "expectedLeadScope": [
+        "structural beam rot",
+        "extension or cancellation decision"
+      ],
+      "expectedExclusions": [
+        "sleeping on it past deadline"
+      ],
+      "requiredGate": "same-day AS IS decision support",
+      "riskIfWrong": "Buyer turns a protected decision into an unprotected post-deadline problem."
+    },
+    {
+      "id": "K074",
+      "sourceBasis": "New Jersey consumer guide: contracts prepared by licensees include a three-business-day attorney review clause and verbal counters should be written.",
+      "persona": "New Jersey buyer agent",
+      "state": "NJ",
+      "deal": "Seller verbally accepted inspection credit during attorney review, but attorney has not approved.",
+      "findings": [
+        "verbal inspection credit",
+        "attorney review still open",
+        "oil tank sweep concern"
+      ],
+      "expectedLeadScope": [
+        "oil tank sweep concern",
+        "attorney review written modification"
+      ],
+      "expectedExclusions": [
+        "verbal credit as binding term"
+      ],
+      "requiredGate": "NJ attorney review and written contract modification",
+      "riskIfWrong": "Buyer believes the deal is locked before attorney review and written terms are finalized."
+    },
+    {
+      "id": "K075",
+      "sourceBasis": "New Jersey consumer guide: attorney review can modify or nullify a licensee-prepared contract within the review period.",
+      "persona": "Listing agent",
+      "state": "NJ",
+      "deal": "Seller receives a higher backup offer while first contract is in attorney review.",
+      "findings": [
+        "first contract in attorney review",
+        "backup offer higher",
+        "inspection not yet scheduled"
+      ],
+      "expectedLeadScope": [
+        "attorney review status",
+        "backup-offer risk disclosure"
+      ],
+      "expectedExclusions": [
+        "treating first contract as fully final"
+      ],
+      "requiredGate": "attorney review status before advising parties",
+      "riskIfWrong": "Agent gives certainty that the contract may not yet have under state practice."
+    },
+    {
+      "id": "K076",
+      "sourceBasis": "New Jersey guide: counteroffers may be communicated verbally but should be memorialized and only become binding through contract terms.",
+      "persona": "Buyer agent",
+      "state": "NJ",
+      "deal": "Listing agent says seller will fix septic if buyer signs, but the contract draft is silent.",
+      "findings": [
+        "verbal septic repair promise",
+        "contract draft silent",
+        "attorney not copied"
+      ],
+      "expectedLeadScope": [
+        "septic repair",
+        "attorney-written term"
+      ],
+      "expectedExclusions": [
+        "agent relay as contract term"
+      ],
+      "requiredGate": "NJ attorney inclusion before relying on repair promise",
+      "riskIfWrong": "Buyer signs a contract that does not contain the septic obligation."
+    },
+    {
+      "id": "K077",
+      "sourceBasis": "New Jersey attorney review: inspection timing often follows review completion, so scheduling and deadline assumptions matter.",
+      "persona": "Transaction coordinator",
+      "state": "NJ",
+      "deal": "Buyer scheduled inspection before attorney review concluded and seller attorney disapproved contract.",
+      "findings": [
+        "inspection scheduled early",
+        "attorney disapproval letter sent",
+        "radon test already ordered"
+      ],
+      "expectedLeadScope": [
+        "inspection cost exposure",
+        "attorney review completion"
+      ],
+      "expectedExclusions": [
+        "assuming inspection spend means contract survives"
+      ],
+      "requiredGate": "attorney-review completion before irreversible spend",
+      "riskIfWrong": "Buyer spends money on inspections for a deal that may be nullified."
+    },
+    {
+      "id": "K078",
+      "sourceBasis": "New Jersey consumer guide: attorney review period is business-day based and starts from delivery of completely signed contracts.",
+      "persona": "Buyer agent",
+      "state": "NJ",
+      "deal": "Parties disagree whether attorney review ended because fully signed contracts were delivered late Friday.",
+      "findings": [
+        "fully signed contract delivered late Friday",
+        "attorney review clock disputed",
+        "inspection objection draft pending"
+      ],
+      "expectedLeadScope": [
+        "attorney review clock",
+        "inspection objection timing"
+      ],
+      "expectedExclusions": [
+        "calendar-day guess"
+      ],
+      "requiredGate": "business-day attorney review calculation",
+      "riskIfWrong": "Agent may tell buyer the contract is binding or cancellable on the wrong day."
+    },
+    {
+      "id": "K079",
+      "sourceBasis": "New Jersey workflow: attorney review modifications can address inspection rights and repair obligations before inspections occur.",
+      "persona": "New Jersey attorney-market buyer agent",
+      "state": "NJ",
+      "deal": "Buyer wants to keep inspection right despite seller pushing as-is language in attorney review.",
+      "findings": [
+        "seller attorney adds as-is rider",
+        "buyer wants inspection contingency preserved",
+        "basement moisture concern"
+      ],
+      "expectedLeadScope": [
+        "basement moisture",
+        "attorney review inspection-right language"
+      ],
+      "expectedExclusions": [
+        "agent interpreting rider without attorney"
+      ],
+      "requiredGate": "attorney review of as-is and inspection contingency",
+      "riskIfWrong": "Buyer may sign away inspection leverage without understanding the rider."
+    },
+    {
+      "id": "K080",
+      "sourceBasis": "Chicago REALTORS contract: attorney approval and inspection periods are distinct written-notice workflows.",
+      "persona": "Illinois buyer agent",
+      "state": "IL",
+      "deal": "Attorney approval period and inspection period both expire this week.",
+      "findings": [
+        "attorney modification deadline Friday",
+        "inspection notice deadline Thursday",
+        "furnace heat exchanger concern"
+      ],
+      "expectedLeadScope": [
+        "furnace safety",
+        "two-deadline workflow"
+      ],
+      "expectedExclusions": [
+        "single generic deadline"
+      ],
+      "requiredGate": "Illinois attorney approval and inspection notice clocks",
+      "riskIfWrong": "Team may satisfy one deadline while missing the other."
+    },
+    {
+      "id": "K081",
+      "sourceBasis": "Chicago contract: inspection notice should identify unacceptable defects and include pertinent report pages, not a full cosmetic list.",
+      "persona": "Junior buyer agent",
+      "state": "IL",
+      "deal": "Agent prepares inspection notice with cosmetic items under a Chicago-area contract.",
+      "findings": [
+        "main sewer line collapsed",
+        "loose cabinet knobs",
+        "small nail pops"
+      ],
+      "expectedLeadScope": [
+        "sewer line collapse",
+        "pertinent report pages"
+      ],
+      "expectedExclusions": [
+        "loose cabinet knobs",
+        "small nail pops"
+      ],
+      "requiredGate": "major-component defect scope",
+      "riskIfWrong": "Seller attorney rejects the notice as outside the inspection clause's intended scope."
+    },
+    {
+      "id": "K082",
+      "sourceBasis": "Chicago contract: if written agreement resolving inspection issues is not reached within the period, termination may be available.",
+      "persona": "Illinois transaction coordinator",
+      "state": "IL",
+      "deal": "Seller attorney counters after the inspection period expired and no extension was signed.",
+      "findings": [
+        "late seller counter",
+        "roof leak",
+        "no written extension"
+      ],
+      "expectedLeadScope": [
+        "roof leak",
+        "late counter and termination posture"
+      ],
+      "expectedExclusions": [
+        "assuming negotiation stayed open"
+      ],
+      "requiredGate": "inspection-period agreement or termination check",
+      "riskIfWrong": "Buyer may think the counter is timely when the contract status is disputed."
+    },
+    {
+      "id": "K083",
+      "sourceBasis": "Chicago contract: minor repairs below stated threshold may not constitute covered inspection defects.",
+      "persona": "Listing agent",
+      "state": "IL",
+      "deal": "Buyer asks for many minor items instead of major component defects.",
+      "findings": [
+        "three loose switch plates",
+        "minor faucet drip",
+        "HVAC failed cooling test"
+      ],
+      "expectedLeadScope": [
+        "HVAC failure"
+      ],
+      "expectedExclusions": [
+        "three loose switch plates",
+        "minor faucet drip"
+      ],
+      "requiredGate": "minor-maintenance exclusion check",
+      "riskIfWrong": "Product overvalidates a request the seller can frame as outside inspection notice scope."
+    },
+    {
+      "id": "K084",
+      "sourceBasis": "Illinois attorney approval source: proposed modifications exclude certain economics in the standard attorney modification path.",
+      "persona": "Buyer agent",
+      "state": "IL",
+      "deal": "Buyer asks attorney to use attorney review solely to lower the price after inspection.",
+      "findings": [
+        "foundation crack",
+        "buyer wants price cut only",
+        "attorney approval period open"
+      ],
+      "expectedLeadScope": [
+        "foundation crack",
+        "proper inspection or attorney modification route"
+      ],
+      "expectedExclusions": [
+        "price-only attorney modification framing"
+      ],
+      "requiredGate": "attorney review boundary and inspection notice coordination",
+      "riskIfWrong": "Agent misroutes an inspection issue into a modification path that may not fit the form."
+    },
+    {
+      "id": "K085",
+      "sourceBasis": "Chicago contract: in absence of written inspection notice before expiration, inspection provision can be deemed waived.",
+      "persona": "Buyer agent",
+      "state": "IL",
+      "deal": "Buyer verbally told agent about defects but no inspection notice was sent before deadline.",
+      "findings": [
+        "verbal defect list",
+        "inspection period expired",
+        "unsafe deck stairs"
+      ],
+      "expectedLeadScope": [
+        "deck safety",
+        "waiver and post-deadline review"
+      ],
+      "expectedExclusions": [
+        "verbal notice as preservation"
+      ],
+      "requiredGate": "written notice before inspection-period expiration",
+      "riskIfWrong": "Buyer believes defects were preserved because they told their agent."
+    },
+    {
+      "id": "K086",
+      "sourceBasis": "Chicago contract: attorney modifications and inspection notices are served by notice and should be tracked by delivery.",
+      "persona": "Transaction coordinator",
+      "state": "IL",
+      "deal": "Attorney emailed inspection objections to the wrong address on the last day.",
+      "findings": [
+        "notice sent to wrong email",
+        "electrical service defect",
+        "deadline already passed"
+      ],
+      "expectedLeadScope": [
+        "electrical service defect",
+        "notice delivery proof"
+      ],
+      "expectedExclusions": [
+        "draft email as delivered notice"
+      ],
+      "requiredGate": "notice recipient and delivery confirmation",
+      "riskIfWrong": "Parties fight over whether the inspection notice was effective."
+    },
+    {
+      "id": "K087",
+      "sourceBasis": "New York attorney-market industry pattern: contract terms are typically attorney-negotiated before execution, so pre-contract inspection posture differs from post-contract states.",
+      "persona": "New York buyer agent",
+      "state": "NY",
+      "deal": "Buyer inspected before signing and now wants repairs while seller entertains another offer.",
+      "findings": [
+        "pre-contract inspection found roof leak",
+        "contract not fully executed",
+        "seller has another offer"
+      ],
+      "expectedLeadScope": [
+        "roof leak",
+        "attorney contract rider negotiation"
+      ],
+      "expectedExclusions": [
+        "post-contract contingency assumption"
+      ],
+      "requiredGate": "NY attorney contract status before repair leverage",
+      "riskIfWrong": "Product assumes escrow-style protection before a contract exists."
+    },
+    {
+      "id": "K088",
+      "sourceBasis": "New York attorney-market workflow: inspection findings often become attorney rider terms before signature.",
+      "persona": "Buyer attorney support coordinator",
+      "state": "NY",
+      "deal": "Attorney wants concise inspection issues for contract rider drafting.",
+      "findings": [
+        "chimney flue unsafe",
+        "sewer line offset",
+        "old wallpaper"
+      ],
+      "expectedLeadScope": [
+        "chimney safety",
+        "sewer line offset"
+      ],
+      "expectedExclusions": [
+        "old wallpaper"
+      ],
+      "requiredGate": "attorney-rider summary, not standalone repair demand",
+      "riskIfWrong": "Output looks like an agent repair request instead of attorney-ready issue framing."
+    },
+    {
+      "id": "K089",
+      "sourceBasis": "Connecticut attorney-market practice: attorney-prepared contracts and contingency language need review before relying on repair rights.",
+      "persona": "Connecticut buyer agent",
+      "state": "CT",
+      "deal": "Offer has inspection contingency, but attorney draft narrows remedies to terminate-only.",
+      "findings": [
+        "well water fails bacteria test",
+        "inspection contingency remedy disputed",
+        "buyer wants seller treatment system"
+      ],
+      "expectedLeadScope": [
+        "well water safety",
+        "attorney contingency language review"
+      ],
+      "expectedExclusions": [
+        "assuming repair remedy exists"
+      ],
+      "requiredGate": "attorney review of inspection remedy",
+      "riskIfWrong": "Buyer asks for seller work when the contract may only allow accept-or-terminate."
+    },
+    {
+      "id": "K090",
+      "sourceBasis": "Massachusetts attorney/P&S workflow: inspection contingency terms in the purchase and sale agreement control timing and remedies.",
+      "persona": "Massachusetts buyer agent",
+      "state": "MA",
+      "deal": "Offer inspection deadline differs from the draft purchase and sale inspection language.",
+      "findings": [
+        "active knob-and-tube wiring concern",
+        "offer deadline says Monday",
+        "P&S draft says Friday"
+      ],
+      "expectedLeadScope": [
+        "electrical safety",
+        "conflicting deadline review"
+      ],
+      "expectedExclusions": [
+        "choosing favorable date without attorney review"
+      ],
+      "requiredGate": "attorney-confirmed controlling deadline",
+      "riskIfWrong": "Buyer misses the enforceable inspection date because the tool picks the wrong document."
+    },
+    {
+      "id": "K091",
+      "sourceBasis": "Attorney-review states: agent should summarize defects and options without pretending to provide legal notice.",
+      "persona": "Attorney-market buyer agent",
+      "state": "NY",
+      "deal": "Attorney asks agent not to send any repair demand directly to seller.",
+      "findings": [
+        "foundation movement",
+        "attorney controls seller communication",
+        "buyer wants copy-ready legal letter"
+      ],
+      "expectedLeadScope": [
+        "foundation movement",
+        "attorney-facing defect summary"
+      ],
+      "expectedExclusions": [
+        "copy-ready legal letter to seller"
+      ],
+      "requiredGate": "attorney communication boundary",
+      "riskIfWrong": "Product bypasses counsel and creates unauthorized communication risk."
+    },
+    {
+      "id": "K092",
+      "sourceBasis": "Attorney-review workflow: inspection and attorney review can overlap, creating cost and deadline tradeoffs.",
+      "persona": "Illinois buyer",
+      "state": "IL",
+      "deal": "Buyer hesitates to pay for sewer scope before attorney approval ends.",
+      "findings": [
+        "attorney approval period open",
+        "sewer backup evidence",
+        "scope appointment available today only"
+      ],
+      "expectedLeadScope": [
+        "sewer backup evidence",
+        "inspection spend versus attorney review risk"
+      ],
+      "expectedExclusions": [
+        "assuming attorney approval is complete"
+      ],
+      "requiredGate": "cost/risk tradeoff before attorney review ends",
+      "riskIfWrong": "Buyer either wastes inspection money or misses the chance to find a major defect."
+    },
+    {
+      "id": "K093",
+      "sourceBasis": "Attorney-review states: all modifications and counters should be tracked in writing with counsel when applicable.",
+      "persona": "New Jersey transaction coordinator",
+      "state": "NJ",
+      "deal": "Multiple attorney emails changed inspection dates, but the team calendar still uses the original date.",
+      "findings": [
+        "attorney email extends inspection date",
+        "team calendar not updated",
+        "septic inspection pending"
+      ],
+      "expectedLeadScope": [
+        "septic inspection",
+        "attorney-modified deadline tracking"
+      ],
+      "expectedExclusions": [
+        "original deadline as sole source"
+      ],
+      "requiredGate": "single source of truth for attorney-modified dates",
+      "riskIfWrong": "Team sends notices early, late, or to the wrong party because the file has competing dates."
+    },
+    {
+      "id": "K094",
+      "sourceBasis": "Attorney-market transactions: as-is language does not automatically answer whether inspection cancellation or repair requests survive.",
+      "persona": "Connecticut listing agent",
+      "state": "CT",
+      "deal": "Buyer signed as-is offer with inspection contingency and now asks for safety repairs.",
+      "findings": [
+        "as-is clause",
+        "inspection contingency included",
+        "exposed wiring"
+      ],
+      "expectedLeadScope": [
+        "electrical safety",
+        "attorney review of as-is and contingency interaction"
+      ],
+      "expectedExclusions": [
+        "blanket rejection based only on as-is label"
+      ],
+      "requiredGate": "contract-specific attorney interpretation",
+      "riskIfWrong": "Seller rejects a request that may still be valid under the negotiated contingency."
+    },
+    {
+      "id": "K095",
+      "sourceBasis": "Attorney-review workflows: inspection report sharing may have disclosure and negotiation consequences.",
+      "persona": "New York buyer agent",
+      "state": "NY",
+      "deal": "Buyer wants to send entire report to seller attorney before contract signing.",
+      "findings": [
+        "full report includes dozens of minor issues",
+        "active roof leak",
+        "old boiler but functioning"
+      ],
+      "expectedLeadScope": [
+        "roof leak",
+        "attorney-guided report-sharing strategy"
+      ],
+      "expectedExclusions": [
+        "old boiler but functioning",
+        "full report dump"
+      ],
+      "requiredGate": "attorney-guided disclosure/report handoff",
+      "riskIfWrong": "Buyer creates friction and disclosure fallout without improving contract terms."
+    },
+    {
+      "id": "K096",
+      "sourceBasis": "Attorney-review and inspection workflows: termination after unresolved inspection issues should match contract notice terms.",
+      "persona": "Illinois buyer agent",
+      "state": "IL",
+      "deal": "Buyer wants to terminate after seller rejects inspection notice.",
+      "findings": [
+        "seller rejects inspection notice",
+        "foundation wall bowing",
+        "termination notice not drafted"
+      ],
+      "expectedLeadScope": [
+        "foundation wall bowing",
+        "termination notice through attorney"
+      ],
+      "expectedExclusions": [
+        "casual email saying buyer is out"
+      ],
+      "requiredGate": "contract notice termination path",
+      "riskIfWrong": "Buyer creates an earnest-money dispute by terminating informally."
+    },
+    {
+      "id": "K097",
+      "sourceBasis": "Attorney-review states: buyer-agent tools should defer legal interpretation of riders while still prioritizing defect evidence.",
+      "persona": "Massachusetts team lead",
+      "state": "MA",
+      "deal": "Seller rider caps inspection repair requests at a small amount but buyer found major structural rot.",
+      "findings": [
+        "seller rider has repair cap",
+        "sill rot at foundation",
+        "buyer wants full remediation"
+      ],
+      "expectedLeadScope": [
+        "structural sill rot",
+        "attorney review of repair cap"
+      ],
+      "expectedExclusions": [
+        "agent interpreting cap alone"
+      ],
+      "requiredGate": "attorney escalation for rider conflict",
+      "riskIfWrong": "Agent either overpromises leverage or under-asserts a major safety issue."
+    },
+    {
+      "id": "K098",
+      "sourceBasis": "Attorney-review workflow: counteroffers and inspection credits should be documented through counsel when counsel controls the transaction.",
+      "persona": "New Jersey buyer agent",
+      "state": "NJ",
+      "deal": "Seller's attorney counters inspection request with home warranty only.",
+      "findings": [
+        "HVAC failed heating test",
+        "home warranty offered",
+        "inspection deadline approaching"
+      ],
+      "expectedLeadScope": [
+        "HVAC failure",
+        "attorney counter comparison"
+      ],
+      "expectedExclusions": [
+        "home warranty as equivalent repair"
+      ],
+      "requiredGate": "attorney-mediated counter response",
+      "riskIfWrong": "Buyer accepts a warranty that may not solve a known failed system."
+    },
+    {
+      "id": "K099",
+      "sourceBasis": "Attorney-review states: file status must distinguish accepted offer, attorney review, fully executed contract, and inspection contingency.",
+      "persona": "Operations manager",
+      "state": "NJ",
+      "deal": "Team dashboard labels attorney-review files as under contract and triggers inspection packet automation.",
+      "findings": [
+        "accepted offer in attorney review",
+        "automation sends repair packet",
+        "inspection not completed"
+      ],
+      "expectedLeadScope": [
+        "workflow-state classification",
+        "attorney review gate"
+      ],
+      "expectedExclusions": [
+        "under-contract label without review status"
+      ],
+      "requiredGate": "state-aware status model",
+      "riskIfWrong": "Automation sends the wrong packet before the transaction reaches the proper stage."
+    },
+    {
+      "id": "K100",
+      "sourceBasis": "Cross-state contract workflow research: the tool must choose between ask, counter, signed amendment, termination, or walk-away advisory based on state and deadline state.",
+      "persona": "Multi-state buyer-agent team lead",
+      "state": "US",
+      "deal": "Team handles TX, CO, CA, FL, NJ, and IL files and wants one validation case for routing failures.",
+      "findings": [
+        "state-specific deadline unknown",
+        "seller counter received",
+        "active roof leak",
+        "contingency may be expired"
+      ],
+      "expectedLeadScope": [
+        "roof leak",
+        "state-specific workflow routing",
+        "counter or termination decision"
+      ],
+      "expectedExclusions": [
+        "generic repair letter"
+      ],
+      "requiredGate": "state, deadline, and document-status router",
+      "riskIfWrong": "Product generates polished but legally misrouted content across multiple contract regimes."
+    }
+  ]
+}

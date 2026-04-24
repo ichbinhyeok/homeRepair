@@ -1,0 +1,2342 @@
+{
+  "meta": {
+    "created": "2026-04-24",
+    "basis": "100 synthetic domain validation cases rewritten from public internet research about residential inspection system defects, water intrusion, roof and sewer scope limitations, electrical and HVAC safety, WDI conditions, pool/deck/chimney hazards, and insurance underwriting friction.",
+    "warning": "These are internet-researched synthetic cases, not verified customer interviews, legal advice, lending advice, insurance advice, or repair estimates.",
+    "sources": [
+      "https://www.nachi.org/sop/htm.htm/1000.htm",
+      "https://www.nachi.org/sewer-scope-sop.htm",
+      "https://www.epa.gov/mold/mold-cleanup",
+      "https://www.cdc.gov/mold-health/communication-resources/guide-to-mold-cleanup.html",
+      "https://www.epa.gov/septic/how-care-your-septic-system",
+      "https://www.epa.gov/npdes/sanitary-sewer-overflow-sso-frequent-questions",
+      "https://www.cpsc.gov/Newsroom/News-Releases/1974/CPSC-Safety-Recommendations-For-Aluminum-Wiring-In-Homes",
+      "https://www.cpsc.gov/Newsroom/News-Releases/1991/Inspect-Home-Furnace-System-For-Hazards-Carbon-Monoxide",
+      "https://www.energystar.gov/saveathome/heating-cooling/hvac-quality-installation",
+      "https://www.citizensfla.com/inspections",
+      "https://www.nadra.org/deck-safety/deck-evaluation-guide",
+      "https://www.csia.org/latest-news/preventing-chimney-fires",
+      "https://content.ces.ncsu.edu/monitoring-management-of-eastern-subterranean-termites",
+      "https://basc.pnnl.gov/resource-guides/final-grade-slopes-away-foundation",
+      "https://www.cpsc.gov/s3fs-public/362%20Safety%20Barrier%20Guidelines%20for%20Pools.pdf"
+    ]
+  },
+  "cases": [
+    {
+      "id": "S001",
+      "sourceBasis": "Roof and general inspection standards treat active roof leakage and visible flashing defects as material system issues rather than cosmetic age comments.",
+      "persona": "Buyer agent",
+      "state": "GA",
+      "deal": "Conventional buyer has seven inspection days left on a 1990s two-story home.",
+      "findings": [
+        "active roof leak at rear bedroom ceiling",
+        "rusted chimney flashing",
+        "granule loss on older shingles",
+        "faded shutters"
+      ],
+      "expectedLeadScope": [
+        "active roof leak",
+        "chimney flashing water entry",
+        "roofing contractor quote"
+      ],
+      "expectedExclusions": [
+        "faded shutters",
+        "granule loss without leak scope"
+      ],
+      "requiredGate": "quote-needed roofing scope and photo evidence",
+      "riskIfWrong": "The ask may become an unsupported roof replacement demand instead of a defensible leak repair or credit."
+    },
+    {
+      "id": "S002",
+      "sourceBasis": "FEMA roof flashing guidance links failed roof penetrations to water intrusion and downstream damage, making source control more important than repainting stains.",
+      "persona": "First-time buyer agent",
+      "state": "SC",
+      "deal": "Inspection contingency is open but seller says the ceiling stain was already painted once.",
+      "findings": [
+        "ceiling stain below skylight",
+        "open sealant gap at skylight flashing",
+        "fresh ceiling paint patch",
+        "loose closet door knob"
+      ],
+      "expectedLeadScope": [
+        "skylight flashing water intrusion",
+        "moisture verification",
+        "roof repair quote"
+      ],
+      "expectedExclusions": [
+        "loose closet door knob",
+        "paint-only repair"
+      ],
+      "requiredGate": "source-before-cosmetic-repair gate",
+      "riskIfWrong": "Buyer could accept paint touchup while the leak source remains active."
+    },
+    {
+      "id": "S003",
+      "sourceBasis": "Public inspection standards distinguish observed active leakage from merely estimating roof life expectancy.",
+      "persona": "Listing agent reviewing buyer request",
+      "state": "OH",
+      "deal": "Buyer sent a broad roof replacement request after a dry inspection.",
+      "findings": [
+        "roof is 18 years old but dry",
+        "no active roof leak observed",
+        "minor moss at north slope",
+        "buyer asks for full replacement"
+      ],
+      "expectedLeadScope": [
+        "roof certification or roofer evaluation only"
+      ],
+      "expectedExclusions": [
+        "full replacement without defect",
+        "minor moss at north slope"
+      ],
+      "requiredGate": "age-alone is not a replacement basis",
+      "riskIfWrong": "The system validates an overbroad ask that a seller can reject as age-based preference."
+    },
+    {
+      "id": "S004",
+      "sourceBasis": "Insurance underwriting sources show roof age and remaining useful life can be a deal risk even when the report does not call for immediate failure.",
+      "persona": "Florida buyer agent",
+      "state": "FL",
+      "deal": "AS IS contract; buyer cannot bind insurance until four-point items are reviewed.",
+      "findings": [
+        "shingle roof reported 24 years old",
+        "no active roof leak observed",
+        "carrier requested remaining life documentation",
+        "dirty gutters"
+      ],
+      "expectedLeadScope": [
+        "roof insurability verification",
+        "remaining useful life documentation",
+        "insurance quote-needed risk"
+      ],
+      "expectedExclusions": [
+        "dirty gutters",
+        "automatic full replacement demand"
+      ],
+      "requiredGate": "insurance binder and roofer documentation",
+      "riskIfWrong": "Buyer may discover after the inspection period that the roof prevents affordable coverage."
+    },
+    {
+      "id": "S005",
+      "sourceBasis": "Roof penetrations, flashing, and attic staining are system clues that require source diagnosis before price negotiation.",
+      "persona": "Relocation buyer agent",
+      "state": "WA",
+      "deal": "Remote buyer needs a concise high-risk summary before deciding whether to fly in.",
+      "findings": [
+        "attic sheathing dark staining near bath vent",
+        "improper bathroom exhaust termination into attic",
+        "roof surface dry during inspection",
+        "dated hallway carpet"
+      ],
+      "expectedLeadScope": [
+        "attic moisture source",
+        "bath exhaust termination",
+        "roof or ventilation specialist evaluation"
+      ],
+      "expectedExclusions": [
+        "dated hallway carpet"
+      ],
+      "requiredGate": "remote-buyer evidence references",
+      "riskIfWrong": "The buyer cannot separate a ventilation moisture issue from a roof leak and may ask for the wrong repair."
+    },
+    {
+      "id": "S006",
+      "sourceBasis": "Inspection standards include gutters, downspouts, and drainage where they can adversely affect the structure.",
+      "persona": "Buyer agent in heavy-rain market",
+      "state": "OR",
+      "deal": "Inspection happened during rain and water was observed at the foundation line.",
+      "findings": [
+        "overflowing gutter at front valley",
+        "downspout dumps beside crawlspace vent",
+        "wet crawlspace perimeter soil",
+        "cosmetic siding oxidation"
+      ],
+      "expectedLeadScope": [
+        "roof drainage correction",
+        "crawlspace moisture evaluation",
+        "downspout extension"
+      ],
+      "expectedExclusions": [
+        "cosmetic siding oxidation"
+      ],
+      "requiredGate": "drainage-source linkage",
+      "riskIfWrong": "The request may treat crawlspace moisture as isolated instead of addressing roof runoff feeding the problem."
+    },
+    {
+      "id": "S007",
+      "sourceBasis": "Roof leak risk rises when damaged flashing or roof covering defects are paired with interior moisture indicators.",
+      "persona": "Team lead reviewing junior agent packet",
+      "state": "TN",
+      "deal": "Junior agent drafted a request for every roof note on a 42-page report.",
+      "findings": [
+        "missing shingles at plumbing vent slope",
+        "water stain in attic below same slope",
+        "minor nail pops on porch shingles",
+        "old satellite dish mount"
+      ],
+      "expectedLeadScope": [
+        "missing shingles with attic stain",
+        "roof leak repair quote"
+      ],
+      "expectedExclusions": [
+        "minor nail pops",
+        "old satellite dish mount"
+      ],
+      "requiredGate": "lead only linked functional defects",
+      "riskIfWrong": "A valid leak ask gets diluted by minor maintenance items."
+    },
+    {
+      "id": "S008",
+      "sourceBasis": "HUD/FHA collateral guidance and public roof standards treat roof serviceability differently from cosmetic finish.",
+      "persona": "FHA-heavy buyer agent",
+      "state": "PA",
+      "deal": "FHA buyer has inspection findings before appraisal is complete.",
+      "findings": [
+        "active roof leak over kitchen light",
+        "wet insulation in attic",
+        "peeling fascia paint",
+        "stained but dry bedroom carpet"
+      ],
+      "expectedLeadScope": [
+        "active roof leak",
+        "wet attic insulation",
+        "lender-visible roof concern"
+      ],
+      "expectedExclusions": [
+        "stained but dry bedroom carpet"
+      ],
+      "requiredGate": "lender and repair-completion caveat",
+      "riskIfWrong": "The packet may imply a seller credit is enough when repair completion could affect financing."
+    },
+    {
+      "id": "S009",
+      "sourceBasis": "Roof water entry around chimneys should be separated from fireplace flue safety and masonry scope.",
+      "persona": "Buyer agent",
+      "state": "CT",
+      "deal": "General inspection and chimney scan produce overlapping but different defects.",
+      "findings": [
+        "chimney counterflashing separated",
+        "cracked clay flue tile reported by chimney camera",
+        "small living room ceiling stain",
+        "dated brick hearth color"
+      ],
+      "expectedLeadScope": [
+        "chimney flashing water intrusion",
+        "flue liner fire safety",
+        "chimney specialist quote"
+      ],
+      "expectedExclusions": [
+        "dated brick hearth color"
+      ],
+      "requiredGate": "split roof leak from chimney fire-safety scope",
+      "riskIfWrong": "The ask may use one trade quote to cover two distinct hazards and become indefensible."
+    },
+    {
+      "id": "S010",
+      "sourceBasis": "Insurance and inspection guidance treat roof damage, active leaks, and age-driven underwriting as separate negotiation tracks.",
+      "persona": "Insurance-aware transaction coordinator",
+      "state": "TX",
+      "deal": "Buyer has an insurance quote pending and option period ends tomorrow.",
+      "findings": [
+        "hail-damaged shingles noted by inspector",
+        "no current interior leak",
+        "carrier asks for roof photos",
+        "buyer wants seller to file insurance claim"
+      ],
+      "expectedLeadScope": [
+        "roof condition verification",
+        "insurance quote-needed risk",
+        "option-period deadline"
+      ],
+      "expectedExclusions": [
+        "seller insurance claim instruction"
+      ],
+      "requiredGate": "do not assume carrier coverage or claim path",
+      "riskIfWrong": "The packet could direct the seller into an insurance claim strategy outside the buyer's evidence base."
+    },
+    {
+      "id": "S011",
+      "sourceBasis": "Sewer scope standards report root intrusion, offsets, standing water, and blockages as material defects in the lateral line.",
+      "persona": "Buyer agent",
+      "state": "CO",
+      "deal": "Sewer scope returned before the Colorado objection deadline.",
+      "findings": [
+        "tree root intrusion at clay sewer joints",
+        "standing water in low section",
+        "scope could not pass beyond 62 feet",
+        "old but working dishwasher"
+      ],
+      "expectedLeadScope": [
+        "sewer root intrusion",
+        "standing water in sewer lateral",
+        "complete sewer scope or repair quote"
+      ],
+      "expectedExclusions": [
+        "old but working dishwasher"
+      ],
+      "requiredGate": "sewer video and plumber quote needed",
+      "riskIfWrong": "Buyer may negotiate a small cleaning credit when a blocked or broken lateral could be a major repair."
+    },
+    {
+      "id": "S012",
+      "sourceBasis": "EPA sanitary sewer overflow guidance identifies roots, grease, cracks, and stormwater infiltration as overflow and backup causes.",
+      "persona": "First-time buyer",
+      "state": "MI",
+      "deal": "Seller says the basement floor drain has only backed up once after a storm.",
+      "findings": [
+        "floor drain backup residue in basement",
+        "cast iron sewer scale",
+        "mature maple over lateral path",
+        "minor basement paneling stains"
+      ],
+      "expectedLeadScope": [
+        "sewer backup risk",
+        "cast iron sewer scale",
+        "lateral scope or cleaning verification"
+      ],
+      "expectedExclusions": [
+        "minor basement paneling stains"
+      ],
+      "requiredGate": "backup history and scope evidence",
+      "riskIfWrong": "The buyer could miss a private lateral defect until sewage backs up after closing."
+    },
+    {
+      "id": "S013",
+      "sourceBasis": "Sewer scope standards treat incomplete access or blocked camera travel as a limitation that should not be converted into a clean bill of health.",
+      "persona": "Transaction coordinator",
+      "state": "IL",
+      "deal": "Listing side claims the sewer passed because the first 30 feet looked clean.",
+      "findings": [
+        "sewer camera stopped at heavy obstruction",
+        "no cleanout at exterior wall",
+        "partial video only",
+        "seller provided old rodding receipt"
+      ],
+      "expectedLeadScope": [
+        "incomplete sewer scope",
+        "obstruction verification",
+        "cleanout or access recommendation"
+      ],
+      "expectedExclusions": [
+        "old rodding receipt as proof"
+      ],
+      "requiredGate": "incomplete inspection limitation",
+      "riskIfWrong": "The packet could falsely treat a limited scope as a pass and leave the buyer with unknown lateral risk."
+    },
+    {
+      "id": "S014",
+      "sourceBasis": "EPA septic homeowner guidance emphasizes drainfield protection, maintenance, and avoiding root or vehicle damage.",
+      "persona": "Rural buyer agent",
+      "state": "NC",
+      "deal": "VA buyer is under contract on acreage with a private septic system.",
+      "findings": [
+        "septic drainfield has vehicle ruts",
+        "slow drains during inspection",
+        "septic records unavailable",
+        "old barn siding is weathered"
+      ],
+      "expectedLeadScope": [
+        "septic system evaluation",
+        "drainfield damage risk",
+        "VA sanitation concern"
+      ],
+      "expectedExclusions": [
+        "old barn siding is weathered"
+      ],
+      "requiredGate": "septic specialist and lender confirmation",
+      "riskIfWrong": "The product may underplay a sanitation issue that can affect loan approval and post-close usability."
+    },
+    {
+      "id": "S015",
+      "sourceBasis": "Septic and sewer guidance separate public lateral defects from private onsite wastewater failures, which need different specialists and responsibilities.",
+      "persona": "Buyer agent",
+      "state": "NJ",
+      "deal": "Older home converted from septic to public sewer decades ago.",
+      "findings": [
+        "abandoned septic tank location unknown",
+        "public sewer lateral has root intrusion",
+        "seller unsure if tank was filled",
+        "old wallpaper"
+      ],
+      "expectedLeadScope": [
+        "sewer lateral root intrusion",
+        "abandoned septic tank verification",
+        "municipal or specialist records"
+      ],
+      "expectedExclusions": [
+        "old wallpaper"
+      ],
+      "requiredGate": "responsibility and records check",
+      "riskIfWrong": "A single generic plumbing request may miss buried tank liability and lateral repair responsibility."
+    },
+    {
+      "id": "S016",
+      "sourceBasis": "Sewer scope standards list offsets and separated lines as defects distinct from routine drain cleaning.",
+      "persona": "Buyer agent",
+      "state": "MO",
+      "deal": "Seller offers to snake the line but refuses a repair credit.",
+      "findings": [
+        "offset clay sewer joint over one quarter inch",
+        "roots at offset joint",
+        "seller offers drain cleaning only",
+        "loose laundry shelf"
+      ],
+      "expectedLeadScope": [
+        "offset sewer joint",
+        "root intrusion at defect",
+        "repair quote beyond cleaning"
+      ],
+      "expectedExclusions": [
+        "loose laundry shelf"
+      ],
+      "requiredGate": "maintenance versus structural sewer defect",
+      "riskIfWrong": "Buyer accepts temporary cleaning for a pipe defect likely to recur."
+    },
+    {
+      "id": "S017",
+      "sourceBasis": "EPA overflow guidance treats fats, wipes, and inadequate maintenance as blockage contributors, but a buyer request still needs property-specific evidence.",
+      "persona": "Listing agent",
+      "state": "CA",
+      "deal": "Buyer requests full sewer replacement after a slow-drain note without a scope.",
+      "findings": [
+        "slow hall bath drain",
+        "no sewer scope performed",
+        "tenant reported wipes flushed",
+        "buyer asks for full lateral replacement"
+      ],
+      "expectedLeadScope": [
+        "sewer scope recommendation",
+        "drainage verification"
+      ],
+      "expectedExclusions": [
+        "full lateral replacement without scope"
+      ],
+      "requiredGate": "evidence-before-large-ask",
+      "riskIfWrong": "The request overclaims a hidden sewer defect without video or plumber support."
+    },
+    {
+      "id": "S018",
+      "sourceBasis": "Sewer scope findings need usable video, distance markers, and defect labels before being turned into a dollar ask.",
+      "persona": "Buyer agent team lead",
+      "state": "UT",
+      "deal": "Team lead is reviewing a packet for a 1950s bungalow.",
+      "findings": [
+        "Orangeburg-like sewer material suspected",
+        "pipe deformation seen on video",
+        "video lacks distance markers",
+        "old but functional range"
+      ],
+      "expectedLeadScope": [
+        "suspected failing sewer material",
+        "pipe deformation",
+        "plumber quote with location markers"
+      ],
+      "expectedExclusions": [
+        "old but functional range"
+      ],
+      "requiredGate": "quote-needed and video-quality caveat",
+      "riskIfWrong": "The buyer may ask for an invented sewer credit without knowing repair location or method."
+    },
+    {
+      "id": "S019",
+      "sourceBasis": "Private sewer laterals can be outside a standard home inspection scope, so missing a recommended ancillary scope is a validation failure.",
+      "persona": "Inspector-channel partner",
+      "state": "OH",
+      "deal": "Inspector wants to test whether the product flags ancillary sewer scope opportunities.",
+      "findings": [
+        "home built in 1938",
+        "large trees over sewer path",
+        "no sewer scope ordered",
+        "minor cracked driveway apron"
+      ],
+      "expectedLeadScope": [
+        "sewer scope recommendation",
+        "older lateral risk",
+        "tree-root risk"
+      ],
+      "expectedExclusions": [
+        "minor cracked driveway apron"
+      ],
+      "requiredGate": "ancillary inspection prompt, not repair demand",
+      "riskIfWrong": "The tool either misses a major hidden system risk or overstates a defect not yet inspected."
+    },
+    {
+      "id": "S020",
+      "sourceBasis": "EPA septic maintenance guidance points to records, tank condition, and drainfield function as decision-critical for rural purchases.",
+      "persona": "Cash buyer agent",
+      "state": "ME",
+      "deal": "Cash buyer can close quickly but has no lender forcing septic documentation.",
+      "findings": [
+        "septic tank lid is cracked",
+        "effluent odor near drainfield",
+        "no pumping records",
+        "wood stove is decorative"
+      ],
+      "expectedLeadScope": [
+        "septic tank lid repair",
+        "drainfield odor evaluation",
+        "septic records and quote"
+      ],
+      "expectedExclusions": [
+        "wood stove is decorative"
+      ],
+      "requiredGate": "cash buyer still needs sanitation risk gate",
+      "riskIfWrong": "The system may treat cash as low-risk and fail to surface a costly onsite wastewater issue."
+    },
+    {
+      "id": "S021",
+      "sourceBasis": "Foundation inspection guidance distinguishes small cosmetic cracks from cracks paired with displacement, moisture, or framing symptoms.",
+      "persona": "Buyer agent",
+      "state": "TX",
+      "deal": "Option period ends in 36 hours on a slab home in expansive-soil market.",
+      "findings": [
+        "diagonal interior cracks at multiple doors",
+        "front bedroom door out of square",
+        "slab crack with vertical offset",
+        "minor nail pops"
+      ],
+      "expectedLeadScope": [
+        "possible foundation movement",
+        "slab crack with offset",
+        "structural engineer evaluation"
+      ],
+      "expectedExclusions": [
+        "minor nail pops"
+      ],
+      "requiredGate": "engineer quote before credit number",
+      "riskIfWrong": "A generic handyman repair ask could miss structural movement and option-period leverage."
+    },
+    {
+      "id": "S022",
+      "sourceBasis": "Building America and FEMA water-management guidance emphasizes grading, gutters, and foundation drainage before interior finish repair.",
+      "persona": "Buyer agent in mountain market",
+      "state": "CO",
+      "deal": "Basement finish is new, but inspection found wet foundation corners.",
+      "findings": [
+        "negative grade at rear foundation",
+        "downspouts discharge against basement wall",
+        "moisture meter elevated at finished wall",
+        "new luxury vinyl plank flooring"
+      ],
+      "expectedLeadScope": [
+        "foundation drainage correction",
+        "basement water intrusion",
+        "moisture verification behind finishes"
+      ],
+      "expectedExclusions": [
+        "new luxury vinyl plank flooring"
+      ],
+      "requiredGate": "source control before finish credit",
+      "riskIfWrong": "Buyer may negotiate floor repair while water continues entering behind the wall."
+    },
+    {
+      "id": "S023",
+      "sourceBasis": "Crawlspace inspection guidance treats active water penetration, wood contact, and compromised framing as material structure concerns.",
+      "persona": "North Carolina buyer agent",
+      "state": "NC",
+      "deal": "Due diligence period is expensive and buyer needs a go/no-go recommendation.",
+      "findings": [
+        "standing water in crawlspace",
+        "fallen insulation batts",
+        "wood joist ends damp near foundation",
+        "old kitchen cabinet finish"
+      ],
+      "expectedLeadScope": [
+        "crawlspace standing water",
+        "damp structural wood",
+        "crawlspace drainage and framing evaluation"
+      ],
+      "expectedExclusions": [
+        "old kitchen cabinet finish"
+      ],
+      "requiredGate": "crawlspace contractor and structural check",
+      "riskIfWrong": "The tool may minimize crawlspace water that can drive rot, insects, and structural damage."
+    },
+    {
+      "id": "S024",
+      "sourceBasis": "Foundation drainage resources link saturated soil and hydrostatic pressure to basement and crawlspace moisture defects.",
+      "persona": "Transaction coordinator",
+      "state": "KY",
+      "deal": "Seller countered with a dehumidifier instead of exterior drainage work.",
+      "findings": [
+        "efflorescence on block foundation",
+        "sump pump cycles during dry weather",
+        "downspout underground drain is disconnected",
+        "portable dehumidifier offered"
+      ],
+      "expectedLeadScope": [
+        "foundation drainage failure",
+        "sump pump and discharge evaluation",
+        "exterior water management quote"
+      ],
+      "expectedExclusions": [
+        "portable dehumidifier offered"
+      ],
+      "requiredGate": "seller counter does not solve source",
+      "riskIfWrong": "Buyer may accept an appliance instead of resolving foundation water loading."
+    },
+    {
+      "id": "S025",
+      "sourceBasis": "Inspection standards report observed indications of possible foundation movement but do not provide engineering conclusions.",
+      "persona": "Broker reviewer",
+      "state": "AZ",
+      "deal": "Agent draft says the house has structural failure without an engineer report.",
+      "findings": [
+        "stair-step stucco cracks",
+        "sloping floor noted by inspector",
+        "no engineer evaluation yet",
+        "dated bathroom mirror"
+      ],
+      "expectedLeadScope": [
+        "possible foundation movement",
+        "structural engineer evaluation"
+      ],
+      "expectedExclusions": [
+        "dated bathroom mirror",
+        "definitive structural failure claim"
+      ],
+      "requiredGate": "avoid overclaiming engineering conclusion",
+      "riskIfWrong": "The packet creates liability by stating an expert conclusion the evidence does not support."
+    },
+    {
+      "id": "S026",
+      "sourceBasis": "Below-grade moisture guidance separates surface drainage fixes from structural foundation repairs.",
+      "persona": "Buyer agent",
+      "state": "MN",
+      "deal": "Spring thaw revealed seepage at the basement stairwell.",
+      "findings": [
+        "water at basement stairwell landing",
+        "settled exterior concrete slopes toward door",
+        "foundation wall has hairline cracks only",
+        "older but working freezer in basement"
+      ],
+      "expectedLeadScope": [
+        "basement stairwell drainage",
+        "settled concrete directing water",
+        "waterproofing quote"
+      ],
+      "expectedExclusions": [
+        "older but working freezer",
+        "foundation replacement without evidence"
+      ],
+      "requiredGate": "diagnose drainage versus structural repair",
+      "riskIfWrong": "The buyer either over-asks for foundation replacement or under-asks by treating seepage as cosmetic."
+    },
+    {
+      "id": "S027",
+      "sourceBasis": "Crawlspace standards flag wood near soil and active water because they can create structural and WDI conditions.",
+      "persona": "VA buyer agent",
+      "state": "VA",
+      "deal": "VA buyer on a rural pier-and-beam property.",
+      "findings": [
+        "wood lattice and debris touching crawlspace soil",
+        "active moisture on sill plate",
+        "termite shelter tubes on pier",
+        "old screen door torn"
+      ],
+      "expectedLeadScope": [
+        "crawlspace moisture",
+        "wood-to-soil conducive condition",
+        "termite/WDI evaluation",
+        "VA property condition risk"
+      ],
+      "expectedExclusions": [
+        "old screen door torn"
+      ],
+      "requiredGate": "WDI report and lender caveat",
+      "riskIfWrong": "Product could miss the overlap between moisture, pests, structure, and VA repair pressure."
+    },
+    {
+      "id": "S028",
+      "sourceBasis": "Foundation crack guidance treats horizontal or bowing wall symptoms differently from shrinkage cracks.",
+      "persona": "Buyer agent",
+      "state": "WI",
+      "deal": "Older basement home has a seller-provided waterproofing invoice.",
+      "findings": [
+        "horizontal crack in block foundation wall",
+        "wall bowing visible along garage side",
+        "waterproofing invoice lacks structural repair",
+        "fresh basement paint"
+      ],
+      "expectedLeadScope": [
+        "bowing foundation wall",
+        "horizontal foundation crack",
+        "structural engineer review"
+      ],
+      "expectedExclusions": [
+        "fresh basement paint"
+      ],
+      "requiredGate": "structural quote separate from waterproofing receipt",
+      "riskIfWrong": "The buyer may accept a waterproofing invoice for a structural wall movement problem."
+    },
+    {
+      "id": "S029",
+      "sourceBasis": "Drainage guidance says lots should move water away from foundations; flat or reverse grade creates repeat intrusion risk.",
+      "persona": "New construction buyer agent",
+      "state": "ID",
+      "deal": "Builder says grading will settle and can be handled after closing.",
+      "findings": [
+        "yard grade slopes toward slab patio door",
+        "standing water against stem wall",
+        "no gutters installed yet",
+        "minor paint overspray"
+      ],
+      "expectedLeadScope": [
+        "final grading correction",
+        "roof drainage completion",
+        "foundation water exposure"
+      ],
+      "expectedExclusions": [
+        "minor paint overspray"
+      ],
+      "requiredGate": "pre-closing builder completion",
+      "riskIfWrong": "Buyer closes on a drainage defect with limited leverage after occupancy."
+    },
+    {
+      "id": "S030",
+      "sourceBasis": "Foundation and crawlspace inspection limits require noting inaccessible areas instead of assuming hidden structure is acceptable.",
+      "persona": "Buyer agent",
+      "state": "LA",
+      "deal": "Raised home has stored items blocking most crawlspace access.",
+      "findings": [
+        "crawlspace access blocked by stored lumber",
+        "visible sill plate has fungal-like staining",
+        "standing water visible from opening",
+        "seller says inspector saw enough"
+      ],
+      "expectedLeadScope": [
+        "incomplete crawlspace inspection",
+        "standing water at crawlspace",
+        "structural wood moisture evaluation"
+      ],
+      "expectedExclusions": [
+        "seller says inspector saw enough"
+      ],
+      "requiredGate": "access limitation must remain visible",
+      "riskIfWrong": "The packet could treat inaccessible structural areas as cleared."
+    },
+    {
+      "id": "S031",
+      "sourceBasis": "CPSC aluminum wiring guidance recommends expert evaluation and recognizes warning signs like warm devices, odors, and flickering.",
+      "persona": "Buyer agent",
+      "state": "AL",
+      "deal": "1970s home has branch wiring concerns during inspection.",
+      "findings": [
+        "solid aluminum branch wiring observed",
+        "warm receptacle faceplate in bedroom",
+        "flickering lights reported by seller",
+        "dated chandelier"
+      ],
+      "expectedLeadScope": [
+        "aluminum branch wiring evaluation",
+        "warm receptacle safety concern",
+        "licensed electrician quote"
+      ],
+      "expectedExclusions": [
+        "dated chandelier"
+      ],
+      "requiredGate": "licensed electrician and insurance review",
+      "riskIfWrong": "The request may treat aluminum wiring as a cosmetic age note instead of fire and insurability risk."
+    },
+    {
+      "id": "S032",
+      "sourceBasis": "CPSC and inspection guidance warn untrained people not to inspect or repair hazardous wiring, making DIY seller repairs a poor substitute.",
+      "persona": "Transaction coordinator",
+      "state": "GA",
+      "deal": "Seller proposes to have a handyman fix electrical items before closing.",
+      "findings": [
+        "double-tapped breakers in main panel",
+        "missing panel knockout covers",
+        "handyman repair offer",
+        "old cabinet pulls"
+      ],
+      "expectedLeadScope": [
+        "electrical panel defects",
+        "licensed electrician repair",
+        "repair verification"
+      ],
+      "expectedExclusions": [
+        "handyman repair offer",
+        "old cabinet pulls"
+      ],
+      "requiredGate": "licensed trade repair and reinspection",
+      "riskIfWrong": "Buyer may rely on unqualified electrical work that increases shock, fire, and closing risk."
+    },
+    {
+      "id": "S033",
+      "sourceBasis": "Insurance underwriting sources commonly scrutinize electrical system age, panel condition, exposed wiring, and active hazards in four-point reviews.",
+      "persona": "Florida buyer agent",
+      "state": "FL",
+      "deal": "AS IS buyer needs a four-point inspection for insurance before the deadline.",
+      "findings": [
+        "Federal Pacific panel reported",
+        "cloth wiring visible in attic",
+        "exposed junction box splice",
+        "working ceiling fans"
+      ],
+      "expectedLeadScope": [
+        "Federal Pacific panel safety/insurance risk",
+        "exposed electrical splice",
+        "four-point insurance review"
+      ],
+      "expectedExclusions": [
+        "working ceiling fans"
+      ],
+      "requiredGate": "insurance and electrician confirmation before send",
+      "riskIfWrong": "The buyer may negotiate a minor repair while the carrier refuses coverage."
+    },
+    {
+      "id": "S034",
+      "sourceBasis": "Public electrical risk sources identify Zinsco/Sylvania-Zinsco panels as high-risk underwriting and safety issues requiring electrician evaluation.",
+      "persona": "Buyer agent in coastal market",
+      "state": "CA",
+      "deal": "Buyer wants to waive repairs to keep the deal competitive.",
+      "findings": [
+        "Zinsco panel identified",
+        "breakers feel loose at bus",
+        "seller says panel has never tripped",
+        "minor drywall dent"
+      ],
+      "expectedLeadScope": [
+        "Zinsco panel safety risk",
+        "electrician evaluation",
+        "insurance quote-needed risk"
+      ],
+      "expectedExclusions": [
+        "minor drywall dent",
+        "seller says panel has never tripped"
+      ],
+      "requiredGate": "do not rely on no-failure history",
+      "riskIfWrong": "The product may let the buyer waive a major fire and insurance red flag as if it were normal age."
+    },
+    {
+      "id": "S035",
+      "sourceBasis": "General inspection standards require reporting electrical defects observed at accessible systems while avoiding code-inspector overreach.",
+      "persona": "Broker-owner",
+      "state": "CO",
+      "deal": "Agent draft cites code violations without permit or electrician review.",
+      "findings": [
+        "ungrounded three-prong outlets",
+        "GFCI absent at kitchen counter",
+        "agent wrote illegal wiring",
+        "dated switch plates"
+      ],
+      "expectedLeadScope": [
+        "ungrounded outlets",
+        "missing GFCI protection",
+        "electrician evaluation"
+      ],
+      "expectedExclusions": [
+        "dated switch plates",
+        "unsupported illegal wiring claim"
+      ],
+      "requiredGate": "safety framing without legal/code overclaim",
+      "riskIfWrong": "Packet creates brokerage liability by calling code conclusions instead of requesting qualified evaluation."
+    },
+    {
+      "id": "S036",
+      "sourceBasis": "CPSC aluminum wiring guidance distinguishes proper remediation from casual pigtailing or device replacement.",
+      "persona": "Listing agent",
+      "state": "MD",
+      "deal": "Buyer asks seller to replace every outlet after aluminum wiring note.",
+      "findings": [
+        "aluminum branch wiring at some receptacles",
+        "no overheating symptoms observed",
+        "unknown connector type",
+        "buyer requests all-new outlets"
+      ],
+      "expectedLeadScope": [
+        "aluminum wiring specialist evaluation",
+        "connector and device compatibility",
+        "insurance review"
+      ],
+      "expectedExclusions": [
+        "all-new outlets without electrician scope"
+      ],
+      "requiredGate": "remediation method must be specified by qualified electrician",
+      "riskIfWrong": "The ask may request a cosmetic outlet swap that fails to address actual aluminum wiring risk."
+    },
+    {
+      "id": "S037",
+      "sourceBasis": "Electrical panel hazards and obsolete panel brands are treated as different from simple capacity preferences.",
+      "persona": "Investor buyer",
+      "state": "NV",
+      "deal": "Investor wants seller to fund a 200-amp upgrade for a future remodel.",
+      "findings": [
+        "100 amp panel is functional",
+        "no overheating observed",
+        "future EV charger desired",
+        "one open junction box in attic"
+      ],
+      "expectedLeadScope": [
+        "open junction box safety repair"
+      ],
+      "expectedExclusions": [
+        "future EV charger desired",
+        "200-amp upgrade preference"
+      ],
+      "requiredGate": "defect versus upgrade boundary",
+      "riskIfWrong": "Product turns inspection leverage into remodel funding and loses seller credibility."
+    },
+    {
+      "id": "S038",
+      "sourceBasis": "Electrical safety evidence should prioritize live exposed conductors, missing covers, and shock hazards over cosmetic fixture preferences.",
+      "persona": "Buyer agent",
+      "state": "OK",
+      "deal": "Buyer is nervous after seeing many low-cost electrical notes.",
+      "findings": [
+        "exposed live wire in attic light box",
+        "missing cover at exterior receptacle",
+        "several mismatched outlet colors",
+        "old doorbell transformer buzzes"
+      ],
+      "expectedLeadScope": [
+        "exposed live wire",
+        "exterior receptacle safety",
+        "electrician quote"
+      ],
+      "expectedExclusions": [
+        "mismatched outlet colors",
+        "old doorbell transformer buzzes"
+      ],
+      "requiredGate": "safety-prioritized scope discipline",
+      "riskIfWrong": "A serious shock hazard gets buried inside cosmetic electrical cleanup."
+    },
+    {
+      "id": "S039",
+      "sourceBasis": "Four-point underwriting reviews electrical, plumbing, HVAC, and roof systems, so an electrical defect can be a closing condition beyond repair cost.",
+      "persona": "Loan officer",
+      "state": "FL",
+      "deal": "Insurance binder is required before clear-to-close.",
+      "findings": [
+        "panel cover missing screws",
+        "cloth wiring noted in attic",
+        "active roof leak also present",
+        "buyer asks for seller credit only"
+      ],
+      "expectedLeadScope": [
+        "electrical system insurability",
+        "active roof leak",
+        "lender and insurance gate"
+      ],
+      "expectedExclusions": [
+        "credit-only framing"
+      ],
+      "requiredGate": "binder usability and lender confirmation",
+      "riskIfWrong": "A negotiated credit may not help if the insurer requires repair before issuing coverage."
+    },
+    {
+      "id": "S040",
+      "sourceBasis": "Electrical defects near water or exterior conditions create higher shock risk and should not be treated as generic handyman items.",
+      "persona": "Buyer agent with pool inspection",
+      "state": "AZ",
+      "deal": "Pool inspection and general inspection overlap at the equipment pad.",
+      "findings": [
+        "pool pump not GFCI protected",
+        "bonding wire disconnected at equipment",
+        "pool light inoperable",
+        "cosmetic pool tile staining"
+      ],
+      "expectedLeadScope": [
+        "pool electrical safety",
+        "GFCI protection",
+        "bonding continuity evaluation"
+      ],
+      "expectedExclusions": [
+        "cosmetic pool tile staining"
+      ],
+      "requiredGate": "pool electrician or qualified contractor review",
+      "riskIfWrong": "The packet may lump electrocution risk with cosmetic pool maintenance."
+    },
+    {
+      "id": "S041",
+      "sourceBasis": "CPSC furnace guidance emphasizes annual qualified inspection, clear venting, and carbon monoxide risk for fuel-fired heating systems.",
+      "persona": "Buyer agent in winter market",
+      "state": "MA",
+      "deal": "Inspection found heat but flagged combustion safety concerns.",
+      "findings": [
+        "furnace flame rollout observed",
+        "rusted flue connector",
+        "CO detector missing near bedrooms",
+        "dirty return grille"
+      ],
+      "expectedLeadScope": [
+        "furnace combustion safety",
+        "flue connector repair",
+        "HVAC contractor evaluation"
+      ],
+      "expectedExclusions": [
+        "dirty return grille"
+      ],
+      "requiredGate": "life-safety HVAC review before operation",
+      "riskIfWrong": "Buyer could accept a maintenance cleaning while a carbon monoxide hazard remains."
+    },
+    {
+      "id": "S042",
+      "sourceBasis": "ENERGY STAR HVAC guidance links poor airflow, refrigerant charge, and duct condition to performance and system life, requiring contractor diagnosis.",
+      "persona": "Buyer agent",
+      "state": "AZ",
+      "deal": "Summer inspection found inadequate cooling in a desert market.",
+      "findings": [
+        "AC supply air temperature split low",
+        "return duct disconnected in attic",
+        "outdoor condenser coil dirty",
+        "dated thermostat"
+      ],
+      "expectedLeadScope": [
+        "AC performance failure",
+        "disconnected return duct",
+        "HVAC contractor quote"
+      ],
+      "expectedExclusions": [
+        "dated thermostat"
+      ],
+      "requiredGate": "HVAC diagnosis before replacement ask",
+      "riskIfWrong": "The packet may demand a full system replacement before confirming duct or charge defects."
+    },
+    {
+      "id": "S043",
+      "sourceBasis": "HVAC maintenance guidance treats dirt and neglect as causes of failure but still requires distinguishing maintenance from nonfunctional equipment.",
+      "persona": "Listing agent",
+      "state": "GA",
+      "deal": "Buyer asks for a new condenser after inspection noted deferred maintenance.",
+      "findings": [
+        "AC cooled during inspection",
+        "filter extremely dirty",
+        "outdoor unit vegetation overgrown",
+        "no documented service history"
+      ],
+      "expectedLeadScope": [
+        "HVAC service and performance verification"
+      ],
+      "expectedExclusions": [
+        "new condenser without failure",
+        "vegetation cleanup as major ask"
+      ],
+      "requiredGate": "maintenance versus failed system distinction",
+      "riskIfWrong": "Seller can reject the request because the evidence supports service, not replacement."
+    },
+    {
+      "id": "S044",
+      "sourceBasis": "Fuel-fired appliance and chimney/flue safety sources treat blocked or damaged venting as life-safety risk.",
+      "persona": "FHA buyer agent",
+      "state": "IN",
+      "deal": "FHA buyer with appraisal pending and furnace concern visible in inspection.",
+      "findings": [
+        "gas furnace vent disconnected at draft hood",
+        "water heater shares same flue",
+        "utility room lacks CO detector",
+        "laundry shelf loose"
+      ],
+      "expectedLeadScope": [
+        "disconnected furnace vent",
+        "shared flue safety",
+        "lender-visible safety concern"
+      ],
+      "expectedExclusions": [
+        "laundry shelf loose"
+      ],
+      "requiredGate": "repair completion and lender caveat",
+      "riskIfWrong": "The buyer may frame a life-safety venting defect as an optional credit."
+    },
+    {
+      "id": "S045",
+      "sourceBasis": "HVAC quality guidance warns oversized or short-cycling systems can perform poorly despite being relatively new.",
+      "persona": "Buyer agent",
+      "state": "TX",
+      "deal": "Newer HVAC system was installed without permits or load documentation.",
+      "findings": [
+        "newer AC short cycles repeatedly",
+        "condensate drain lacks proper termination",
+        "no permit record found",
+        "fresh paint in mechanical closet"
+      ],
+      "expectedLeadScope": [
+        "HVAC short cycling",
+        "condensate drain defect",
+        "permit and contractor verification"
+      ],
+      "expectedExclusions": [
+        "fresh paint in mechanical closet"
+      ],
+      "requiredGate": "installation quality and permit review",
+      "riskIfWrong": "The system may assume newer equipment is low-risk even if it was poorly installed."
+    },
+    {
+      "id": "S046",
+      "sourceBasis": "CPSC furnace safety material emphasizes flue blockages and combustion byproducts, not just whether heat turns on.",
+      "persona": "First-time buyer",
+      "state": "NY",
+      "deal": "Buyer thinks the furnace is fine because it warmed the house.",
+      "findings": [
+        "orphaned water heater vent into oversized chimney",
+        "visible flue corrosion",
+        "furnace reached set temperature",
+        "old humidifier pad"
+      ],
+      "expectedLeadScope": [
+        "combustion venting evaluation",
+        "water heater flue safety",
+        "HVAC/plumbing contractor quote"
+      ],
+      "expectedExclusions": [
+        "old humidifier pad"
+      ],
+      "requiredGate": "do not equate operation with safe venting",
+      "riskIfWrong": "Buyer may miss carbon monoxide or backdrafting risk because the appliance operated briefly."
+    },
+    {
+      "id": "S047",
+      "sourceBasis": "ENERGY STAR guidance identifies duct leakage and airflow as performance defects, which can matter even when the equipment itself runs.",
+      "persona": "Buyer agent",
+      "state": "NV",
+      "deal": "One bedroom is unusably hot during inspection walkthrough.",
+      "findings": [
+        "no airflow at rear bedroom register",
+        "flex duct crushed in attic",
+        "AC compressor operated",
+        "buyer wants ceiling fan credit"
+      ],
+      "expectedLeadScope": [
+        "crushed duct repair",
+        "room airflow defect",
+        "HVAC contractor verification"
+      ],
+      "expectedExclusions": [
+        "ceiling fan credit"
+      ],
+      "requiredGate": "system performance over comfort accessory",
+      "riskIfWrong": "The packet may ask for a fan while ignoring the failed conditioned-air delivery."
+    },
+    {
+      "id": "S048",
+      "sourceBasis": "HVAC safety and inspection standards distinguish inaccessible or untested systems from passed systems.",
+      "persona": "Transaction coordinator",
+      "state": "PA",
+      "deal": "Closing is in five days and heating could not be tested because fuel was off.",
+      "findings": [
+        "oil boiler not operated during inspection",
+        "fuel tank nearly empty",
+        "visible soot around burner door",
+        "minor chipped basement stair paint"
+      ],
+      "expectedLeadScope": [
+        "untested heating system",
+        "soot at burner",
+        "pre-closing HVAC operation test"
+      ],
+      "expectedExclusions": [
+        "minor chipped basement stair paint"
+      ],
+      "requiredGate": "untested system must not be marked cleared",
+      "riskIfWrong": "Buyer closes with no proof the primary heat source is safe or functional."
+    },
+    {
+      "id": "S049",
+      "sourceBasis": "Inspection standards include permanently installed heating and cooling equipment, but not seller promises about future servicing.",
+      "persona": "Buyer agent",
+      "state": "MO",
+      "deal": "Seller offers a home warranty instead of HVAC repair.",
+      "findings": [
+        "heat pump auxiliary heat not operating",
+        "outdoor unit loud bearing noise",
+        "seller offers generic home warranty",
+        "old carpet in hallway"
+      ],
+      "expectedLeadScope": [
+        "heat pump failure",
+        "outdoor unit noise evaluation",
+        "warranty versus repair gap"
+      ],
+      "expectedExclusions": [
+        "old carpet in hallway"
+      ],
+      "requiredGate": "known defect not solved by vague warranty",
+      "riskIfWrong": "Buyer accepts warranty language that may exclude a known pre-existing HVAC defect."
+    },
+    {
+      "id": "S050",
+      "sourceBasis": "HVAC and moisture guidance links failed condensate management to water damage and mold-like staining.",
+      "persona": "Buyer agent",
+      "state": "FL",
+      "deal": "AS IS condo has air handler in a closet above finished flooring.",
+      "findings": [
+        "AC condensate pan rusted through",
+        "water stain below air handler closet",
+        "mold-like staining on closet baseboard",
+        "dated light fixture"
+      ],
+      "expectedLeadScope": [
+        "AC condensate leak",
+        "water damage below air handler",
+        "mold-like staining evaluation"
+      ],
+      "expectedExclusions": [
+        "dated light fixture"
+      ],
+      "requiredGate": "moisture source and HOA responsibility check",
+      "riskIfWrong": "The request may chase cosmetic flooring damage without addressing the condensate leak."
+    },
+    {
+      "id": "S051",
+      "sourceBasis": "Inspection standards require reporting active plumbing leaks observed during inspection.",
+      "persona": "Buyer agent",
+      "state": "ID",
+      "deal": "Buyer wants a small credit for many minor plumbing notes.",
+      "findings": [
+        "active leak at kitchen sink trap",
+        "swollen cabinet floor under sink",
+        "loose faucet handle",
+        "dated laminate counter"
+      ],
+      "expectedLeadScope": [
+        "active plumbing leak",
+        "cabinet water damage",
+        "plumber quote"
+      ],
+      "expectedExclusions": [
+        "loose faucet handle",
+        "dated laminate counter"
+      ],
+      "requiredGate": "active leak evidence and quote",
+      "riskIfWrong": "The valid leak gets diluted into a cosmetic kitchen update request."
+    },
+    {
+      "id": "S052",
+      "sourceBasis": "Polybutylene public real estate guidance treats pipe presence, leak history, and insurance availability as separate risk checks.",
+      "persona": "Buyer agent",
+      "state": "NC",
+      "deal": "Inspection found PB piping in a 1994 subdivision home.",
+      "findings": [
+        "polybutylene supply piping visible in crawlspace",
+        "no active leaks observed",
+        "past ceiling patch below upstairs bath",
+        "old brass light fixture"
+      ],
+      "expectedLeadScope": [
+        "polybutylene plumbing risk",
+        "insurance availability check",
+        "plumber repipe quote"
+      ],
+      "expectedExclusions": [
+        "old brass light fixture"
+      ],
+      "requiredGate": "insurance and plumber confirmation before ask amount",
+      "riskIfWrong": "The packet may either ignore PB as not leaking or overstate failure without quote and insurance evidence."
+    },
+    {
+      "id": "S053",
+      "sourceBasis": "Insurance underwriting sources show active leaks and plumbing material risks can block coverage, especially in four-point markets.",
+      "persona": "Florida transaction coordinator",
+      "state": "FL",
+      "deal": "Buyer needs insurance approval before AS IS inspection period expires.",
+      "findings": [
+        "polybutylene pipes at water heater closet",
+        "active leak at tub valve access panel",
+        "water heater 18 years old",
+        "minor screen enclosure tear"
+      ],
+      "expectedLeadScope": [
+        "polybutylene plumbing insurability",
+        "active tub valve leak",
+        "water heater age and leak risk"
+      ],
+      "expectedExclusions": [
+        "minor screen enclosure tear"
+      ],
+      "requiredGate": "four-point and binder gate",
+      "riskIfWrong": "Buyer may negotiate repairs that still leave the home uninsurable."
+    },
+    {
+      "id": "S054",
+      "sourceBasis": "Plumbing leaks require source repair before concealed moisture damage can be scoped.",
+      "persona": "Buyer agent",
+      "state": "WA",
+      "deal": "Condo inspection found moisture at a shared wall.",
+      "findings": [
+        "moisture meter elevated behind hall bath",
+        "toilet wax ring suspected leaking",
+        "downstairs unit reported ceiling stain",
+        "dated vanity mirror"
+      ],
+      "expectedLeadScope": [
+        "bath plumbing leak source",
+        "concealed moisture damage",
+        "HOA or downstairs impact verification"
+      ],
+      "expectedExclusions": [
+        "dated vanity mirror"
+      ],
+      "requiredGate": "source and responsibility boundary",
+      "riskIfWrong": "Packet asks only for interior patching and misses shared building or neighbor damage exposure."
+    },
+    {
+      "id": "S055",
+      "sourceBasis": "Inspection and insurance sources treat old water heaters with leaks or unsafe discharge as more than appliance age.",
+      "persona": "Buyer agent",
+      "state": "CA",
+      "deal": "Seller says the water heater works and age is not negotiable.",
+      "findings": [
+        "water heater tank actively leaking at base",
+        "TPR discharge pipe terminates upward",
+        "water heater is 16 years old",
+        "garage shelves are loose"
+      ],
+      "expectedLeadScope": [
+        "active water heater leak",
+        "TPR discharge safety",
+        "plumber replacement quote"
+      ],
+      "expectedExclusions": [
+        "garage shelves are loose"
+      ],
+      "requiredGate": "active leak plus safety defect",
+      "riskIfWrong": "The product may wrongly demote the issue as age-only instead of active failure."
+    },
+    {
+      "id": "S056",
+      "sourceBasis": "Plumbing material and hidden leak risks are different from fixture finish preferences.",
+      "persona": "Investor buyer",
+      "state": "OH",
+      "deal": "Investor wants seller to fund a bathroom remodel after inspection.",
+      "findings": [
+        "galvanized supply pipes with low flow",
+        "active leak at shower valve",
+        "pink tile is dated",
+        "vanity style is old"
+      ],
+      "expectedLeadScope": [
+        "active shower valve leak",
+        "low-flow galvanized piping evaluation"
+      ],
+      "expectedExclusions": [
+        "pink tile is dated",
+        "vanity style is old"
+      ],
+      "requiredGate": "repair defect versus remodel preference",
+      "riskIfWrong": "The ask becomes a renovation credit rather than a defensible plumbing repair."
+    },
+    {
+      "id": "S057",
+      "sourceBasis": "Water intrusion research emphasizes identifying whether the source is plumbing, roof, or exterior drainage before remediating damage.",
+      "persona": "Buyer agent",
+      "state": "OR",
+      "deal": "Finished basement has staining after a recent bathroom remodel.",
+      "findings": [
+        "wet drywall below upstairs shower",
+        "new shower pan lacks visible permit",
+        "exterior grade appears acceptable",
+        "basement accent wall color disliked"
+      ],
+      "expectedLeadScope": [
+        "shower pan leak",
+        "concealed water damage",
+        "permit and plumber verification"
+      ],
+      "expectedExclusions": [
+        "basement accent wall color disliked"
+      ],
+      "requiredGate": "source identification and permit review",
+      "riskIfWrong": "Buyer could ask for repainting while a failed shower pan continues leaking."
+    },
+    {
+      "id": "S058",
+      "sourceBasis": "Public inspection standards require reporting active water leaks but not predicting every concealed pipe defect.",
+      "persona": "Broker reviewer",
+      "state": "IL",
+      "deal": "Agent draft claims all copper plumbing must be replaced due to one pinhole leak.",
+      "findings": [
+        "one active pinhole leak at copper elbow",
+        "green corrosion at several fittings",
+        "no whole-house pressure test performed",
+        "agent wrote entire system failed"
+      ],
+      "expectedLeadScope": [
+        "active copper pipe leak",
+        "corroded fitting evaluation",
+        "plumber scope"
+      ],
+      "expectedExclusions": [
+        "entire system failed without plumber test"
+      ],
+      "requiredGate": "avoid whole-system overclaim",
+      "riskIfWrong": "The packet overstates visible evidence and becomes easy for the seller to attack."
+    },
+    {
+      "id": "S059",
+      "sourceBasis": "Sump pump and foundation drainage problems are system risks when they control below-grade water entry.",
+      "persona": "Buyer agent",
+      "state": "IA",
+      "deal": "Home has a finished basement and no backup power at the sump.",
+      "findings": [
+        "sump pump failed to activate",
+        "pit water level high",
+        "no battery backup",
+        "minor carpet wear in guest room"
+      ],
+      "expectedLeadScope": [
+        "sump pump failure",
+        "basement water intrusion risk",
+        "backup pump quote"
+      ],
+      "expectedExclusions": [
+        "minor carpet wear in guest room"
+      ],
+      "requiredGate": "functional test and water-risk framing",
+      "riskIfWrong": "Buyer may close on a finished basement whose only drainage protection is not working."
+    },
+    {
+      "id": "S060",
+      "sourceBasis": "Plumbing leak evidence and water damage should be linked to repair quality and reinspection before closing.",
+      "persona": "Transaction coordinator",
+      "state": "GA",
+      "deal": "Seller says the plumber fixed the leak yesterday but no invoice is attached.",
+      "findings": [
+        "fresh caulk under sink after prior active leak",
+        "cabinet floor still wet",
+        "no licensed plumber invoice",
+        "minor backsplash chip"
+      ],
+      "expectedLeadScope": [
+        "plumbing leak repair verification",
+        "remaining cabinet moisture",
+        "licensed invoice or reinspection"
+      ],
+      "expectedExclusions": [
+        "minor backsplash chip"
+      ],
+      "requiredGate": "repair verification before closing",
+      "riskIfWrong": "Buyer may accept a concealed wet cabinet and undocumented repair."
+    },
+    {
+      "id": "S061",
+      "sourceBasis": "EPA and CDC mold cleanup guidance centers moisture control and complete cleanup rather than naming species from visual inspection.",
+      "persona": "Buyer agent",
+      "state": "SC",
+      "deal": "Inspection report says mold-like staining in the attic after a roof leak.",
+      "findings": [
+        "mold-like staining on attic sheathing",
+        "bath fan vents into attic",
+        "past roof leak repaired",
+        "attic storage boxes dusty"
+      ],
+      "expectedLeadScope": [
+        "mold-like staining evaluation",
+        "bath fan vent correction",
+        "moisture source verification"
+      ],
+      "expectedExclusions": [
+        "attic storage boxes dusty",
+        "definitive mold species claim"
+      ],
+      "requiredGate": "moisture-source and specialist caveat",
+      "riskIfWrong": "The packet may make unsupported environmental claims or miss the moisture condition that causes recurrence."
+    },
+    {
+      "id": "S062",
+      "sourceBasis": "Mold cleanup resources emphasize that cleanup without fixing leaks or moisture will fail.",
+      "persona": "Buyer agent",
+      "state": "LA",
+      "deal": "Seller offers to bleach visible staining before closing.",
+      "findings": [
+        "mold-like staining behind laundry wall",
+        "active washer box leak",
+        "seller offers surface cleaning",
+        "laundry room paint scuffed"
+      ],
+      "expectedLeadScope": [
+        "active washer box leak",
+        "mold-like staining remediation",
+        "moisture verification after repair"
+      ],
+      "expectedExclusions": [
+        "surface cleaning only",
+        "laundry room paint scuffed"
+      ],
+      "requiredGate": "fix moisture source before cleanup",
+      "riskIfWrong": "Buyer accepts stain removal while the leak continues behind the wall."
+    },
+    {
+      "id": "S063",
+      "sourceBasis": "CDC public guidance links mold growth to moisture around roofs, windows, pipes, and flooding, requiring source-specific follow-up.",
+      "persona": "First-time buyer",
+      "state": "TX",
+      "deal": "Buyer is alarmed by black staining but no lab test exists.",
+      "findings": [
+        "black mold-like staining under kitchen sink",
+        "active drain leak",
+        "musty odor in cabinet",
+        "old cabinet hardware"
+      ],
+      "expectedLeadScope": [
+        "active drain leak",
+        "mold-like staining under sink",
+        "cabinet moisture damage"
+      ],
+      "expectedExclusions": [
+        "old cabinet hardware",
+        "toxic mold claim without testing"
+      ],
+      "requiredGate": "health-language caution and plumber quote",
+      "riskIfWrong": "The packet could either panic the buyer with unsupported toxicity claims or underplay a live moisture issue."
+    },
+    {
+      "id": "S064",
+      "sourceBasis": "Water intrusion and mold-like staining in crawlspaces should be tied to drainage, vapor, and wood condition rather than cosmetic cleanup.",
+      "persona": "Buyer agent",
+      "state": "TN",
+      "deal": "Crawlspace company quote arrives after inspection but before objection deadline.",
+      "findings": [
+        "mold-like staining on floor joists",
+        "missing vapor barrier over soil",
+        "standing water at low corner",
+        "quote includes optional dehumidifier upgrade"
+      ],
+      "expectedLeadScope": [
+        "crawlspace moisture control",
+        "mold-like staining remediation",
+        "standing water correction"
+      ],
+      "expectedExclusions": [
+        "optional dehumidifier upgrade"
+      ],
+      "requiredGate": "quote line-item review",
+      "riskIfWrong": "The request may accept an upsold appliance without correcting water entry and vapor conditions."
+    },
+    {
+      "id": "S065",
+      "sourceBasis": "Mold and moisture sources require deciding whether the problem is roof, plumbing, HVAC condensate, or exterior intrusion.",
+      "persona": "Transaction coordinator",
+      "state": "FL",
+      "deal": "Condo seller says staining is an HOA roof matter and refuses interior repair.",
+      "findings": [
+        "mold-like staining at ceiling below roof deck",
+        "HOA roof leak work order open",
+        "interior drywall soft",
+        "dated ceiling fan"
+      ],
+      "expectedLeadScope": [
+        "HOA roof leak status",
+        "interior moisture damage",
+        "mold-like staining evaluation"
+      ],
+      "expectedExclusions": [
+        "dated ceiling fan"
+      ],
+      "requiredGate": "HOA versus seller responsibility check",
+      "riskIfWrong": "The packet may ask the wrong party for roof work or ignore interior damage the seller controls."
+    },
+    {
+      "id": "S066",
+      "sourceBasis": "EPA mold cleanup guidance supports specialist involvement for larger or recurring contamination and prioritizes preventing re-growth.",
+      "persona": "Buyer agent",
+      "state": "NJ",
+      "deal": "Basement remediation quote is large and seller offers a small credit.",
+      "findings": [
+        "mold-like staining over multiple basement walls",
+        "active seepage at cove joint",
+        "old sump pump with no lid",
+        "seller offers 500 credit"
+      ],
+      "expectedLeadScope": [
+        "basement seepage source",
+        "mold-like staining remediation",
+        "sump pump condition"
+      ],
+      "expectedExclusions": [
+        "seller offers 500 credit"
+      ],
+      "requiredGate": "specialist quote and moisture-source scope",
+      "riskIfWrong": "Buyer may accept a token credit for a recurring moisture and remediation problem."
+    },
+    {
+      "id": "S067",
+      "sourceBasis": "Moisture staining without elevated moisture or source evidence should be framed differently from active intrusion.",
+      "persona": "Listing agent",
+      "state": "NM",
+      "deal": "Buyer asks for mold remediation after a dry stain in a desert home.",
+      "findings": [
+        "old dry stain at ceiling corner",
+        "moisture meter normal",
+        "roof patch invoice from five years ago",
+        "buyer asks for whole-house mold remediation"
+      ],
+      "expectedLeadScope": [
+        "stain history verification",
+        "targeted moisture recheck"
+      ],
+      "expectedExclusions": [
+        "whole-house mold remediation without active evidence"
+      ],
+      "requiredGate": "do not convert dry stain into broad remediation ask",
+      "riskIfWrong": "The system validates an unsupported environmental demand."
+    },
+    {
+      "id": "S068",
+      "sourceBasis": "Mold-like staining around HVAC or ducts should connect to condensation, insulation, and airflow conditions.",
+      "persona": "Buyer agent",
+      "state": "AL",
+      "deal": "Inspection was performed during humid weather with AC running.",
+      "findings": [
+        "mold-like staining on supply registers",
+        "sweating ducts in attic",
+        "missing duct insulation",
+        "dirty return filter"
+      ],
+      "expectedLeadScope": [
+        "duct condensation source",
+        "mold-like staining at registers",
+        "HVAC airflow and insulation evaluation"
+      ],
+      "expectedExclusions": [
+        "dirty return filter as standalone major ask"
+      ],
+      "requiredGate": "HVAC moisture diagnosis",
+      "riskIfWrong": "The packet may request cleaning while missing the condensation condition causing recurrence."
+    },
+    {
+      "id": "S069",
+      "sourceBasis": "Deck safety resources prioritize ledger attachment, flashing, fasteners, stairs, guards, and decay over surface appearance.",
+      "persona": "Buyer agent",
+      "state": "WA",
+      "deal": "Elevated deck overlooks a slope and seller says it was built by prior owner.",
+      "findings": [
+        "deck ledger attached over siding",
+        "no visible ledger flashing",
+        "guardrail wobbles at corner",
+        "deck stain is faded"
+      ],
+      "expectedLeadScope": [
+        "deck ledger attachment",
+        "missing ledger flashing",
+        "loose guardrail safety"
+      ],
+      "expectedExclusions": [
+        "deck stain is faded"
+      ],
+      "requiredGate": "deck specialist or structural evaluation",
+      "riskIfWrong": "The product may treat an elevated deck collapse risk like normal deck maintenance."
+    },
+    {
+      "id": "S070",
+      "sourceBasis": "NADRA deck evaluation materials distinguish decay, corroded fasteners, stairs, and guards from cosmetic deck finish.",
+      "persona": "Team lead",
+      "state": "MO",
+      "deal": "Junior agent wants to ask for full deck replacement and landscaping cleanup.",
+      "findings": [
+        "soft decayed stair stringer",
+        "corroded joist hangers",
+        "missing handrail at deck stairs",
+        "weeds around deck"
+      ],
+      "expectedLeadScope": [
+        "decayed deck stair stringer",
+        "corroded deck connectors",
+        "missing stair handrail"
+      ],
+      "expectedExclusions": [
+        "weeds around deck",
+        "full deck replacement without structural scope"
+      ],
+      "requiredGate": "safety and structural deck quote",
+      "riskIfWrong": "Seller can dismiss the ask as beautification instead of recognizing occupant-safety defects."
+    },
+    {
+      "id": "S071",
+      "sourceBasis": "Chimney safety guidance treats cracked flue liners, creosote evidence, and masonry damage as fire-safety issues requiring specialist evaluation.",
+      "persona": "Buyer agent",
+      "state": "CT",
+      "deal": "Home has a wood-burning fireplace the buyer plans to use immediately.",
+      "findings": [
+        "cracked flue tile noted by chimney scan",
+        "creosote flakes in firebox",
+        "damaged chimney crown",
+        "dated mantel style"
+      ],
+      "expectedLeadScope": [
+        "cracked flue liner",
+        "chimney fire-safety evaluation",
+        "chimney crown repair quote"
+      ],
+      "expectedExclusions": [
+        "dated mantel style"
+      ],
+      "requiredGate": "chimney specialist quote before use",
+      "riskIfWrong": "Buyer may treat the fireplace as usable and negotiate only cosmetic hearth updates."
+    },
+    {
+      "id": "S072",
+      "sourceBasis": "Chimney and roof flashing sources show water entry at masonry penetrations can damage both roof assemblies and interior finishes.",
+      "persona": "Buyer agent",
+      "state": "PA",
+      "deal": "Seller had chimney tuckpointed but attic still shows staining.",
+      "findings": [
+        "attic water stain adjacent to chimney",
+        "counterflashing pulled from mortar joint",
+        "masonry repair invoice excludes flashing",
+        "old fireplace screen"
+      ],
+      "expectedLeadScope": [
+        "chimney flashing leak",
+        "attic water stain",
+        "roofer/chimney quote coordination"
+      ],
+      "expectedExclusions": [
+        "old fireplace screen"
+      ],
+      "requiredGate": "invoice does not cover observed leak source",
+      "riskIfWrong": "The buyer may accept masonry paperwork that does not address roof water entry."
+    },
+    {
+      "id": "S073",
+      "sourceBasis": "CPSC pool barrier guidance prioritizes self-closing/self-latching gates and door alarms where the house opens to the pool.",
+      "persona": "Buyer agent with young-family buyer",
+      "state": "FL",
+      "deal": "AS IS home with pool and child-safety concerns.",
+      "findings": [
+        "pool gate does not self-latch",
+        "rear slider opens directly to pool with no alarm",
+        "pool pump works",
+        "cosmetic pool deck stains"
+      ],
+      "expectedLeadScope": [
+        "pool barrier gate safety",
+        "door alarm or access protection",
+        "pool safety correction quote"
+      ],
+      "expectedExclusions": [
+        "cosmetic pool deck stains"
+      ],
+      "requiredGate": "pool safety versus cosmetic scope",
+      "riskIfWrong": "The packet may miss a child-safety hazard and focus on pool appearance."
+    },
+    {
+      "id": "S074",
+      "sourceBasis": "Pool electrical safety resources separate pump operation from grounding, bonding, and GFCI protection.",
+      "persona": "Buyer agent",
+      "state": "AZ",
+      "deal": "Pool inspector says the equipment runs but electrical safety is incomplete.",
+      "findings": [
+        "pool pump operates",
+        "bonding conductor absent at heater",
+        "GFCI trip test failed",
+        "pool plaster is faded"
+      ],
+      "expectedLeadScope": [
+        "pool bonding defect",
+        "failed GFCI protection",
+        "qualified pool electrical repair"
+      ],
+      "expectedExclusions": [
+        "pool plaster is faded"
+      ],
+      "requiredGate": "operation does not clear electrical safety",
+      "riskIfWrong": "Buyer may accept working pool equipment while electrocution protection is unresolved."
+    },
+    {
+      "id": "S075",
+      "sourceBasis": "Deck standards emphasize guard and handrail stability because falls are a life-safety risk.",
+      "persona": "Buyer agent",
+      "state": "CO",
+      "deal": "Mountain property has a second-story balcony deck.",
+      "findings": [
+        "deck guard spacing is wide enough for child passage",
+        "guard posts move under hand pressure",
+        "snow load history unknown",
+        "deck furniture is weathered"
+      ],
+      "expectedLeadScope": [
+        "deck guard safety",
+        "loose guard posts",
+        "structural/deck contractor evaluation"
+      ],
+      "expectedExclusions": [
+        "deck furniture is weathered"
+      ],
+      "requiredGate": "fall hazard evidence and specialist quote",
+      "riskIfWrong": "The buyer may negotiate furniture or finish items while a fall hazard remains."
+    },
+    {
+      "id": "S076",
+      "sourceBasis": "Chimney safety guidance recommends professional evaluation after signs of chimney fire or damaged liner.",
+      "persona": "Listing-side agent",
+      "state": "OH",
+      "deal": "Buyer requests a complete chimney rebuild after a level-one visual inspection.",
+      "findings": [
+        "firebox has cracked refractory panel",
+        "chimney cap missing",
+        "no camera scan performed",
+        "buyer asks for full rebuild"
+      ],
+      "expectedLeadScope": [
+        "firebox panel repair",
+        "chimney cap replacement",
+        "level-two chimney inspection recommendation"
+      ],
+      "expectedExclusions": [
+        "full rebuild without camera or mason scope"
+      ],
+      "requiredGate": "specialist scope before large ask",
+      "riskIfWrong": "The request skips needed evidence and inflates scope beyond the inspection finding."
+    },
+    {
+      "id": "S077",
+      "sourceBasis": "Pool barrier guidance treats above-ground access ladders and gates as part of child access control.",
+      "persona": "Buyer agent",
+      "state": "NV",
+      "deal": "Home has an above-ground pool the seller plans to leave.",
+      "findings": [
+        "above-ground pool ladder cannot be locked",
+        "yard gate latch is broken",
+        "pool cover torn",
+        "patio umbrella faded"
+      ],
+      "expectedLeadScope": [
+        "pool access control",
+        "broken yard gate latch",
+        "pool cover safety condition"
+      ],
+      "expectedExclusions": [
+        "patio umbrella faded"
+      ],
+      "requiredGate": "pool safety item or remove pool before closing",
+      "riskIfWrong": "The product may treat a removable pool as personal property and miss a liability hazard."
+    },
+    {
+      "id": "S078",
+      "sourceBasis": "Deck inspection resources flag ledgers attached to masonry veneer or inaccessible structural connections as needing design-professional review.",
+      "persona": "Buyer agent",
+      "state": "NC",
+      "deal": "Brick veneer home has a large attached deck with finished ceiling below.",
+      "findings": [
+        "deck ledger appears attached through brick veneer",
+        "finished ceiling blocks ledger inspection",
+        "minor deck board cupping",
+        "string lights not working"
+      ],
+      "expectedLeadScope": [
+        "deck ledger connection uncertainty",
+        "brick veneer attachment risk",
+        "design professional or deck contractor review"
+      ],
+      "expectedExclusions": [
+        "minor deck board cupping",
+        "string lights not working"
+      ],
+      "requiredGate": "inaccessible critical connection caveat",
+      "riskIfWrong": "The packet may falsely clear a critical deck connection that was not visible."
+    },
+    {
+      "id": "S079",
+      "sourceBasis": "WDI guidance links wood-to-ground contact, moisture, and mud tubes to termite risk requiring pest specialist evaluation.",
+      "persona": "Buyer agent",
+      "state": "GA",
+      "deal": "Termite letter is not yet ordered and inspection shows conducive conditions.",
+      "findings": [
+        "termite mud tubes on foundation pier",
+        "wood debris in crawlspace",
+        "wet crawlspace soil",
+        "old vinyl floor color"
+      ],
+      "expectedLeadScope": [
+        "termite/WDI evaluation",
+        "wood debris conducive condition",
+        "crawlspace moisture"
+      ],
+      "expectedExclusions": [
+        "old vinyl floor color"
+      ],
+      "requiredGate": "WDI specialist before repair demand",
+      "riskIfWrong": "Buyer may miss active infestation or hidden structural damage during the contingency period."
+    },
+    {
+      "id": "S080",
+      "sourceBasis": "NC WDI public guidance clarifies that WDI reports cover more than termites and note conducive moisture and cellulose conditions.",
+      "persona": "North Carolina buyer agent",
+      "state": "NC",
+      "deal": "Buyer has high due diligence money and wants to know whether to walk.",
+      "findings": [
+        "wood moisture content reported above 20 percent in crawlspace",
+        "cellulose debris under structure",
+        "possible powderpost beetle exit holes",
+        "minor porch paint wear"
+      ],
+      "expectedLeadScope": [
+        "wood-destroying insect report",
+        "excessive wood moisture",
+        "cellulose debris removal"
+      ],
+      "expectedExclusions": [
+        "minor porch paint wear"
+      ],
+      "requiredGate": "WDI report and moisture correction",
+      "riskIfWrong": "The system may separate pest and moisture issues that must be handled together."
+    },
+    {
+      "id": "S081",
+      "sourceBasis": "Termite prevention guidance identifies wood-to-soil contact as a common access path and moisture as a conducive condition.",
+      "persona": "Listing agent",
+      "state": "SC",
+      "deal": "Buyer requests all floor joists be replaced after seeing old termite tubes.",
+      "findings": [
+        "inactive-looking termite tubes",
+        "no visible joist damage in accessible area",
+        "wood steps contact soil",
+        "buyer asks for joist replacement"
+      ],
+      "expectedLeadScope": [
+        "WDI activity verification",
+        "wood-to-soil contact correction"
+      ],
+      "expectedExclusions": [
+        "joist replacement without damage evidence"
+      ],
+      "requiredGate": "active damage versus conducive condition",
+      "riskIfWrong": "The request jumps from evidence of risk to unsupported structural replacement."
+    },
+    {
+      "id": "S082",
+      "sourceBasis": "WDI and crawlspace sources show pest damage should be paired with structural evaluation when load-bearing wood is affected.",
+      "persona": "Buyer agent",
+      "state": "AL",
+      "deal": "Pest inspector confirms active termites after the general inspection.",
+      "findings": [
+        "active subterranean termites confirmed",
+        "damaged sill plate at rear crawlspace",
+        "moisture leak from hose bib",
+        "old blinds"
+      ],
+      "expectedLeadScope": [
+        "active termite treatment",
+        "damaged sill plate structural evaluation",
+        "hose bib leak repair"
+      ],
+      "expectedExclusions": [
+        "old blinds"
+      ],
+      "requiredGate": "pest treatment plus structural repair quote",
+      "riskIfWrong": "Buyer might ask only for treatment and miss damaged load-bearing wood."
+    },
+    {
+      "id": "S083",
+      "sourceBasis": "Termite guidance warns surface treatment alone may not solve below-ground entry or moisture conditions.",
+      "persona": "Transaction coordinator",
+      "state": "MS",
+      "deal": "Seller provides a receipt for a spot spray after WDI report.",
+      "findings": [
+        "subterranean termite evidence at foundation",
+        "seller receipt says spot treatment only",
+        "leaking exterior faucet near tubes",
+        "minor fence discoloration"
+      ],
+      "expectedLeadScope": [
+        "termite treatment adequacy",
+        "exterior faucet leak",
+        "WDI clearance or warranty review"
+      ],
+      "expectedExclusions": [
+        "minor fence discoloration"
+      ],
+      "requiredGate": "treatment documentation and moisture correction",
+      "riskIfWrong": "Buyer may accept a minimal treatment receipt while the conducive leak remains."
+    },
+    {
+      "id": "S084",
+      "sourceBasis": "WDI reports can find fungi, dry rot, beetles, and carpenter ants in addition to termites, so the packet should not collapse everything into termite treatment.",
+      "persona": "Buyer agent",
+      "state": "CA",
+      "deal": "Pest report identifies fungus damage at a deck and eaves.",
+      "findings": [
+        "fungus damage at deck joist ends",
+        "dry rot at fascia near gutter leak",
+        "no active termite evidence",
+        "buyer asks for termite tenting"
+      ],
+      "expectedLeadScope": [
+        "fungus-damaged wood repair",
+        "gutter leak source",
+        "wood-destroying organism scope"
+      ],
+      "expectedExclusions": [
+        "termite tenting without termite evidence"
+      ],
+      "requiredGate": "correct WDI category and source control",
+      "riskIfWrong": "The request asks for the wrong pest remedy and ignores moisture-driven wood decay."
+    },
+    {
+      "id": "S085",
+      "sourceBasis": "WDI inspection reports are limited to accessible evidence, so hidden damage risk must be framed as uncertainty, not certainty.",
+      "persona": "Buyer agent",
+      "state": "NJ",
+      "deal": "Seller remodeled basement walls before listing and WDI access was limited.",
+      "findings": [
+        "finished walls block sill inspection",
+        "old termite treatment sticker in basement",
+        "moisture staining at base trim",
+        "new recessed lights"
+      ],
+      "expectedLeadScope": [
+        "limited WDI access",
+        "prior termite treatment history",
+        "moisture at base trim"
+      ],
+      "expectedExclusions": [
+        "new recessed lights",
+        "confirmed hidden damage claim"
+      ],
+      "requiredGate": "uncertainty and records request",
+      "riskIfWrong": "Packet may overpromise hidden damage findings or falsely clear inaccessible areas."
+    },
+    {
+      "id": "S086",
+      "sourceBasis": "Insurance four-point reviews evaluate roof, electrical, plumbing, and HVAC together, so multiple moderate defects can combine into quote failure.",
+      "persona": "Insurance-aware buyer agent",
+      "state": "FL",
+      "deal": "Buyer has three days left in AS IS inspection period and no firm binder.",
+      "findings": [
+        "older shingle roof with unknown remaining life",
+        "Zinsco electrical panel",
+        "polybutylene plumbing visible",
+        "AC cools adequately"
+      ],
+      "expectedLeadScope": [
+        "roof insurability verification",
+        "Zinsco panel safety/insurance risk",
+        "polybutylene plumbing insurability"
+      ],
+      "expectedExclusions": [
+        "AC replacement because unit cools adequately"
+      ],
+      "requiredGate": "insurance quote before repair strategy",
+      "riskIfWrong": "The buyer may spend the deadline negotiating credits that cannot produce an insurable closing."
+    },
+    {
+      "id": "S087",
+      "sourceBasis": "Quote-needed risks are highest when inspection evidence identifies a serious system defect but no trade scope or repair method exists.",
+      "persona": "Buyer agent",
+      "state": "CO",
+      "deal": "Objection deadline is tomorrow and only the general inspection is complete.",
+      "findings": [
+        "foundation movement suspected",
+        "sewer scope not yet performed",
+        "electrical panel has double taps",
+        "cosmetic drywall cracks"
+      ],
+      "expectedLeadScope": [
+        "foundation engineer evaluation",
+        "sewer scope recommendation",
+        "electrical panel repair quote"
+      ],
+      "expectedExclusions": [
+        "cosmetic drywall cracks"
+      ],
+      "requiredGate": "quote-needed labels and deadline decision",
+      "riskIfWrong": "The system invents a single ask number across unpriced structural, sewer, and electrical risks."
+    },
+    {
+      "id": "S088",
+      "sourceBasis": "Major systems should be prioritized by safety, active failure, financing, and insurability rather than number of report bullets.",
+      "persona": "Team lead",
+      "state": "AZ",
+      "deal": "High-volume team wants a QA case for reducing a 90-item report.",
+      "findings": [
+        "failed AC compressor",
+        "pool gate does not latch",
+        "minor cabinet scuffs",
+        "missing door stops",
+        "loose towel bar"
+      ],
+      "expectedLeadScope": [
+        "failed AC compressor",
+        "pool gate safety"
+      ],
+      "expectedExclusions": [
+        "minor cabinet scuffs",
+        "missing door stops",
+        "loose towel bar"
+      ],
+      "requiredGate": "scope discipline under long report pressure",
+      "riskIfWrong": "The product becomes a prettier inspection report summary instead of a negotiation triage tool."
+    },
+    {
+      "id": "S089",
+      "sourceBasis": "Lender-visible repair risks differ from buyer preference items and should be gated when FHA or VA financing is involved.",
+      "persona": "Loan officer",
+      "state": "VA",
+      "deal": "VA buyer has safety and sanitation defects in inspection before appraisal.",
+      "findings": [
+        "failed septic dye test",
+        "missing deck stair handrail",
+        "active roof leak over electrical fixture",
+        "dated kitchen backsplash"
+      ],
+      "expectedLeadScope": [
+        "failed septic",
+        "missing deck stair handrail",
+        "active roof leak over electrical fixture",
+        "VA lender-visible risk"
+      ],
+      "expectedExclusions": [
+        "dated kitchen backsplash"
+      ],
+      "requiredGate": "VA/lender confirmation and repair completion caveat",
+      "riskIfWrong": "The packet may present credit language for items that could require completion before closing."
+    },
+    {
+      "id": "S090",
+      "sourceBasis": "Seller-side pushback is strongest when valid system defects are mixed with upgrades, cosmetics, and speculative future replacements.",
+      "persona": "Listing-side agent",
+      "state": "GA",
+      "deal": "Listing side wants to classify buyer request items for counteroffer.",
+      "findings": [
+        "active plumbing leak at crawlspace supply",
+        "double-tapped breaker",
+        "buyer wants new appliances",
+        "buyer wants fresh interior paint"
+      ],
+      "expectedLeadScope": [
+        "active plumbing leak",
+        "double-tapped breaker electrical safety"
+      ],
+      "expectedExclusions": [
+        "new appliances",
+        "fresh interior paint"
+      ],
+      "requiredGate": "seller counter classification",
+      "riskIfWrong": "The seller may reject even valid repairs because the product endorses a mixed wishlist."
+    },
+    {
+      "id": "S091",
+      "sourceBasis": "Expired contingency or option windows can make even serious defects advisory rather than sendable repair requests.",
+      "persona": "Texas buyer agent",
+      "state": "TX",
+      "deal": "Option period expired yesterday and buyer just received sewer scope video.",
+      "findings": [
+        "sewer lateral collapsed at 74 feet",
+        "buyer wants new repair amendment",
+        "minor cracked tile at laundry",
+        "seller has not agreed to extend option"
+      ],
+      "expectedLeadScope": [
+        "sewer lateral collapse advisory",
+        "rights/deadline review"
+      ],
+      "expectedExclusions": [
+        "minor cracked tile at laundry",
+        "normal first repair demand after expired option"
+      ],
+      "requiredGate": "expired-rights not sendable gate",
+      "riskIfWrong": "The system may draft a normal repair request after the buyer's strongest leverage expired."
+    },
+    {
+      "id": "S092",
+      "sourceBasis": "Repair receipts and seller promises require verification for critical systems before final walk-through or closing.",
+      "persona": "Transaction coordinator",
+      "state": "PA",
+      "deal": "Closing is tomorrow and seller says all serious items are complete.",
+      "findings": [
+        "roof leak repair receipt lacks photos",
+        "electrical panel repair invoice missing permit",
+        "crawlspace still visibly wet",
+        "seller says no reinspection needed"
+      ],
+      "expectedLeadScope": [
+        "roof repair verification",
+        "electrical repair verification",
+        "crawlspace moisture reinspection"
+      ],
+      "expectedExclusions": [
+        "seller says no reinspection needed"
+      ],
+      "requiredGate": "critical repair verification before closing",
+      "riskIfWrong": "Buyer closes after relying on paperwork that does not prove critical defects were resolved."
+    },
+    {
+      "id": "S093",
+      "sourceBasis": "General inspection limitations mean underground, concealed, and inaccessible components often need specialist follow-up instead of definitive clearance.",
+      "persona": "Inspector-channel product reviewer",
+      "state": "OR",
+      "deal": "Inspector wants output that respects inspection scope limitations.",
+      "findings": [
+        "main sewer line not scoped",
+        "crawlspace inaccessible due to low clearance",
+        "roof too steep to walk",
+        "agent asks for clean pass language"
+      ],
+      "expectedLeadScope": [
+        "sewer scope limitation",
+        "crawlspace access limitation",
+        "roof access limitation"
+      ],
+      "expectedExclusions": [
+        "clean pass language"
+      ],
+      "requiredGate": "limitations stay visible",
+      "riskIfWrong": "The tool creates false certainty about systems the inspector did not inspect."
+    },
+    {
+      "id": "S094",
+      "sourceBasis": "Cost and credit strategy should not exceed usable lender or contract pathways when repairs are safety or collateral sensitive.",
+      "persona": "FHA buyer agent",
+      "state": "OH",
+      "deal": "Buyer asks for a large seller credit on an FHA file.",
+      "findings": [
+        "active roof leak",
+        "missing stair handrail",
+        "exposed wiring at basement junction",
+        "buyer wants all items handled as closing cost credit"
+      ],
+      "expectedLeadScope": [
+        "active roof leak",
+        "missing stair handrail",
+        "exposed wiring",
+        "FHA lender-visible risk"
+      ],
+      "expectedExclusions": [
+        "credit-only assumption"
+      ],
+      "requiredGate": "lender approval and repair-versus-credit path",
+      "riskIfWrong": "The request may negotiate an unusable credit for items the lender wants repaired."
+    },
+    {
+      "id": "S095",
+      "sourceBasis": "Multiple water sources require separating roof, plumbing, and site drainage before assigning a single repair scope.",
+      "persona": "Buyer agent",
+      "state": "MD",
+      "deal": "Historic rowhouse has stains in several locations with different likely causes.",
+      "findings": [
+        "front bedroom ceiling stain below roof parapet",
+        "kitchen cabinet wet below sink",
+        "basement wall damp after rain",
+        "old plaster cracks"
+      ],
+      "expectedLeadScope": [
+        "roof/parapet water intrusion",
+        "active sink leak",
+        "basement drainage moisture"
+      ],
+      "expectedExclusions": [
+        "old plaster cracks"
+      ],
+      "requiredGate": "separate water sources and trade scopes",
+      "riskIfWrong": "A single generic water-damage credit may be underpriced and impossible to defend."
+    },
+    {
+      "id": "S096",
+      "sourceBasis": "Buyer market leverage can justify stronger asks, but scope should still be anchored to major system defects.",
+      "persona": "Buyer agent in buyer market",
+      "state": "MI",
+      "deal": "Property has been listed for 120 days and seller is motivated.",
+      "findings": [
+        "failed sewer scope due to broken clay pipe",
+        "furnace heat exchanger concern",
+        "active leak at water heater",
+        "dated carpet"
+      ],
+      "expectedLeadScope": [
+        "broken clay sewer pipe",
+        "furnace heat exchanger evaluation",
+        "active water heater leak"
+      ],
+      "expectedExclusions": [
+        "dated carpet"
+      ],
+      "requiredGate": "strong ask but no cosmetic drift",
+      "riskIfWrong": "The product either underuses leverage or weakens the request with cosmetic extras."
+    },
+    {
+      "id": "S097",
+      "sourceBasis": "Competitive seller markets require minimal, defensible asks focused on defects that could threaten safety, financing, or insurance.",
+      "persona": "Buyer agent in seller market",
+      "state": "UT",
+      "deal": "Seller has backup offers and says no repairs unless safety related.",
+      "findings": [
+        "loose second-story deck guard",
+        "active roof leak at vent boot",
+        "old but working HVAC",
+        "dated countertops"
+      ],
+      "expectedLeadScope": [
+        "loose deck guard safety",
+        "active roof leak"
+      ],
+      "expectedExclusions": [
+        "old but working HVAC",
+        "dated countertops"
+      ],
+      "requiredGate": "minimal high-leverage ask",
+      "riskIfWrong": "Buyer may lose the deal by including age and preference items alongside true safety defects."
+    },
+    {
+      "id": "S098",
+      "sourceBasis": "Quote-needed cases should preserve uncertainty when defect severity is known but repair method is unknown.",
+      "persona": "Buyer agent",
+      "state": "CA",
+      "deal": "Seller requests a dollar number today but specialists cannot visit until tomorrow.",
+      "findings": [
+        "possible foundation settlement",
+        "cracked chimney flue liner",
+        "polybutylene main supply suspected",
+        "minor landscaping overgrowth"
+      ],
+      "expectedLeadScope": [
+        "foundation settlement evaluation",
+        "chimney flue liner safety",
+        "polybutylene supply verification"
+      ],
+      "expectedExclusions": [
+        "minor landscaping overgrowth"
+      ],
+      "requiredGate": "do not invent unquoted repair amount",
+      "riskIfWrong": "The output may produce a confident but fictional credit number across three specialist scopes."
+    },
+    {
+      "id": "S099",
+      "sourceBasis": "Post-counter workflows require comparing seller cure quality to the original system risk, not drafting a brand-new first ask.",
+      "persona": "Colorado transaction coordinator",
+      "state": "CO",
+      "deal": "Inspection objection was sent and seller countered with selected repairs.",
+      "findings": [
+        "seller will repair GFCI outlets",
+        "seller refuses sewer root intrusion credit",
+        "seller offers to clean mold-like crawlspace staining",
+        "drainage correction not included"
+      ],
+      "expectedLeadScope": [
+        "sewer root intrusion counter decision",
+        "crawlspace moisture source",
+        "drainage correction missing"
+      ],
+      "expectedExclusions": [
+        "new first objection language"
+      ],
+      "requiredGate": "counter comparison and resolution deadline",
+      "riskIfWrong": "The system ignores workflow state and drafts demands that do not fit the pending resolution deadline."
+    },
+    {
+      "id": "S100",
+      "sourceBasis": "Physical system triage should create an immediate, copy-ready packet while preserving caveats for quotes, lenders, insurance, and specialist scopes.",
+      "persona": "SEO landing-page visitor with live deal",
+      "state": "US",
+      "deal": "Visitor searched for help turning a 55-page inspection report into a seller credit request.",
+      "findings": [
+        "active roof leak",
+        "Federal Pacific panel",
+        "crawlspace standing water",
+        "cosmetic paint scuffs",
+        "old but working appliances"
+      ],
+      "expectedLeadScope": [
+        "active roof leak",
+        "Federal Pacific panel safety/insurance risk",
+        "crawlspace standing water"
+      ],
+      "expectedExclusions": [
+        "cosmetic paint scuffs",
+        "old but working appliances"
+      ],
+      "requiredGate": "immediate output with quote-needed and insurance caveats",
+      "riskIfWrong": "User gets a generic article or bloated wishlist instead of a usable high-risk negotiation packet."
+    }
+  ]
+}

@@ -1,36 +1,72 @@
 @template.layout(
     title = "Privacy Policy | LifeVerdict",
-    showHeader = true,
+    description = "Privacy practices for the LifeVerdict inspection response tool.",
     content = @`
-    <div class="max-w-4xl mx-auto px-4 py-12">
-        <h1 class="text-3xl font-bold text-slate-900 mb-8">Privacy Policy</h1>
-        
-        <div class="prose prose-slate max-w-none">
-            <p class="text-sm text-slate-500 mb-6">Last Updated: February 2026</p>
+        <div class="support-shell">
+            <section class="support-hero">
+                <div class="section-kicker">Privacy policy</div>
+                <h1 class="support-title">We collect only what is needed to generate and improve the packet.</h1>
+                <p class="support-lede">
+                LifeVerdict is designed around a focused workflow. We collect the information needed to run the ask pre-send check, support optional follow-up, and understand whether the artifact is useful.
+                </p>
+                <div class="support-meta">
+                    <span>Minimal collection</span>
+                    <span>Optional email</span>
+                    <span>Updated April 23, 2026</span>
+                </div>
+            </section>
 
-            <h3>1. Information We Collect</h3>
-            <p>At LifeVerdict, we collect minimal information necessary to provide our repair cost analysis services:</p>
-            <ul>
-                <li><strong>Property Details:</strong> Address, age, square footage, and condition details entered into our calculator.</li>
-                <li><strong>Contact Information:</strong> Email address (only if you choose to save/send your report).</li>
-                <li><strong>Usage Data:</strong> Pages visited, time spent, and interaction with our tools.</li>
-            </ul>
+            <section class="support-grid">
+                <article class="support-card">
+                    <h2>Information you provide</h2>
+                    <ul class="support-list">
+                        <li>Inspection findings and pasted report text.</li>
+                        <li>Uploaded inspection files such as PDFs, TXT files, and photos.</li>
+                        <li>Optional email address if you choose to share one for follow-up.</li>
+                    </ul>
+                </article>
 
-            <h3>2. How We Use Your Information</h3>
-            <p>We use your data to:</p>
-            <ul>
-                <li>Generate accurate, localized repair cost estimates.</li>
-                <li>Send you requested reports via email.</li>
-                <li>Improve our algorithms and user experience.</li>
-            </ul>
-            <p><strong>We do NOT sell your personal data to third parties.</strong></p>
+                <article class="support-card">
+                    <h2>Workflow context we process</h2>
+                    <ul class="support-list">
+                        <li>Loan posture, quote support, and response timeline.</li>
+                        <li>Optional market, era, and red-flag system context.</li>
+                        <li>Packet interaction events such as copy, print, and useful-feedback actions.</li>
+                    </ul>
+                </article>
 
-            <h3>3. Cookies</h3>
-            <p>We use standard cookies to remember your session preferences (e.g., your selected metro area) so you don't have to re-enter details.</p>
+                <article class="support-card">
+                    <h2>How we use it</h2>
+                    <ul class="support-list">
+                    <li>Generate the pre-send review, response packet, and matched evidence.</li>
+                        <li>Measure whether the packet is used in real workflows.</li>
+                        <li>Improve packet quality, scoping logic, and evidence handling.</li>
+                    </ul>
+                </article>
+            </section>
 
-            <h3>4. Contact Us</h3>
-            <p>If you have questions about this policy, please contact us at support@lifeverdict.com.</p>
+            <section class="support-grid mt-5">
+                <article class="support-card">
+                    <h2>Email is optional</h2>
+                    <p>
+                        Email is not required to copy, print, or use the packet. If you provide an email, it is used only for the workflow or follow-up you requested.
+                    </p>
+                </article>
+
+                <article class="support-card">
+                    <h2>We do not sell your personal data</h2>
+                    <p>
+                LifeVerdict does not sell personal data. We may use standard infrastructure or analytics providers needed to run the service, but the primary product goal is ask pre-send review, not profile expansion.
+                    </p>
+                </article>
+
+                <article class="support-card">
+                    <h2>Questions</h2>
+                    <p>
+                        For privacy questions, contact <a href="mailto:support@lifeverdict.com">support@lifeverdict.com</a>.
+                    </p>
+                </article>
+            </section>
         </div>
-    </div>
     `
 )

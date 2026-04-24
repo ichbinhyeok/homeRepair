@@ -1,239 +1,132 @@
-@param String baseUrl
+@template.layout(
+    title = "Methodology | LifeVerdict",
+    description = "How LifeVerdict checks whether an inspection ask is send-ready before turning it into a response packet.",
+    content = @`
+        <div class="support-shell">
+            <section class="support-hero">
+                <div class="section-kicker">Methodology</div>
+                <h1 class="support-title">How the ask pre-send check works.</h1>
+                <p class="support-lede">
+                    The product first checks whether the proposed ask is send-ready. Only then does it assemble the revised response artifact for the inspection window.
+                </p>
+                <div class="support-meta">
+                    <span>Buyer-agent workflow first</span>
+                    <span>Scoped exposure model</span>
+                    <span>Updated April 23, 2026</span>
+                </div>
+            </section>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JV6YLYZHN8"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+            <section class="support-stat-grid">
+                <article class="support-stat">
+                    <strong>1. Parse</strong>
+                    <span>Read pasted findings, uploaded report text, and OCR-backed scans into a normalized finding set.</span>
+                </article>
+                <article class="support-stat">
+                    <strong>2. Scope</strong>
+                    <span>Match findings to lead anchors, verify items, and do-not-lead items before any ask range is built.</span>
+                </article>
+                <article class="support-stat">
+                    <strong>3. Defend</strong>
+                    <span>Produce send posture, number basis, evidence checks, fallback, agent note, and readiness gates in one artifact.</span>
+                </article>
+            </section>
 
-      gtag('config', 'G-JV6YLYZHN8');
-    </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>Research Methodology | Home Repair Cost Analysis</title>
-    <meta name="description" content="Detailed explanation of our RSMeans-based cost calculation methodology, including regional labor adjustments, climate zone analysis, and era-specific risk modeling.">
-    <meta name="robots" content="noindex,follow">
-    
-    <link rel="canonical" href="${baseUrl}/home-repair/methodology">
-    <link rel="icon" href="/favicon.ico">
-    <link rel="stylesheet" href="/css/seo-report.css">
-    
-    <!-- MathJax for formula rendering -->
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    
-    <style>
-        .methodology-container {
-            width: 100%;
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 0 20px;
-            box-sizing: border-box;
-        }
-        
-        @media (min-width: 768px) {
-            .methodology-container {
-                margin: 60px auto;
-                padding: 0 30px;
-            }
-        }
-        
-        .formula-box {
-            background: #f8fafc;
-            border: 2px solid #3b82f6;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 30px 0;
-            overflow-x: auto; /* Enable scrolling for long formulas */
-            max-width: 100%;
-        }
-        
-        .formula-legend {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #cbd5e1;
-            font-size: 0.95em;
-            line-height: 1.8;
-        }
-        
-        .data-source {
-            background: #eff6ff;
-            border-left: 4px solid #2563eb;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 6px;
-        }
-        
-        .process-step {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 24px;
-            margin: 20px 0;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        
-        .step-number {
-            display: inline-block;
-            width: 36px;
-            height: 36px;
-            background: #3b82f6;
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 36px;
-            font-weight: bold;
-            margin-right: 12px;
-        }
-    </style>
-</head>
-<body>
-    @template.layout._header()
-    
-    <div class="methodology-container">
-        <header style="margin-bottom: 60px;">
-            <h1 style="font-size: 2.5em; color: #1e293b; margin-bottom: 16px;">Research Methodology</h1>
-            <p style="font-size: 1.2em; color: #64748b; line-height: 1.6;">
-                A transparent explanation of our data-driven approach to home repair cost estimation and risk assessment.
-            </p>
-        </header>
-        
-        <!-- Data Sources -->
-        <section style="margin-bottom: 60px;">
-            <h2 style="color: #1e293b; margin-bottom: 24px;">📊 Primary Data Sources</h2>
-            
-            <div class="data-source">
-                <h3 style="margin-top: 0; color: #1e40af;">RSMeans® Construction Cost Database (2026)</h3>
-                <p>
-                    Our cost estimates are derived from the industry-standard RSMeans® Building Construction Cost Data, 
-                    published by Gordian. This database provides detailed unit costs for over 25,000 construction items, 
-                    indexed to the 2026 national average.
-                </p>
-                <ul>
-                    <li><strong>Coverage:</strong> Material costs, labor rates, equipment rental, and overhead</li>
-                    <li><strong>Update Frequency:</strong> Quarterly adjustments for inflation and market conditions</li>
-                    <li><strong>Validation:</strong> Cross-referenced with actual contractor bids from 117 metro areas</li>
+            <section class="spotlight-grid mt-5">
+                <div class="spotlight-panel cool">
+                    <div class="section-kicker">What this is for</div>
+                    <h2>Buyer agents first, then buyers under contract who need a reviewed first draft.</h2>
+                    <ul>
+                        <li>Buyer agents who need a narrow, defensible first ask fast.</li>
+                        <li>Buyers under contract with a short response window.</li>
+                        <li>Inspection asks that need a send, revise, or do-not-send verdict quickly.</li>
+                    </ul>
+                </div>
+                <div class="spotlight-panel warm">
+                    <div class="section-kicker">What this is not</div>
+                    <h2>Not an inspector suite, broad repair-cost blog, full renovation planner, or lender approval promise.</h2>
+                    <ul>
+                        <li>The product is not trying to replace inspection report software.</li>
+                        <li>The product is not trying to estimate every cosmetic project.</li>
+                        <li>The packet is not a contractor bid or underwriting guarantee.</li>
+                        <li>The output is intentionally narrower than the total future maintenance backlog.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="support-grid mt-5">
+                <article class="support-card">
+                    <h2>Inspection extraction</h2>
+                    <p>
+                        The first layer is the user's own report language. Pasted text and quick-add findings are normalized into a concise set of inspection items. If the user uploads a PDF, TXT, or image, the evidence layer tries to match the strongest items back to report pages.
+                    </p>
+                </article>
+
+                <article class="support-card">
+                    <h2>Lead vs. verify vs. cut</h2>
+                    <p>
+                        Each finding is evaluated against must-request terms, verify-next terms, component signals, and verdict-plan anchors. The goal is not to preserve every detail from the report. The goal is to keep only what improves negotiation leverage and cut what weakens the ask.
+                    </p>
+                </article>
+
+                <article class="support-card">
+                    <h2>Scoped exposure</h2>
+                    <p>
+                        Cost data is used only after the findings are scoped. Scoped exposure means lead items plus a disciplined verify reserve, so the ask reflects the live deal instead of the entire future repair backlog.
+                    </p>
+                </article>
+            </section>
+
+            <section class="support-grid mt-5">
+                <article class="support-card">
+                    <h2>Ask range construction</h2>
+                    <p>
+                        The defensible, target, and stretch asks are influenced by lead-anchor strength, quote support, closing window, loan posture, lender-visible signals, and matched report evidence. If quote or evidence support is missing, the model stays more conservative and keeps the result in review mode.
+                    </p>
+                </article>
+
+                <article class="support-card">
+                    <h2>Evidence and OCR</h2>
+                    <p>
+                        If a citation is marked <code>(OCR)</code>, the packet is telling the user that the line was recovered from a scan or photo and should be checked against the source page before sending. OCR raises usability, but it never removes the need for user verification.
+                    </p>
+                </article>
+
+                <article class="support-card">
+                    <h2>Pre-send gates</h2>
+                    <p>
+                        The visible verdict is based on hard gates: deadline, form path, evidence, financing boundary, stage, ownership, number basis, seller pushback, and send posture. Confidence is secondary; gates decide whether the ask is safe to send.
+                    </p>
+                </article>
+            </section>
+
+            <section class="support-card mt-5">
+                <h2>Limitations</h2>
+                <ul class="support-list">
+                    <li>The reviewed ask is not a binding contractor quote.</li>
+                    <li>Hidden conditions, access constraints, and local contractor availability can materially change actual pricing.</li>
+                    <li>Lender-visible logic is an aid to negotiation framing, not a promise of appraisal or underwriting outcomes.</li>
+                    <li>Users should confirm OCR-marked excerpts against the source page before sending.</li>
                 </ul>
-            </div>
-            
-            <div class="data-source">
-                <h3 style="margin-top: 0; color: #1e40af;">U.S. Bureau of Labor Statistics (BLS)</h3>
-                <p>
-                    Regional labor cost multipliers are calculated using BLS Occupational Employment and Wage Statistics (OEWS) 
-                    for construction trades in each metropolitan statistical area (MSA).
-                </p>
-            </div>
-            
-            <div class="data-source">
-                <h3 style="margin-top: 0; color: #1e40af;">ASHRAE Climate Zone Classification</h3>
-                <p>
-                    Climate-specific risk assessments use the American Society of Heating, Refrigeating and Air-Conditioning 
-                    Engineers (ASHRAE) climate zone system to model weathering patterns and material degradation rates.
-                </p>
-            </div>
-        </section>
-        
-        <!-- Cost Calculation Formula -->
-        <section style="margin-bottom: 60px;">
-            <h2 style="color: #1e293b; margin-bottom: 24px;">🧮 Regional Cost Adjustment Formula</h2>
-            
-            <p style="font-size: 1.05em; line-height: 1.7; margin-bottom: 30px;">
-                Our proprietary algorithm adjusts national average costs to reflect local market conditions through 
-                a multi-factor calculation:
-            </p>
-            
-            <div class="formula-box">
-                <div style="text-align: center; font-size: 1.1em;">
-                    $$
-                    C_{adjusted} = \left( C_{base} \times L_{mult} \times (1 + M_{logistics}) + F_{mob} \right) \times (1 + D_{tax})
-                    $$
+            </section>
+
+            <section class="intent-shell">
+                <div class="section-kicker">Method questions</div>
+                <h2 class="intent-title">Three practical questions behind the product choices.</h2>
+                <div class="support-grid mt-5">
+                    <article class="support-card intent-card">
+                        <h3>Why seller credit first?</h3>
+                        <p>Because buyer agents usually need one clean, defensible ask more than they need a sprawling repair specification. Seller-credit posture can survive short response windows better, but the product still checks whether credit wording is appropriate.</p>
+                    </article>
+                    <article class="support-card intent-card">
+                        <h3>Why can local context be optional?</h3>
+                    <p>Speed matters. The first-pass job is to judge the ask. Local market and age context improve precision, but a broad U.S. baseline is better than losing the user before the pre-send check exists.</p>
+                    </article>
+                    <article class="support-card intent-card">
+                        <h3>Why is the core flow free during validation?</h3>
+                        <p>Because the current proof point is whether buyers and agents actually use the pre-send check, copy the revised packet, and trust it enough to review real files. Charging before that proof would slow the learning loop.</p>
+                    </article>
                 </div>
-                
-                <div class="formula-legend">
-                    <strong>Where:</strong><br>
-                    • \(C_{base}\) = RSMeans 2026 National Average Cost<br>
-                    • \(L_{mult}\) = Metro Labor Multiplier (range: 0.78 – 1.52)<br>
-                    • \(M_{logistics}\) = Material Transport Index (accounts for shipping costs to remote areas)<br>
-                    • \(F_{mob}\) = Mobilization Fee (contractor travel and setup costs)<br>
-                    • \(D_{tax}\) = Local Disposal Tax Rate (varies by jurisdiction)
-                </div>
-            </div>
-            
-            <div class="process-step">
-                <h3 style="margin-top: 0;"><span class="step-number">1</span>Base Cost Retrieval</h3>
-                <p>
-                    For each repair item (e.g., "Roof Replacement - Asphalt Shingles"), we extract the RSMeans unit cost, 
-                    which includes both material and labor components, indexed to the 2026 national average.
-                </p>
-            </div>
-            
-            <div class="process-step">
-                <h3 style="margin-top: 0;"><span class="step-number">2</span>Labor Market Adjustment</h3>
-                <p>
-                    The labor multiplier is calculated by comparing average hourly wages for construction trades in each MSA 
-                    to the national median. For example:
-                </p>
-                <ul>
-                    <li><strong>San Francisco, CA:</strong> Labor multiplier = 1.52 (52% above national average)</li>
-                    <li><strong>Memphis, TN:</strong> Labor multiplier = 0.84 (16% below national average)</li>
-                </ul>
-            </div>
-        </section>
-        
-        <!-- Era-Specific Risk Modeling -->
-        <section style="margin-bottom: 60px;">
-            <h2 style="color: #1e293b; margin-bottom: 24px;">📅 Era-Specific Defect Probability</h2>
-            
-            <p style="font-size: 1.05em; line-height: 1.7; margin-bottom: 30px;">
-                Our risk assessment model assigns probability weights to common defects based on construction era, 
-                derived from historical building code analysis and insurance claim data.
-            </p>
-            
-            <div class="formula-box">
-                <div style="text-align: center; font-size: 1.1em;">
-                    $$
-                    P(defect) = P_{base} \times (1 + R_{climate}) \times (1 + R_{age})
-                    $$
-                </div>
-                
-                <div class="formula-legend">
-                    <strong>Where:</strong><br>
-                    • \(P_{base}\) = Baseline defect probability for era<br>
-                    • \(R_{climate}\) = Climate zone risk multiplier<br>
-                    • \(R_{age}\) = Age-based degradation factor
-                </div>
-            </div>
-        </section>
-        
-        <!-- Transparency Disclaimer -->
-        <section style="background: #fef3c7; border: 2px solid #f59e0b; border-radius: 12px; padding: 30px; margin-top: 60px;">
-            <h3 style="margin-top: 0; color: #92400e;">⚠️ Limitations & Disclaimer</h3>
-            <p style="margin-bottom: 16px;">
-                <strong>This is a statistical modeling tool, not a substitute for professional inspection.</strong>
-            </p>
-            <ul style="margin-bottom: 0;">
-                <li>Cost estimates assume standard site conditions and may not account for unique structural challenges</li>
-                <li>Risk probabilities are population-level statistics and do not predict individual home conditions</li>
-                <li>All figures are provided for informational purposes only and should be verified by licensed contractors</li>
-                <li>We recommend obtaining 3+ competitive bids before authorizing major repair work</li>
-            </ul>
-        </section>
-        
-        <footer style="margin-top: 60px; padding-top: 40px; border-top: 2px solid #e5e7eb; text-align: center; color: #64748b;">
-            <p>
-                <strong>Last Updated:</strong> February 2026<br>
-                <strong>Data Version:</strong> RSMeans 2026 Q1 | BLS OEWS May 2025
-            </p>
-            <p style="margin-top: 20px;">
-                <a href="/home-repair" style="color: #3b82f6; text-decoration: none; font-weight: 600;">← Back to Home</a>
-            </p>
-        </footer>
-    </div>
-    
-    @template.layout._footer()
-</body>
-</html>
+            </section>
+        </div>
+    `
+)

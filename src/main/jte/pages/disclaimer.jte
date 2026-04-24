@@ -1,105 +1,53 @@
-@param String baseUrl
+@template.layout(
+    title = "Disclaimer | LifeVerdict",
+    description = "Important limitations and legal disclaimers for the LifeVerdict inspection ask pre-send check.",
+    content = @`
+        <div class="support-shell">
+            <section class="support-hero">
+                <div class="section-kicker">Disclaimer</div>
+                <h1 class="support-title">Use the packet as negotiation support, not as a substitute for licensed advice.</h1>
+                <p class="support-lede">
+                    LifeVerdict is an informational decision-support tool. It helps compress inspection findings into a clearer ask, but it does not replace licensed professional judgment.
+                </p>
+                <div class="support-meta">
+                    <span>Informational use only</span>
+                    <span>Not professional advice</span>
+                    <span>Updated April 23, 2026</span>
+                </div>
+            </section>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JV6YLYZHN8"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+            <section class="support-grid">
+                <article class="support-card">
+                    <h2>Not a contractor quote</h2>
+                    <p>
+                        Ask ranges are model-driven negotiation aids, not binding bids or offers to perform work. Actual pricing can vary materially based on site access, hidden conditions, contractor availability, permitting, and scope changes.
+                    </p>
+                </article>
 
-      gtag('config', 'G-JV6YLYZHN8');
-    </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Disclaimer & Terms | Home Repair Verdict</title>
-    <meta name="description" content="Legal disclaimer and terms of use for the Home Repair Verdict cost estimation engine.">
-    <meta name="robots" content="noindex,follow">
-    <link rel="canonical" href="${baseUrl}/home-repair/disclaimer">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="stylesheet" href="/css/seo-report.css">
-    <style>
-        .page-content {
-            max-width: 800px;
-            margin: 60px auto;
-            padding: 0 24px;
-        }
-        .disclaimer-list li {
-            margin-bottom: 16px;
-        }
-    </style>
-</head>
-<body>
-    @template.layout._header()
+                <article class="support-card">
+                    <h2>Not legal, lending, or brokerage advice</h2>
+                    <p>
+                        LifeVerdict does not provide engineering, legal, real-estate brokerage, lending, or contractor services. Users remain responsible for their own due diligence and for consulting licensed professionals where appropriate.
+                    </p>
+                </article>
 
-    <main class="page-content">
-        <h1 style="margin-bottom: 24px; font-size: 2.5rem;">Disclaimer</h1>
-        <p class="explanation-text" style="font-size: 1.125rem; margin-bottom: 40px;">
-            Please read the following important legal disclosures regarding the use of the Home Repair Verdict engine.
-        </p>
+                <article class="support-card">
+                    <h2>OCR needs human verification</h2>
+                    <p>
+                        If the packet shows a citation marked <code>(OCR)</code>, that excerpt was recovered from a scan or photo and should be verified against the original source page before sending.
+                    </p>
+                </article>
+            </section>
 
-        <section class="card">
-            <h2 class="section-title text-warning">
-                <span>⚠️</span> Informational Use Only
-            </h2>
-            <p class="explanation-text">
-                The content, data, and estimates provided by Home Repair Verdict are for <strong>informational and educational purposes only</strong>. 
-                They are computer-generated estimates based on statistical averages and historical data.
-            </p>
-            <ul class="explanation-text disclaimer-list" style="list-style-type: disc; padding-left: 20px;">
-                <li><strong>Not a Substitute for Professional Advice:</strong> This information is not intended to replace the services of a licensed professional engineer, architect, or home inspector.</li>
-                <li><strong>Not a Binding Offer:</strong> The costs presented are estimates of fair market value, not offers to perform work.</li>
-            </ul>
-        </section>
-
-        <section class="card">
-            <h2 class="section-title">Accuracy & Assumptions</h2>
-            <p class="explanation-text">
-                While we strive for accuracy using high-quality data sources, actual home repair costs can vary significantly based on:
-            </p>
-            <ul class="explanation-text disclaimer-list" style="list-style-type: disc; padding-left: 20px;">
-                <li><strong>Standard Conditions Assumed:</strong> Our estimates assume "standard" access and site conditions. Unique constraints (e.g., steep slopes, limited access) will increase costs.</li>
-                <li><strong>Market Volatility:</strong> Supply chain disruptions or local labor shortages can cause prices to fluctuate rapidly outside of quarterly index updates.</li>
-                <li><strong>Hidden Defects:</strong> No algorithm can detect unseen issues behind walls or under ground. Actual scope of work may exceed visible estimates.</li>
-            </ul>
-        </section>
-
-        <section class="card">
-            <h2 class="section-title">Limitation of Liability</h2>
-            <p class="explanation-text">
-                The LifeVerdict research team, its operators, and affiliates shall not be held liable for any decisions made based on the information provided on this website. 
-                This includes, but is not limited to:
-            </p>
-            <ul class="explanation-text disclaimer-list" style="list-style-type: disc; padding-left: 20px;">
-                <li>Buying or selling decisions regarding real estate.</li>
-                <li>Financial planning or budgeting errors.</li>
-                <li>Disputes with contractors or insurance providers.</li>
-            </ul>
-            <p class="explanation-text" style="margin-top: 20px;">
-                By using this site, you acknowledge that you are responsible for your own due diligence.
-            </p>
-        </section>
-
-        <section class="card">
-            <h2 class="section-title">💰 Affiliate Disclosure</h2>
-            <p class="explanation-text">
-                Some pages on this site contain <strong>affiliate links</strong> to third-party service providers, including but not limited to contractor matching platforms and home warranty companies (e.g., Angi, Thumbtack, Choice Home Warranty).
-            </p>
-            <ul class="explanation-text disclaimer-list" style="list-style-type: disc; padding-left: 20px;">
-                <li><strong>Referral Fees:</strong> If you click an affiliate link and request a quote or purchase a service, we may earn a referral fee at <strong>no additional cost to you</strong>.</li>
-                <li><strong>Editorial Independence:</strong> Affiliate partnerships do not influence our cost estimates, risk assessments, or verdicts. All data is generated by our algorithm using publicly available datasets.</li>
-                <li><strong>Clearly Marked:</strong> All affiliate links are labeled with <code>rel="nofollow sponsored"</code> and are visually distinguished from editorial content.</li>
-                <li><strong>No Obligation:</strong> You are never required to click an affiliate link or purchase any service. Our estimates and analysis are freely accessible without interaction with any partner.</li>
-            </ul>
-            <p class="explanation-text" style="margin-top: 16px;">
-                For more details on how we maintain editorial integrity, please see our <a href="/home-repair/editorial-policy" style="color: var(--primary); text-decoration: underline;">Editorial Policy</a>.
-            </p>
-        </section>
-
-    </main>
-
-    @template.layout._footer()
-</body>
-</html>
+            <section class="support-card mt-5">
+                <h2>Limitations of packet logic</h2>
+                <ul class="support-list">
+                    <li>The product is designed to improve negotiation clarity, not to predict outcomes.</li>
+                    <li>Lender-visible signals are a framing aid, not a guarantee of underwriting or appraisal treatment.</li>
+                    <li>The packet may understate or overstate final repair cost when concealed conditions or unusual scope are involved.</li>
+                    <li>Users should review the final language before sending it to an agent, seller, inspector, or lender.</li>
+                </ul>
+            </section>
+        </div>
+    `
+)

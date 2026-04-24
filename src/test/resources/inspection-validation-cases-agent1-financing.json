@@ -1,0 +1,2341 @@
+{
+  "meta": {
+    "created": "2026-04-24",
+    "basis": "100 synthetic domain validation cases rewritten from internet research across FHA/HUD Handbook 4000.1 appraisal/MPR guidance, VA Pamphlet 26-7 MPR and concession guidance, Fannie Mae IPC/property-condition/site-utility rules, Freddie Mac seller contribution guidance, and CFPB closing-disclosure seller-credit references.",
+    "warning": "These are internet-researched synthetic cases, not verified customer interviews or legal, lending, appraisal, or underwriting advice.",
+    "sources": [
+      "https://www.hud.gov/hud-partners/single-family-handbook-4000-1",
+      "https://www.hud.gov/hudclips/handbooks/housing",
+      "https://www.hud.gov/sites/dfiles/SFH/documents/2022_appraisal_policies_principles_practices.pdf",
+      "https://www.benefits.va.gov/WARMS/docs/admin26/m26-07/Chapter_12.pdf",
+      "https://www.benefits.va.gov/WARMS/docs/admin26/handbook/ChapterLendersHanbookChapter8.pdf",
+      "https://www.va.gov/housing-assistance/home-loans/funding-fee-and-closing-costs",
+      "https://selling-guide.fanniemae.com/sel/b3-4.1-02/interested-party-contributions-ipcs",
+      "https://selling-guide.fanniemae.com/sel/b4-1.3-06/property-condition-and-quality-construction-improvements",
+      "https://selling-guide.fanniemae.com/sel/b4-1.3-04/site-section-appraisal-report",
+      "https://singlefamily.fanniemae.com/property-valuation/faqs-property-valuation",
+      "https://guide.freddiemac.com/app/guide/section/5501.5",
+      "https://guide.freddiemac.com/ci/okcsFattach/get/1009237_7",
+      "https://www.consumerfinance.gov/rules-policy/regulations/1026/interp-38/"
+    ]
+  },
+  "cases": [
+    {
+      "id": "F001",
+      "sourceBasis": "FHA/HUD appraisal guidance treats utility availability as a prerequisite to observing major systems.",
+      "persona": "FHA-heavy buyer agent",
+      "state": "OH",
+      "deal": "FHA purchase of vacant winterized house; appraisal is scheduled before seller turns on utilities.",
+      "findings": [
+        "electric service off",
+        "water shut off at meter",
+        "gas service inactive",
+        "cosmetic cabinet wear"
+      ],
+      "expectedLeadScope": [
+        "utilities-on coordination before appraisal",
+        "possible reinspection after systems are active",
+        "lender warning that hidden repair conditions may surface"
+      ],
+      "expectedExclusions": [
+        "cosmetic cabinet wear"
+      ],
+      "requiredGate": "FHA appraisal scheduling and utility activation confirmation",
+      "riskIfWrong": "The product may ask for a cosmetic credit while missing a lender-visible condition that can delay closing."
+    },
+    {
+      "id": "F002",
+      "sourceBasis": "FHA/HUD mechanical-system review can require follow-up when water service prevents plumbing and hot-water observation.",
+      "persona": "Transaction coordinator",
+      "state": "MI",
+      "deal": "FHA buyer under contract on an estate sale with water off until municipal account transfer.",
+      "findings": [
+        "water inactive",
+        "water heater age unknown",
+        "active stain below upstairs bath",
+        "loose towel bars"
+      ],
+      "expectedLeadScope": [
+        "water restoration before appraisal or reinspection",
+        "plumbing leak evaluation",
+        "water heater operation once service is active"
+      ],
+      "expectedExclusions": [
+        "loose towel bars"
+      ],
+      "requiredGate": "utilities-on plus leak/operation evidence",
+      "riskIfWrong": "A closing-cost-credit draft can understate that the appraiser may not clear the property without operating water."
+    },
+    {
+      "id": "F003",
+      "sourceBasis": "FHA/HUD appraisal practice requires observable heating function when gas service is needed for a permanent heat source.",
+      "persona": "Listing agent handling FHA offer",
+      "state": "PA",
+      "deal": "FHA buyer; seller turned off gas after moving out.",
+      "findings": [
+        "gas inactive",
+        "furnace could not be tested",
+        "portable electric heaters in bedrooms",
+        "fresh interior paint"
+      ],
+      "expectedLeadScope": [
+        "gas activation",
+        "permanent heat verification",
+        "possible HVAC service call if furnace fails startup"
+      ],
+      "expectedExclusions": [
+        "fresh interior paint"
+      ],
+      "requiredGate": "FHA permanent heat and utility operation gate",
+      "riskIfWrong": "The response may suggest accepting portable heaters even though financing depends on a lender-acceptable heat source."
+    },
+    {
+      "id": "F004",
+      "sourceBasis": "FHA/HUD MPR concepts prioritize electrical hazards that affect occupant safety.",
+      "persona": "Buyer agent preparing repair addendum",
+      "state": "MO",
+      "deal": "FHA buyer with inspection contingency open and appraisal not yet completed.",
+      "findings": [
+        "open junction boxes in attic",
+        "double-tapped breaker noted",
+        "missing outlet covers",
+        "dated light fixtures"
+      ],
+      "expectedLeadScope": [
+        "licensed electrical evaluation",
+        "correction of exposed wiring hazards",
+        "appraisal-visible safety repair risk"
+      ],
+      "expectedExclusions": [
+        "dated light fixtures"
+      ],
+      "requiredGate": "qualified electrical quote and lender disclosure check",
+      "riskIfWrong": "Treating electrical hazards as a normal credit can leave a required repair unresolved at appraisal."
+    },
+    {
+      "id": "F005",
+      "sourceBasis": "FHA/HUD minimum property standards require the dwelling to be safely habitable, including adequate permanent heat where needed.",
+      "persona": "Cold-climate FHA buyer agent",
+      "state": "MN",
+      "deal": "FHA purchase in January; seller says wall plug heaters are enough until spring.",
+      "findings": [
+        "central boiler disabled",
+        "temporary plug-in heaters",
+        "temperature below safe living range",
+        "old carpet"
+      ],
+      "expectedLeadScope": [
+        "permanent heating system repair or replacement",
+        "HVAC contractor documentation",
+        "FHA appraiser follow-up risk"
+      ],
+      "expectedExclusions": [
+        "old carpet"
+      ],
+      "requiredGate": "permanent heat approval by lender/appraiser",
+      "riskIfWrong": "The buyer could negotiate a cosmetic allowance while the loan remains blocked by habitability."
+    },
+    {
+      "id": "F006",
+      "sourceBasis": "FHA/HUD appliance and mechanical guidance distinguishes market-value systems from preference items.",
+      "persona": "Buyer agent in warm-climate market",
+      "state": "AZ",
+      "deal": "FHA buyer; appraiser likely to observe central cooling because the system remains with the home.",
+      "findings": [
+        "central AC not cooling",
+        "ceiling fans noisy",
+        "desert landscaping deferred",
+        "pool light bulb out"
+      ],
+      "expectedLeadScope": [
+        "central AC operation",
+        "HVAC diagnosis",
+        "lender/appraiser treatment of built-in system"
+      ],
+      "expectedExclusions": [
+        "ceiling fan noise",
+        "desert landscaping deferred",
+        "pool light bulb out"
+      ],
+      "requiredGate": "FHA appraiser and lender treatment of cooling failure",
+      "riskIfWrong": "The product may over-ask on preferences and under-call a built-in system that affects value and marketability."
+    },
+    {
+      "id": "F007",
+      "sourceBasis": "FHA/HUD living-unit standards focus on basic kitchen water and cooking utility capability, not cosmetic appliance upgrades.",
+      "persona": "First-time FHA buyer agent",
+      "state": "AL",
+      "deal": "FHA purchase of tenant-occupied home with basic kitchen defects.",
+      "findings": [
+        "kitchen sink disconnected",
+        "no stove utility hookup visible",
+        "missing microwave",
+        "laminate counter scratches"
+      ],
+      "expectedLeadScope": [
+        "potable water at kitchen sink",
+        "stove utility hookup verification",
+        "lender-visible minimum kitchen functionality"
+      ],
+      "expectedExclusions": [
+        "missing microwave",
+        "laminate counter scratches"
+      ],
+      "requiredGate": "FHA minimum living-unit functionality review",
+      "riskIfWrong": "A repair packet may chase appliance preferences instead of conditions needed for loan insurability."
+    },
+    {
+      "id": "F008",
+      "sourceBasis": "FHA/HUD appraisal guidance can require appliances that remain and contribute to value to be operational.",
+      "persona": "FHA listing agent",
+      "state": "NV",
+      "deal": "FHA buyer; contract includes built-in range and dishwasher.",
+      "findings": [
+        "built-in range does not heat",
+        "dishwasher leaks during cycle",
+        "refrigerator handles scratched",
+        "pantry door misaligned"
+      ],
+      "expectedLeadScope": [
+        "built-in range operation",
+        "dishwasher leak and operation",
+        "appraisal/value contribution of included appliances"
+      ],
+      "expectedExclusions": [
+        "refrigerator handles scratched",
+        "pantry door misaligned"
+      ],
+      "requiredGate": "appliance inclusion and value-contribution check with lender",
+      "riskIfWrong": "The answer may assume all appliance issues are optional, causing a surprise appraisal condition."
+    },
+    {
+      "id": "F009",
+      "sourceBasis": "FHA/HUD MPR risk is high when a roof leak affects soundness and interior moisture.",
+      "persona": "Buyer agent writing inspection response",
+      "state": "IN",
+      "deal": "FHA buyer; roof leak was visible before appraisal.",
+      "findings": [
+        "active roof leak at chimney",
+        "wet attic decking",
+        "stained living room ceiling",
+        "loose gutter downspout"
+      ],
+      "expectedLeadScope": [
+        "roof leak repair",
+        "moisture-damaged decking evaluation",
+        "interior water intrusion tied to roof"
+      ],
+      "expectedExclusions": [
+        "loose gutter downspout unless tied to water intrusion"
+      ],
+      "requiredGate": "roof contractor evidence before lender/Appraiser clearance",
+      "riskIfWrong": "Calling it a simple closing credit may fail because lender-visible roof leakage usually needs repair evidence."
+    },
+    {
+      "id": "F010",
+      "sourceBasis": "FHA/HUD roof analysis can trigger replacement or repair when remaining utility is inadequate or leaks are probable.",
+      "persona": "FHA buyer specialist",
+      "state": "KY",
+      "deal": "FHA purchase with 22-year-old shingles and appraiser visit next week.",
+      "findings": [
+        "widespread curled shingles",
+        "multiple missing tabs",
+        "attic daylight at ridge",
+        "cosmetic moss on north slope"
+      ],
+      "expectedLeadScope": [
+        "roof remaining-life assessment",
+        "missing shingle repair or replacement scope",
+        "appraisal condition risk"
+      ],
+      "expectedExclusions": [
+        "cosmetic moss unless roof performance is affected"
+      ],
+      "requiredGate": "roofing professional quote plus FHA lender review",
+      "riskIfWrong": "A buyer may accept a small credit that cannot cure a roof condition before closing."
+    },
+    {
+      "id": "F011",
+      "sourceBasis": "FHA/HUD defective-paint standards create lender-visible risk for pre-1978 dwellings.",
+      "persona": "Buyer agent in older housing stock",
+      "state": "MA",
+      "deal": "FHA buyer on 1924 home; seller prefers a credit instead of paint work.",
+      "findings": [
+        "peeling paint on bedroom windows",
+        "chipped exterior trim",
+        "aged wallpaper",
+        "scuffed hardwood floors"
+      ],
+      "expectedLeadScope": [
+        "lead-sensitive defective paint repair",
+        "safe paint stabilization documentation",
+        "appraiser final inspection risk"
+      ],
+      "expectedExclusions": [
+        "aged wallpaper",
+        "scuffed hardwood floors"
+      ],
+      "requiredGate": "pre-1978 paint protocol and lender/appraiser signoff",
+      "riskIfWrong": "A credit-only request may leave a known FHA repair condition unresolved."
+    },
+    {
+      "id": "F012",
+      "sourceBasis": "FHA/HUD appraisal guidance can treat exterior paint exposing substrate as a repair issue even outside lead-based-paint framing.",
+      "persona": "FHA listing-side coordinator",
+      "state": "NC",
+      "deal": "FHA appraisal on a 1992 house with neglected exterior trim.",
+      "findings": [
+        "exposed bare wood on fascia",
+        "peeling paint on exterior door",
+        "interior accent wall disliked",
+        "mailbox dented"
+      ],
+      "expectedLeadScope": [
+        "exterior substrate protection",
+        "fascia and door surface repair",
+        "appraisal-visible deterioration"
+      ],
+      "expectedExclusions": [
+        "interior accent wall disliked",
+        "mailbox dented"
+      ],
+      "requiredGate": "FHA exterior-defective-paint review",
+      "riskIfWrong": "The product may dismiss all paint as cosmetic and miss a required exterior repair."
+    },
+    {
+      "id": "F013",
+      "sourceBasis": "FHA/HUD safety analysis can flag fall hazards such as missing handrails at elevated stairs.",
+      "persona": "Buyer agent nearing appraisal deadline",
+      "state": "TN",
+      "deal": "FHA buyer; front porch stairs have no handrail.",
+      "findings": [
+        "missing handrail at five exterior steps",
+        "loose porch boards",
+        "dated porch light",
+        "small paint scuffs"
+      ],
+      "expectedLeadScope": [
+        "handrail installation",
+        "loose porch board repair",
+        "fall-safety documentation"
+      ],
+      "expectedExclusions": [
+        "dated porch light",
+        "small paint scuffs"
+      ],
+      "requiredGate": "appraiser-visible safety repair gate",
+      "riskIfWrong": "The agent may submit a broad cosmetic request while missing a low-cost item that can delay FHA clearance."
+    },
+    {
+      "id": "F014",
+      "sourceBasis": "FHA/HUD health-and-safety review can require correction of broken glazing and weather/security issues.",
+      "persona": "FHA buyer agent",
+      "state": "SC",
+      "deal": "FHA purchase; detached glass repair was deferred by seller.",
+      "findings": [
+        "cracked bedroom window pane",
+        "broken sash lock",
+        "old blinds missing",
+        "minor drywall nail pops"
+      ],
+      "expectedLeadScope": [
+        "broken window glass",
+        "window security and weather closure",
+        "appraisal-visible safety condition"
+      ],
+      "expectedExclusions": [
+        "old blinds missing",
+        "minor drywall nail pops"
+      ],
+      "requiredGate": "repair-before-appraisal or lender-approved resolution",
+      "riskIfWrong": "A financing-sensitive window defect may be buried among cosmetic punch-list items."
+    },
+    {
+      "id": "F015",
+      "sourceBasis": "FHA/HUD MPR risk rises when deck or guardrail defects create obvious safety hazards.",
+      "persona": "Inspection repair negotiator",
+      "state": "OR",
+      "deal": "FHA buyer; raised rear deck is visible from appraiser path.",
+      "findings": [
+        "rotted deck ledger area",
+        "loose guardrail",
+        "missing stair tread fasteners",
+        "weathered deck stain"
+      ],
+      "expectedLeadScope": [
+        "structural deck repair",
+        "guardrail stabilization",
+        "safe stair tread repair"
+      ],
+      "expectedExclusions": [
+        "weathered deck stain"
+      ],
+      "requiredGate": "contractor safety repair evidence",
+      "riskIfWrong": "The product may recommend a stain allowance instead of repairs needed for occupant safety."
+    },
+    {
+      "id": "F016",
+      "sourceBasis": "FHA/HUD appraisal observation can condition a file for crawlspace moisture, dampness, or ventilation concerns.",
+      "persona": "FHA buyer agent with inspector report",
+      "state": "WA",
+      "deal": "FHA buyer; inspector entered crawlspace but appraiser has not visited.",
+      "findings": [
+        "standing water in crawlspace",
+        "wet insulation",
+        "musty odor at floor registers",
+        "older vapor barrier"
+      ],
+      "expectedLeadScope": [
+        "crawlspace moisture source",
+        "wet insulation remediation",
+        "qualified drainage or pest/moisture evaluation"
+      ],
+      "expectedExclusions": [
+        "older vapor barrier if no active defect remains"
+      ],
+      "requiredGate": "moisture professional documentation before lender reliance",
+      "riskIfWrong": "The app may generate a generic repair credit while FHA underwriting needs evidence the defect is corrected."
+    },
+    {
+      "id": "F017",
+      "sourceBasis": "FHA/HUD appraisal review can require further inspection when attic evidence suggests moisture or ventilation problems.",
+      "persona": "Buyer agent drafting a precise request",
+      "state": "WI",
+      "deal": "FHA purchase after inspector found attic concerns.",
+      "findings": [
+        "dark microbial-like staining on roof sheathing",
+        "bath fan vents into attic",
+        "attic insulation disturbed",
+        "old holiday decorations left behind"
+      ],
+      "expectedLeadScope": [
+        "attic ventilation correction",
+        "moisture/mold-like staining evaluation",
+        "qualified remediation or contractor scope"
+      ],
+      "expectedExclusions": [
+        "old holiday decorations left behind"
+      ],
+      "requiredGate": "qualified attic/moisture inspection gate",
+      "riskIfWrong": "The product could overstate mold without evidence or understate a lender-visible moisture condition."
+    },
+    {
+      "id": "F018",
+      "sourceBasis": "FHA/HUD appraisal forms and MPR practice treat visible infestation evidence as a qualified-inspection trigger.",
+      "persona": "FHA transaction coordinator",
+      "state": "LA",
+      "deal": "FHA buyer in termite-prone market; inspection showed possible active wood damage.",
+      "findings": [
+        "mud tubes on crawlspace pier",
+        "soft sill plate area",
+        "old termite bond expired",
+        "small drywall crack"
+      ],
+      "expectedLeadScope": [
+        "wood-destroying insect inspection",
+        "structural wood damage evaluation",
+        "treatment/repair evidence if active"
+      ],
+      "expectedExclusions": [
+        "small drywall crack unless tied to structural damage"
+      ],
+      "requiredGate": "qualified pest report and lender acceptance",
+      "riskIfWrong": "An appraiser or underwriter may condition the file after the buyer thought a credit solved the issue."
+    },
+    {
+      "id": "F019",
+      "sourceBasis": "FHA/HUD sanitation standards make septic failure and surface discharge lender-sensitive.",
+      "persona": "Rural FHA buyer agent",
+      "state": "MS",
+      "deal": "FHA buyer on property with private septic and no municipal sewer.",
+      "findings": [
+        "sewage odor near drain field",
+        "standing effluent at cleanout",
+        "slow master bath drain",
+        "dated bathroom tile"
+      ],
+      "expectedLeadScope": [
+        "septic system inspection",
+        "sewage discharge correction",
+        "plumbing backup evaluation"
+      ],
+      "expectedExclusions": [
+        "dated bathroom tile"
+      ],
+      "requiredGate": "septic professional clearance and lender review",
+      "riskIfWrong": "The tool may draft a repair credit even though a failed septic system can block FHA closing."
+    },
+    {
+      "id": "F020",
+      "sourceBasis": "FHA/HUD rural-property review can require well safety and water-quality diligence when private water risk is visible.",
+      "persona": "Buyer agent in rural county",
+      "state": "ID",
+      "deal": "FHA purchase with private well near older septic components.",
+      "findings": [
+        "well head close to septic tank",
+        "missing well cap seal",
+        "water sample not yet taken",
+        "older pressure tank"
+      ],
+      "expectedLeadScope": [
+        "well/septic separation verification",
+        "safe water test",
+        "well head repair"
+      ],
+      "expectedExclusions": [
+        "older pressure tank if functioning and lender accepts"
+      ],
+      "requiredGate": "water/septic documentation acceptable to FHA lender",
+      "riskIfWrong": "A standard inspection response may omit a rural utility issue the lender must clear."
+    },
+    {
+      "id": "F021",
+      "sourceBasis": "FHA/HUD property eligibility for private utilities depends on safe, ongoing access and use rights.",
+      "persona": "FHA buyer agent",
+      "state": "ME",
+      "deal": "FHA buyer; cabin uses a shared well on neighboring parcel.",
+      "findings": [
+        "shared well is off-site",
+        "no recorded maintenance agreement provided",
+        "water pressure fluctuates",
+        "kitchen cabinets dated"
+      ],
+      "expectedLeadScope": [
+        "legal access to shared well",
+        "maintenance and repair rights",
+        "water adequacy verification"
+      ],
+      "expectedExclusions": [
+        "kitchen cabinets dated"
+      ],
+      "requiredGate": "lender/title review of shared utility rights",
+      "riskIfWrong": "The product may focus on condition repairs and miss title/utility documentation needed for financing."
+    },
+    {
+      "id": "F022",
+      "sourceBasis": "FHA/HUD safety review can flag unsecured pools or empty pools that create hazard and marketability concerns.",
+      "persona": "FHA listing agent",
+      "state": "FL",
+      "deal": "FHA buyer; property has neglected in-ground pool.",
+      "findings": [
+        "empty pool with no protective cover",
+        "broken pool fence latch",
+        "pool pump missing",
+        "faded patio furniture"
+      ],
+      "expectedLeadScope": [
+        "pool fall hazard mitigation",
+        "barrier/latch repair",
+        "lender decision on pool equipment/value"
+      ],
+      "expectedExclusions": [
+        "faded patio furniture"
+      ],
+      "requiredGate": "FHA lender/appraiser safety treatment",
+      "riskIfWrong": "A credit for missing equipment may not clear an immediate safety condition."
+    },
+    {
+      "id": "F023",
+      "sourceBasis": "FHA/HUD MPR analysis prioritizes obvious trip hazards over ordinary wear.",
+      "persona": "FHA buyer agent",
+      "state": "OK",
+      "deal": "FHA purchase with cracked walkway between driveway and front door.",
+      "findings": [
+        "raised concrete lip at entry walk",
+        "loose threshold at front door",
+        "worn carpet in hallway",
+        "paint mismatch in dining room"
+      ],
+      "expectedLeadScope": [
+        "entry trip hazard correction",
+        "front threshold safety repair"
+      ],
+      "expectedExclusions": [
+        "worn carpet in hallway unless unsafe",
+        "paint mismatch in dining room"
+      ],
+      "requiredGate": "appraiser-visible safety triage",
+      "riskIfWrong": "The tool may over-ask on wear items and miss a simple safety repair that could be conditioned."
+    },
+    {
+      "id": "F024",
+      "sourceBasis": "FHA/HUD habitability standards make missing sanitary fixtures more important than bathroom cosmetic updates.",
+      "persona": "FHA buyer agent",
+      "state": "AR",
+      "deal": "FHA buyer on small bungalow with a partially gutted hall bath.",
+      "findings": [
+        "bathtub removed",
+        "sink drain open",
+        "toilet rocks at floor",
+        "vanity style outdated"
+      ],
+      "expectedLeadScope": [
+        "functional bathing facility",
+        "safe sink plumbing",
+        "toilet securement"
+      ],
+      "expectedExclusions": [
+        "vanity style outdated"
+      ],
+      "requiredGate": "FHA sanitary-facility completion gate",
+      "riskIfWrong": "A cosmetic bathroom allowance cannot replace lender-required sanitary functionality."
+    },
+    {
+      "id": "F025",
+      "sourceBasis": "FHA/HUD site safety review can require correction of exposed hazards before insurance endorsement.",
+      "persona": "FHA closing coordinator",
+      "state": "NM",
+      "deal": "FHA buyer; seller removed an above-ground tank but left related hazards.",
+      "findings": [
+        "uncapped metal fuel line at exterior wall",
+        "abandoned tank pad with sharp edges",
+        "minor stucco cracks",
+        "old satellite dish"
+      ],
+      "expectedLeadScope": [
+        "fuel line safe termination",
+        "exterior hazard removal",
+        "qualified contractor confirmation"
+      ],
+      "expectedExclusions": [
+        "minor stucco cracks",
+        "old satellite dish"
+      ],
+      "requiredGate": "safety repair documentation and lender review",
+      "riskIfWrong": "The app could treat the issue as debris while the appraiser conditions the loan for a safety hazard."
+    },
+    {
+      "id": "F026",
+      "sourceBasis": "VA MPR guidance focuses on properties being safe, sanitary, and structurally sound.",
+      "persona": "VA-specialist buyer agent",
+      "state": "CO",
+      "deal": "VA purchase with inspection report before VA appraisal.",
+      "findings": [
+        "active roof leak into garage",
+        "soft roof decking",
+        "minor garage drywall dents",
+        "older garage door opener"
+      ],
+      "expectedLeadScope": [
+        "roof leak repair",
+        "roof decking evaluation",
+        "VA MPR appraisal condition risk"
+      ],
+      "expectedExclusions": [
+        "minor garage drywall dents",
+        "older garage door opener if safe"
+      ],
+      "requiredGate": "VA appraisal/NOV condition tracking",
+      "riskIfWrong": "The buyer may rely on a seller credit when VA may need the repair completed."
+    },
+    {
+      "id": "F027",
+      "sourceBasis": "VA MPR water-supply guidance emphasizes safe potable water and accurate water-source reporting.",
+      "persona": "Rural VA buyer agent",
+      "state": "MT",
+      "deal": "VA purchase with individual well and no recent potability report.",
+      "findings": [
+        "private well has no current test",
+        "rust-colored water at first draw",
+        "sediment filter bypassed",
+        "bathroom faucet finish worn"
+      ],
+      "expectedLeadScope": [
+        "potable water testing",
+        "well system evaluation",
+        "filter/bypass correction if needed"
+      ],
+      "expectedExclusions": [
+        "bathroom faucet finish worn"
+      ],
+      "requiredGate": "VA lender water-test requirement",
+      "riskIfWrong": "The product may ask for fixture cosmetics and skip a safe-water gate the SAR may condition."
+    },
+    {
+      "id": "F028",
+      "sourceBasis": "VA MPR sanitation requirements make individual sewer failures high-priority lender issues.",
+      "persona": "VA buyer agent",
+      "state": "GA",
+      "deal": "VA buyer; seller says septic was pumped two years ago.",
+      "findings": [
+        "septic alarm sounding",
+        "toilets gurgle after laundry drain",
+        "wet area above drain field",
+        "older bathroom mirrors"
+      ],
+      "expectedLeadScope": [
+        "septic inspection",
+        "sewage disposal functionality",
+        "drain field condition"
+      ],
+      "expectedExclusions": [
+        "older bathroom mirrors"
+      ],
+      "requiredGate": "VA sanitation and septic clearance",
+      "riskIfWrong": "A generic credit could leave a VA MPR defect that prevents guaranty."
+    },
+    {
+      "id": "F029",
+      "sourceBasis": "VA MPR guidance can require connection when public water or sewer is available and local authority mandates it.",
+      "persona": "VA transaction coordinator",
+      "state": "NJ",
+      "deal": "VA buyer; township records show mandatory sewer tie-in after sale.",
+      "findings": [
+        "private septic remains in use",
+        "public sewer main at street",
+        "municipal notice requires connection",
+        "kitchen backsplash cracked"
+      ],
+      "expectedLeadScope": [
+        "local sewer connection requirement",
+        "septic-to-sewer transition cost",
+        "VA appraisal subject-to risk"
+      ],
+      "expectedExclusions": [
+        "kitchen backsplash cracked"
+      ],
+      "requiredGate": "municipal and VA lender confirmation",
+      "riskIfWrong": "The product may draft an ordinary repair ask when the deal needs local compliance and lender clearance."
+    },
+    {
+      "id": "F030",
+      "sourceBasis": "VA MPR access requirements require dependable property access rather than informal neighbor permission.",
+      "persona": "VA buyer agent",
+      "state": "WV",
+      "deal": "VA purchase of rural home reached by gravel lane across another parcel.",
+      "findings": [
+        "no recorded access easement in packet",
+        "neighbor verbally allows driveway use",
+        "gravel lane has washouts",
+        "front door paint faded"
+      ],
+      "expectedLeadScope": [
+        "legal ingress/egress evidence",
+        "driveway access maintenance question",
+        "title/lender review"
+      ],
+      "expectedExclusions": [
+        "front door paint faded"
+      ],
+      "requiredGate": "title and VA lender access review",
+      "riskIfWrong": "A repair-focused output could miss a financing-critical access defect."
+    },
+    {
+      "id": "F031",
+      "sourceBasis": "VA MPR lead-based-paint handling can condition pre-1978 properties with defective paint.",
+      "persona": "VA buyer agent in historic district",
+      "state": "RI",
+      "deal": "VA buyer on 1908 home with peeling painted surfaces.",
+      "findings": [
+        "peeling paint on porch columns",
+        "chipped paint on bedroom sill",
+        "historic trim needs touch-up",
+        "vintage wallpaper"
+      ],
+      "expectedLeadScope": [
+        "defective paint stabilization",
+        "lead-safe repair documentation",
+        "VA appraiser final inspection risk"
+      ],
+      "expectedExclusions": [
+        "vintage wallpaper",
+        "historic trim style preference"
+      ],
+      "requiredGate": "VA pre-1978 paint repair gate",
+      "riskIfWrong": "The tool may recommend cash in lieu of work when VA may require completed repair."
+    },
+    {
+      "id": "F032",
+      "sourceBasis": "VA MPR safety review commonly treats missing handrails and unsafe stairs as correctable conditions.",
+      "persona": "Military relocation buyer agent",
+      "state": "VA",
+      "deal": "VA buyer under tight PCS timeline.",
+      "findings": [
+        "basement stairs missing handrail",
+        "uneven bottom stair tread",
+        "unfinished basement ceiling",
+        "old washer hoses"
+      ],
+      "expectedLeadScope": [
+        "handrail installation",
+        "stair tread safety",
+        "VA appraisal condition avoidance"
+      ],
+      "expectedExclusions": [
+        "unfinished basement ceiling",
+        "old washer hoses unless leaking"
+      ],
+      "requiredGate": "repair-before-VA-appraisal decision",
+      "riskIfWrong": "The closing timeline may slip because a simple safety item was not handled before the VA appraiser visit."
+    },
+    {
+      "id": "F033",
+      "sourceBasis": "VA MPR defect guidance includes electrical hazards that threaten safe occupancy.",
+      "persona": "VA buyer agent",
+      "state": "KS",
+      "deal": "VA purchase; detached garage workshop has visible electrical hazards.",
+      "findings": [
+        "exposed live conductors at garage wall",
+        "extension cords used as permanent wiring",
+        "missing GFCI near utility sink",
+        "pegboard worn"
+      ],
+      "expectedLeadScope": [
+        "electrical hazard repair",
+        "licensed electrician documentation",
+        "lender-visible safety defect"
+      ],
+      "expectedExclusions": [
+        "pegboard worn"
+      ],
+      "requiredGate": "qualified electrical repair and VA lender review",
+      "riskIfWrong": "The app could omit a safety defect because it is outside the main dwelling, causing a NOV condition later."
+    },
+    {
+      "id": "F034",
+      "sourceBasis": "VA MPR habitability review emphasizes adequate, safe, permanent heat.",
+      "persona": "VA-specialist lender liaison",
+      "state": "AK",
+      "deal": "VA purchase where seller removed the oil furnace before listing.",
+      "findings": [
+        "no permanent heat source",
+        "temporary propane heater in living room",
+        "missing fuel tank",
+        "dated kitchen flooring"
+      ],
+      "expectedLeadScope": [
+        "permanent heating system installation",
+        "safe fuel source",
+        "VA habitability clearance"
+      ],
+      "expectedExclusions": [
+        "dated kitchen flooring"
+      ],
+      "requiredGate": "VA MPR heat approval before closing",
+      "riskIfWrong": "A concession-heavy negotiation cannot cure the absence of a required heat system without repair."
+    },
+    {
+      "id": "F035",
+      "sourceBasis": "VA MPR and local practice can require wood-destroying insect clearance in affected markets.",
+      "persona": "VA buyer agent",
+      "state": "TX",
+      "deal": "VA buyer in termite-active county; inspection found damage at sill plate.",
+      "findings": [
+        "termite shelter tubes",
+        "damaged sill plate at crawl access",
+        "old pest treatment sticker",
+        "cosmetic baseboard gaps"
+      ],
+      "expectedLeadScope": [
+        "wood-destroying insect inspection",
+        "structural damage determination",
+        "treatment and repair clearance"
+      ],
+      "expectedExclusions": [
+        "cosmetic baseboard gaps"
+      ],
+      "requiredGate": "VA pest-clearance requirement for market",
+      "riskIfWrong": "The product may produce a generic seller credit that the VA underwriter cannot accept as clearance."
+    },
+    {
+      "id": "F036",
+      "sourceBasis": "VA MPR review can condition inaccessible or damp crawlspaces when there is evidence of defective conditions.",
+      "persona": "VA buyer agent",
+      "state": "NC",
+      "deal": "VA purchase; inspector could only partially access crawlspace.",
+      "findings": [
+        "blocked crawlspace access",
+        "standing water visible from hatch",
+        "wood floor feels spongy",
+        "older vinyl siding"
+      ],
+      "expectedLeadScope": [
+        "crawlspace access for evaluation",
+        "moisture source correction",
+        "floor structure assessment"
+      ],
+      "expectedExclusions": [
+        "older vinyl siding"
+      ],
+      "requiredGate": "qualified crawlspace/structural inspection gate",
+      "riskIfWrong": "The buyer may waive a critical inspection while the VA appraisal later requires professional clearance."
+    },
+    {
+      "id": "F037",
+      "sourceBasis": "VA MPR safety standards can flag damaged stairs or walking surfaces that create fall risk.",
+      "persona": "VA listing agent",
+      "state": "IA",
+      "deal": "VA buyer; seller wants to offer a small credit rather than repair exterior steps.",
+      "findings": [
+        "front concrete step cracked through",
+        "loose metal railing",
+        "porch mat worn",
+        "yard needs edging"
+      ],
+      "expectedLeadScope": [
+        "front step structural repair",
+        "railing stabilization",
+        "fall hazard resolution"
+      ],
+      "expectedExclusions": [
+        "porch mat worn",
+        "yard needs edging"
+      ],
+      "requiredGate": "VA appraisal-visible safety repair",
+      "riskIfWrong": "A credit-only response can fail if the VA appraiser conditions the NOV for completed repairs."
+    },
+    {
+      "id": "F038",
+      "sourceBasis": "VA MPR paint risk can extend to related site improvements on pre-1978 property when defective paint is visible.",
+      "persona": "VA buyer agent",
+      "state": "CT",
+      "deal": "VA buyer on 1955 home with detached painted shed.",
+      "findings": [
+        "peeling paint on detached shed",
+        "chipped paint on garage trim",
+        "shed door sticks",
+        "lawn equipment left inside"
+      ],
+      "expectedLeadScope": [
+        "defective paint repair on related improvements",
+        "appraiser/NOV treatment of outbuilding",
+        "lead-safe completion evidence"
+      ],
+      "expectedExclusions": [
+        "shed door sticks unless safety/security issue",
+        "lawn equipment left inside"
+      ],
+      "requiredGate": "current VA paint requirement confirmation",
+      "riskIfWrong": "The answer could dismiss an outbuilding condition that may still be lender-visible for this closing date."
+    },
+    {
+      "id": "F039",
+      "sourceBasis": "VA MPR roof requirements focus on preventing moisture entry and preserving reasonable future utility.",
+      "persona": "VA buyer agent",
+      "state": "UT",
+      "deal": "VA purchase with seller disclosure noting prior roof leak.",
+      "findings": [
+        "missing shingles at rear slope",
+        "ceiling stain under roof valley",
+        "roof age unknown",
+        "old satellite mount"
+      ],
+      "expectedLeadScope": [
+        "roof leak evaluation",
+        "missing shingle repair",
+        "roof useful-life documentation"
+      ],
+      "expectedExclusions": [
+        "old satellite mount unless causing leak"
+      ],
+      "requiredGate": "VA roof condition and appraiser acceptance",
+      "riskIfWrong": "The tool may treat the roof as a negotiation preference while VA may condition it as a property requirement."
+    },
+    {
+      "id": "F040",
+      "sourceBasis": "VA appraisal/MPR review is compromised when utilities are off and major systems cannot be observed.",
+      "persona": "VA transaction coordinator",
+      "state": "IL",
+      "deal": "VA buyer on bank-owned property with utilities inactive.",
+      "findings": [
+        "electric meter pulled",
+        "water winterized",
+        "furnace not testable",
+        "dated wallpaper"
+      ],
+      "expectedLeadScope": [
+        "utility activation plan",
+        "major system observation",
+        "possible VA reinspection timeline"
+      ],
+      "expectedExclusions": [
+        "dated wallpaper"
+      ],
+      "requiredGate": "VA appraisal scheduling around utilities",
+      "riskIfWrong": "The buyer may lose days to a preventable reinspection and miss the rate-lock or closing timeline."
+    },
+    {
+      "id": "F041",
+      "sourceBasis": "VA MPR water and sanitary facilities guidance requires basic sanitary function.",
+      "persona": "VA buyer agent",
+      "state": "SD",
+      "deal": "VA buyer; seller renovated bathroom but did not reconnect fixtures.",
+      "findings": [
+        "toilet absent in only bathroom",
+        "vanity supply lines capped",
+        "tub surround unfinished",
+        "new tile color disliked"
+      ],
+      "expectedLeadScope": [
+        "functional toilet",
+        "working sink and bathing fixtures",
+        "sanitary facility completion"
+      ],
+      "expectedExclusions": [
+        "new tile color disliked"
+      ],
+      "requiredGate": "VA sanitary-facility completion before closing",
+      "riskIfWrong": "The product may suggest a post-closing repair credit for work that VA likely requires before guarantee."
+    },
+    {
+      "id": "F042",
+      "sourceBasis": "VA MPR water-supply guidance requires dependable rights and adequacy for shared individual systems.",
+      "persona": "VA buyer agent",
+      "state": "NH",
+      "deal": "VA buyer; shared well serves three homes through informal family arrangement.",
+      "findings": [
+        "shared well lacks recorded agreement",
+        "no maintenance cost allocation",
+        "water pressure drops during simultaneous use",
+        "kitchen faucet handle loose"
+      ],
+      "expectedLeadScope": [
+        "shared well rights",
+        "maintenance agreement documentation",
+        "adequacy of water supply"
+      ],
+      "expectedExclusions": [
+        "kitchen faucet handle loose unless leaking"
+      ],
+      "requiredGate": "VA lender/title shared-water review",
+      "riskIfWrong": "The request may focus on minor plumbing while ignoring a title/utility defect that blocks the loan."
+    },
+    {
+      "id": "F043",
+      "sourceBasis": "VA MPR review of community water systems requires confidence in safe, adequate service.",
+      "persona": "VA buyer agent for rural subdivision",
+      "state": "WY",
+      "deal": "VA purchase in small HOA-run water district.",
+      "findings": [
+        "community well operated by HOA",
+        "no recent water-quality report provided",
+        "HOA reserve for pump repairs unclear",
+        "front landscaping sparse"
+      ],
+      "expectedLeadScope": [
+        "community water adequacy documents",
+        "water-quality evidence",
+        "maintenance/repair governance"
+      ],
+      "expectedExclusions": [
+        "front landscaping sparse"
+      ],
+      "requiredGate": "VA lender water-system document review",
+      "riskIfWrong": "The product may miss a non-obvious lender documentation issue that surfaces late in underwriting."
+    },
+    {
+      "id": "F044",
+      "sourceBasis": "VA MPR water-source review can be sensitive when the home depends on hauled water, cisterns, or nonstandard supply.",
+      "persona": "VA lender liaison",
+      "state": "NM",
+      "deal": "VA buyer on rural property with cistern and hauled-water receipts.",
+      "findings": [
+        "cistern water system",
+        "no potable water certification",
+        "delivery agreement expires before closing",
+        "old kitchen range"
+      ],
+      "expectedLeadScope": [
+        "water-source acceptability",
+        "potability and adequacy evidence",
+        "ongoing delivery/service documentation"
+      ],
+      "expectedExclusions": [
+        "old kitchen range if operational and lender accepts"
+      ],
+      "requiredGate": "VA lender approval of nonstandard water supply",
+      "riskIfWrong": "The buyer could pay inspection money on a property the lender will not accept without special documentation."
+    },
+    {
+      "id": "F045",
+      "sourceBasis": "VA MPR hazard review includes visible site conditions that may affect safety or marketability.",
+      "persona": "VA buyer agent",
+      "state": "OK",
+      "deal": "VA purchase near visible utility corridor.",
+      "findings": [
+        "high-voltage tower crosses rear yard",
+        "pipeline marker near detached garage",
+        "no easement documents in packet",
+        "fence panels aged"
+      ],
+      "expectedLeadScope": [
+        "easement and hazard documentation",
+        "appraisal marketability impact",
+        "lender review of site condition"
+      ],
+      "expectedExclusions": [
+        "fence panels aged unless safety/security issue"
+      ],
+      "requiredGate": "title/appraisal hazard review",
+      "riskIfWrong": "The product may ignore a lender-visible site issue because it is not a conventional home-inspection defect."
+    },
+    {
+      "id": "F046",
+      "sourceBasis": "VA appraisal process can require marketability and insurance attention when flood risk is present.",
+      "persona": "VA buyer agent",
+      "state": "LA",
+      "deal": "VA buyer; property appears near mapped flood zone and has prior flood repairs.",
+      "findings": [
+        "flood vents damaged",
+        "prior waterline visible in garage",
+        "elevation certificate missing",
+        "paint color dated"
+      ],
+      "expectedLeadScope": [
+        "flood-zone/insurance verification",
+        "flood vent repair",
+        "prior water-intrusion disclosure and appraisal impact"
+      ],
+      "expectedExclusions": [
+        "paint color dated"
+      ],
+      "requiredGate": "lender flood determination and appraisal review",
+      "riskIfWrong": "The buyer may negotiate ordinary repairs while failing to clear mandatory flood insurance or collateral questions."
+    },
+    {
+      "id": "F047",
+      "sourceBasis": "VA MPR habitability and appraisal review can flag non-permitted conversions lacking safe heat, egress, or utility support.",
+      "persona": "VA buyer agent",
+      "state": "CA",
+      "deal": "VA buyer; garage conversion advertised as bedroom suite.",
+      "findings": [
+        "converted garage lacks permit record",
+        "space heated by extension cord heater",
+        "bathroom drains slow",
+        "flooring mismatch"
+      ],
+      "expectedLeadScope": [
+        "legal and safe use of converted area",
+        "permanent heat and electrical safety",
+        "appraisal treatment of unpermitted living area"
+      ],
+      "expectedExclusions": [
+        "flooring mismatch"
+      ],
+      "requiredGate": "lender/appraiser and local-permit review",
+      "riskIfWrong": "The output may value the space as ordinary bedroom area and miss collateral eligibility risk."
+    },
+    {
+      "id": "F048",
+      "sourceBasis": "VA MPR defect guidance treats abnormal settlement and moisture intrusion as structural/safety concerns.",
+      "persona": "VA buyer agent",
+      "state": "NE",
+      "deal": "VA buyer; inspection found basement movement.",
+      "findings": [
+        "horizontal crack in basement wall",
+        "water seepage after rain",
+        "sump pump not operating",
+        "basement paneling dated"
+      ],
+      "expectedLeadScope": [
+        "structural engineer evaluation",
+        "water intrusion correction",
+        "sump pump operation"
+      ],
+      "expectedExclusions": [
+        "basement paneling dated"
+      ],
+      "requiredGate": "qualified structural/moisture report and VA lender acceptance",
+      "riskIfWrong": "A credit request may be inadequate if the NOV requires correction or professional clearance."
+    },
+    {
+      "id": "F049",
+      "sourceBasis": "VA seller-concession guidance separates ordinary closing costs from the 4 percent concession bucket.",
+      "persona": "VA buyer agent negotiating seller help",
+      "state": "MD",
+      "deal": "VA buyer asks seller for closing-cost help and prepaid insurance.",
+      "findings": [
+        "seller to pay all allowable closing costs",
+        "seller to prepay one year hazard insurance",
+        "seller to pay VA funding fee",
+        "home inspection noted minor paint chips"
+      ],
+      "expectedLeadScope": [
+        "separate closing-cost credits from VA concessions",
+        "track prepaid insurance and funding fee against concession cap",
+        "lender math before amendment"
+      ],
+      "expectedExclusions": [
+        "minor paint chips unless appraisal/MPR sensitive"
+      ],
+      "requiredGate": "VA concession-cap calculation",
+      "riskIfWrong": "Combining all seller payments into one bucket can either kill a valid credit or exceed VA limits."
+    },
+    {
+      "id": "F050",
+      "sourceBasis": "VA guidance caps concessions such as funding fee payments, debt payoff, and certain prepaids by reasonable value.",
+      "persona": "VA lender liaison",
+      "state": "FL",
+      "deal": "VA buyer wants seller to pay funding fee and two credit cards to improve qualification.",
+      "findings": [
+        "seller-paid VA funding fee",
+        "seller payoff of buyer credit-card debt",
+        "seller-paid property tax escrow",
+        "inspection requested new appliances"
+      ],
+      "expectedLeadScope": [
+        "VA concession bucket math",
+        "debt payoff underwriting treatment",
+        "reasonable value basis after NOV"
+      ],
+      "expectedExclusions": [
+        "new appliances unless contract/lender treats as concession"
+      ],
+      "requiredGate": "VA lender concession approval after appraisal value",
+      "riskIfWrong": "The deal may be written with benefits the VA lender must reject or restructure."
+    },
+    {
+      "id": "F051",
+      "sourceBasis": "Fannie Mae IPC limits cap financing concessions by occupancy and LTV/CLTV tier.",
+      "persona": "Conventional buyer agent",
+      "state": "GA",
+      "deal": "Conventional primary residence at 95 percent LTV; buyer asks for 5 percent seller credit.",
+      "findings": [
+        "seller credit requested at 5 percent",
+        "buyer closing costs equal 4 percent",
+        "inspection asks for roof tune-up",
+        "seller wants to keep price unchanged"
+      ],
+      "expectedLeadScope": [
+        "3 percent IPC cap risk for high-LTV primary",
+        "credit cannot exceed buyer closing costs",
+        "lender-approved credit wording"
+      ],
+      "expectedExclusions": [
+        "roof tune-up unless lender-visible defect"
+      ],
+      "requiredGate": "conventional IPC cap calculation",
+      "riskIfWrong": "The product may draft an amendment the lender must reduce or treat as a sales concession."
+    },
+    {
+      "id": "F052",
+      "sourceBasis": "Fannie Mae IPC guidance allows a higher cap for primary/second-home transactions in the mid-LTV tier, but still limits use.",
+      "persona": "Buyer agent",
+      "state": "IL",
+      "deal": "Conventional primary at 82 percent LTV; seller offers 7 percent credit to preserve price.",
+      "findings": [
+        "seller credit exceeds mid-tier cap",
+        "buyer has 5 percent actual closing costs",
+        "seller asks credit to cover furniture",
+        "minor HVAC age concern"
+      ],
+      "expectedLeadScope": [
+        "6 percent IPC cap",
+        "actual closing-cost ceiling",
+        "non-realty item sales-concession risk"
+      ],
+      "expectedExclusions": [
+        "minor HVAC age concern if system functions"
+      ],
+      "requiredGate": "lender IPC and CD review",
+      "riskIfWrong": "Excess credits may require price reduction, LTV recalculation, or loan restructuring."
+    },
+    {
+      "id": "F053",
+      "sourceBasis": "Fannie Mae IPC limits for low-LTV principal residences do not allow unused credit to become cash to buyer.",
+      "persona": "Conventional buyer agent",
+      "state": "CO",
+      "deal": "Conventional primary at 70 percent LTV; seller agrees to 9 percent credit but buyer costs are only 3 percent.",
+      "findings": [
+        "large seller credit",
+        "closing costs far below credit amount",
+        "buyer wants unused amount after closing",
+        "inspection found minor plumbing drip"
+      ],
+      "expectedLeadScope": [
+        "credit limited by actual costs",
+        "unused concession sales-concession treatment",
+        "no cash-back framing"
+      ],
+      "expectedExclusions": [
+        "minor plumbing drip unless active damage or lender-visible"
+      ],
+      "requiredGate": "closing-cost worksheet before amendment",
+      "riskIfWrong": "The output could imply the buyer can receive leftover seller money, creating disclosure and eligibility risk."
+    },
+    {
+      "id": "F054",
+      "sourceBasis": "Fannie Mae IPC limits are materially lower for investment properties.",
+      "persona": "Investor buyer agent",
+      "state": "TX",
+      "deal": "Conventional investment purchase; buyer asks for 4 percent seller credit for rate buydown.",
+      "findings": [
+        "investment occupancy",
+        "seller-funded buydown requested",
+        "credit exceeds 2 percent",
+        "tenant asked for carpet replacement"
+      ],
+      "expectedLeadScope": [
+        "2 percent investment-property IPC cap",
+        "buydown cost counted as financing concession",
+        "lender underwriting check"
+      ],
+      "expectedExclusions": [
+        "tenant carpet preference unless safety/habitability issue"
+      ],
+      "requiredGate": "investment-property IPC cap and buydown approval",
+      "riskIfWrong": "A primary-residence credit assumption can make the loan unsalable or force a late amendment."
+    },
+    {
+      "id": "F055",
+      "sourceBasis": "Fannie Mae IPC tiers apply to second homes similarly to principal residences but depend on LTV/CLTV.",
+      "persona": "Second-home buyer agent",
+      "state": "SC",
+      "deal": "Conventional second home at 92 percent CLTV with 6 percent seller-paid costs requested.",
+      "findings": [
+        "second-home occupancy",
+        "CLTV above 90 percent",
+        "seller credit at 6 percent",
+        "dock boards weathered"
+      ],
+      "expectedLeadScope": [
+        "3 percent IPC cap for high-CLTV second home",
+        "occupancy/LTV verification",
+        "credit amount restructuring"
+      ],
+      "expectedExclusions": [
+        "dock boards weathered unless safety or collateral condition"
+      ],
+      "requiredGate": "lender occupancy and CLTV confirmation",
+      "riskIfWrong": "Using the wrong LTV tier may overstate allowable seller help by thousands of dollars."
+    },
+    {
+      "id": "F056",
+      "sourceBasis": "Fannie Mae IPC guidance does not permit interested-party money to satisfy borrower down payment or minimum contribution.",
+      "persona": "Loan-aware buyer agent",
+      "state": "OH",
+      "deal": "Conventional buyer short on down payment asks seller to credit funds toward the 5 percent down.",
+      "findings": [
+        "seller credit described as down payment help",
+        "buyer reserves thin",
+        "inspection found small roof leak",
+        "seller prefers no repairs"
+      ],
+      "expectedLeadScope": [
+        "disallow seller funds for down payment",
+        "separate legitimate closing-cost credit",
+        "roof leak financing visibility"
+      ],
+      "expectedExclusions": [
+        "reserve shortage as seller-credit cure"
+      ],
+      "requiredGate": "loan officer confirmation of funds-to-close structure",
+      "riskIfWrong": "The product could recommend an ineligible credit that fails underwriting."
+    },
+    {
+      "id": "F057",
+      "sourceBasis": "Fannie Mae IPC guidance does not allow interested-party contributions to satisfy reserve requirements.",
+      "persona": "Buyer agent for self-employed borrower",
+      "state": "CA",
+      "deal": "Conventional purchase requiring reserves; seller offers credit to meet reserve condition.",
+      "findings": [
+        "seller credit intended for reserves",
+        "buyer has closing costs covered",
+        "loan approval requires cash reserves",
+        "inspection found loose dishwasher bracket"
+      ],
+      "expectedLeadScope": [
+        "reserve funds cannot be replaced by seller IPC",
+        "buyer asset documentation need",
+        "closing-cost-only credit framing"
+      ],
+      "expectedExclusions": [
+        "loose dishwasher bracket unless lender-visible"
+      ],
+      "requiredGate": "underwriter asset/reserve approval",
+      "riskIfWrong": "The output may misstate how reserves work and create a false path to approval."
+    },
+    {
+      "id": "F058",
+      "sourceBasis": "Fannie Mae IPC guidance treats financing concessions above borrower costs as sales concessions.",
+      "persona": "Transaction coordinator",
+      "state": "TN",
+      "deal": "Conventional primary at 89 percent LTV; seller credit exceeds the final closing-cost worksheet.",
+      "findings": [
+        "seller credit 6 percent",
+        "final buyer costs 4.2 percent",
+        "buyer asks to keep excess",
+        "inspection found minor caulking"
+      ],
+      "expectedLeadScope": [
+        "excess-over-costs treatment",
+        "sales-concession deduction risk",
+        "CD and underwriting recalculation"
+      ],
+      "expectedExclusions": [
+        "minor caulking"
+      ],
+      "requiredGate": "final fee worksheet and lender recalculation",
+      "riskIfWrong": "Loan terms may change late because the credit cannot simply remain unused."
+    },
+    {
+      "id": "F059",
+      "sourceBasis": "Fannie Mae IPC guidance treats non-realty giveaways differently from ordinary financing concessions.",
+      "persona": "Buyer agent",
+      "state": "NV",
+      "deal": "Conventional buyer asks seller to include furniture and moving-cost reimbursement.",
+      "findings": [
+        "seller to leave furniture at no charge",
+        "seller to reimburse moving truck",
+        "seller credit already near cap",
+        "inspection found working but old water heater"
+      ],
+      "expectedLeadScope": [
+        "non-realty item sales-concession risk",
+        "moving-cost reimbursement disclosure",
+        "IPC cap interaction"
+      ],
+      "expectedExclusions": [
+        "working but old water heater unless lender/appraiser flags condition"
+      ],
+      "requiredGate": "lender disclosure and sales-concession review",
+      "riskIfWrong": "Undisclosed non-realty value can alter LTV calculations and lender eligibility."
+    },
+    {
+      "id": "F060",
+      "sourceBasis": "Fannie Mae IPC guidance identifies undisclosed interested-party contributions as loan-sale eligibility risk.",
+      "persona": "Compliance-minded transaction coordinator",
+      "state": "AZ",
+      "deal": "Conventional purchase; seller proposes paying buyer after closing for repairs.",
+      "findings": [
+        "side agreement for post-closing cash",
+        "repair credit not on settlement statement",
+        "roof inspection pending",
+        "buyer wants no lender involvement"
+      ],
+      "expectedLeadScope": [
+        "undisclosed IPC prohibition risk",
+        "settlement-statement disclosure",
+        "lender-approved repair or credit path"
+      ],
+      "expectedExclusions": [
+        "off-book cash arrangement"
+      ],
+      "requiredGate": "lender and escrow disclosure approval",
+      "riskIfWrong": "The output could facilitate undisclosed consideration and create serious mortgage-fraud/compliance risk."
+    },
+    {
+      "id": "F061",
+      "sourceBasis": "Fannie Mae IPC guidance counts seller-funded temporary buydown subsidies when calculating allowable concessions.",
+      "persona": "Buyer agent negotiating rate relief",
+      "state": "WA",
+      "deal": "Conventional buyer wants a 2-1 buydown plus a closing-cost credit.",
+      "findings": [
+        "seller-funded temporary buydown",
+        "separate 3 percent closing-cost credit",
+        "LTV above 90 percent",
+        "minor attic insulation gaps"
+      ],
+      "expectedLeadScope": [
+        "buydown subsidy included in IPC math",
+        "combined seller credits against cap",
+        "loan officer buydown approval"
+      ],
+      "expectedExclusions": [
+        "minor attic insulation gaps unless safety/soundness issue"
+      ],
+      "requiredGate": "combined IPC and buydown worksheet",
+      "riskIfWrong": "Treating the buydown as separate can exceed the cap and force re-disclosure."
+    },
+    {
+      "id": "F062",
+      "sourceBasis": "Fannie Mae IPC guidance includes discount-point or rate-buydown costs funded by interested parties in concession math.",
+      "persona": "Luxury buyer agent",
+      "state": "MA",
+      "deal": "Conventional primary at 78 percent LTV; seller funds permanent buydown plus repairs.",
+      "findings": [
+        "seller-paid discount points",
+        "seller-paid closing costs",
+        "repair credit for HVAC",
+        "cosmetic closet shelving"
+      ],
+      "expectedLeadScope": [
+        "discount points counted in concession limit",
+        "combined credit cap",
+        "HVAC repair vs credit lender visibility"
+      ],
+      "expectedExclusions": [
+        "cosmetic closet shelving"
+      ],
+      "requiredGate": "loan estimate/CD and IPC cap review",
+      "riskIfWrong": "A rate strategy may collapse late if credits are not aggregated correctly."
+    },
+    {
+      "id": "F063",
+      "sourceBasis": "Fannie Mae IPC guidance permits limited seller-paid HOA assessments, not open-ended future housing costs.",
+      "persona": "Condo buyer agent",
+      "state": "FL",
+      "deal": "Conventional condo purchase; seller offers to prepay two years of HOA dues.",
+      "findings": [
+        "seller prepaying 24 months HOA",
+        "special assessment coming due",
+        "seller credit otherwise near cap",
+        "balcony paint worn"
+      ],
+      "expectedLeadScope": [
+        "HOA prepayment limit risk",
+        "special assessment treatment",
+        "IPC cap and project review"
+      ],
+      "expectedExclusions": [
+        "balcony paint worn unless safety/building issue"
+      ],
+      "requiredGate": "lender review of HOA credit and condo docs",
+      "riskIfWrong": "The product may approve a seller payment structure that the lender must reduce."
+    },
+    {
+      "id": "F064",
+      "sourceBasis": "Fannie Mae IPC guidance distinguishes lender credits from seller or other interested-party concessions.",
+      "persona": "Buyer agent coordinating with loan officer",
+      "state": "NC",
+      "deal": "Conventional buyer has lender credit from pricing and a separate seller credit.",
+      "findings": [
+        "lender credit from rate pricing",
+        "seller closing-cost credit",
+        "buyer costs nearly fully covered",
+        "inspection found old smoke detectors"
+      ],
+      "expectedLeadScope": [
+        "separate lender credit from IPC",
+        "avoid total credits exceeding costs",
+        "CD cash-to-close review"
+      ],
+      "expectedExclusions": [
+        "old smoke detectors unless required by local/lender condition"
+      ],
+      "requiredGate": "loan officer fee worksheet after all credits",
+      "riskIfWrong": "The response may incorrectly count or ignore credits, creating excess-credit or disclosure issues."
+    },
+    {
+      "id": "F065",
+      "sourceBasis": "Fannie Mae/Freddie Mac 2024 guidance treats customary seller-paid buyer-agent compensation separately from financing-concession caps when local custom supports it.",
+      "persona": "Buyer agent after commission-rule changes",
+      "state": "PA",
+      "deal": "Conventional buyer asks seller to pay buyer-broker compensation and closing costs.",
+      "findings": [
+        "seller-paid buyer-agent fee",
+        "separate seller closing-cost credit",
+        "local custom letter available",
+        "inspection found minor roof nail pops"
+      ],
+      "expectedLeadScope": [
+        "confirm buyer-agent fee treatment with lender",
+        "separate true IPC credit from customary commission",
+        "document local custom if needed"
+      ],
+      "expectedExclusions": [
+        "minor roof nail pops unless leak/safety condition"
+      ],
+      "requiredGate": "lender-specific commission and IPC interpretation",
+      "riskIfWrong": "The tool may wrongly consume concession capacity or wrongly ignore a non-customary payment."
+    },
+    {
+      "id": "F066",
+      "sourceBasis": "Fannie Mae IPC guidance can treat builder/developer/lender-affiliate incentives as interested-party contributions.",
+      "persona": "New-construction buyer agent",
+      "state": "UT",
+      "deal": "Conventional buyer using builder's affiliated lender with advertised incentives.",
+      "findings": [
+        "builder design-center credit",
+        "builder-affiliate lender rate incentive",
+        "seller-paid closing costs",
+        "inspection found paint touch-ups"
+      ],
+      "expectedLeadScope": [
+        "builder incentive IPC classification",
+        "affiliate lender incentive review",
+        "combined concession cap"
+      ],
+      "expectedExclusions": [
+        "paint touch-ups unless completion condition"
+      ],
+      "requiredGate": "underwriter review of builder and affiliate incentives",
+      "riskIfWrong": "The app may double-count or fail to count incentives, causing late underwriting conditions."
+    },
+    {
+      "id": "F067",
+      "sourceBasis": "Fannie Mae IPC exclusions may apply to gifts of equity only when donor and transaction conditions are satisfied.",
+      "persona": "Family-sale buyer agent",
+      "state": "NY",
+      "deal": "Conventional purchase from parent with gift of equity and seller credit.",
+      "findings": [
+        "parent seller gift of equity",
+        "additional seller-paid closing costs",
+        "buyer minimum contribution question",
+        "inspection found old furnace"
+      ],
+      "expectedLeadScope": [
+        "acceptable donor/gift-of-equity documentation",
+        "seller credit IPC cap separately",
+        "minimum borrower contribution rules"
+      ],
+      "expectedExclusions": [
+        "old furnace if functioning and not appraisal-sensitive"
+      ],
+      "requiredGate": "loan officer gift and IPC eligibility review",
+      "riskIfWrong": "The tool may treat every family contribution as free of IPC limits or wrongly reject a valid gift."
+    },
+    {
+      "id": "F068",
+      "sourceBasis": "Fannie Mae IPC guidance flags rebates or contributions not credited through the transaction as sales-concession or disclosure risk.",
+      "persona": "Buyer agent",
+      "state": "OR",
+      "deal": "Conventional buyer expects an agent rebate paid outside escrow.",
+      "findings": [
+        "agent rebate not on CD",
+        "seller credit already at cap",
+        "buyer asks rebate for repairs",
+        "inspection found radon mitigation need"
+      ],
+      "expectedLeadScope": [
+        "rebate disclosure",
+        "IPC/sales-concession classification",
+        "radon repair versus credit lender visibility"
+      ],
+      "expectedExclusions": [
+        "off-CD rebate handling"
+      ],
+      "requiredGate": "lender/escrow disclosure gate",
+      "riskIfWrong": "Undisclosed rebates can create loan-sale and compliance problems."
+    },
+    {
+      "id": "F069",
+      "sourceBasis": "Fannie Mae IPC rules can require sales-price or LTV recalculation when concessions exceed allowed amounts, especially after a low appraisal.",
+      "persona": "Buyer agent after appraisal gap",
+      "state": "ID",
+      "deal": "Conventional purchase appraised below contract; seller offers credit instead of price cut.",
+      "findings": [
+        "appraised value below contract price",
+        "seller offers excess credit",
+        "LTV tier changes after appraisal",
+        "minor outlet issue"
+      ],
+      "expectedLeadScope": [
+        "lower of price/appraised value for cap math",
+        "LTV/CLTV recalculation",
+        "price reduction versus concession strategy"
+      ],
+      "expectedExclusions": [
+        "minor outlet issue unless safety/appraisal condition"
+      ],
+      "requiredGate": "post-appraisal underwriting recalculation",
+      "riskIfWrong": "The credit may not preserve the deal if it worsens eligibility math after appraisal."
+    },
+    {
+      "id": "F070",
+      "sourceBasis": "CFPB closing-disclosure and lender workflow make late seller-credit changes a re-disclosure and underwriting risk.",
+      "persona": "Closing coordinator",
+      "state": "DE",
+      "deal": "Conventional closing in three days; inspection credit amendment arrives after initial CD.",
+      "findings": [
+        "late seller credit addendum",
+        "loan docs already drawn",
+        "credit reason references repairs",
+        "minor HVAC service receipt pending"
+      ],
+      "expectedLeadScope": [
+        "CD revision timing",
+        "underwriter review of credit purpose",
+        "loan document redraw risk"
+      ],
+      "expectedExclusions": [
+        "assuming credit can be added without lender approval"
+      ],
+      "requiredGate": "lender/closing disclosure approval before signing",
+      "riskIfWrong": "A last-minute amendment can delay closing or violate disclosure workflow."
+    },
+    {
+      "id": "F071",
+      "sourceBasis": "Fannie Mae property-condition guidance treats C6 safety/soundness/structural deficiencies as ineligible until repaired.",
+      "persona": "Conventional buyer agent",
+      "state": "MI",
+      "deal": "Conventional primary; inspector found multiple major deficiencies before appraisal.",
+      "findings": [
+        "collapsed porch support",
+        "exposed structural beam rot",
+        "active ceiling leak",
+        "dated interior doors"
+      ],
+      "expectedLeadScope": [
+        "safety/soundness structural repairs",
+        "possible subject-to appraisal",
+        "professional repair evidence"
+      ],
+      "expectedExclusions": [
+        "dated interior doors"
+      ],
+      "requiredGate": "Fannie Mae property-condition eligibility review",
+      "riskIfWrong": "The product may suggest an as-is credit for a property condition that must be repaired before loan delivery."
+    },
+    {
+      "id": "F072",
+      "sourceBasis": "Fannie Mae property-condition guidance permits as-is appraisals for minor conditions that do not affect safety, soundness, or structural integrity.",
+      "persona": "Conventional buyer agent",
+      "state": "VA",
+      "deal": "Conventional buyer wants to maximize repairs on a generally sound home.",
+      "findings": [
+        "small drywall dents",
+        "older but operating furnace",
+        "minor countertop chip",
+        "loose doorknob"
+      ],
+      "expectedLeadScope": [
+        "operating furnace age disclosure only if performance concern",
+        "evidence-based repair prioritization"
+      ],
+      "expectedExclusions": [
+        "small drywall dents",
+        "minor countertop chip",
+        "loose doorknob unless security/safety"
+      ],
+      "requiredGate": "avoid overstating minor conditions as lender-required repairs",
+      "riskIfWrong": "The request may look inflated and reduce negotiation credibility."
+    },
+    {
+      "id": "F073",
+      "sourceBasis": "Fannie Mae property-condition guidance calls for professional inspection when the appraiser is not qualified to evaluate structural concerns.",
+      "persona": "Conventional buyer agent",
+      "state": "MO",
+      "deal": "Conventional purchase; appraiser may see foundation movement.",
+      "findings": [
+        "diagonal foundation crack",
+        "doors out of square",
+        "sloped living room floor",
+        "old carpet stains"
+      ],
+      "expectedLeadScope": [
+        "structural engineer evaluation",
+        "foundation repair scope if needed",
+        "subject-to inspection risk"
+      ],
+      "expectedExclusions": [
+        "old carpet stains"
+      ],
+      "requiredGate": "qualified structural report and lender acceptance",
+      "riskIfWrong": "The product may ask for a price concession without resolving the appraisal's professional-inspection condition."
+    },
+    {
+      "id": "F074",
+      "sourceBasis": "Fannie Mae appraisal guidance requires comments and evidence when infestation, dampness, or abnormal settlement affects value or marketability.",
+      "persona": "Conventional transaction coordinator",
+      "state": "IA",
+      "deal": "Conventional buyer with basement water concerns.",
+      "findings": [
+        "active basement seepage",
+        "efflorescence on block wall",
+        "floor slab settlement crack",
+        "basement paint peeling"
+      ],
+      "expectedLeadScope": [
+        "dampness source",
+        "settlement evaluation",
+        "professional report or correction evidence"
+      ],
+      "expectedExclusions": [
+        "basement paint peeling unless moisture-related"
+      ],
+      "requiredGate": "Fannie Mae dampness/settlement professional evidence gate",
+      "riskIfWrong": "An as-is credit may not satisfy lender documentation if the appraisal notes dampness or settlement."
+    },
+    {
+      "id": "F075",
+      "sourceBasis": "Fannie Mae property-condition guidance treats wood-boring insect evidence as a possible professional-inspection or repair condition.",
+      "persona": "Conventional buyer agent",
+      "state": "AL",
+      "deal": "Conventional purchase in termite-prone county.",
+      "findings": [
+        "frass below window sill",
+        "soft subfloor near bath",
+        "seller says termites treated years ago",
+        "bath vanity outdated"
+      ],
+      "expectedLeadScope": [
+        "wood-destroying insect inspection",
+        "subfloor damage repair scope",
+        "lender appraisal condition tracking"
+      ],
+      "expectedExclusions": [
+        "bath vanity outdated"
+      ],
+      "requiredGate": "qualified pest/structural report",
+      "riskIfWrong": "The lender may require proof the condition does not threaten structural damage."
+    },
+    {
+      "id": "F076",
+      "sourceBasis": "Fannie Mae site-utility guidance requires private well or septic access rights and ongoing viability.",
+      "persona": "Conventional rural buyer agent",
+      "state": "VT",
+      "deal": "Conventional primary; septic leach field is located partly on neighbor parcel.",
+      "findings": [
+        "off-site septic component",
+        "no recorded easement provided",
+        "older septic design plan",
+        "kitchen cabinet hardware missing"
+      ],
+      "expectedLeadScope": [
+        "legal septic access rights",
+        "maintenance/repair agreement",
+        "site utility eligibility"
+      ],
+      "expectedExclusions": [
+        "kitchen cabinet hardware missing"
+      ],
+      "requiredGate": "title/lender review of off-site private utility",
+      "riskIfWrong": "The deal may fail collateral eligibility despite minor inspection items being resolved."
+    },
+    {
+      "id": "F077",
+      "sourceBasis": "Fannie Mae site guidance expects adequate vehicular access and appraisal commentary for atypical private streets.",
+      "persona": "Conventional buyer agent",
+      "state": "MT",
+      "deal": "Conventional second home reached by seasonal private road.",
+      "findings": [
+        "no winter plowing agreement",
+        "road crosses two private parcels",
+        "appraiser noted limited access",
+        "deck stain weathered"
+      ],
+      "expectedLeadScope": [
+        "year-round access evidence",
+        "private-road maintenance documents",
+        "marketability impact in appraisal"
+      ],
+      "expectedExclusions": [
+        "deck stain weathered"
+      ],
+      "requiredGate": "title, appraisal, and lender access review",
+      "riskIfWrong": "A repair addendum may ignore an access issue that affects collateral acceptability."
+    },
+    {
+      "id": "F078",
+      "sourceBasis": "Fannie Mae environmental-hazard appraisal guidance requires measurable market impact or specialist review when hazards affect value or marketability.",
+      "persona": "Conventional buyer agent",
+      "state": "NJ",
+      "deal": "Conventional purchase of older home with possible buried oil tank.",
+      "findings": [
+        "abandoned oil fill pipe",
+        "soil staining near foundation",
+        "no tank closure certificate",
+        "old boiler still operational"
+      ],
+      "expectedLeadScope": [
+        "environmental/tank inspection",
+        "marketability and value impact",
+        "lender disclosure of known hazard"
+      ],
+      "expectedExclusions": [
+        "old boiler if functioning and not tied to hazard"
+      ],
+      "requiredGate": "environmental professional and lender appraisal review",
+      "riskIfWrong": "The product may hide or minimize an environmental issue that can make value unreliable."
+    },
+    {
+      "id": "F079",
+      "sourceBasis": "Fannie Mae property-valuation FAQ guidance requires known needed repairs to be completed even when valuation alternatives reduce appraisal scope.",
+      "persona": "Loan officer assistant",
+      "state": "AZ",
+      "deal": "Conventional loan received appraisal waiver/property data option but inspection found safety repairs.",
+      "findings": [
+        "waiver path selected",
+        "water heater flue disconnected",
+        "exposed wiring at laundry",
+        "minor cabinet scratches"
+      ],
+      "expectedLeadScope": [
+        "known safety repairs despite valuation alternative",
+        "lender collateral eligibility documentation",
+        "repair completion before sale/delivery"
+      ],
+      "expectedExclusions": [
+        "minor cabinet scratches"
+      ],
+      "requiredGate": "lender property-eligibility review despite waiver",
+      "riskIfWrong": "The app may assume no appraisal means no property-condition gate."
+    },
+    {
+      "id": "F080",
+      "sourceBasis": "Fannie Mae site-utility requirements expect utilities that meet community standards and support marketability.",
+      "persona": "Conventional buyer agent",
+      "state": "MS",
+      "deal": "Conventional primary; rural home has temporary electric pole but no permanent meter.",
+      "findings": [
+        "no permanent electric meter",
+        "temporary construction power active",
+        "HVAC not fully connected",
+        "porch needs repainting"
+      ],
+      "expectedLeadScope": [
+        "permanent electric utility service",
+        "HVAC connection after permanent power",
+        "collateral utility eligibility"
+      ],
+      "expectedExclusions": [
+        "porch repainting unless exterior deterioration"
+      ],
+      "requiredGate": "utility-provider and lender confirmation",
+      "riskIfWrong": "A cosmetic request may miss a basic utility defect that blocks conventional collateral approval."
+    },
+    {
+      "id": "F081",
+      "sourceBasis": "Fannie Mae site appraisal guidance requires adequate vehicular access and market acceptance.",
+      "persona": "Conventional buyer agent",
+      "state": "AR",
+      "deal": "Conventional purchase of landlocked-looking rural parcel.",
+      "findings": [
+        "driveway crosses unrecorded trail",
+        "no direct public road frontage",
+        "neighbor gate controls access",
+        "interior paint scuffed"
+      ],
+      "expectedLeadScope": [
+        "recorded access rights",
+        "vehicular access adequacy",
+        "title/appraisal marketability"
+      ],
+      "expectedExclusions": [
+        "interior paint scuffed"
+      ],
+      "requiredGate": "title and lender collateral review",
+      "riskIfWrong": "The system may treat access as a seller-neighbor issue rather than a financing-critical collateral issue."
+    },
+    {
+      "id": "F082",
+      "sourceBasis": "Fannie Mae appraisal/site utility analysis can require support for ADU utility capacity and legal marketability.",
+      "persona": "Conventional buyer agent",
+      "state": "CA",
+      "deal": "Conventional purchase advertised with ADU on private septic.",
+      "findings": [
+        "ADU not shown on septic permit",
+        "unpermitted kitchenette",
+        "separate electric subpanel unlabeled",
+        "ADU paint color dated"
+      ],
+      "expectedLeadScope": [
+        "ADU legal/permitted status",
+        "septic capacity for added unit",
+        "utility and appraisal treatment"
+      ],
+      "expectedExclusions": [
+        "ADU paint color dated"
+      ],
+      "requiredGate": "lender appraisal and local permit review",
+      "riskIfWrong": "The output may overvalue unverified living area and miss collateral eligibility conditions."
+    },
+    {
+      "id": "F083",
+      "sourceBasis": "Fannie Mae property-condition guidance treats active moisture intrusion as more than ordinary deferred maintenance.",
+      "persona": "Conventional buyer agent",
+      "state": "OR",
+      "deal": "Conventional purchase after seller patched roof but leak remains visible.",
+      "findings": [
+        "fresh roof patch",
+        "active drip during rain",
+        "wet attic insulation",
+        "new paint conceals ceiling stain"
+      ],
+      "expectedLeadScope": [
+        "active roof leak correction",
+        "attic moisture repair",
+        "appraiser/lender disclosure risk"
+      ],
+      "expectedExclusions": [
+        "new paint as cure without leak evidence"
+      ],
+      "requiredGate": "roof repair evidence and possible reinspection",
+      "riskIfWrong": "The product may accept a cosmetic patch while the loan file still contains safety/soundness concerns."
+    },
+    {
+      "id": "F084",
+      "sourceBasis": "Fannie Mae property-condition review requires clear treatment of prior fire damage affecting safety or soundness.",
+      "persona": "Conventional buyer agent",
+      "state": "NV",
+      "deal": "Conventional purchase of renovated property with prior garage fire.",
+      "findings": [
+        "charred framing visible in attic over garage",
+        "smoke odor remains",
+        "no permit closeout for repairs",
+        "garage opener remote missing"
+      ],
+      "expectedLeadScope": [
+        "fire-damaged framing evaluation",
+        "permit/repair completion evidence",
+        "appraisal condition and marketability"
+      ],
+      "expectedExclusions": [
+        "garage opener remote missing"
+      ],
+      "requiredGate": "structural/permit documentation and lender review",
+      "riskIfWrong": "A credit for smoke odor can miss unrepaired structural collateral risk."
+    },
+    {
+      "id": "F085",
+      "sourceBasis": "Fannie Mae property-condition guidance requires deficiencies affecting safety to be identified and potentially repaired.",
+      "persona": "Conventional buyer agent",
+      "state": "WI",
+      "deal": "Conventional purchase of older home with electrical system concerns.",
+      "findings": [
+        "knob-and-tube wiring in attic",
+        "open splices near insulation",
+        "fuse panel shows overheating",
+        "vintage light switches"
+      ],
+      "expectedLeadScope": [
+        "electrical safety evaluation",
+        "open splice correction",
+        "lender/appraiser condition risk"
+      ],
+      "expectedExclusions": [
+        "vintage light switches if safe and operational"
+      ],
+      "requiredGate": "licensed electrician report and lender acceptance",
+      "riskIfWrong": "The system may frame all old wiring as cosmetic or all vintage components as mandatory without evidence."
+    },
+    {
+      "id": "F086",
+      "sourceBasis": "Fannie Mae abnormal-settlement guidance can require a professional report or correction evidence.",
+      "persona": "Conventional buyer agent",
+      "state": "OK",
+      "deal": "Conventional primary in expansive-soil area.",
+      "findings": [
+        "stairstep brick crack",
+        "foundation piers visible at one corner",
+        "interior doors bind",
+        "older roof gutters"
+      ],
+      "expectedLeadScope": [
+        "foundation engineer evaluation",
+        "settlement repair history",
+        "marketability/value impact"
+      ],
+      "expectedExclusions": [
+        "older roof gutters unless causing drainage/foundation issue"
+      ],
+      "requiredGate": "structural report and appraisal review",
+      "riskIfWrong": "A seller credit may not satisfy the lender if the appraisal references abnormal settlement."
+    },
+    {
+      "id": "F087",
+      "sourceBasis": "Fannie Mae property-condition analysis can treat damaged pool barriers or structures as safety/marketability concerns.",
+      "persona": "Conventional buyer agent",
+      "state": "FL",
+      "deal": "Conventional primary with neglected pool.",
+      "findings": [
+        "pool cage panels missing",
+        "deep end covered by torn tarp",
+        "pool equipment inoperable",
+        "patio furniture stained"
+      ],
+      "expectedLeadScope": [
+        "pool safety hazard mitigation",
+        "barrier/tarp correction",
+        "lender treatment of inoperable equipment"
+      ],
+      "expectedExclusions": [
+        "patio furniture stained"
+      ],
+      "requiredGate": "appraiser/lender safety and marketability decision",
+      "riskIfWrong": "The tool may only negotiate equipment value and leave a visible safety hazard unresolved."
+    },
+    {
+      "id": "F088",
+      "sourceBasis": "Fannie Mae site-utility guidance requires durable access and maintenance rights for off-site private utility systems.",
+      "persona": "Conventional buyer agent",
+      "state": "ME",
+      "deal": "Conventional purchase with shared well and septic easements crossing a family parcel.",
+      "findings": [
+        "shared well on cousin's property",
+        "septic force main crosses private land",
+        "no recorded repair rights found",
+        "laundry room flooring worn"
+      ],
+      "expectedLeadScope": [
+        "recorded utility easements",
+        "maintenance and repair rights",
+        "private utility viability"
+      ],
+      "expectedExclusions": [
+        "laundry room flooring worn"
+      ],
+      "requiredGate": "title/lender private-utility document gate",
+      "riskIfWrong": "The product may draft condition repairs while title/utility access remains unsolved."
+    },
+    {
+      "id": "F089",
+      "sourceBasis": "Fannie Mae C6/safety analysis can be triggered by missing finishes when they create unsafe or uninhabitable conditions, not mere decor issues.",
+      "persona": "Conventional renovation buyer agent",
+      "state": "PA",
+      "deal": "Conventional primary; seller removed flooring after contract.",
+      "findings": [
+        "subfloor exposed with protruding fasteners",
+        "missing stair landing flooring",
+        "baseboards removed",
+        "paint touchups incomplete"
+      ],
+      "expectedLeadScope": [
+        "safe walking surfaces",
+        "protruding fastener removal",
+        "stair landing completion"
+      ],
+      "expectedExclusions": [
+        "baseboards removed unless safety/marketability issue",
+        "paint touchups incomplete"
+      ],
+      "requiredGate": "property-condition eligibility and appraiser treatment",
+      "riskIfWrong": "The answer may either over-call decor items or under-call exposed subfloor safety issues."
+    },
+    {
+      "id": "F090",
+      "sourceBasis": "Fannie Mae and government loan appraisal rules can override an as-is contract when lender-visible repairs affect collateral eligibility.",
+      "persona": "Buyer agent on as-is financed deal",
+      "state": "GA",
+      "deal": "Conventional as-is contract; buyer expects seller credit instead of repairs.",
+      "findings": [
+        "appraiser noted unsafe porch railing",
+        "inspection shows plumbing leak",
+        "seller refuses repairs citing as-is",
+        "buyer wants closing credit"
+      ],
+      "expectedLeadScope": [
+        "lender-required repairs despite as-is terms",
+        "credit versus completion distinction",
+        "closing timeline impact"
+      ],
+      "expectedExclusions": [
+        "assuming as-is waives lender collateral conditions"
+      ],
+      "requiredGate": "underwriter/appraiser repair-condition resolution",
+      "riskIfWrong": "The buyer may believe negotiation rights are the only issue while financing cannot close without repair evidence."
+    },
+    {
+      "id": "F091",
+      "sourceBasis": "Industry repair-credit guidance and lender practice distinguish repair wording that reveals unresolved collateral defects from neutral closing-cost credits.",
+      "persona": "Buyer agent asking for credit language",
+      "state": "MD",
+      "deal": "Conventional buyer wants $8,000 because inspector found roof damage.",
+      "findings": [
+        "draft says seller credit for roof replacement",
+        "roof leak is active",
+        "lender has not reviewed repair issue",
+        "buyer asks to avoid lender questions"
+      ],
+      "expectedLeadScope": [
+        "active roof defect",
+        "lender-approved credit wording",
+        "repair completion versus credit decision"
+      ],
+      "expectedExclusions": [
+        "wording intended to hide known collateral defect"
+      ],
+      "requiredGate": "loan officer and escrow wording approval",
+      "riskIfWrong": "The tool could encourage concealment or draft language that triggers underwriting conditions without repair plan."
+    },
+    {
+      "id": "F092",
+      "sourceBasis": "Fannie Mae undisclosed IPC guidance and closing-disclosure rules make post-closing cash-back arrangements high risk.",
+      "persona": "Transaction coordinator",
+      "state": "KY",
+      "deal": "Financed buyer; seller offers to Venmo repair money after closing.",
+      "findings": [
+        "post-closing cash-back agreement",
+        "not included on closing disclosure",
+        "inspection found sewer issue",
+        "agent says everyone does it"
+      ],
+      "expectedLeadScope": [
+        "undisclosed consideration risk",
+        "lender/settlement disclosure requirement",
+        "sewer issue financing visibility"
+      ],
+      "expectedExclusions": [
+        "off-book payment recommendation"
+      ],
+      "requiredGate": "lender and settlement-agent compliance review",
+      "riskIfWrong": "The output could facilitate mortgage fraud or an unsalable loan."
+    },
+    {
+      "id": "F093",
+      "sourceBasis": "FHA/Fannie Mae appraisal practice distinguishes repair escrow or completed repairs from simple credits when required repairs affect eligibility.",
+      "persona": "Buyer agent comparing options",
+      "state": "MO",
+      "deal": "FHA buyer; seller wants to escrow funds for broken water heater after closing.",
+      "findings": [
+        "water heater inoperative",
+        "seller proposes post-closing repair escrow",
+        "hot water unavailable",
+        "minor tile grout cracks"
+      ],
+      "expectedLeadScope": [
+        "hot water/habitability repair",
+        "lender-approved repair escrow possibility",
+        "appraiser final inspection requirement"
+      ],
+      "expectedExclusions": [
+        "minor tile grout cracks"
+      ],
+      "requiredGate": "program-specific repair escrow approval",
+      "riskIfWrong": "The product may imply any credit works, although lender-required repairs usually need completion or approved escrow."
+    },
+    {
+      "id": "F094",
+      "sourceBasis": "FHA/HUD seller contribution guidance generally caps interested-party help and treats excess as an inducement or loan-amount issue.",
+      "persona": "FHA buyer agent",
+      "state": "TX",
+      "deal": "FHA buyer already has 6 percent seller concessions and now asks for additional repair credit.",
+      "findings": [
+        "seller concessions already at 6 percent",
+        "additional $3,000 repair credit requested",
+        "inspection found nonfunctioning furnace",
+        "seller refuses to reduce price"
+      ],
+      "expectedLeadScope": [
+        "FHA contribution cap",
+        "required furnace repair versus credit",
+        "price reduction or completed repair alternatives"
+      ],
+      "expectedExclusions": [
+        "assuming extra credit can stack above cap"
+      ],
+      "requiredGate": "FHA lender concession and repair-condition review",
+      "riskIfWrong": "The amendment may exceed allowable credits and still fail to cure the lender-required repair."
+    },
+    {
+      "id": "F095",
+      "sourceBasis": "VA concession guidance separates unlimited ordinary closing-cost credits from the 4 percent concession bucket for certain benefits.",
+      "persona": "VA buyer agent",
+      "state": "NC",
+      "deal": "VA buyer asks for closing costs, funding fee, and prepaid taxes in one sentence.",
+      "findings": [
+        "seller pays buyer closing costs",
+        "seller pays funding fee",
+        "seller prepays property taxes",
+        "buyer also asks for carpet allowance"
+      ],
+      "expectedLeadScope": [
+        "separate VA closing-cost bucket",
+        "track funding fee/prepaids against 4 percent concession cap",
+        "carpet allowance concession classification"
+      ],
+      "expectedExclusions": [
+        "treating every seller-paid dollar as the same category"
+      ],
+      "requiredGate": "VA lender fee and concession worksheet",
+      "riskIfWrong": "The product may wrongly cap valid closing-cost help or approve excessive concessions."
+    },
+    {
+      "id": "F096",
+      "sourceBasis": "Fannie Mae/Freddie Mac IPC and commission guidance requires separating customary buyer-agent compensation from true seller credits, especially with low investment-property caps.",
+      "persona": "Investor buyer agent",
+      "state": "AZ",
+      "deal": "Conventional investment property with seller-paid buyer-agent fee and 2 percent seller credit.",
+      "findings": [
+        "investment occupancy",
+        "seller-paid buyer-agent compensation",
+        "separate 2 percent closing-cost credit",
+        "buyer requests extra repair credit"
+      ],
+      "expectedLeadScope": [
+        "investment-property 2 percent IPC cap",
+        "customary commission treatment",
+        "no extra credit without lender math"
+      ],
+      "expectedExclusions": [
+        "assuming buyer-agent compensation always consumes IPC cap",
+        "assuming it never matters to lender"
+      ],
+      "requiredGate": "lender-specific commission and IPC review",
+      "riskIfWrong": "The deal may either leave credit capacity unused or exceed a strict investment-property limit."
+    },
+    {
+      "id": "F097",
+      "sourceBasis": "Fannie Mae IPC limits are based on lower-of value concepts and can interact with low appraisal and LTV recalculation.",
+      "persona": "Appraisal-gap negotiator",
+      "state": "CO",
+      "deal": "Conventional primary; appraisal came in $20,000 low and seller proposes a credit instead of price reduction.",
+      "findings": [
+        "low appraisal",
+        "seller credit offered",
+        "LTV moves above 90 percent",
+        "inspection found minor GFCI issue"
+      ],
+      "expectedLeadScope": [
+        "post-appraisal LTV tier",
+        "seller credit cap after value change",
+        "price reduction versus concession analysis"
+      ],
+      "expectedExclusions": [
+        "minor GFCI issue unless appraisal/lender safety condition"
+      ],
+      "requiredGate": "re-run underwriting with updated value and credits",
+      "riskIfWrong": "A mathematically attractive credit can be disallowed or reduce eligibility when value drops."
+    },
+    {
+      "id": "F098",
+      "sourceBasis": "Lender-visible inspection defects can trigger appraisal or underwriting conditions when disclosed without a repair plan.",
+      "persona": "Buyer agent deciding what to send lender",
+      "state": "IN",
+      "deal": "FHA buyer; full inspection report includes major safety defects and cosmetic notes.",
+      "findings": [
+        "inspection report sent to lender",
+        "report notes active roof leak",
+        "report notes unsafe electrical panel",
+        "report also lists paint scratches"
+      ],
+      "expectedLeadScope": [
+        "roof leak repair plan",
+        "electrical safety repair plan",
+        "lender communication strategy"
+      ],
+      "expectedExclusions": [
+        "paint scratches"
+      ],
+      "requiredGate": "loan officer guidance on disclosure and repair conditions",
+      "riskIfWrong": "The output may advise broad report sharing or hiding without managing lender-required repair consequences."
+    },
+    {
+      "id": "F099",
+      "sourceBasis": "FHA/VA appraisal processes often require reinspection when utilities were unavailable or required repairs are completed after initial visit.",
+      "persona": "Closing coordinator",
+      "state": "MI",
+      "deal": "VA buyer; appraisal occurred with water off and seller says it can be turned on next week.",
+      "findings": [
+        "water off during appraisal",
+        "plumbing not observed",
+        "seller disputes reinspection fee",
+        "buyer closing date in six days"
+      ],
+      "expectedLeadScope": [
+        "utility activation",
+        "reinspection scheduling",
+        "responsibility for delay/fee negotiation"
+      ],
+      "expectedExclusions": [
+        "assuming appraisal is final despite unobserved systems"
+      ],
+      "requiredGate": "appraiser/lender reinspection confirmation",
+      "riskIfWrong": "The product may miss a timeline-critical second visit and misadvise on closing readiness."
+    },
+    {
+      "id": "F100",
+      "sourceBasis": "FHA, VA, and conventional appraisal-condition workflows require completion evidence for required repairs rather than unsupported seller promises.",
+      "persona": "Transaction coordinator",
+      "state": "OH",
+      "deal": "FHA buyer; seller signs amendment promising repairs before closing.",
+      "findings": [
+        "missing handrail to be installed by seller",
+        "peeling exterior paint to be corrected",
+        "roof leak repair promised",
+        "seller provides no receipts or photos yet"
+      ],
+      "expectedLeadScope": [
+        "repair completion evidence",
+        "appraiser final inspection or lender signoff",
+        "avoid closing on promises only"
+      ],
+      "expectedExclusions": [
+        "seller promise without documentation"
+      ],
+      "requiredGate": "final repair verification before clear-to-close",
+      "riskIfWrong": "The buyer may reach closing without evidence needed to clear lender-required repair conditions."
+    }
+  ]
+}

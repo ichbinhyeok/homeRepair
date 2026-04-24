@@ -1,101 +1,27 @@
 package com.livingcostcheck.home_repair.seo;
 
 import com.livingcostcheck.home_repair.domain.VerdictHistory;
-import com.livingcostcheck.home_repair.service.VerdictEngineService;
+import com.livingcostcheck.home_repair.service.dto.inspection.InspectionDefenseSignal;
+import com.livingcostcheck.home_repair.service.dto.inspection.InspectionEvidenceRef;
+import com.livingcostcheck.home_repair.service.dto.inspection.InspectionCaseWorkflowEvent;
+import com.livingcostcheck.home_repair.service.dto.inspection.InspectionCaseWorkflowSummary;
+import com.livingcostcheck.home_repair.service.dto.inspection.InspectionExclusionItem;
+import com.livingcostcheck.home_repair.service.dto.inspection.InspectionReadinessGate;
+import com.livingcostcheck.home_repair.service.dto.inspection.InspectionResponsePacket;
+import com.livingcostcheck.home_repair.service.dto.inspection.InspectionWorkspaceSummary;
 import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs;
-import com.livingcostcheck.home_repair.seo.InternalLinkBuilder.InternalLink;
 import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.output.StringOutput;
 import gg.jte.resolve.DirectoryCodeResolver;
 import org.junit.jupiter.api.Test;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JteTemplateTest {
-
-        @Test
-        public void testStaticVerdictTemplate() {
-                TemplateEngine templateEngine = TemplateEngine.create(
-                                new DirectoryCodeResolver(Paths.get("src/main/jte")),
-                                ContentType.Html);
-
-                // Mock Data
-                VerdictDTOs.Verdict verdict = new VerdictDTOs.Verdict();
-                verdict.setTier("LOW_RISK");
-                verdict.setHeadline("Test Headline");
-                verdict.setCostRangeLabel("$100 - $200");
-
-                VerdictDTOs.SortedPlan plan = new VerdictDTOs.SortedPlan();
-                VerdictDTOs.RiskAdjustedItem sampleRisk = VerdictDTOs.RiskAdjustedItem.builder()
-                                .itemCode("ELECTRICAL_PANEL_UPGRADE")
-                                .prettyName("Electrical Panel Upgrade")
-                                .category("SAFETY")
-                                .adjustedCost(9200.0)
-                                .riskFlags(List.of(
-                                                "ERA_RISK: KNOB_AND_TUBE_WIRING",
-                                                "ERA_LABOR_ADJUSTMENT: 2.5x",
-                                                "CRITICAL_SEVERITY_SURCHARGE"))
-                                .mandatory(true)
-                                .explanation(
-                                                "[FINANCIAL RISK PROMOTION] High liability detected ($9,200). <strong>Legacy wiring risk detected.</strong>")
-                                .definition("Legacy wiring systems often require full panel upgrades.")
-                                .build();
-                plan.setMustDo(new ArrayList<>(List.of(sampleRisk)));
-                plan.setShouldDo(new ArrayList<>());
-                verdict.setPlan(plan);
-                verdict.setContextBriefing(new VerdictDTOs.ContextBriefing());
-
-                Map<String, Object> params = new HashMap<>();
-                params.put("title", "Test Title");
-                params.put("h1Content", "Test H1");
-                params.put("metroCode", "AUSTIN_TX");
-                params.put("metroName", "Austin");
-                params.put("era", "PRE_1950");
-                params.put("eraName", "Pre-1950");
-                params.put("verdict", verdict);
-                params.put("eraLinks", new ArrayList<InternalLink>());
-                params.put("cityLinks", new ArrayList<InternalLink>());
-                params.put("baseUrl", "http://localhost");
-                params.put("canonicalUrl", "http://localhost/test");
-                params.put("faqSchema", "");
-                params.put("stateLinks", new ArrayList<InternalLink>());
-                params.put("climateFragment", "Climate Info");
-                params.put("eraFragment", "Era Info");
-                params.put("costFragment", "Cost Info");
-                params.put("faqItems", new ArrayList<Map<String, String>>());
-                params.put("lowPrice", "100");
-                params.put("highPrice", "200");
-                params.put("breadcrumbSchema", "");
-                params.put("metroRisk", "Aging Infrastructure");
-                params.put("climateZone", "5A");
-                params.put("foundation", "FULL_BASEMENT");
-                params.put("avgHouseAge", "N/A");
-                params.put("howToSchema", "");
-                params.put("dateString", "February 2026");
-
-                StringOutput output = new StringOutput();
-                assertDoesNotThrow(() -> templateEngine.render("seo/static-verdict.jte", params, output),
-                                "static-verdict.jte should render without errors");
-
-                String html = output.toString();
-                assertFalse(html.contains("ERA_RISK"), "Template should not leak internal risk flags");
-                assertFalse(html.contains("CRITICAL_SEVERITY_SURCHARGE"),
-                                "Template should not leak internal surcharge flags");
-                assertFalse(html.contains("[FINANCIAL RISK PROMOTION]"),
-                                "Template should not leak internal explanation tokens");
-                assertTrue(html.contains("Era-specific hazard"),
-                                "Template should render user-facing risk labels");
-
-                System.out.println(
-                                "Static Output snippet: " + output.toString().substring(0,
-                                                Math.min(output.toString().length(), 200)));
-        }
 
         @Test
         public void testResultTemplate() {
@@ -126,8 +52,86 @@ public class JteTemplateTest {
                 Map<String, Object> params = new HashMap<>();
                 params.put("verdict", verdict);
                 params.put("history", history);
+                params.put("workspace", new InspectionWorkspaceSummary(
+                                history.getId(),
+                                "Maple Street response window",
+                                "123 Maple St, Atlanta, GA",
+                                "Mina Kim",
+                                "Alex Park",
+                                "Atlanta",
+                                "response window 1-3 weeks",
+                                "FHA financing",
+                                "Apr 23, 7:30 PM",
+                                "/home-repair/result/" + history.getId()));
+                params.put("packet", new InspectionResponsePacket(
+                                "Revise before send",
+                                "Pre-send check fixture.",
+                                List.of("Federal Pacific panel flagged by inspector"),
+                                List.of("Federal Pacific panel flagged by inspector"),
+                                List.of("Roof age needs verification"),
+                                List.of("Minor paint scuffs"),
+                                List.of(new InspectionEvidenceRef(
+                                                "Federal Pacific panel flagged by inspector",
+                                                List.of("Report p.14: Federal Pacific panel flagged by inspector"))),
+                                "sample-inspection.pdf",
+                                List.of("Inspection report page reference"),
+                                List.of("Preference upgrades"),
+                                List.of(new InspectionExclusionItem(
+                                                "Preference upgrades",
+                                                "Visible-before-offer preference ask.")),
+                                "no quote attached; negotiation estimate only",
+                                "closing in the next 1-3 weeks",
+                                "FHA financing",
+                                "Keep the request anchored to safety and habitability.",
+                                "Use the short deadline to keep the ask clear.",
+                                "Start with the inspection notes.",
+                                "$10k - $20k",
+                                "Cost data sizes leverage; findings decide scope.",
+                                List.of("Electrical Panel Upgrade: $9,200 counted in the opening scope."),
+                                List.of("Unsafe electrical panel or wiring"),
+                                "These items can read as lender-visible habitability or appraisal issues.",
+                                "Ready to send",
+                                "The packet is narrow enough to send now.",
+                                List.of(
+                                                new InspectionReadinessGate("PASS", "Deadline alive", "Exact deadline captured."),
+                                                new InspectionReadinessGate("WARN", "Form path locked", "Confirm the exact amendment form.")),
+                                List.of(
+                                                new InspectionDefenseSignal("WARN", "Number basis", "The ask is inspection-estimated.", "Confirm quote support."),
+                                                new InspectionDefenseSignal("PASS", "Evidence support", "Lead item has report support.", "Attach the cited page.")),
+                                List.of("Verdict is Draft only because one gate needs confirmation."),
+                                List.of("Attach the exact report page for roof age before sending."),
+                                List.of("Quote caveat: do not call this estimate a contractor bid."),
+                                1,
+                                1,
+                                0,
+                                88,
+                                List.of("The ask has a safety anchor."),
+                                "Credit-first workflow",
+                                "How to move this into the real credit request",
+                                "Use this as support language, not as a substitute for the signed amendment.",
+                                List.of("Move the ask into the credit amendment."),
+                                List.of("Send the agent-ready request."),
+                                9000,
+                                12500,
+                                15000,
+                                "9,000",
+                                "12,500",
+                                "15,000",
+                                "Start with a seller-credit request.",
+                                "We are requesting a seller credit before closing.",
+                                "If the seller pushes back, fall back to safety items.",
+                                "Full packet text"));
                 params.put("title", "Result Title");
                 params.put("verdictH1", "Result H1");
+                params.put("caseWorkflow", new InspectionCaseWorkflowSummary(
+                                "REVIEW",
+                                "In review",
+                                "Buyer approval is not recorded yet.",
+                                "Record buyer approval once the packet is settled.",
+                                List.of(new InspectionCaseWorkflowEvent(
+                                                "Packet generated",
+                                                "Snapshot: status=Ready to send",
+                                                "Apr 24, 9:00 AM"))));
 
                 // Note: result.jte uses @template.layout which might require 'pages/result.jte'
                 // or similar path depending on root.
@@ -136,6 +140,9 @@ public class JteTemplateTest {
                 StringOutput output = new StringOutput();
                 assertDoesNotThrow(() -> templateEngine.render("pages/result.jte", params, output),
                                 "result.jte should render without errors");
+                assertTrue(output.toString().contains("Why this verdict was chosen"));
+                assertTrue(output.toString().contains("Missing or weak evidence"));
+                assertTrue(output.toString().contains("Boundaries the agent should not overstate"));
 
                 System.out.println(
                                 "Result Output snippet: " + output.toString().substring(0,

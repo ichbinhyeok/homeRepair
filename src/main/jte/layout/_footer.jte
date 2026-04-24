@@ -4,42 +4,39 @@
             <div class="footer-panel">
                 <div class="footer-brand">LifeVerdict</div>
                 <p>
-                    A buyer-side inspection response tool that turns home-age risk, metro labor rates, and inspection findings into a request your agent can send today.
+                    An inspection response copilot built for buyer agents first, and for buyers under contract who need a packet their agent can actually send.
                 </p>
+                <p class="footer-note">Free during validation.</p>
             </div>
 
             <div class="footer-panel">
-                <h4>Packet</h4>
+                <h4>Product</h4>
                 <div class="footer-links-stack">
-                    <a href="/home-repair">Start planner</a>
-                    <a href="/home-repair?relationship=BUYING">Build send-today packet</a>
-                    <a href="/home-repair?relationship=BUYING&loanType=CONVENTIONAL">Conventional buyer</a>
-                    <a href="/home-repair?relationship=BUYING&loanType=FHA">FHA buyer</a>
+                    <a href="/home-repair">Open the intake tool</a>
+                    <a href="/for-buyer-agents">For buyer-agent teams</a>
+                    <a href="/sample-seller-credit-request-after-home-inspection">Sample packet</a>
+                    <a href="/home-repair/about">About the product</a>
+                    <a href="/home-repair/methodology">Methodology</a>
+                    <a href="/home-repair/data-sources">Data sources</a>
                 </div>
             </div>
 
             <div class="footer-panel">
-                <h4>Loan path</h4>
+                <h4>Trust & legal</h4>
                 <div class="footer-links-stack">
-                    <a href="/home-repair?relationship=BUYING&loanType=VA">VA buyer</a>
-                    <a href="/home-repair?relationship=BUYING&loanType=CASH">Cash offer</a>
-                    <a href="/home-repair?relationship=BUYING&loanType=INVESTOR">Investor offer</a>
-                    <a href="/home-repair?relationship=BUYING">Ready-to-send request</a>
+                    <a href="/home-repair/disclaimer">Disclaimer</a>
+                    <a href="/home-repair/editorial-policy">Editorial policy</a>
+                    <a href="/privacy-policy">Privacy policy</a>
+                    <a href="/terms-of-service">Terms of service</a>
                 </div>
             </div>
         </div>
 
         <div class="footer-divider">
             <p class="footer-meta">
-                Estimates are informational only and based on regional averages. Actual contractor pricing varies by layout, condition, and market timing. LifeVerdict does not provide engineering, legal, or contractor services.
+                Packet language and ask ranges are informational only. Actual contractor pricing, underwriting treatment, and negotiation outcomes vary by property, market, contract, jurisdiction, and deal terms. LifeVerdict does not provide engineering, legal, lending, brokerage, or contractor services.
             </p>
-            <p class="footer-meta" style="margin-top: 10px;">
-                Legal and support:
-                <a href="/privacy-policy">Privacy policy</a>,
-                <a href="/terms-of-service">Terms of Service</a>,
-                <a href="/home-repair/disclaimer">Disclaimer</a>
-            </p>
-            <p class="footer-meta" style="margin-top: 14px; opacity: 0.7;">(c) 2026 LifeVerdict. All rights reserved.</p>
+            <p class="footer-meta footer-meta-soft">(c) 2026 LifeVerdict. All rights reserved.</p>
         </div>
     </div>
 </footer>

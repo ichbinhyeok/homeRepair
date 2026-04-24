@@ -23,10 +23,17 @@ spring:
     resources:
       static-locations: classpath:/static/
       add-mappings: true
+  servlet:
+    multipart:
+      max-file-size: 12MB
+      max-request-size: 12MB
 
 # Application-specific configuration
 app:
   base-url: https://lifeverdict.com
+  acquisition:
+    default-surface: letter
+    telemetry-path: data/acquisition-events.csv
   seo:
     default-image: /images/og-default.png
     sitemap-path: /sitemap.xml

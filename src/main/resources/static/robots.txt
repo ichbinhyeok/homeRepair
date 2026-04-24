@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+# Retired legacy archive URLs stay reachable so crawlers can receive the 410 response.
 Disallow: /home-repair/api/
 Disallow: /home-repair/track
 

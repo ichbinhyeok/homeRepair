@@ -17,15 +17,14 @@ class RiskHubStatusTest {
     private MockMvc mockMvc;
 
     @Test
-    void validRiskSlugReturnsOk() throws Exception {
+    void validRiskSlugReturnsGoneBecauseArchiveIsRetired() throws Exception {
         mockMvc.perform(get("/home-repair/risks/knob-and-tube-wiring"))
-                .andExpect(status().isOk());
+                .andExpect(status().isGone());
     }
 
     @Test
-    void invalidRiskSlugReturnsNotFound() throws Exception {
+    void invalidRiskSlugAlsoReturnsGoneInsideRetiredArchive() throws Exception {
         mockMvc.perform(get("/home-repair/risks/not-a-real-risk"))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isGone());
     }
 }
-

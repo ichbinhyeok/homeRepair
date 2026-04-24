@@ -1,89 +1,164 @@
-# 🦅 SERVICE OVERVIEW: LifeVerdict (Home Repair Engine)
+# SERVICE OVERVIEW: LifeVerdict v2
 
-> **⚠️ ATTENTION AI AGENTS:**
-> This document serves as the **SINGLE SOURCE OF TRUTH** for the project's vision, architecture, and strategic intent. Read this before modifying core logic or SEO strategies.
+> Source of truth for the current product direction. Read this before changing product, routing, SEO, or pSEO behavior.
 
----
+## 1. Current Product Thesis
 
-## 1. VISION & PHILOSOPHY (Why this exists)
+LifeVerdict v2 is an **inspection ask pre-send check** for buyer agents and buyers under contract.
 
-### The Problem: Information Asymmetry
-Legacy home repair calculators are fundamentally broken. They rely on generic square footage multipliers (e.g., "$150 per sqft") that ignore the three critical dimensions of risk:
-1.  **Era (Year Built):** A 1920s Victorian has different failure points (Knob & Tube, Lead) than a 1990s Spec House (Polybutylene, Builder Grade).
-2.  **Geography (Metro):** Repair costs in **San Francisco** are ~3x higher than in **Memphis**.
-3.  **Specific Defects:** "Hidden Killers" like FPE Panels, Aluminum Wiring, or Chinese Drywall are not "renovation costs"—they are **bankruptcy risks**.
+The core job is:
 
-### The Solution: "The Verdict"
-We are not building a calculator. We are building a **Forensic Risk Engine**.
-*   **Actuarial Approach:** We treat homes like financial assets with specific risk profiles.
-*   **The Verdict:** Instead of just a price tag, we output a **"Verdict Tier"** (e.g., *Money Pit*, *Manageable*, *Safe Bet*) based on probabilistic modeling.
-*   **Target Audience:** Homebuyers of "Fixer-Uppers", Investors, and homeowners needing objective data to negotiate.
+1. A buyer receives inspection findings during an active transaction.
+2. The buyer or agent drafts a repair request, seller-credit ask, objection, counter, or fallback.
+3. LifeVerdict checks the request before it is sent: what to ask for, what to cut, what evidence is missing, and what fallback to use if the seller pushes back.
+4. LifeVerdict produces a copy-ready packet with sendability verdict, revised ask, cut list, caveats, fallback, and agent-ready wording.
 
----
+The product should not present itself as a broad home-repair cost directory. The prior pSEO experiment proved that city/era/component pages can create generic repair-cost impressions without establishing buyer-side inspection negotiation intent.
 
-## 2. CORE ARCHITECTURE
+## 2. Version History
 
-### Tech Stack
-*   **Backend:** Java 21, Spring Boot 3.5.x
-*   **Template Engine:** **JTE (Java Template Engine)** via `gg.jte`.
-    *   *Why JTE?* Selected for extreme performance (compiled to Java classes) and type safety, crucial for pSEO at scale.
-*   **Database:** H2 (In-memory for Dev/MVP), JPA/Hibernate.
-*   **Build System:** Gradle (Kotlin DSL).
+### v1: broad repair-cost pSEO
 
-### Key Components
-1.  **`VerdictEngineService`**: The brain. Takes `UserContext` (Zip, Era, Condition) and calculates the financial verdict.
-2.  **`HomeRepairController`**: The consolidated web controller. Handles:
-    *   Main UI (`/`)
-    *   Verdict Generation (`/verdict`)
-    *   Static Pages (`/about`, `/methodology`)
-    *   *merged from legacy PageController to avoid mapping conflicts.*
-3.  **`StaticPageGeneratorService`**: The pSEO factory. Generates thousands of static HTML files for SEO.
-    *   Uses `StateHubPage` DTO for type-safe template rendering.
+v1 tried to use a large city/era/component repair-cost surface to discover traffic, then narrow into winners later.
 
----
+It failed for five reasons:
 
-## 3. SEO STRATEGY (Programmatic SEO)
+- The visible surface looked like repair-cost education, while the useful backend logic was closer to buyer-side transaction decision support.
+- Generic repair-cost searches were not money-nearest enough; many visitors were browsing, not preparing a live ask.
+- The product identity became broad and weak. Google had little reason to treat LifeVerdict as a unique tool.
+- The tool was hidden behind informational surface area, so users did not immediately understand what action to take.
+- Search Console improvements mostly reflected legacy repair-cost visibility, not proof of buyer-agent workflow demand.
 
-**Strategy Codename: "Seed & Sprout"**
+### v2: inspection ask pre-send check
 
-We rejected the "Mass Spam" approach (generating 30k pages instantly) to avoid the Google Sandbox.
+v2 narrows the wedge to one transaction moment:
 
-### Phase 1: The Seed (Current Status: ✅ DONE)
-*   **What:** Generated **702** High-Quality "Level 1" pages (117 Metros × 6 Eras).
-*   **Format:** Physical Static HTML Files (`/verdicts/{city}/{era}.html`).
-*   **Hubs:** Created **40** State Hub Pages (`/verdicts/states/tx.html`) to structure internal linking.
-*   **Goal:** Establish trusted "Authority Anchors" in the index.
+`before the inspection request is sent`
 
-### Phase 2: The Sprout (Next Step)
-*   **What:** The ~28,000 "Level 2" pages (Specific Risks like "Roofing in Abilene 1950s").
-*   **Format:** **Dynamic Rendering**.
-    *   Instead of creating 28k files, we will serve these via a Controller endpoint that catches the URL pattern and renders the JTE template on-the-fly.
-*   **Goal:** Efficiently scale long-tail keywords without "Empty Calorie" file bloat.
+The acquisition surface can be broader than one keyword, but every surface must map back to the same job:
 
----
+`check what to ask, what to cut, and what fallback to use`
 
-## 4. CRITICAL IMPLEMENTATION DETAILS
+See `docs/PRODUCT_EVOLUTION.md` for the full v1-to-v2 narrative.
 
-### 1. JTE Template Safety
-*   **DTOs are Mandatory:** Do NOT pass raw `Map<String, Object>` to JTE templates. It causes compilation errors and runtime risks.
-*   **Use `StateHubPage.java`** (and similar DTOs) ensuring fields are `@Data` and `@AllArgsConstructor`.
+## 3. Product Boundaries
 
-### 2. Controller Routing
-*   All pSEO pages are routed through `HomeRepairController` or served statically from `src/main/resources/static`.
-*   **Do not create new Controllers** for static content unless absolutely necessary; we recently refactored to specific consolidation.
+Primary workflow:
 
-### 3. Data Integrity
-*   **RSMeans & BLS Data:** Hardcoded/Configured in `VerdictEngineService`.
-*   **Era Definitions:** STRICTLY defined enums (`PRE_1950`, `1950_1970`, etc.). Do not use arbitrary date ranges.
+- Buyer under contract.
+- Inspection response, objection, option, or resolution window is active.
+- Output must be something a buyer agent can review, copy, print, or send.
 
----
+Primary customer:
 
-## 5. AGENT INSTRUCTIONS (How to work on this repo)
+- Buyer agents and 2-10 seat buyer-agent teams.
 
-1.  **Check Previous Context:** Always look at `.agent/strategy/` to understand the current strategic phase.
-2.  **Run with Gradle:** Use `./gradlew bootRun` to start.
-3.  **Process Management:** If build hangs, it's likely a daemon lock. Use `taskkill /F /IM java.exe` (Windows) to clear.
-4.  **Verification:** When modifying pSEO logic, ALWAYS verify generation by checking `src/main/resources/static/home-repair/verdicts` before committing.
+Secondary customer:
 
----
-*Document Last Updated: 2026-02-06*
+- Buyers under contract who need a stronger first draft before using their agent workflow.
+
+Useful context:
+
+- Report evidence.
+- Loan posture.
+- Quote support.
+- Deadline and deal stage.
+- Contract/form path.
+- Local market and home-era context.
+
+Non-goals:
+
+- Broad renovation budgeting.
+- Generic city repair-cost directory.
+- Component-by-component contractor lead-gen pages.
+- Inspector report-writing suite.
+- Indexed personal result pages.
+- Paywall before product pull is proven.
+
+## 4. Architecture
+
+- Backend: Java 21, Spring Boot.
+- Templates: JTE.
+- Main controller: `HomeRepairController`.
+- Main service: `InspectionResponseService`.
+- Evidence service: `InspectionDocumentService`.
+- Main tool route: `/home-repair`.
+- Result route: `/home-repair/result/{uuid}` with `noindex`.
+- Acquisition surfaces: `AcquisitionSurface` enum plus `pages/hub.jte`.
+- Commercial/trust proof: `/for-buyer-agents`, `/sample-seller-credit-request-after-home-inspection`, `/fha-va-inspection-repairs-and-seller-credit`.
+
+v2 intentionally removes the old broad static verdict page system from the public surface. Do not reintroduce city/era/component pages unless a specific page maps to a live inspection-response transaction decision.
+
+## 5. SEO Rules
+
+SEO supports the tool. SEO is not the product.
+
+Indexable surface should stay narrow around transaction-decision intent:
+
+- `/`
+- `/home-repair`
+- `/inspection-response-letter`
+- `/seller-credit-after-home-inspection`
+- `/repair-request-vs-seller-credit-after-inspection`
+- `/what-to-ask-for-after-home-inspection`
+- `/repair-request-after-home-inspection`
+- `/inspection-objection-after-home-inspection`
+- `/inspection-contingency-deadline-after-home-inspection`
+- high-intent counter, financing, form/deadline, and system-specific ask pages
+
+Do not expand pSEO again unless the query represents a real transaction decision, such as:
+
+- `repair request after home inspection`
+- `seller credit after inspection`
+- `what to ask for after home inspection`
+- `seller refused repairs after inspection`
+- `inspection objection notice`
+- `FHA inspection repairs seller credit`
+
+If a page attracts generic component-cost queries but does not create tool opens, packets, copy/print actions, or buyer-agent intent, treat it as v1 drift.
+
+## 6. Success Metrics
+
+v2 should be judged by product pull before monetization.
+
+Primary product metrics:
+
+- Inspection findings submitted.
+- Packet generated.
+- Weak items cut before send.
+- Ask summary copied.
+- Agent message copied.
+- Packet printed.
+- Feedback marked useful.
+- Second file run.
+- Buyer-agent team setup requested.
+
+Search metrics:
+
+- Impressions by v2 surface URL.
+- Clicks by v2 surface URL.
+- CTR by v2 surface URL.
+- Query mix moving from repair-cost browsing toward inspection-response negotiation.
+- Tool open after landing.
+- Packet generated after tool open.
+
+Kill or re-pivot if users do not copy, print, reuse, or request team setup after generating packets. The artifact is valuable only if it helps the user avoid an overbroad request and move to the next message faster.
+
+## 7. Monetization Rule
+
+Stay in validation mode until product pull is visible.
+
+- Copy and print actions remain free.
+- Email capture remains optional, not an unlock gate.
+- Affiliate or contractor-lead CTAs stay off the primary buyer flow.
+- Monetization starts only after repeated packet actions prove the artifact is useful.
+
+Likely paid layers after validation:
+
+- Broker-ready export.
+- Team templates.
+- Saved case libraries.
+- Repeated desk review.
+- Small-team workflow support.
+
+See `docs/PIVOT_PLAN.md` for operating gates and `docs/RELEASE_CANDIDATE_REVIEW.md` for current release status.

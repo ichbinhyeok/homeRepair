@@ -1,5 +1,6 @@
 package com.livingcostcheck.home_repair.seo;
 
+import com.livingcostcheck.home_repair.web.AcquisitionSurface;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -9,28 +10,19 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
- * Generates Strategic Seed Sitemap for pSEO
+ * Generates the current public sitemap for the tool-first product surface.
  */
 @Slf4j
 @Service
 public class SitemapGenerator {
 
     private static final String BASE_URL = "https://lifeverdict.com";
-    private static final Set<String> INDEXABLE_URLS = Set.of(
-            BASE_URL + "/home-repair/verdicts/states/tx.html",
-            BASE_URL + "/home-repair/verdicts/states/fl.html",
-            BASE_URL + "/home-repair/verdicts/pittsburgh-pa/pre-1950.html",
-            BASE_URL + "/home-repair/verdicts/tulsa-ok/pre-1950.html",
-            BASE_URL + "/home-repair/verdicts/little-rock-north-little-rock-ar/1950-1970.html",
-            BASE_URL + "/home-repair/verdicts/chicago-naperville-il/1950-1970.html");
 
     public int generateSitemap(String outputPath, List<String> extraUrls) throws IOException {
-        log.info("Generating Strategic Seed Sitemap...");
+        log.info("Generating tool-only sitemap...");
 
         StringBuilder xml = new StringBuilder();
         xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
@@ -39,31 +31,19 @@ public class SitemapGenerator {
         String lastMod = LocalDate.now().format(DateTimeFormatter.ISO_DATE);
         int urlCount = 0;
 
-        // 1. Core Pages (Seed)
-        xml.append(buildUrlEntry(BASE_URL + "/", lastMod, "daily", "1.0"));
-        xml.append(buildUrlEntry(BASE_URL + "/home-repair", lastMod, "weekly", "0.9"));
-        urlCount += 2;
-
-        // 2. Generated Pages (Winner-only)
-        if (extraUrls != null) {
-            Set<String> uniqueUrls = new HashSet<>(extraUrls); // Deduplicate just in case
-            for (String url : uniqueUrls) {
-                if (!INDEXABLE_URLS.contains(url)) {
-                    continue;
-                }
-                // Determine priority based on type
-                String priority = "0.8";
-                String freq = "monthly";
-
-                if (url.contains("/states/")) {
-                    priority = "0.9";
-                    freq = "weekly";
-                }
-
-                xml.append(buildUrlEntry(url, lastMod, freq, priority));
-                urlCount++;
-            }
+        for (AcquisitionSurface surface : AcquisitionSurface.indexableSurfaces()) {
+            xml.append(buildUrlEntry(BASE_URL + surface.path(), lastMod, "weekly", "0.8"));
+            urlCount++;
         }
+        xml.append(buildUrlEntry(BASE_URL + "/home-repair", lastMod, "weekly", "1.0"));
+        urlCount++;
+        xml.append(buildUrlEntry(BASE_URL + "/for-buyer-agents", lastMod, "weekly", "0.7"));
+        urlCount++;
+        xml.append(buildUrlEntry(BASE_URL + "/sample-seller-credit-request-after-home-inspection", lastMod, "weekly",
+                "0.7"));
+        urlCount++;
+        xml.append(buildUrlEntry(BASE_URL + "/fha-va-inspection-repairs-and-seller-credit", lastMod, "weekly", "0.7"));
+        urlCount++;
 
         xml.append("</urlset>");
 
@@ -71,7 +51,7 @@ public class SitemapGenerator {
         Files.createDirectories(path.getParent());
         Files.writeString(path, xml.toString());
 
-        log.info("Sitemap generated successfully: {} URLs (Seed Strategy applied)", urlCount);
+        log.info("Sitemap generated successfully: {} URLs (tool surface only)", urlCount);
         return urlCount;
     }
 

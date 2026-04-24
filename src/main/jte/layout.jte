@@ -1,12 +1,12 @@
 @import gg.jte.Content
 @param Content content
-@param String title = "LifeVerdict | Property Intelligence"
+@param String title = "LifeVerdict | Inspection Response Copilot"
 @param String description = null
 @param Content headContent = null
 @param boolean showHeader = true
 
 <!DOCTYPE html>
-<html lang="en" class="bg-gray-100">
+<html lang="en">
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-JV6YLYZHN8"></script>
@@ -20,36 +20,29 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Mono:wght@500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @if(description != null)
         <meta name="description" content="${description}">
+        <meta property="og:description" content="${description}">
+        <meta name="twitter:description" content="${description}">
     @endif
+    <meta property="og:title" content="${title}">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="${title}">
+    <meta name="theme-color" content="#174a5a">
     <title>${title}</title>
     @if(headContent != null)
         ${headContent}
     @endif
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="stylesheet" href="/css/styles.css">
-    <!-- Tailwind for utility classes within the app -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Only keep critical overrides, move rest to styles.css */
-        body { font-family: 'Inter', sans-serif; }
-        /* Ensure main content doesn't hit header/footer directly */
-        .app-container {
-            width: 100%;
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 0 20px;
-            flex: 1; /* Pushes footer down */
-        }
-    </style>
 </head>
-<body class="antialiased min-h-screen">
+<body class="antialiased">
 
     @if(showHeader)
         @template.layout._header()

@@ -3,11 +3,8 @@ package com.livingcostcheck.home_repair.web;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType;
-import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
-import com.microsoft.playwright.options.SelectOption;
-import com.microsoft.playwright.options.WaitForSelectorState;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -35,7 +32,6 @@ class PlaywrightPersonaE2ETest {
     @LocalServerPort
     private int port;
 
-    private Browser.NewContextOptions contextOptions;
     private BrowserContext context;
     private Page page;
 
@@ -57,9 +53,7 @@ class PlaywrightPersonaE2ETest {
 
     @BeforeEach
     void createContext() {
-        contextOptions = new Browser.NewContextOptions()
-                .setViewportSize(1440, 900);
-        context = browser.newContext(contextOptions);
+        context = browser.newContext(new Browser.NewContextOptions().setViewportSize(1440, 900));
         page = context.newPage();
     }
 
@@ -71,108 +65,118 @@ class PlaywrightPersonaE2ETest {
     }
 
     @Test
-    void buyerPersonaCanReachVerdictWithoutInternalTokens() throws IOException {
-        completeStepOne("BUYING", "1980_1995");
+    void rootRedirectsToInspectionResponseLetterLanding() throws IOException {
+        page.navigate(url("/"));
+        page.waitForURL("**/inspection-response-letter");
 
-        page.fill("input[name='budget']", "68000");
-        page.fill("input[name='sqft']", "2100");
+        String bodyText = page.locator("body").innerText();
+        String normalizedBodyText = bodyText.toLowerCase();
+
+        assertTrue(normalizedBodyText.contains("need an inspection response letter after a home inspection?"));
+        assertTrue(normalizedBodyText.contains("check the letter free"));
+        assertTrue(page.locator("a[href='/home-repair?entry=letter#packet-builder']").first().isVisible());
+
+        saveScreenshot("inspection-response-letter-landing.png");
+    }
+
+    @Test
+    void sellerCreditSurfaceFunnelsIntoSamePacketTool() throws IOException {
+        page.navigate(url("/seller-credit-after-home-inspection"));
+
+        String bodyText = page.locator("body").innerText();
+        String normalizedBodyText = bodyText.toLowerCase();
+
+        assertTrue(normalizedBodyText.contains("seller credit request"));
+        assertTrue(normalizedBodyText.contains("check credit ask free"));
+        assertTrue(page.locator("a[href='/home-repair?entry=credit#packet-builder']").first().isVisible());
+
+        saveScreenshot("seller-credit-surface.png");
+    }
+
+    @Test
+    void landingIsToolFirstInsteadOfDirectoryFirst() throws IOException {
+        page.navigate(url("/home-repair"));
+        String bodyText = page.locator("body").innerText();
+        String normalizedBodyText = bodyText.toLowerCase();
+
+        assertTrue(normalizedBodyText.contains("pre-send inspection request check"));
+        assertTrue(normalizedBodyText.contains("free during validation"));
+        assertTrue(normalizedBodyText.contains("paste the request before you send it."));
+        assertTrue(normalizedBodyText.contains("pre-send preview"));
+        assertTrue(normalizedBodyText.contains("response letter"));
+        assertTrue(normalizedBodyText.contains("seller credit"));
+        assertTrue(normalizedBodyText.contains("inspection objection"));
+        assertTrue(normalizedBodyText.contains("check my ask free"));
+        assertTrue(page.locator("form[action='/home-repair/verdict']").first().isVisible());
+        assertTrue(page.locator("a[href='/inspection-response-letter']").first().isVisible());
+        assertTrue(page.locator("a[href='/repair-request-after-home-inspection']").first().isVisible());
+        assertFalse(bodyText.contains("Start planner"));
+
+        saveScreenshot("tool-first-landing.png");
+    }
+
+    @Test
+    void buyerCanGeneratePacketDirectlyFromInspectionFindings() throws IOException {
+        page.navigate(url("/home-repair"));
+
+        page.locator("summary:has-text('Optional case-file details')").click();
+        page.locator("input[name='caseLabel']").fill("Maple Street response window");
+        page.locator("input[name='propertyAddress']").fill("123 Maple St, Atlanta, GA");
+        page.locator("input[name='clientName']").fill("Mina Kim");
+        page.locator("input[name='agentName']").fill("Alex Park");
+        page.locator("textarea[name='inspectionReportText']").fill("""
+                 Active roof leak above the garage
+                 Federal Pacific panel flagged by inspector
+                 Minor paint scuffs in hallway
+                 """);
+        page.locator("summary:has-text('Optional deal settings')").click();
         page.selectOption("select[name='loanType']", "FHA");
-        page.locator("input[name='inspectionFinding']").nth(0).fill("Active roof leak above the garage");
-        page.locator("input[name='inspectionFinding']").nth(1).fill("Federal Pacific panel flagged by inspector");
         page.selectOption("select[name='quoteSupport']", "HAS_ONE");
         page.selectOption("select[name='closingWindow']", "SEVEN_TO_TWENTY_ONE_DAYS");
-        page.locator("input[name='condition'][value='SEVERE']")
-                .check(new Locator.CheckOptions().setForce(true));
+        page.locator("summary:has-text('Optional local property context')").click();
+        page.locator("select[name='metroCode']").selectOption("ATLANTA_SANDY_SPRINGS_GA");
+        page.locator("select[name='era']").selectOption("1980_1995");
         page.check("input[name='isFpePanel']");
-        page.check("input[name='isPolyB']");
         page.check("input[name='history'][value='ROOFING']");
-        page.check("input[name='history'][value='HVAC']");
         page.locator("form[action='/home-repair/verdict'] button[type='submit']").click();
 
         page.waitForURL("**/home-repair/result/**");
         String bodyText = page.locator("body").innerText();
+        String normalizedBodyText = bodyText.toLowerCase();
 
-        assertTrue(bodyText.contains("Ready-To-Send Seller Credit Packet"));
+        assertTrue(normalizedBodyText.contains("inspection ask pre-send check"));
         assertTrue(bodyText.contains("FHA financing"));
-        assertTrue(bodyText.contains("Keep this send-today packet tight."));
         assertTrue(bodyText.contains("Active roof leak above the garage"));
+        assertTrue(bodyText.contains("Federal Pacific panel flagged by inspector"));
+        assertTrue(bodyText.contains("Maple Street response window"));
+        assertTrue(bodyText.contains("123 Maple St, Atlanta, GA"));
+        assertTrue(bodyText.contains("Mina Kim"));
+        assertTrue(bodyText.contains("Alex Park"));
+        assertTrue(bodyText.contains("Cut before sending"));
+        assertTrue(bodyText.contains("lender-visible"));
         assertFalse(bodyText.contains("12-Month Security Calendar"));
-        assertFalse(bodyText.contains("Component Health"));
-        assertFalse(bodyText.contains("Share this analysis."));
         assertNoInternalLeak(bodyText);
 
-        saveScreenshot("buyer-persona-result.png");
+        saveScreenshot("buyer-direct-packet-result.png");
     }
 
     @Test
-    void ownerPersonaOnMobileCanRecalculateFromResultPage() throws IOException {
-        recreateMobileContext();
-        completeStepOne("LIVING", "2010_PRESENT");
-
-        page.fill("input[name='budget']", "54000");
-        page.fill("input[name='sqft']", "1600");
-        page.locator("input[name='condition'][value='MINOR']")
-                .check(new Locator.CheckOptions().setForce(true));
-        page.locator("summary:has-text('Tighten the send-today packet')").click();
-        page.locator("label:has(input[name='roofType'][value='METAL'])").click();
-        page.check("input[name='history'][value='PLUMBING']");
-        page.locator("form[action='/home-repair/verdict'] button[type='submit']").click();
-
-        page.waitForURL("**/home-repair/result/**");
-        assertTrue(page.locator("text=Capital Expenditure Budget").first().isVisible());
-
-        page.selectOption("form[action='/home-repair/verdict'] select[name='bathrooms']", "4");
-        page.selectOption("form[action='/home-repair/verdict'] select[name='stories']", "3");
-        page.locator("button:has-text('Recalculate')").click();
-        page.waitForURL("**/home-repair/result/**");
-
-        String bodyText = page.locator("body").innerText();
-        assertNoInternalLeak(bodyText);
-
-        saveScreenshot("owner-mobile-recalculate.png");
-    }
-
-    @Test
-    void investorPersonaCanCompleteFlowWithoutBuyerOnlyUi() throws IOException {
-        completeStepOne("INVESTING", "1970_1980");
-
-        page.fill("input[name='budget']", "72000");
-        page.fill("input[name='sqft']", "1850");
-        page.locator("input[name='condition'][value='SEVERE']")
-                .check(new Locator.CheckOptions().setForce(true));
-        page.check("input[name='history'][value='ELECTRICAL']");
-        page.check("input[name='history'][value='PLUMBING']");
+    void buyerCanUseFreePacketActionsWithoutLeadGate() throws IOException {
+        page.navigate(url("/home-repair"));
+        page.locator("textarea[name='inspectionReportText']").fill("Main sewer line shows active backup risk");
         page.locator("form[action='/home-repair/verdict'] button[type='submit']").click();
 
         page.waitForURL("**/home-repair/result/**");
         String bodyText = page.locator("body").innerText();
-        assertFalse(bodyText.contains("Vendor-Agnostic Forensic Audit"));
-        assertTrue(bodyText.contains("View Verified Plan"));
-        assertNoInternalLeak(bodyText);
+        assertTrue(bodyText.contains("Validation mode: no payment or email required."));
+        assertTrue(bodyText.contains("Broad U.S. baseline"));
+        assertTrue(bodyText.contains("Print Pre-Send Check"));
+        assertFalse(page.locator("#report-unlock-form").isVisible());
 
-        saveScreenshot("investor-persona-result.png");
-    }
+        page.click("#validation-feedback-form button[type='submit']");
+        assertTrue(page.locator("#packet-action-status").innerText().contains("Marked useful."));
 
-    @Test
-    void buyerPersonaCanUnlockLeadCapturePanel() throws IOException {
-        completeStepOne("BUYING", "1995_2010");
-
-        page.fill("input[name='budget']", "58000");
-        page.fill("input[name='sqft']", "1950");
-        page.locator("input[name='condition'][value='MINOR']")
-                .check(new Locator.CheckOptions().setForce(true));
-        page.locator("form[action='/home-repair/verdict'] button[type='submit']").click();
-
-        page.waitForURL("**/home-repair/result/**");
-        page.fill("#report-unlock-form input[name='email']", "persona-beta@example.com");
-        page.click("#report-unlock-form button[type='submit']");
-
-        Locator unlocked = page.locator("#unlocked-actions");
-        unlocked.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-        assertTrue(unlocked.innerText().contains("Saved."));
-        assertTrue(unlocked.innerText().contains("Print Packet"));
-
-        saveScreenshot("buyer-unlock-flow.png");
+        saveScreenshot("buyer-validation-actions.png");
     }
 
     @Test
@@ -185,34 +189,17 @@ class PlaywrightPersonaE2ETest {
 
     @Test
     void riskDetailHtmlVariantReturnsGoneInBrowser() throws IOException {
-        var response = page.navigate(url("/home-repair/verdicts/atlanta-sandy-springs-ga/1980-1995/hvac-heat-pump-central.html.html"));
+        var response = page.navigate(url(
+                "/home-repair/verdicts/atlanta-sandy-springs-ga/1980-1995/hvac-heat-pump-central.html.html"));
 
         assertTrue(response != null);
         assertTrue(response.status() == 410);
-        assertTrue(page.url().endsWith("/home-repair/verdicts/atlanta-sandy-springs-ga/1980-1995/hvac-heat-pump-central.html.html"));
-        assertTrue(page.locator("body").innerText().contains("This URL is no longer part of the site."));
+        assertTrue(page.url()
+                .endsWith("/home-repair/verdicts/atlanta-sandy-springs-ga/1980-1995/hvac-heat-pump-central.html.html"));
+        assertTrue(page.locator("body").innerText().contains("This archive page has been retired."));
         assertTrue(page.locator("a[href='/home-repair']").first().isVisible());
 
         saveScreenshot("risk-detail-gone.png");
-    }
-
-    private void completeStepOne(String relationship, String era) {
-        page.navigate(url("/home-repair"));
-        page.locator("select[name='metroCode']").selectOption(new SelectOption().setIndex(0));
-        page.locator("select[name='era']").selectOption(era);
-        page.locator("input[name='relationship'][value='" + relationship + "']")
-                .check(new Locator.CheckOptions().setForce(true));
-        page.locator("form[action='/home-repair/step-2'] button[type='submit']").click();
-        page.waitForURL("**/home-repair/step-2");
-        assertTrue(page.url().contains("/home-repair/step-2"));
-    }
-
-    private void recreateMobileContext() {
-        if (context != null) {
-            context.close();
-        }
-        context = browser.newContext(new Browser.NewContextOptions().setViewportSize(390, 844));
-        page = context.newPage();
     }
 
     private void saveScreenshot(String filename) throws IOException {

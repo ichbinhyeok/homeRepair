@@ -19,9 +19,10 @@ class RedirectFilterTest {
     void shouldRedirectRiskHtmlToExtensionlessCanonical() throws Exception {
         FilterResult result = execute("/home-repair/verdicts/erie-pa/1950-1970/water-heater-tankless-gas.html", null);
 
-        assertEquals(301, result.statusCode);
-        assertEquals("/home-repair/verdicts/erie-pa/1950-1970/water-heater-tankless-gas", result.location);
+        assertEquals(410, result.statusCode);
+        assertEquals(null, result.location);
         assertFalse(result.chainInvoked);
+        assertTrue(result.body.contains("archive page has been retired"));
     }
 
     @Test
@@ -33,16 +34,16 @@ class RedirectFilterTest {
         assertEquals(410, result.statusCode);
         assertEquals(null, result.location);
         assertFalse(result.chainInvoked);
-        assertTrue(result.body.contains("This URL is no longer part of the site."));
-        assertTrue(result.body.contains("Open seller credit planner"));
+        assertTrue(result.body.contains("archive page has been retired"));
+        assertTrue(result.body.contains("Open inspection response tool"));
     }
 
     @Test
-    void shouldRedirectL1WithoutExtensionToHtmlCanonical() throws Exception {
+    void shouldRetireL1WithoutExtension() throws Exception {
         FilterResult result = execute("/home-repair/verdicts/miami-ft-lauderdale-fl/1995-2010", null);
 
-        assertEquals(301, result.statusCode);
-        assertEquals("/home-repair/verdicts/miami-ft-lauderdale-fl/1995-2010.html", result.location);
+        assertEquals(410, result.statusCode);
+        assertEquals(null, result.location);
         assertFalse(result.chainInvoked);
     }
 
@@ -53,7 +54,7 @@ class RedirectFilterTest {
         assertEquals(410, result.statusCode);
         assertEquals(null, result.location);
         assertFalse(result.chainInvoked);
-        assertTrue(result.body.contains("410 Gone"));
+        assertTrue(result.body.contains("archive page has been retired"));
     }
 
     @Test
@@ -63,34 +64,45 @@ class RedirectFilterTest {
         assertEquals(410, result.statusCode);
         assertEquals(null, result.location);
         assertFalse(result.chainInvoked);
-        assertTrue(result.body.contains("Browse markets"));
+        assertTrue(result.body.contains("Read methodology"));
     }
 
     @Test
-    void shouldRedirectStatePageWithoutExtensionToHtmlCanonical() throws Exception {
+    void shouldRetireStatePageWithoutExtension() throws Exception {
         FilterResult result = execute("/home-repair/verdicts/states/ca", null);
 
-        assertEquals(301, result.statusCode);
-        assertEquals("/home-repair/verdicts/states/ca.html", result.location);
+        assertEquals(410, result.statusCode);
+        assertEquals(null, result.location);
         assertFalse(result.chainInvoked);
     }
 
     @Test
-    void shouldPassThroughCanonicalRiskUrl() throws Exception {
+    void shouldRetireCanonicalRiskUrl() throws Exception {
         FilterResult result = execute("/home-repair/verdicts/erie-pa/1950-1970/water-heater-tankless-gas", null);
 
-        assertEquals(200, result.statusCode);
+        assertEquals(410, result.statusCode);
         assertEquals(null, result.location);
-        assertTrue(result.chainInvoked);
+        assertFalse(result.chainInvoked);
     }
 
     @Test
-    void shouldPassThroughCanonicalL1Url() throws Exception {
+    void shouldRetireCanonicalL1Url() throws Exception {
         FilterResult result = execute("/home-repair/verdicts/miami-ft-lauderdale-fl/1995-2010.html", null);
 
-        assertEquals(200, result.statusCode);
+        assertEquals(410, result.statusCode);
         assertEquals(null, result.location);
-        assertTrue(result.chainInvoked);
+        assertFalse(result.chainInvoked);
+        assertEquals("noindex,noarchive", result.robotsHeader);
+    }
+
+    @Test
+    void shouldRetireRiskArchivePath() throws Exception {
+        FilterResult result = execute("/home-repair/risks/fpe-electrical-panel", null);
+
+        assertEquals(410, result.statusCode);
+        assertEquals(null, result.location);
+        assertFalse(result.chainInvoked);
+        assertEquals("noindex,noarchive", result.robotsHeader);
     }
 
     private FilterResult execute(String uri, String queryString) throws Exception {
@@ -104,18 +116,33 @@ class RedirectFilterTest {
         FilterChain chain = (req, res) -> chainInvoked.set(true);
 
         filter.doFilter(request, response, chain);
-        return new FilterResult(response.getStatus(), response.getHeader("Location"), chainInvoked.get(), response.getContentAsString());
+        return new FilterResult(
+                response.getStatus(),
+                response.getHeader("Location"),
+                response.getHeader("X-Robots-Tag"),
+                response.getHeader("Link"),
+                chainInvoked.get(),
+                response.getContentAsString());
     }
 
     private static class FilterResult {
         private final int statusCode;
         private final String location;
+        private final String robotsHeader;
+        private final String linkHeader;
         private final boolean chainInvoked;
         private final String body;
 
-        private FilterResult(int statusCode, String location, boolean chainInvoked, String body) {
+        private FilterResult(int statusCode,
+                String location,
+                String robotsHeader,
+                String linkHeader,
+                boolean chainInvoked,
+                String body) {
             this.statusCode = statusCode;
             this.location = location;
+            this.robotsHeader = robotsHeader;
+            this.linkHeader = linkHeader;
             this.chainInvoked = chainInvoked;
             this.body = body;
         }

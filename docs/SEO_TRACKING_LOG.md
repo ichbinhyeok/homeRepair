@@ -3,15 +3,42 @@
 ## Purpose
 Track Search Console outcomes after SEO/code changes so we can decide whether to wait, iterate metadata/content, or fix technical issues.
 
+As of the v2 pivot, this log also separates old v1 repair-cost signals from new v2 inspection ask pre-send check signals.
+
 ## Update Cadence
 - Check every 7 days.
 - Use fixed comparison windows: last 28 days vs previous 28 days.
 - Record absolute dates in every entry.
 
 ## KPI Guardrails
-- Primary KPI: CTR on `/home-repair*`.
-- Secondary KPI: impressions and average position.
-- Technical KPI: impressions on malformed URL variants (for example `.html.html`) should trend down after canonical/410 rules.
+- Primary v2 product KPI: packet actions after SEO landing, especially packet generation, copy, print, useful feedback, and buyer-agent setup intent.
+- Primary v2 SEO KPI: query mix and CTR on tool-first transaction surfaces.
+- Secondary SEO KPI: impressions and average position by v2 surface URL.
+- Technical KPI: retired legacy URL impressions and malformed URL variants should trend down after sitemap, canonical, and 410 changes.
+
+## Entry: 2026-04-24 (v2 Pivot Documentation Baseline)
+### Scope
+- Property: `sc-domain:lifeverdict.com`
+- Product version: v2 inspection ask pre-send check
+- Current public data status: pre-deploy baseline for the old v1 surface
+
+### Decision
+- Do not judge v2 by old Search Console data before deployment and recrawl.
+- v1 broad repair-cost pSEO is considered failed as a business direction, even where technical ranking improved.
+- v2 should be judged by page-level query mix, tool opens, packet generation, copy/print, useful feedback, and buyer-agent team intent after the new surfaces are live.
+
+### v1 Failure Summary
+- v1 exposed city/era/component repair-cost pages.
+- The surface looked informational and generic.
+- The useful backend logic was not obvious as a tool.
+- Query mix stayed too close to broad repair-cost browsing.
+- Higher impressions did not prove buyer-agent workflow demand.
+
+### v2 Measurement Plan
+- Track v2 URLs separately from retired v1 URLs.
+- Treat old repair-cost queries as baseline noise unless they convert into packet actions.
+- Watch whether new surfaces earn queries around inspection response, seller credit, repair request, objection, deadline, refusal, counter, FHA/VA, and high-stakes defect asks.
+- Keep monetization off until product actions prove pull.
 
 ## Entry: 2026-03-05
 ### Scope
@@ -468,6 +495,72 @@ Track Search Console outcomes after SEO/code changes so we can decide whether to
   - top queries still look like generic component-cost lookups
   - state winners hold rankings but still do not attract buyer-intent queries
   - the send-today framing does not change user behavior
+
+## Entry: 2026-04-23
+### Scope
+- Property: `sc-domain:lifeverdict.com`
+- Focus path: `/home-repair*`
+- Current period: `2026-03-27` to `2026-04-23`
+- Previous period: `2026-02-27` to `2026-03-26`
+- Short post-change read: `2026-04-13` to `2026-04-23` vs `2026-04-02` to `2026-04-12`
+- Note: GSC daily rows were available through `2026-04-22` during this check.
+
+### Metrics Snapshot
+- `/home-repair*` (current): `9 clicks`, `1,753 impressions`, `0.513% CTR`, `7.73 avg position`
+- `/home-repair*` (previous): `6 clicks`, `4,162 impressions`, `0.144% CTR`, `9.42 avg position`
+- Delta summary: clicks improved by `+3`, impressions fell by `-57.9%`, CTR improved `3.56x`, and average position improved by `1.70` positions.
+- Short post-change read: `5 clicks`, `444 impressions`, `1.126% CTR`, `6.78 avg position` vs `2 clicks`, `799 impressions`, `0.250% CTR`, `8.53 avg position`.
+- Caveat: the post-change click lift is not clean validation because `4` of the `5` short-window clicks came from `/home-repair/about`.
+
+### Technical Signals
+- Repeated extension variants (`.html.html` family): `0 clicks`, `2 impressions`, `0% CTR`, `8.50 avg position`; previous period was `0 clicks`, `197 impressions`, `20.12 avg position`.
+- State pages (`/home-repair/verdicts/states/*`): `1 click`, `525 impressions`, `0.190% CTR`, `7.10 avg position`; previous period was `2 clicks`, `830 impressions`, `0.241% CTR`, `6.01 avg position`.
+- Support pages (`/home-repair/about`, `/methodology`, `/editorial-policy`, `/data-sources`, `/disclaimer`): `4 clicks`, `37 impressions`, `10.81% CTR`, `20.84 avg position`; previous period was `0 clicks`, `248 impressions`, `0% CTR`, `5.04 avg position`.
+- Deep item pages (`/home-repair/verdicts/{metro}/{era}/{item}`): `1 click`, `45 impressions`, `2.22% CTR`, `7.89 avg position`; previous period was `0 clicks`, `697 impressions`, `0% CTR`, `18.10 avg position`.
+- City/era pages excluding state hubs: `3 clicks`, `1,134 impressions`, `0.265% CTR`, `7.53 avg position`; previous period was `4 clicks`, `2,167 impressions`, `0.185% CTR`, `8.83 avg position`.
+- Non-winner city/era pages still produced `3 clicks` and `1,114 impressions`; sampled live pages now emit `noindex,follow`, so this appears to be residual/stale Search Console surface rather than a current sitemap expansion.
+
+### Search Console / Inspection Findings
+- Sitemap:
+  - `https://lifeverdict.com/sitemap.xml`
+  - `lastSubmitted`: `2026-04-12T10:48:43.097Z`
+  - `lastDownloaded`: `2026-04-18T01:43:16.232Z`
+  - `warnings`: `0`
+  - `errors`: `0`
+  - live sitemap still contains exactly `8` winner/core URLs.
+- Root `/home-repair`: `Submitted and indexed`, last crawled `2026-04-10T14:05:35Z`; current-period performance was only `0 clicks`, `5 impressions`, `18.60 avg position`.
+- `states/tx.html`: `Submitted and indexed`, last crawled `2026-04-13T21:57:45Z`; current-period performance was `1 click`, `61 impressions`, `1.64% CTR`, `6.69 avg position`.
+- `states/fl.html`: `Submitted and indexed`, last crawled `2026-03-22T12:26:38Z`; current-period performance was `0 clicks`, `25 impressions`, `7.16 avg position`.
+- `pittsburgh-pa/pre-1950.html`: now `Crawled - currently not indexed`, last crawled `2026-02-10T20:24:33Z`; live page still emits `index,follow` with updated April 2026 seller-credit-request copy.
+- `chicago-naperville-il/1950-1970.html`: `Submitted and indexed`, last crawled `2026-04-11T00:57:15Z`; current-period performance was `0 clicks`, `1 impression`, `4.00 avg position`.
+- `states/ca.html` and `states/il.html`: inspection still showed `Submitted and indexed`, but live HTML now emits `noindex,follow`; likely stale crawl state that needs another recrawl cycle.
+- `/home-repair/about`: inspection shows `Excluded by 'noindex' tag`, last crawled `2026-04-15T14:57:20Z`, despite `4` current-period clicks. Treat the clicks as residual/noisy rather than product validation.
+
+### Query-Mix Conclusion
+- Visible query rows remain sparse and privacy-filtered; only `64` current-period impressions were visible in query-level rows.
+- Visible query examples still look off-wedge:
+  - `replacement cost 1950 or older`
+  - `home repair estimates`
+  - `how much to refubish a fla`
+  - `30 year fixed savannah ga`
+- A direct buyer-intent query filter for `seller credit`, `repair request`, `after inspection`, `home inspection`, `inspection`, `credit request`, `seller concession`, `inspection contingency`, and `what to ask` returned `0 clicks` and `0 impressions`.
+- Interpretation: the April 12 `send-today seller credit request` framing has not yet produced measurable buyer-intent query association in GSC.
+
+### Assessment
+- Status: **Continue only as a monitored narrow bet; do not scale**
+- Reason: headline CTR is healthy, but the improvement is not coming from the intended winner/wedge pages. Winner/core URLs declined from `5 clicks / 452 impressions / 1.106% CTR` in the previous period to `1 click / 111 impressions / 0.901% CTR` in the current period. The aggregate lift is mostly from residual noindex/support/non-winner surfaces, so the business thesis remains unvalidated.
+- Technical cleanup still worked: malformed variants collapsed from `197` to `2` impressions, deep-item impressions collapsed from `697` to `45`, and support-page impressions collapsed from `248` to `37`.
+- Strategic demand is still the blocker: there is no measurable `seller credit request after inspection` query family yet.
+
+### Next Checkpoints
+- `2026-04-26`
+  - Re-run the buyer-intent query filter and require at least non-zero impressions before calling the wedge validated.
+  - Re-inspect `pittsburgh-pa/pre-1950.html`; if it remains `Crawled - currently not indexed`, stop treating it as a winner until it re-enters the index.
+  - Re-inspect `states/fl.html`; the last crawl is still `2026-03-22`, so it may not reflect the latest narrowed copy.
+  - Re-inspect `states/ca.html` and `states/il.html` to verify they flip from indexed to excluded by `noindex`.
+- `2026-05-07`
+  - Continue only if winner/core pages drive the majority of clicks and buyer-intent query filters show real impressions.
+  - Kill or re-pivot if clicks remain concentrated in support/noindex/non-winner residual pages.
 
 ## Reusable Weekly Template
 ```

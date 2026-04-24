@@ -28,10 +28,27 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class PlaywrightSeoRepresentativeUrlsTest {
 
     private static final List<String> REPRESENTATIVE_URLS = List.of(
-            "/home-repair/verdicts/abilene-tx/pre-1950.html",
-            "/home-repair/verdicts/riverside-san-bernardino-ca/1995-2010.html",
-            "/home-repair/verdicts/atlanta-sandy-springs-ga/1980-1995/hvac-heat-pump-central",
-            "/home-repair/verdicts/miami-ft-lauderdale-fl/1995-2010/hvac-heat-pump-central",
+            "/inspection-response-letter",
+            "/seller-credit-after-home-inspection",
+            "/repair-request-vs-seller-credit-after-inspection",
+            "/what-to-ask-for-after-home-inspection",
+            "/repair-request-after-home-inspection",
+            "/inspection-objection-after-home-inspection",
+            "/inspection-contingency-deadline-after-home-inspection",
+            "/seller-refused-repairs-after-inspection",
+            "/seller-counter-offer-after-home-inspection",
+            "/reasonable-requests-after-home-inspection",
+            "/fha-inspection-repairs-seller-credit",
+            "/va-inspection-repairs-seller-credit",
+            "/lender-required-repairs-after-inspection",
+            "/seller-credit-limits-after-home-inspection",
+            "/roof-repair-credit-after-inspection",
+            "/for-buyer-agents",
+            "/sample-seller-credit-request-after-home-inspection",
+            "/fha-va-inspection-repairs-and-seller-credit",
+            "/home-repair",
+            "/home-repair/about",
+            "/home-repair/methodology",
             "/home-repair/data-sources");
 
     private static Playwright playwright;
@@ -129,29 +146,154 @@ class PlaywrightSeoRepresentativeUrlsTest {
     private void assertExpectedBlocks(String path, Page page, String bodyText) {
         String lower = bodyText.toLowerCase(Locale.ROOT);
 
+        if (path.equals("/inspection-response-letter")) {
+            assertTrue(lower.contains("inspection response letter"));
+            assertTrue(lower.contains("check the letter free"));
+            assertTrue(lower.contains("this is not an article page."));
+            assertTrue(lower.contains("pre-send review preview"));
+            assertTrue(lower.contains("what to ask"));
+            assertTrue(lower.contains("what to cut"));
+            assertTrue(lower.contains("repeat-use path"));
+            assertTrue(lower.contains("response letter"));
+            assertTrue(lower.contains("seller credit"));
+            assertTrue(lower.contains("repair request"));
+            return;
+        }
+
+        if (path.equals("/seller-credit-after-home-inspection")) {
+            assertTrue(lower.contains("seller credit request"));
+            assertTrue(lower.contains("check credit ask free"));
+            return;
+        }
+
+        if (path.equals("/repair-request-vs-seller-credit-after-inspection")) {
+            assertTrue(lower.contains("repair request vs seller credit"));
+            assertTrue(lower.contains("check credit vs repair"));
+            return;
+        }
+
+        if (path.equals("/what-to-ask-for-after-home-inspection")) {
+            assertTrue(lower.contains("what should i ask for after a home inspection"));
+            assertTrue(lower.contains("check my first ask"));
+            return;
+        }
+
+        if (path.equals("/repair-request-after-home-inspection")) {
+            assertTrue(lower.contains("repair request"));
+            assertTrue(lower.contains("check repair request free"));
+            return;
+        }
+
+        if (path.equals("/inspection-objection-after-home-inspection")) {
+            assertTrue(lower.contains("inspection objection"));
+            assertTrue(lower.contains("check objection ask free"));
+            return;
+        }
+
+        if (path.equals("/inspection-contingency-deadline-after-home-inspection")) {
+            assertTrue(lower.contains("inspection contingency deadline"));
+            assertTrue(lower.contains("check deadline-sensitive ask"));
+            return;
+        }
+
+        if (path.equals("/seller-refused-repairs-after-inspection")) {
+            assertTrue(lower.contains("seller refused repairs"));
+            assertTrue(lower.contains("check seller refusal"));
+            return;
+        }
+
+        if (path.equals("/seller-counter-offer-after-home-inspection")) {
+            assertTrue(lower.contains("seller counter offer"));
+            assertTrue(lower.contains("check seller counter"));
+            assertTrue(lower.contains("seller countered far below the ask"));
+            return;
+        }
+
+        if (path.equals("/reasonable-requests-after-home-inspection")) {
+            assertTrue(lower.contains("reasonable requests"));
+            assertTrue(lower.contains("check reasonable requests"));
+            return;
+        }
+
+        if (path.equals("/fha-inspection-repairs-seller-credit")) {
+            assertTrue(lower.contains("fha inspection repairs"));
+            assertTrue(lower.contains("check fha ask"));
+            return;
+        }
+
+        if (path.equals("/va-inspection-repairs-seller-credit")) {
+            assertTrue(lower.contains("va inspection repairs"));
+            assertTrue(lower.contains("check va ask"));
+            assertTrue(lower.contains("va repair gate before credit language"));
+            return;
+        }
+
+        if (path.equals("/lender-required-repairs-after-inspection")) {
+            assertTrue(lower.contains("lender-required repairs"));
+            assertTrue(lower.contains("check lender-sensitive ask"));
+            assertTrue(lower.contains("lender-required repair risk"));
+            return;
+        }
+
+        if (path.equals("/seller-credit-limits-after-home-inspection")) {
+            assertTrue(lower.contains("seller credit limits"));
+            assertTrue(lower.contains("check credit limit risk"));
+            assertTrue(lower.contains("credit request may exceed usable limits"));
+            return;
+        }
+
+        if (path.equals("/roof-repair-credit-after-inspection")) {
+            assertTrue(lower.contains("roof repair credit"));
+            assertTrue(lower.contains("check roof credit"));
+            return;
+        }
+
+        if (path.equals("/home-repair")) {
+            assertTrue(lower.contains("pre-send inspection request check"));
+            assertTrue(lower.contains("paste the request before you send it."));
+            assertTrue(lower.contains("what fallback to use"));
+            assertTrue(lower.contains("buyer agents first"));
+            return;
+        }
+
+        if (path.equals("/for-buyer-agents")) {
+            assertTrue(lower.contains("for buyer-agent teams"));
+            assertTrue(lower.contains("inspection ask pre-send desk"));
+            assertTrue(lower.contains("free first file"));
+            assertTrue(lower.contains("team setup only after use"));
+            return;
+        }
+
+        if (path.equals("/sample-seller-credit-request-after-home-inspection")) {
+            assertTrue(lower.contains("sample pre-send review"));
+            assertTrue(lower.contains("illustrative ask review"));
+            return;
+        }
+
+        if (path.equals("/fha-va-inspection-repairs-and-seller-credit")) {
+            assertTrue(lower.contains("loan-sensitive deals"));
+            assertTrue(lower.contains("fha and va inspection issues"));
+            return;
+        }
+
+        if (path.equals("/home-repair/about")) {
+            assertTrue(lower.contains("inspection response window"));
+            assertTrue(lower.contains("buyer-agent workflow first"));
+            return;
+        }
+
+        if (path.equals("/home-repair/methodology")) {
+            assertTrue(lower.contains("how the ask pre-send check works."));
+            assertTrue(lower.contains("scoped exposure"));
+            return;
+        }
+
         if (path.equals("/home-repair/data-sources")) {
             assertTrue(lower.contains("open data downloads (csv/json)"));
             assertTrue(lower.contains("metro_unique_signals_2026.csv"));
             assertTrue(lower.contains("metro_unique_signals_2026.json"));
             return;
         }
-
-        if (path.matches("^/home-repair/verdicts/[^/]+/[^/]+\\.html$")) {
-            assertTrue(
-                    lower.contains("public data signals") || lower.contains("local negotiation signals"),
-                    "missing public-data / negotiation-signals block on " + path);
-            assertTrue(lower.contains("fema major disasters"), "missing FEMA metric on " + path);
-            assertTrue(lower.contains("owner occupancy"), "missing owner occupancy metric on " + path);
-            assertTrue(lower.contains("median year built"), "missing median year metric on " + path);
-            assertTrue(lower.contains("repair pressure index"), "missing RPI metric on " + path);
-            assertTrue(lower.contains("source file:"), "missing source file label on " + path);
-            assertTrue(page.locator("a[href='/data/metro_unique_signals_2026.csv']").first().isVisible());
-            return;
-        }
-
-        assertTrue(lower.contains("technical breakdown"));
-        assertTrue(lower.contains("open data context"));
-        assertTrue(page.locator("a[href='/data/metro_unique_signals_2026.csv']").first().isVisible());
     }
 
     private void assertNoInternalLeak(String bodyText, String path) {

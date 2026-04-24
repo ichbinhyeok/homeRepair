@@ -1,680 +1,1089 @@
 @import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.Verdict
-@import com.livingcostcheck.home_repair.service.dto.verdict.VerdictDTOs.RiskAdjustedItem
+@import com.livingcostcheck.home_repair.service.dto.inspection.InspectionDefenseSignal
+@import com.livingcostcheck.home_repair.service.dto.inspection.InspectionEvidenceRef
+@import com.livingcostcheck.home_repair.service.dto.inspection.InspectionCaseWorkflowEvent
+@import com.livingcostcheck.home_repair.service.dto.inspection.InspectionCaseWorkflowSummary
+@import com.livingcostcheck.home_repair.service.dto.inspection.InspectionExclusionItem
+@import com.livingcostcheck.home_repair.service.dto.inspection.InspectionReadinessGate
+@import com.livingcostcheck.home_repair.service.dto.inspection.InspectionResponsePacket
+@import com.livingcostcheck.home_repair.service.dto.inspection.InspectionWorkspaceSummary
 @import com.livingcostcheck.home_repair.domain.VerdictHistory
 @param Verdict verdict
 @param VerdictHistory history
-@param String[] inspectionFindings = new String[0]
-@param String[] mustFixNow = new String[0]
-@param String[] verifyNext = new String[0]
-@param String[] deferLater = new String[0]
-@param String quoteSupport = "NONE"
-@param String quoteSupportLabel = ""
-@param String closingWindow = "FLEXIBLE"
-@param String closingWindowLabel = ""
-@param String loanType = "CONVENTIONAL"
-@param String loanTypeLabel = ""
-@param String loanTypeNote = ""
-@param String negotiationEvidenceNote = ""
-@param Double defendableAsk = 0.0
-@param String defendableAskLabel = ""
-@param Double targetAsk = 0.0
-@param String targetAskLabel = ""
-@param Double stretchAsk = 0.0
-@param String stretchAskLabel = ""
-@param String sellerCreditSummary = ""
-@param String sellerCreditSummaryJs = ""
-@param String agentNegotiationScript = ""
-@param String agentNegotiationScriptJs = ""
-@param String title = "Verdict | LifeVerdict"
+@param InspectionResponsePacket packet
+@param InspectionCaseWorkflowSummary caseWorkflow = new InspectionCaseWorkflowSummary("DRAFT", "Draft", "No workflow data is attached to this render path yet.", "Open the saved result route to record review and send activity.", java.util.List.of())
+@param InspectionWorkspaceSummary workspace
+@param String title = "Inspection Ask Pre-Send Check | LifeVerdict"
 @param String verdictH1 = null
+@param String sellerCreditSummaryJs = ""
+@param String agentNegotiationScriptJs = ""
+@param String fullPacketTextJs = ""
+@param String acquisitionEntry = "direct"
 
 @template.layout(
     title = title,
+    description = "Pre-send verdict for an inspection ask, including send posture, number basis, evidence support, seller pushback risk, and agent-ready language.",
     headContent = @`
         <meta name="robots" content="noindex">
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
         <style>
-            .analysis-shell {
-                position: relative;
+            .packet-stage {
+                --ink: #10202a;
+                --muted: #5f6d74;
+                --line: rgba(16, 32, 42, 0.10);
+                --cyan: #174a5a;
+                --amber: #c96a3d;
+                --paper: #fffaf4;
+                max-width: 1180px;
+                margin: 0 auto;
+                padding: 42px 24px 80px;
             }
-            .analysis-shell::before {
+            .packet-stage::before {
                 content: "";
-                position: absolute;
-                inset: 0 auto auto 0;
-                width: 280px;
-                height: 280px;
-                border-radius: 9999px;
-                background: rgba(21, 94, 117, 0.08);
-                filter: blur(70px);
-                pointer-events: none;
+                position: fixed;
+                inset: 0;
+                z-index: -1;
+                background:
+                    radial-gradient(circle at 12% 16%, rgba(201, 106, 61, 0.12), transparent 28%),
+                    radial-gradient(circle at 88% 12%, rgba(23, 74, 90, 0.12), transparent 30%),
+                    repeating-linear-gradient(180deg, rgba(16, 32, 42, 0.02) 0, rgba(16, 32, 42, 0.02) 1px, transparent 1px, transparent 38px),
+                    linear-gradient(180deg, #f8f1e9 0%, #f4ede3 100%);
             }
-            .bento-card {
-                @apply rounded-[28px] border p-6 transition-all duration-300;
-                background: rgba(255, 255, 255, 0.84);
-                border-color: rgba(15, 23, 42, 0.08);
-                box-shadow: 0 20px 70px rgba(15, 23, 42, 0.08);
+            .packet-hero {
+                display: grid;
+                grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.75fr);
+                gap: 24px;
+                align-items: stretch;
+                margin-bottom: 24px;
+            }
+            .hero-panel,
+            .ask-panel,
+            .packet-card,
+            .copy-panel {
+                border: 1px solid var(--line);
+                background: rgba(255, 250, 244, 0.88);
+                box-shadow: 0 22px 70px rgba(16, 32, 42, 0.08);
                 backdrop-filter: blur(14px);
             }
-            .bento-card:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 24px 80px rgba(15, 23, 42, 0.12);
+            .hero-panel {
+                border-radius: 32px;
+                padding: 38px;
+                position: relative;
+                overflow: hidden;
             }
-            .result-banner {
-                border: 1px solid rgba(15, 23, 42, 0.08);
-                background: rgba(255, 255, 255, 0.72);
-                backdrop-filter: blur(12px);
-                box-shadow: 0 18px 60px rgba(15, 23, 42, 0.07);
+            .hero-panel::after {
+                content: "";
+                position: absolute;
+                right: -90px;
+                top: -90px;
+                width: 220px;
+                height: 220px;
+                border-radius: 999px;
+                background: rgba(23, 74, 90, 0.08);
+                filter: blur(4px);
             }
-            .micro-kicker {
+            .packet-kicker {
                 display: inline-flex;
                 align-items: center;
                 gap: 10px;
-                padding: 0.55rem 0.8rem;
-                border-radius: 9999px;
-                background: rgba(21, 94, 117, 0.08);
-                color: #155e75;
-                font-size: 0.74rem;
-                font-weight: 800;
-                letter-spacing: 0.08em;
+                padding: 9px 12px;
+                border-radius: 999px;
+                background: rgba(23, 74, 90, 0.08);
+                color: var(--cyan);
+                font-family: var(--font-mono);
+                font-size: 11px;
+                font-weight: 600;
+                letter-spacing: 0.14em;
                 text-transform: uppercase;
             }
-            .micro-kicker::before {
+            .packet-kicker::before {
                 content: "";
                 width: 8px;
                 height: 8px;
-                border-radius: 9999px;
-                background: #c7792c;
-                box-shadow: 0 0 0 5px rgba(199, 121, 44, 0.14);
+                border-radius: 999px;
+                background: var(--amber);
+                box-shadow: 0 0 0 5px rgba(199, 121, 44, 0.15);
             }
-            
-            /* PDF Print Styles for "Forensic Audit Report" Look */
+            .hero-title {
+                margin-top: 22px;
+                max-width: 760px;
+                color: var(--ink);
+                font-family: var(--font-display);
+                font-size: clamp(44px, 7vw, 82px);
+                line-height: 0.94;
+                letter-spacing: -0.04em;
+                font-weight: 600;
+            }
+            .hero-copy {
+                max-width: 720px;
+                margin-top: 20px;
+                color: var(--muted);
+                font-size: 18px;
+                line-height: 1.7;
+            }
+            .context-strip {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-top: 26px;
+            }
+            .case-dossier {
+                margin-top: 22px;
+                border: 1px solid rgba(15, 23, 42, 0.10);
+                border-radius: 24px;
+                background: rgba(255, 255, 255, 0.76);
+                padding: 18px;
+            }
+            .case-dossier-grid {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 14px;
+            }
+            .case-dossier-item span {
+                display: block;
+                color: var(--muted);
+                font-family: var(--font-mono);
+                font-size: 11px;
+                font-weight: 600;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+            }
+            .case-dossier-item strong {
+                display: block;
+                margin-top: 6px;
+                color: var(--ink);
+                font-size: 16px;
+                line-height: 1.45;
+            }
+            .context-pill {
+                border: 1px solid rgba(15, 23, 42, 0.10);
+                border-radius: 999px;
+                background: rgba(255, 255, 255, 0.62);
+                padding: 9px 12px;
+                color: #334155;
+                font-family: var(--font-mono);
+                font-size: 12px;
+                font-weight: 600;
+            }
+            .trust-deck {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 12px;
+                margin-top: 22px;
+            }
+            .trust-card {
+                border: 1px solid rgba(15, 23, 42, 0.10);
+                border-radius: 22px;
+                background: rgba(255, 255, 255, 0.70);
+                padding: 16px;
+            }
+            .trust-card strong {
+                display: block;
+                color: var(--ink);
+                font-size: 15px;
+                line-height: 1.35;
+            }
+            .trust-list {
+                display: grid;
+                gap: 8px;
+                margin-top: 12px;
+            }
+            .trust-list li {
+                list-style: none;
+                color: #475569;
+                font-size: 13px;
+                line-height: 1.5;
+            }
+            .trust-list li::before {
+                content: "Check";
+                display: inline-flex;
+                margin-right: 7px;
+                color: var(--amber);
+                font-family: var(--font-mono);
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+            }
+            .ask-panel {
+                border-radius: 32px;
+                padding: 28px;
+                background:
+                    linear-gradient(160deg, rgba(16, 32, 42, 0.97), rgba(23, 74, 90, 0.95)),
+                    #10202a;
+                color: white;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                min-height: 100%;
+            }
+            .ask-label {
+                color: #a5f3fc;
+                font-family: var(--font-mono);
+                font-size: 11px;
+                font-weight: 600;
+                letter-spacing: 0.16em;
+                text-transform: uppercase;
+            }
+            .ask-amount {
+                margin-top: 10px;
+                font-family: var(--font-display);
+                font-size: clamp(52px, 7vw, 86px);
+                line-height: 0.92;
+                letter-spacing: -0.04em;
+                font-weight: 600;
+            }
+            .ask-summary {
+                margin-top: 18px;
+                color: rgba(255, 255, 255, 0.78);
+                line-height: 1.6;
+            }
+            .quality-box {
+                margin-top: 22px;
+                border: 1px solid rgba(255, 255, 255, 0.14);
+                border-radius: 22px;
+                padding: 16px;
+                background: rgba(255, 255, 255, 0.08);
+            }
+            .quality-top {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                color: white;
+                font-weight: 700;
+            }
+            .quality-top span {
+                color: #a5f3fc;
+                font-family: var(--font-mono);
+                font-size: 11px;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+            }
+            .quality-meter {
+                height: 8px;
+                margin-top: 12px;
+                border-radius: 999px;
+                overflow: hidden;
+                background: rgba(255, 255, 255, 0.16);
+            }
+            .quality-meter span {
+                display: block;
+                height: 100%;
+                border-radius: inherit;
+                background: linear-gradient(90deg, #fbbf24, #67e8f9);
+            }
+            .quality-note {
+                margin-top: 10px;
+                color: rgba(255, 255, 255, 0.72);
+                font-size: 13px;
+                line-height: 1.55;
+            }
+            .ask-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+                margin-top: 24px;
+            }
+            .ask-mini {
+                border: 1px solid rgba(255, 255, 255, 0.14);
+                border-radius: 20px;
+                padding: 14px;
+                background: rgba(255, 255, 255, 0.08);
+            }
+            .ask-mini span {
+                display: block;
+                color: rgba(255, 255, 255, 0.56);
+                font-family: var(--font-mono);
+                font-size: 10px;
+                font-weight: 600;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+            }
+            .ask-mini strong {
+                display: block;
+                margin-top: 6px;
+                font-size: 21px;
+            }
+            .action-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-top: 28px;
+            }
+            .packet-button {
+                border: 0;
+                border-radius: 16px;
+                padding: 13px 16px;
+                font-weight: 900;
+                transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+            }
+            .packet-button:hover {
+                transform: translateY(-1px);
+            }
+            .packet-button.primary {
+                background: var(--ink);
+                color: white;
+                box-shadow: 0 14px 36px rgba(15, 23, 42, 0.20);
+            }
+            .packet-button.secondary {
+                border: 1px solid var(--line);
+                background: white;
+                color: var(--ink);
+            }
+            .packet-grid {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 18px;
+                margin: 24px 0;
+            }
+            .packet-card {
+                border-radius: 26px;
+                padding: 24px;
+            }
+            .card-kicker {
+                color: var(--amber);
+                font-family: var(--font-mono);
+                font-size: 11px;
+                font-weight: 600;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+            }
+            .packet-card h2,
+            .copy-panel h2 {
+                margin-top: 9px;
+                color: var(--ink);
+                font-family: var(--font-display);
+                font-size: 26px;
+                line-height: 1.08;
+                letter-spacing: -0.03em;
+                font-weight: 600;
+            }
+            .packet-list {
+                margin-top: 18px;
+                display: grid;
+                gap: 10px;
+            }
+            .packet-list li {
+                list-style: none;
+                border: 1px solid rgba(15, 23, 42, 0.08);
+                border-radius: 16px;
+                padding: 12px 13px;
+                background: rgba(255, 255, 255, 0.72);
+                color: #334155;
+                line-height: 1.45;
+            }
+            .must-card {
+                background: linear-gradient(180deg, rgba(255, 247, 237, 0.92), rgba(255, 255, 255, 0.86));
+            }
+            .verify-card {
+                background: linear-gradient(180deg, rgba(236, 254, 255, 0.86), rgba(255, 255, 255, 0.86));
+            }
+            .avoid-card {
+                background: linear-gradient(180deg, rgba(248, 250, 252, 0.96), rgba(255, 255, 255, 0.86));
+            }
+            .copy-layout {
+                display: grid;
+                grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+                gap: 18px;
+            }
+            .copy-panel {
+                border-radius: 28px;
+                padding: 26px;
+            }
+            .script-box {
+                margin-top: 18px;
+                border: 1px solid rgba(15, 23, 42, 0.10);
+                border-radius: 22px;
+                background: #122632;
+                color: #e2e8f0;
+                padding: 20px;
+                line-height: 1.65;
+                white-space: pre-wrap;
+            }
+            .support-box {
+                margin-top: 18px;
+                border-radius: 22px;
+                background: var(--paper);
+                border: 1px solid rgba(199, 121, 44, 0.18);
+                padding: 18px;
+                color: #7c2d12;
+                line-height: 1.6;
+            }
+            .validation-panel {
+                margin-top: 18px;
+                border: 1px dashed rgba(21, 94, 117, 0.30);
+                border-radius: 24px;
+                background: rgba(236, 254, 255, 0.74);
+                padding: 18px;
+            }
+            .validation-panel strong {
+                display: block;
+                color: #164e63;
+                font-weight: 900;
+            }
+            .validation-panel p {
+                color: #0e7490;
+                font-size: 13px;
+                margin-top: 4px;
+            }
+            .feedback-row {
+                display: flex;
+                gap: 8px;
+                margin-top: 14px;
+            }
+            .feedback-row input {
+                min-width: 0;
+                flex: 1;
+                border: 1px solid rgba(15, 23, 42, 0.12);
+                border-radius: 14px;
+                padding: 11px 12px;
+                outline: none;
+            }
+            #packet-action-status {
+                margin-top: 10px;
+                min-height: 20px;
+                color: #155e75;
+                font-size: 13px;
+                font-weight: 800;
+            }
+            @media (max-width: 900px) {
+                .packet-hero,
+                .copy-layout,
+                .packet-grid {
+                    grid-template-columns: 1fr;
+                }
+                .case-dossier-grid {
+                    grid-template-columns: 1fr;
+                }
+                .trust-deck {
+                    grid-template-columns: 1fr;
+                }
+                .hero-panel {
+                    padding: 28px;
+                }
+            }
             @media print {
-                body { background: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-                header, footer, .print\\:hidden { display: none !important; }
-                .bg-black, .bg-slate-900 { background: white !important; color: black !important; border: 2px solid #000; }
-                .text-white { color: black !important; }
-                .shadow-2xl, .shadow-sm { shadow: none !important; box-shadow: none !important; }
-                .bento-card { border: 1px solid #ccc !important; break-inside: avoid; }
-                /* Stamp Effect */
-                .report-stamp { position: absolute; top: 20px; right: 20px; border: 3px solid #64748b; color: #64748b; padding: 10px; font-family: monospace; font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; transform: rotate(-5deg); opacity: 0.8; }
-                /* Replace visual buttons with textual links for print */
-                button { display: none !important; }
-                /* Reset Grid for Print */
-                .md\\:col-span-8, .md\\:col-span-4, .md\\:col-span-12 { grid-column: span 12 / span 12 !important; }
+                header,
+                footer,
+                .print-hidden,
+                .action-row,
+                .validation-panel {
+                    display: none !important;
+                }
+                .packet-stage {
+                    padding: 0;
+                }
+                .packet-stage::before {
+                    display: none;
+                }
+                .hero-panel,
+                .ask-panel,
+                .packet-card,
+                .copy-panel {
+                    box-shadow: none;
+                    background: white !important;
+                    color: black !important;
+                    break-inside: avoid;
+                }
+                .packet-hero,
+                .copy-layout,
+                .packet-grid {
+                    grid-template-columns: 1fr;
+                }
+                .script-box {
+                    color: black;
+                    background: white;
+                }
             }
         </style>
     `,
     content = @`
-        <%-- WRAPPED CONTENT --%>
-        <div class="analysis-shell max-w-6xl mx-auto px-6 py-10">
-        
-            <%-- 2. STATUS HEADER (Minimalist) --%>
-            <div class="result-banner rounded-[34px] p-6 md:p-8 flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-12">
-                <div>
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="micro-kicker">
-                            @if("BUYING".equals(history.getPurpose()))
-                                Send in the next 24-72 hours
-                            @else
-                                Home health check complete
-                            @endif
-                        </span>
-                    </div>
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="w-2.5 h-2.5 rounded-full
-                            ${"LOW_RISK".equals(verdict.getTier()) ? "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]" : 
-                              "CONDITIONAL".equals(verdict.getTier()) ? "bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.4)]" : 
-                              verdict.isDealKiller() ? "bg-red-600 shadow-[0_0_8px_rgba(220,38,38,0.4)]" : "bg-rose-500"}">
-                        </span>
-                        <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Signal quality check</span>
-                    </div>
-                    <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-2 relative">
-                        @if("BUYING".equals(history.getPurpose()))
-                            Ready-To-Send Seller Credit Packet
-                        @else
-                            ${verdictH1 != null ? verdictH1 : (verdict.getHeadline().split("\\.")[0] + ".")}
-                        @endif
-                    </h1>
-                    <p class="text-lg text-slate-500 max-w-2xl leading-relaxed">
-                        ${verdict.getHeadline().contains(".") && verdict.getHeadline().split("\\.").length > 1 ? verdict.getHeadline().split("\\.")[1] : ""}
-                    </p>
+        <div class="packet-stage">
+            <section class="packet-hero">
+                <div class="hero-panel">
+                    <div class="packet-kicker">Inspection ask pre-send check</div>
+                    <h1 class="hero-title">${packet.title()}</h1>
+                    <p class="hero-copy">${packet.subtitle()}</p>
 
                     @if(verdict.isDealKiller())
-                        <div class="mt-4 inline-flex items-center gap-2 px-3 py-2 bg-red-50 border border-red-100 rounded-lg text-red-700 text-sm font-semibold">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        <div class="mt-5 inline-flex rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-bold text-red-700">
                             ${verdict.getDealKillerMessage()}
                         </div>
                     @endif
-                </div>
-                
-                <div class="text-right hidden md:block opacity-10">
-                    <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                </div>
-            </div>
 
-            <%-- 3. KEY METRICS GRID (Apple Health Style) --%>
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-16">
-
-                <%-- CARD 1: COST ESTIMATE (Large Card) --%>
-                <div class="md:col-span-8 rounded-[36px] p-8 text-white relative overflow-hidden shadow-[0_30px_100px_rgba(15,23,42,0.22)] flex flex-col justify-between group border border-slate-800/30">
-                    <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-900"></div>
-                    <div class="absolute right-0 bottom-0 w-64 h-64 bg-cyan-500 rounded-full blur-[120px] opacity-20 group-hover:opacity-30 transition-opacity"></div>
-                    <div class="absolute left-10 top-10 w-32 h-32 bg-amber-400/20 rounded-full blur-[90px]"></div>
-                    
-                    <div class="report-stamp hidden print:block">
-                        OFFICIAL DATA REPORT<br>
-                        Ref: V-${history.getId().toString().substring(0,8)}<br>
-                        Generated: ${java.time.LocalDate.now().toString()}<br>
-                        Data Source: RSMeans/BLS
+                    <div class="context-strip">
+                        <span class="context-pill">${packet.loanTypeLabel()}</span>
+                        <span class="context-pill">${packet.closingWindowLabel()}</span>
+                        <span class="context-pill">${packet.quoteSupportLabel()}</span>
+                        <span class="context-pill">Ref ${history.getId().toString().substring(0, 8)}</span>
                     </div>
-                    <div class="relative z-10">
-                        <h2 class="text-sm font-medium text-slate-400 uppercase tracking-widest mb-1">
-                            @if("BUYING".equals(history.getPurpose()))
-                                Deferred Maintenance Liability
-                            @else
-                                Capital Expenditure Budget
+
+                    <div class="trust-deck">
+                        <div class="trust-card">
+                            <div class="card-kicker">Why verdict</div>
+                            <strong>Why this verdict was chosen</strong>
+                            <ul class="trust-list">
+                                @for(String item : packet.verdictRationale())
+                                    <li>${item}</li>
+                                @endfor
+                            </ul>
+                        </div>
+                        <div class="trust-card">
+                            <div class="card-kicker">Weak evidence</div>
+                            <strong>What is missing before send</strong>
+                            <ul class="trust-list">
+                                @for(String item : packet.missingEvidence())
+                                    <li>${item}</li>
+                                @endfor
+                            </ul>
+                        </div>
+                        <div class="trust-card">
+                            <div class="card-kicker">Caveats</div>
+                            <strong>Boundaries the agent should not overstate</strong>
+                            <ul class="trust-list">
+                                @for(String item : packet.reviewCaveats())
+                                    <li>${item}</li>
+                                @endfor
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="case-dossier">
+                        <div class="card-kicker">Case workspace</div>
+                        <div class="case-dossier-grid mt-4">
+                            <div class="case-dossier-item">
+                                <span>Case</span>
+                                <strong>${workspace.caseLabel()}</strong>
+                            </div>
+                            <div class="case-dossier-item">
+                                <span>Property</span>
+                                <strong>${workspace.propertyAddress()}</strong>
+                            </div>
+                            <div class="case-dossier-item">
+                                <span>Market</span>
+                                <strong>${workspace.marketLabel()}</strong>
+                            </div>
+                            <div class="case-dossier-item">
+                                <span>Buyer</span>
+                                <strong>${workspace.clientLabel()}</strong>
+                            </div>
+                            <div class="case-dossier-item">
+                                <span>Agent</span>
+                                <strong>${workspace.agentLabel()}</strong>
+                            </div>
+                            <div class="case-dossier-item">
+                                <span>Opened</span>
+                                <strong>${workspace.createdAtLabel()}</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-row print-hidden">
+                        <button onclick="window.copyNegotiationPacket();" class="packet-button primary">Copy Revised Packet</button>
+                        <button onclick="window.copyAgentRequest();" class="packet-button secondary">Copy Reviewed Ask</button>
+                        <button onclick="window.printNegotiationPacket();" class="packet-button secondary">Print Pre-Send Check</button>
+                        <a href="/home-repair/workspace" class="packet-button secondary" style="text-decoration: none;">Open Workspace</a>
+                    </div>
+                </div>
+
+                <aside class="ask-panel">
+                    <div>
+                        <div class="ask-label">Reviewed seller-credit ask</div>
+                        <div class="ask-amount">$${packet.targetAskLabel()}</div>
+                        <p class="ask-summary">${packet.sellerCreditSummary()}</p>
+                        <div class="quality-box">
+                            <div class="quality-top">
+                                <span>${packet.readinessLabel()}</span>
+                                <strong>${packet.readinessPassCount()}/${packet.readinessGates().size()} gates</strong>
+                            </div>
+                            <div class="quality-meter"><span style="width: ${packet.confidenceScore()}%"></span></div>
+                            <p class="quality-note">${packet.readinessNote()}</p>
+                            <p class="quality-subnote">Confidence ${packet.confidenceScore()}% is secondary. Hard gates decide whether this is send-ready.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="ask-grid">
+                            <div class="ask-mini">
+                                <span>Defensible floor</span>
+                                <strong>$${packet.defendableAskLabel()}</strong>
+                            </div>
+                            <div class="ask-mini">
+                                <span>Stretch ask</span>
+                                <strong>$${packet.stretchAskLabel()}</strong>
+                            </div>
+                        </div>
+                        <p class="mt-5 text-sm leading-6 text-cyan-50/75">${packet.loanTypeNote()}</p>
+                        <p class="mt-3 text-sm leading-6 text-cyan-50/75">${packet.responseDeadlineNote()}</p>
+                        <p class="mt-3 text-sm leading-6 text-cyan-50/75">${packet.evidenceNote()}</p>
+                    </div>
+                </aside>
+            </section>
+
+            <section class="packet-grid">
+                <article class="packet-card must-card">
+                    <div class="card-kicker">1. Survives first review</div>
+                    <h2>Keep in the ask</h2>
+                    <ul class="packet-list">
+                        @for(String item : packet.mustFixNow())
+                            <li>${item}</li>
+                        @endfor
+                    </ul>
+                </article>
+
+                <article class="packet-card verify-card">
+                    <div class="card-kicker">2. Not ready to lead</div>
+                    <h2>Verify before asking</h2>
+                    <ul class="packet-list">
+                        @for(String item : packet.verifyNext())
+                            <li>${item}</li>
+                        @endfor
+                    </ul>
+                </article>
+
+                <article class="packet-card avoid-card">
+                    <div class="card-kicker">3. Weakens sendability</div>
+                    <h2>Cut before sending</h2>
+                    <ul class="packet-list">
+                        @for(String item : packet.doNotLead())
+                            <li>${item}</li>
+                        @endfor
+                    </ul>
+                </article>
+            </section>
+
+            <section class="copy-layout">
+                <article class="copy-panel">
+                    <div class="card-kicker">Agent pre-send review</div>
+                    <h2>Can this ask survive pushback?</h2>
+                    <div class="gate-list">
+                        @for(InspectionDefenseSignal signal : packet.defenseSignals())
+                            <div class="gate-item gate-${signal.status().toLowerCase()}">
+                                <div class="gate-head">
+                                    <span class="gate-badge gate-${signal.status().toLowerCase()}">${signal.status()}</span>
+                                    <strong>${signal.label()}</strong>
+                                </div>
+                                <p class="gate-note">${signal.detail()}</p>
+                                <p class="gate-note mt-2"><strong>Next:</strong> ${signal.action()}</p>
+                            </div>
+                        @endfor
+                    </div>
+                </article>
+
+                <aside class="copy-panel">
+                    <div class="card-kicker">Differentiator</div>
+                    <h2>This is the part a request-list builder does not decide.</h2>
+                    <div class="support-box">
+                        The review separates a defendable ask from a long defect list. It marks the number basis, evidence support, seller pushback risk, financing boundary, form boundary, and send posture before anything leaves review mode.
+                    </div>
+                </aside>
+            </section>
+
+            <section class="copy-layout">
+                <article class="copy-panel">
+                    <div class="card-kicker">Agent-ready language</div>
+                    <h2>Use this after the pre-send gates are cleared</h2>
+                    <div class="script-box">${packet.agentNegotiationScript()}</div>
+                    <div class="action-row print-hidden">
+                        <button onclick="window.copyAgentRequest();" class="packet-button primary">Copy Reviewed Ask</button>
+                        <button onclick="window.copyAskSummary();" class="packet-button secondary">Copy Ask Summary</button>
+                    </div>
+                </article>
+
+                <aside class="copy-panel">
+                    <div class="card-kicker">Fallback posture</div>
+                    <h2>If the seller pushes back</h2>
+                    <div class="support-box">${packet.fallbackScript()}</div>
+
+                    <div class="mt-6">
+                        <div class="card-kicker">Evidence checklist</div>
+                        <ul class="packet-list">
+                            @for(String item : packet.evidenceChecklist())
+                                <li>${item}</li>
+                            @endfor
+                        </ul>
+                    </div>
+                    <div class="mt-6">
+                        <div class="card-kicker">Missing or weak evidence</div>
+                        <h2>Do not call this file-ready until these are fixed</h2>
+                        <ul class="packet-list">
+                            @for(String item : packet.missingEvidence())
+                                <li>${item}</li>
+                            @endfor
+                        </ul>
+                    </div>
+                    @if(!packet.matchedEvidence().isEmpty())
+                        <div class="mt-6">
+                            <div class="card-kicker">Matched report evidence</div>
+                            <h2>Pages backing the ask</h2>
+                            @if(packet.evidenceSourceLabel() != null && !packet.evidenceSourceLabel().isBlank())
+                                <p class="mt-3 text-slate-600 leading-7">Source: ${packet.evidenceSourceLabel()}</p>
                             @endif
-                        </h2>
-                        <div class="flex items-baseline gap-1 mt-4">
-                            <span class="text-5xl md:text-6xl lg:text-7xl xl:text-[4.5rem] font-semibold tracking-tighter leading-tight block">
-                                ${verdict.getCostRangeLabel().contains("(") ? verdict.getCostRangeLabel().substring(0, verdict.getCostRangeLabel().indexOf("(")) : verdict.getCostRangeLabel()}
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="relative z-10 mt-8 flex flex-col lg:flex-row items-start lg:items-end justify-between gap-6">
-                         <p class="text-slate-400 text-sm font-medium max-w-sm">
-                            Total estimated immediate to 5-year liability based on forensic scan of ${verdict.getItemsAnalyzed()} components.
-                        </p>
-                        @if(verdict.getPrimaryCostDriver() != null)
-                            <div class="text-left lg:text-right w-full lg:w-auto mt-2 lg:mt-0 pt-4 lg:pt-0 border-t border-slate-800 lg:border-t-0">
-                                 <div class="text-xs font-bold text-slate-500 uppercase mb-1">Primary Cost Driver</div>
-                                 <div class="text-lg font-semibold">${verdict.getPrimaryCostDriver().replace("Primary Cost Driver:", "").trim()}</div>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-
-                <%-- CARD 2: ACTION PLAN (Strategy) --%>
-                <div class="md:col-span-4 rounded-[32px] p-8 border border-amber-100/80 bg-[linear-gradient(180deg,rgba(255,249,240,0.98),rgba(255,255,255,0.94))] shadow-[0_20px_60px_rgba(15,23,42,0.08)] hover:shadow-[0_24px_70px_rgba(15,23,42,0.10)] transition-all flex flex-col justify-between">
-                    !{
-                        String primary = verdict.getPrimaryCostDriver() != null ? verdict.getPrimaryCostDriver().toLowerCase() : "general";
-                        String cat = "general";
-                        String catName = "Contractor";
-                        if (primary.contains("roof")) { cat = "roofing"; catName = "Roofing"; }
-                        else if (primary.contains("plumb") || primary.contains("pipe") || primary.contains("water")) { cat = "plumbing"; catName = "Plumbing"; }
-                        else if (primary.contains("electric") || primary.contains("wire") || primary.contains("panel")) { cat = "electrical"; catName = "Electrical"; }
-                        else if (primary.contains("foundation") || primary.contains("struct") || primary.contains("crack")) { cat = "foundation-repair"; catName = "Foundation"; }
-                        else if (primary.contains("hvac") || primary.contains("furnace") || primary.contains("ac") || primary.contains("air")) { cat = "hvac"; catName = "HVAC"; }
-                        
-                        String trackPrefix = "/home-repair/track?verdictId=" + history.getId() + "&type=AFFILIATE&target=";
-                        String buyingTarget = "https://angi.com/companylist/" + cat + ".htm";
-                        String livingTarget = "https://homeadvisor.com/task." + cat + ".html";
-                    }
-
-                    @if("BUYING".equals(history.getPurpose()))
-                        <!-- BUYER MODE: Negotiation Packet -->
-                        <div>
-                            <div class="flex items-center gap-2 mb-6">
-                                <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Send-today packet</span>
-                            </div>
-                            <h3 class="text-xl font-bold text-slate-900 mb-2">This is the packet to send next.</h3>
-                            <div class="rounded-2xl border border-amber-200 bg-amber-50 p-4 mb-3">
-                                <div class="text-[11px] font-bold uppercase tracking-[0.18em] text-amber-800 mb-2">Start here</div>
-                                <div class="text-3xl font-bold text-slate-900">$${targetAskLabel}</div>
-                                <p class="text-xs text-slate-600 mt-2">${sellerCreditSummary}</p>
-                            </div>
-                            <div class="rounded-2xl border border-slate-200 bg-white p-4">
-                                <div class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500 mb-2">Loan posture</div>
-                                <div class="text-sm font-semibold text-slate-900">${loanTypeLabel}</div>
-                                <p class="text-xs text-slate-500 mt-2">${loanTypeNote}</p>
-                            </div>
-                        </div>
-                        <div>
-                            <button onclick="window.copyNegotiationPacket();" data-analytics-event="copy_packet" data-analytics-category="engagement" data-analytics-label="buying_primary" class="mt-4 w-full py-3 bg-slate-900 text-white font-semibold rounded-xl text-sm hover:bg-slate-700 transition-colors">
-                                Copy Full Send-Today Packet
-                            </button>
-                            <button onclick="window.copyAgentRequest();" data-analytics-event="copy_agent_request" data-analytics-category="engagement" data-analytics-label="buying_secondary" class="mt-3 w-full py-3 bg-white border border-slate-300 text-slate-700 font-semibold rounded-xl text-sm hover:bg-slate-50 transition-colors">
-                                Copy Agent Request
-                            </button>
-                            <button onclick="window.copyAskSummary();" data-analytics-event="copy_ask_summary" data-analytics-category="engagement" data-analytics-label="buying_summary" class="mt-3 w-full py-3 bg-white border border-slate-300 text-slate-700 font-semibold rounded-xl text-sm hover:bg-slate-50 transition-colors">
-                                Copy Ask Summary
-                            </button>
-                            <div class="mt-3 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                                <div class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500 mb-2">Defensible fallback</div>
-                                <div class="text-lg font-bold text-slate-900">$${defendableAskLabel}</div>
-                                <p class="text-xs text-slate-500 mt-2">${negotiationEvidenceNote}</p>
-                            </div>
-                            
-                            <!-- 백업 CTA (이메일 수집 보험) + 언락 로직 -->
-                            <div id="lead-capture-container" class="mt-4 print:hidden">
-                                <form id="report-unlock-form" onsubmit="event.preventDefault(); window.unlockReport(this);" class="w-full">
-                                <div class="mb-2 text-xs font-bold text-slate-500 uppercase">Save packet + unlock print</div>
-                                    <div class="flex gap-2">
-                                        <input type="email" name="email" placeholder="Enter email to save this send-today packet and enable printing..." required class="flex-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
-                                        <button type="submit" class="px-3 py-2 bg-slate-900 text-white font-bold text-sm rounded-lg hover:bg-slate-800 transition-colors whitespace-nowrap">
-                                            Save Packet
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                            <!-- 잠금 해제 후 보이는 섹션 -->
-                            <div id="unlocked-actions" class="hidden mt-4 pt-4 border-t border-slate-100">
-                                <div class="bg-emerald-50 text-emerald-800 text-xs p-2 rounded mb-3 font-medium">Saved. You can now print this send-today packet.</div>
-                                <button onclick="window.printNegotiationPacket();" data-analytics-event="print_packet" data-analytics-category="engagement" data-analytics-label="buying_unlocked" class="w-full py-2.5 bg-white border border-slate-300 text-slate-700 font-semibold rounded-lg text-sm hover:bg-slate-50 transition-colors flex items-center justify-center gap-2">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 00-2 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                                    Print Packet
-                                </button>
-                            </div>
-                            
-                            <script>
-                                window.sendPacketEvent = function(eventName, label) {
-                                    if (typeof window.gtag === "function") {
-                                        window.gtag("event", eventName, {
-                                            event_category: "engagement",
-                                            event_label: label || "buying_packet"
-                                        });
-                                    }
-                                };
-                                window.copyNegotiationPacket = function() {
-                                    const packet = '${sellerCreditSummaryJs}' + '\n\n' + '${agentNegotiationScriptJs}';
-                                    navigator.clipboard.writeText(packet);
-                                    alert('Send-today packet copied to clipboard!');
-                                    window.sendPacketEvent('copy_packet', 'full_packet');
-                                };
-                                window.copyAgentRequest = function() {
-                                    navigator.clipboard.writeText('${agentNegotiationScriptJs}');
-                                    alert('Agent request copied to clipboard!');
-                                    window.sendPacketEvent('copy_agent_request', 'agent_request');
-                                };
-                                window.copyAskSummary = function() {
-                                    navigator.clipboard.writeText('${sellerCreditSummaryJs}');
-                                    alert('Ask summary copied to clipboard!');
-                                    window.sendPacketEvent('copy_ask_summary', 'ask_summary');
-                                };
-                                window.printNegotiationPacket = function() {
-                                    window.sendPacketEvent('print_packet', 'print_packet');
-                                    window.print();
-                                };
-                                window.unlockReport = function(form) {
-                                    const email = form.email.value;
-                                    fetch('/home-repair/api/lead?verdictId=${history.getId().toString()}&email=' + encodeURIComponent(email), {method: 'POST'})
-                                    .then(() => {
-                                        document.getElementById('lead-capture-container').classList.add('hidden');
-                                        document.getElementById('unlocked-actions').classList.remove('hidden');
-                                        gtag('event', 'generate_lead', {
-                                            'event_category': 'conversion',
-                                            'event_label': 'print_access_unlock'
-                                        });
-                                    });
-                                };
-                                window.sendPacketEvent('packet_generated', 'buying_packet');
-                            </script>
-                        </div>
-                    @else
-                        <!-- OWNER MODE: Strategy -->
-                        <div>
-                             <div class="flex items-center gap-2 mb-6">
-                                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Strategy</span>
-                            </div>
-                            <h3 class="text-2xl font-bold text-slate-900 mb-2">${verdict.getStrategyUsed().replace("_", " ")}</h3>
-                            <p class="text-sm text-slate-500 leading-relaxed">
-                                ${verdict.getStrategyExplanation()}
-                            </p>
-                        </div>
-                        <div>
-                            <button onclick="document.getElementById('details-section').scrollIntoView({behavior: 'smooth'})" class="mt-6 w-full py-3 bg-slate-50 text-slate-900 font-semibold rounded-xl text-sm hover:bg-slate-100 transition-colors block">
-                                View Verified Plan
-                            </button>
-                            
-                            <!-- 메인 CTA (LIVING) -->
-                            <a href="${trackPrefix}${livingTarget}&cat=${cat}&src=living" target="_blank" rel="nofollow sponsored noopener" class="mt-3 w-full py-3 bg-emerald-600 text-white font-bold rounded-xl text-center text-sm hover:bg-emerald-700 transition-colors shadow-lg shadow-emerald-200 block">
-                                Find a top-rated ${catName} pro before it gets worse &rarr;
-                            </a>
-                            
-                            <!-- 서브 CTA (LIVING 비교) -->
-                            <a href="${trackPrefix}https://thumbtack.com&cat=${cat}&src=living" target="_blank" rel="nofollow sponsored noopener" class="mt-2 w-full py-2 bg-white border border-slate-200 text-slate-700 font-semibold rounded-xl text-center text-sm hover:bg-slate-50 transition-colors block">
-                                Compare ${catName} Quotes
-                            </a>
+                            <p class="mt-3 text-sm text-slate-500 leading-6">Any citation marked <strong>(OCR)</strong> came from a scan or photo and should be checked against the original page before sending.</p>
+                            <ul class="packet-list">
+                                @for(InspectionEvidenceRef evidence : packet.matchedEvidence())
+                                    <li>
+                                        <strong>${evidence.findingLabel()}</strong>
+                                        <div class="mt-2 text-sm text-slate-600 leading-6">
+                                            @for(String citation : evidence.citations())
+                                                <div>${citation}</div>
+                                            @endfor
+                                        </div>
+                                    </li>
+                                @endfor
+                            </ul>
                         </div>
                     @endif
-                </div>
+                </aside>
+            </section>
 
-                <%-- CARD 3: MARKET SIGNALS (Detail Grid) --%>
-                <div class="md:col-span-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-                    
-                    <!-- Regional Risk -->
-                    <div class="bento-card">
-                         <div class="flex items-center justify-between mb-4">
-                            <span class="text-xs font-bold text-slate-400 uppercase">Context Risk</span>
-                            <span class="text-xl">🌍</span>
-                         </div>
-                         @if(verdict.getContextBriefing() != null)
-                            <div class="text-2xl font-bold text-slate-900 mb-1">${verdict.getContextBriefing().getRegionalRisk()}</div>
-                            <div class="w-full bg-slate-100 h-1.5 rounded-full mb-3 overflow-hidden">
-                               <div class="bg-cyan-700 h-full rounded-full" style="width: 75%"></div>
-                            </div>
-                            <p class="text-xs text-slate-500">${verdict.getContextBriefing().getRegionalRiskReason()}</p>
-                         @else
-                            <div class="text-lg font-bold text-slate-400 mb-1">N/A</div>
-                            <p class="text-xs text-slate-400">Regional data unavailable.</p>
-                         @endif
-                    </div>
-
-                    <!-- Labor Market -->
-                    <div class="bento-card">
-                         <div class="flex items-center justify-between mb-4">
-                            <span class="text-xs font-bold text-slate-400 uppercase">Labor Rates</span>
-                            <span class="text-xl">🔨</span>
-                         </div>
-                         @if(verdict.getContextBriefing() != null)
-                            <div class="text-2xl font-bold text-slate-900 mb-1">${verdict.getContextBriefing().getLaborMarketRate()}</div>
-                            <div class="w-full bg-slate-100 h-1.5 rounded-full mb-3 overflow-hidden">
-                               <div class="bg-amber-600 h-full rounded-full" style="width: 85%"></div>
-                            </div>
-                            <p class="text-xs text-slate-500">${verdict.getContextBriefing().getLaborMarketRateReason()}</p>
-                         @else
-                            <div class="text-lg font-bold text-slate-400 mb-1">N/A</div>
-                            <p class="text-xs text-slate-400">Labor data unavailable.</p>
-                         @endif
-                    </div>
-
-                    <!-- Leverage -->
-                    <div class="bento-card bg-gradient-to-br from-slate-50 to-white relative overflow-hidden group">
-                         <div class="absolute right-0 top-0 p-3 opacity-10 font-black text-6xl text-slate-900 select-none">$</div>
-                         <div class="relative z-10">
-                            @if("BUYING".equals(history.getPurpose()))
-                                <span class="text-xs font-bold text-slate-400 uppercase">Seller Credit Range</span>
-                                <div class="space-y-3 mt-4">
-                                    <div class="flex items-center justify-between bg-white/80 border border-slate-200 rounded-xl px-3 py-2">
-                                        <span class="text-xs font-semibold text-slate-500 uppercase">Defensible</span>
-                                        <span class="text-lg font-bold text-slate-900">$${String.format("%,.0f", defendableAsk)}</span>
-                                    </div>
-                                    <div class="flex items-center justify-between bg-amber-50 border border-amber-200 rounded-xl px-3 py-2">
-                                        <span class="text-xs font-semibold text-amber-700 uppercase">Target Ask</span>
-                                        <span class="text-lg font-bold text-amber-900">$${String.format("%,.0f", targetAsk)}</span>
-                                    </div>
-                                    <div class="flex items-center justify-between bg-white/80 border border-slate-200 rounded-xl px-3 py-2">
-                                        <span class="text-xs font-semibold text-slate-500 uppercase">Stretch</span>
-                                        <span class="text-lg font-bold text-slate-900">$${String.format("%,.0f", stretchAsk)}</span>
-                                    </div>
+            <section class="copy-layout">
+                <article class="copy-panel">
+                    <div class="card-kicker">Hard readiness gates</div>
+                    <h2>What still blocks a safe send</h2>
+                    <ul class="packet-list">
+                        @for(String item : packet.verdictRationale())
+                            <li>${item}</li>
+                        @endfor
+                    </ul>
+                    <div class="gate-list">
+                        @for(InspectionReadinessGate gate : packet.readinessGates())
+                            <div class="gate-item gate-${gate.status().toLowerCase()}">
+                                <div class="gate-head">
+                                    <span class="gate-badge gate-${gate.status().toLowerCase()}">${gate.status()}</span>
+                                    <strong>${gate.label()}</strong>
                                 </div>
-                                <p class="text-xs text-slate-500 mt-3">${loanTypeLabel}: ${loanTypeNote}</p>
-                            @else
-                                <span class="text-xs font-bold text-slate-400 uppercase">Repair Allowance Estimate</span>
-                                <div class="text-3xl font-bold text-slate-900 mt-2 tracking-tight">$${String.format("%,.0f", verdict.getExactCostEstimate() * 1.5)}</div>
-                                <p class="text-xs text-slate-500 mt-2 font-medium bg-white/50 inline-block px-2 py-1 rounded">
-                                    Suggested allowance request (+50% buffer)
-                                </p>
-                            @endif
-                         </div>
+                                <p class="gate-note">${gate.note()}</p>
+                            </div>
+                        @endfor
                     </div>
+                    <div class="card-kicker mt-6">Score inputs</div>
+                    <ul class="packet-list">
+                        @for(String item : packet.confidenceReasons())
+                            <li>${item}</li>
+                        @endfor
+                    </ul>
+                </article>
 
-                    @if("BUYING".equals(history.getPurpose()))
-                    <div class="md:col-span-12 bento-card">
-                        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
-                            <div>
-                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Inspection-to-Credit Builder</span>
-                                <h3 class="text-2xl font-bold text-slate-900 mt-2">Keep this send-today packet tight.</h3>
-                            </div>
-                            <div class="text-sm text-slate-500">
-                                <strong class="text-slate-700">${loanTypeLabel}</strong> | <strong class="text-slate-700">${quoteSupportLabel}</strong> | <strong class="text-slate-700">${closingWindowLabel}</strong>
-                            </div>
-                        </div>
+                <aside class="copy-panel">
+                    <div class="card-kicker">Next actions</div>
+                    <h2>What to do before sending</h2>
+                    <ul class="packet-list">
+                        @for(String item : packet.nextActions())
+                            <li>${item}</li>
+                        @endfor
+                    </ul>
+                </aside>
+            </section>
 
-                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
-                            <div class="rounded-2xl border border-rose-100 bg-rose-50/80 p-4">
-                                <div class="text-xs font-bold uppercase tracking-widest text-rose-700 mb-3">Must fix now</div>
-                                @for(var finding : mustFixNow)
-                                    <div class="text-sm text-slate-800 mb-2 last:mb-0">- ${finding}</div>
-                                @endfor
-                            </div>
-                            <div class="rounded-2xl border border-amber-100 bg-amber-50/80 p-4">
-                                <div class="text-xs font-bold uppercase tracking-widest text-amber-700 mb-3">Verify next</div>
-                                @for(var finding : verifyNext)
-                                    <div class="text-sm text-slate-800 mb-2 last:mb-0">- ${finding}</div>
-                                @endfor
-                            </div>
-                            <div class="rounded-2xl border border-emerald-100 bg-emerald-50/80 p-4">
-                                <div class="text-xs font-bold uppercase tracking-widest text-emerald-700 mb-3">Can defer / do not lead with this ask</div>
-                                @for(var finding : deferLater)
-                                    <div class="text-sm text-slate-800 mb-2 last:mb-0">- ${finding}</div>
-                                @endfor
-                            </div>
-                        </div>
+            <section class="packet-grid">
+                <article class="packet-card">
+                    <div class="card-kicker">Source findings</div>
+                    <h2>Inspection intake readback</h2>
+                    <ul class="packet-list">
+                        @for(String item : packet.originalFindings())
+                            <li>${item}</li>
+                        @endfor
+                    </ul>
+                </article>
 
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-                                <div class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Request summary</div>
-                                <p class="text-sm text-slate-700 leading-relaxed">${sellerCreditSummary}</p>
-                            </div>
-                            <div class="rounded-2xl border border-slate-200 bg-white p-5">
-                                <div class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Copy-ready request</div>
-                                <p class="text-sm text-slate-700 leading-relaxed">${agentNegotiationScript}</p>
-                            </div>
-                        </div>
-                    </div>
+                <article class="packet-card">
+                    <div class="card-kicker">Negotiation basis</div>
+                    <h2>${packet.dataAnchor()}</h2>
+                    <p class="mt-4 text-slate-600 leading-7">${packet.dataAnchorNote()}</p>
+                    @if(!packet.pricingBreakdown().isEmpty())
+                        <ul class="packet-list mt-5">
+                            @for(String item : packet.pricingBreakdown())
+                                <li>${item}</li>
+                            @endfor
+                        </ul>
                     @endif
+                    <div class="card-kicker mt-6">Financing pressure</div>
+                    <p class="mt-3 text-slate-600 leading-7">${packet.lenderVisibleNote()}</p>
+                    @if(!packet.lenderVisibleSignals().isEmpty())
+                        <ul class="packet-list mt-5">
+                            @for(String item : packet.lenderVisibleSignals())
+                                <li>${item}</li>
+                            @endfor
+                        </ul>
+                    @endif
+                </article>
 
-                </div>
-            </div>
-
-                <!-- Market Benchmark (Redesigned) -->
-                @if(!"BUYING".equals(history.getPurpose()) && verdict.getComparisonData() != null)
-                <div class="bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm mb-12 flex flex-col md:flex-row items-center gap-8">
-                    <div class="flex-1">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-full mb-4">
-                            <span class="w-2 h-2 rounded-full bg-slate-900"></span>
-                            <span class="text-xs font-bold text-slate-600 uppercase tracking-widest">2026 Benchmark</span>
-                        </div>
-                        <h3 class="text-3xl font-bold text-slate-900 mb-2">
-                             @if(verdict.getComparisonData().getCostDelta() > 0)
-                                <span class="text-rose-500">+${String.format("%.0f", verdict.getComparisonData().getDeltaPercentage())}%</span> Liability Gap
-                             @else
-                                <span class="text-emerald-500">${String.format("%.0f", verdict.getComparisonData().getDeltaPercentage())}%</span> Cost Advantage
-                             @endif
-                        </h3>
-                        <p class="text-slate-500 text-lg leading-relaxed mb-6">
-                            @if(verdict.getComparisonData().getCostDelta() > 0)
-                                Compared to a modern home (2010+) in this zip code, this property carries an additional 
-                                <span class="font-bold text-slate-900">$${String.format("%,.0f", verdict.getComparisonData().getCostDelta())}</span> 
-                                in statistical maintenance liability and actuarial depreciation risk.
-                            @else
-                                This property's estimated maintenance costs are 
-                                <span class="font-bold text-slate-900">$${String.format("%,.0f", Math.abs(verdict.getComparisonData().getCostDelta()))}</span> 
-                                lower than the modern benchmark for this area.
-                            @endif
-                        </p>
-                        
-                        <!-- Simple visual bar -->
-                        <div class="relative h-12 bg-slate-50 rounded-xl overflow-hidden flex items-center px-4 border border-slate-100">
-                             <div class="absolute left-0 top-0 bottom-0 bg-rose-500/10" style="width: ${Math.min(100, Math.max(0, verdict.getComparisonData().getDeltaPercentage()))}%"></div>
-                             <div class="relative z-10 flex justify-between w-full text-xs font-bold uppercase tracking-widest text-slate-500">
-                                <span>Modern Baseline</span>
-                                <span>This Property</span>
-                             </div>
-                             <!-- Marker for this property -->
-                             @if(verdict.getComparisonData().getDeltaPercentage() > 0)
-                                <div class="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-rose-500 rounded-full shadow-[0_0_12px_rgba(244,63,94,0.6)]" style="left: ${Math.min(98, Math.max(2, verdict.getComparisonData().getDeltaPercentage()))}%"></div>
-                             @else
-                                <div class="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-emerald-500 rounded-full shadow-[0_0_12px_rgba(16,185,129,0.6)]" style="left: 2%"></div>
-                             @endif
-                        </div>
-                    </div>
-                    
-                    <div class="w-full md:w-64 bg-slate-50 rounded-2xl p-6 text-center border border-slate-100">
-                        <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Baseline Cost</div>
-                        <div class="text-2xl font-bold text-slate-900">$${String.format("%,.0f", verdict.getComparisonData().getModernBenchmarkCost())}</div>
-                        <div class="text-xs text-slate-400 mt-2">Expected 5yr Maintenance (2010+)</div>
-                    </div>
-                </div>
-                @endif
-
-                <!-- System Integrity Timeline -->
-                @if(!"BUYING".equals(history.getPurpose()) && verdict.getPlan() != null && verdict.getPlan().getMustDo() != null)
-                <div class="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm mb-12">
-                    <div class="flex items-center gap-4 mb-8">
-                        <div class="p-3 bg-blue-50 rounded-2xl text-blue-600">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        </div>
-                        <div>
-                            <h3 class="text-2xl font-bold text-slate-900">Component Health</h3>
-                            <p class="text-slate-500">Forensic status of key systems</p>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        @for(var item : verdict.getPlan().getMustDo())
-                            @if(item.getRiskFlags() != null && (item.getRiskFlags().stream().anyMatch(f -> f.contains("DEAD") || f.contains("WATCH") || f.contains("VERIFIED"))))
-                            <div class="group h-full">
-                                <div class="p-4 rounded-4 border h-100 transition-hover" style="background: ${item.getRiskFlags().contains("VERIFIED_UPDATE: RECENTLY_REPLACED") ? "var(--slate-50)" : "white"};">
-                                    <div class="d-flex justify-content-between align-items-start mb-3">
-                                        <div class="h5 fw-bold mb-0">${item.getPrettyName()}</div>
-                                        @if(item.getRiskFlags().contains("VERIFIED_UPDATE: RECENTLY_REPLACED"))
-                                            <span class="badge bg-success-subtle text-success border border-success-subtle">NEW</span>
-                                        @elseif(item.getRiskFlags().stream().anyMatch(f -> f.contains("DEAD")))
-                                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle">EXPIRED</span>
-                                        @else
-                                            <span class="badge bg-warning-subtle text-warning border border-warning-subtle">WATCH</span>
-                                        @endif
-                                    </div>
-                                    <p class="text-sm text-slate-500 leading-snug">
-                                        $unsafe{item.getExplanation() != null && item.getExplanation().contains(". ") ? item.getExplanation().split("\\. ")[0] + "." : item.getExplanation()}
-                                    </p>
-                                </div>
-                            </div>
-                            @endif
+                <article class="packet-card">
+                    <div class="card-kicker">Cut from the ask</div>
+                    <h2>Excluded on purpose</h2>
+                    <ul class="packet-list">
+                        @for(InspectionExclusionItem item : packet.excludedFindings())
+                            <li>
+                                <strong>${item.findingLabel()}</strong>
+                                <div class="mt-2 text-sm text-slate-600 leading-6">${item.reason()}</div>
+                            </li>
                         @endfor
-                        
-                        <!-- Always show some stability for balance -->
-                        <div class="group h-full">
-                            <div class="p-4 rounded-4 border h-100 bg-light-subtle">
-                                <div class="d-flex justify-content-between align-items-start mb-3">
-                                    <div class="h5 fw-bold mb-0">Structural Shell</div>
-                                    <span class="badge bg-success-subtle text-success border border-success-subtle">STABLE</span>
-                                </div>
-                                <p class="small text-muted mb-0">Foundations and load-bearing elements are statistically reliable.</p>
-                            </div>
+                    </ul>
+                </article>
+            </section>
+
+            <section class="copy-layout">
+                <article class="copy-panel">
+                    <div class="card-kicker">${packet.workflowLabel()}</div>
+                    <h2>${packet.workflowTitle()}</h2>
+                    <div class="support-box">${packet.workflowNote()}</div>
+                </article>
+
+                <aside class="copy-panel">
+                    <div class="card-kicker">File handoff</div>
+                    <h2>Move it into the real transaction file</h2>
+                    <ul class="packet-list">
+                        @for(String item : packet.workflowSteps())
+                            <li>${item}</li>
+                        @endfor
+                    </ul>
+                </aside>
+            </section>
+
+            <section class="copy-layout">
+                <article class="copy-panel">
+                    <div class="card-kicker">Case workflow</div>
+                    <h2>${caseWorkflow.currentLabel()}</h2>
+                    <div class="support-box">${caseWorkflow.currentNote()}</div>
+                    <p class="mt-4 text-slate-600 leading-7"><strong>Next:</strong> ${caseWorkflow.recommendedNextAction()}</p>
+
+                    <div class="workflow-actions print-hidden mt-6">
+                        <div class="feedback-row">
+                            <input type="text" id="workflow-actor" placeholder="Actor / owner name">
+                            <input type="text" id="workflow-note" placeholder="Optional audit note">
+                        </div>
+                        <div class="action-row">
+                            <button type="button" class="packet-button secondary" onclick="window.recordWorkflowState('REQUEST_REVIEW')">Request Review</button>
+                            <button type="button" class="packet-button secondary" onclick="window.recordWorkflowState('BUYER_APPROVED')">Record Buyer Approval</button>
+                            <button type="button" class="packet-button secondary" onclick="window.recordWorkflowState('MARK_SENT')">Mark Sent</button>
+                            <button type="button" class="packet-button secondary" onclick="window.recordWorkflowState('COUNTER_RECEIVED')">Record Seller Counter</button>
+                            <button type="button" class="packet-button secondary" onclick="window.recordWorkflowState('RESOLUTION_SIGNED')">Mark Resolution Signed</button>
+                            <button type="button" class="packet-button secondary" onclick="window.recordWorkflowState('MARK_TERMINATED')">Mark Terminated</button>
                         </div>
                     </div>
-                </div>
+                </article>
 
-                <!-- Refine Analysis CTA -->
-                <div class="bg-indigo-50 border border-indigo-100 p-8 rounded-[32px] text-center mb-12">
-                     <h3 class="text-xl font-bold text-indigo-900 mb-2">Need a tighter seller-credit range?</h3>
-                     <p class="text-indigo-700 mb-6 max-w-lg mx-auto">Property details like roof material and story count can change the repair ask by 30%+. Tighten the send-today packet before you negotiate.</p>
-                     
-                    <form action="/home-repair/verdict" method="post" class="w-full max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-sm border border-indigo-100 flex flex-col md:flex-row items-center gap-6">
-                        <input type="hidden" name="metroCode" value="${history.getZipCode()}"> 
-                        <input type="hidden" name="era" value="${history.getDecade()}"> 
-                        <input type="hidden" name="sqft" value="1800"> 
-                        <input type="hidden" name="relationship" value="${history.getPurpose() != null ? history.getPurpose() : "LIVING"}">
-                        <input type="hidden" name="budget" value="${history.getBudget() != null && !"null".equalsIgnoreCase(history.getBudget()) ? history.getBudget() : "50000"}">
-                        <input type="hidden" name="loanType" value="${loanType}">
-                        <input type="hidden" name="quoteSupport" value="${quoteSupport}">
-                        <input type="hidden" name="closingWindow" value="${closingWindow}">
-                        @for(var finding : inspectionFindings)
-                            <input type="hidden" name="inspectionFinding" value="${finding}">
+                <aside class="copy-panel">
+                    <div class="card-kicker">Audit timeline</div>
+                    <h2>What happened in this case</h2>
+                    <div class="timeline-list">
+                        @for(InspectionCaseWorkflowEvent event : caseWorkflow.timeline())
+                            <div class="timeline-item">
+                                <div class="timeline-top">
+                                    <strong>${event.label()}</strong>
+                                    @if(event.timestampLabel() != null && !event.timestampLabel().isBlank())
+                                        <span>${event.timestampLabel()}</span>
+                                    @endif
+                                </div>
+                                @if(event.note() != null && !event.note().isBlank())
+                                    <p class="timeline-note">${event.note()}</p>
+                                @endif
+                            </div>
                         @endfor
+                    </div>
+                </aside>
+            </section>
 
-                        <div class="w-full md:flex-1 text-left">
-                            <label class="block text-xs font-bold text-slate-500 mb-1 uppercase">Bathrooms</label>
-                            <select name="bathrooms" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 focus:ring-2 focus:ring-indigo-500">
-                                <option value="1">1 Bath</option>
-                                <option value="2" selected>2 Baths</option>
-                                <option value="3">3 Baths</option>
-                                <option value="4">4+ Baths</option>
-                            </select>
-                        </div>
-                        
-                        <div class="w-full md:flex-1 text-left">
-                            <label class="block text-xs font-bold text-slate-500 mb-1 uppercase">Stories</label>
-                            <select name="stories" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 focus:ring-2 focus:ring-indigo-500">
-                                 <option value="1">1 Story</option>
-                                 <option value="2" selected>2 Stories</option>
-                                 <option value="3">3+ Stories</option>
-                            </select>
-                        </div>
-
-                        <div class="w-full md:w-auto h-full flex items-end">
-                             <button type="submit" class="w-full md:w-auto h-[42px] whitespace-nowrap px-8 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition shadow-lg shadow-indigo-200 mt-5 md:mt-0">
-                                Recalculate
-                             </button>
+            <section class="copy-panel">
+                <div class="card-kicker">Validation mode</div>
+                <h2>Use the pre-send check freely, then tell us if it held up</h2>
+                <div class="validation-panel" id="validation-actions">
+                    <strong>Validation mode: no payment or email required.</strong>
+                <p>Copy, print, and use the revised packet after review. The core product stays free while we confirm that people actually rely on the pre-send check in the real inspection response window.</p>
+                    <form id="validation-feedback-form" onsubmit="event.preventDefault(); window.saveValidationSignal(this);">
+                        <div class="feedback-row">
+                            <input type="email" name="email" placeholder="Optional email for follow-up">
+                            <button type="submit" class="packet-button primary">Mark Useful</button>
                         </div>
                     </form>
+                    <div id="packet-action-status" aria-live="polite"></div>
                 </div>
-                @endif
+            </section>
 
-                <!-- 12-Month Post-Purchase Action Plan -->
-                @if(!"BUYING".equals(history.getPurpose()))
-                <div class="bg-white p-8 rounded-[32px] border border-slate-200 shadow-sm mb-12">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center text-white text-xl">📅</div>
-                        <div>
-                            <h3 class="text-2xl font-bold text-slate-900 leading-tight">12-Month Security Calendar</h3>
-                            <p class="text-sm text-slate-500">Immediate maintenance steps to prevent asset depreciation.</p>
+            <section class="copy-panel">
+                <div class="card-kicker">Buyer-agent desk</div>
+                <h2>Fastest paid path: small teams that want help on live files</h2>
+                <div class="validation-panel agent-desk-panel">
+                    <strong>Why this is the easy-money layer</strong>
+                    <p>
+                        Spectora, HomeGauge, and Palmtech already sell request-list builders inside inspector software. The easier paid layer here is not replacing those stacks. It is helping buyer agents turn live inspection findings into a narrow packet they can send, defend, and reuse across deals.
+                    </p>
+                    <form id="agent-desk-form" onsubmit="event.preventDefault(); window.requestAgentDesk(this);">
+                        <div class="agent-desk-grid mt-4">
+                            <input type="email" name="email" placeholder="Work email" required>
+                            <select name="role">
+                                <option value="buyer_agent">Buyer agent</option>
+                                <option value="team_lead">Team lead</option>
+                                <option value="transaction_coordinator">Transaction coordinator</option>
+                                <option value="inspector_partner">Inspector partner</option>
+                            </select>
+                            <select name="teamSize">
+                                <option value="solo">Solo</option>
+                                <option value="2_5">2-5 people</option>
+                                <option value="6_10">6-10 people</option>
+                                <option value="11_plus">11+ people</option>
+                            </select>
+                            <select name="monthlyVolume">
+                                <option value="1_4">1-4 packets / month</option>
+                                <option value="5_10">5-10 packets / month</option>
+                                <option value="11_25">11-25 packets / month</option>
+                                <option value="26_plus">26+ packets / month</option>
+                            </select>
                         </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100">
-                            <div class="text-xs font-bold text-indigo-600 uppercase tracking-widest mb-2">Month 1-3</div>
-                            <h4 class="font-bold text-slate-900 mb-2 whitespace-pre-line">Immediate Stabilization</h4>
-                            <ul class="text-xs text-slate-600 space-y-2">
-                                <li>• Clean all gutters & downspouts</li>
-                                <li>• Change HVAC filters (MERV 11)</li>
-                                <li>• Check attic for moisture signs</li>
-                                <li>• Locate main water shut-off</li>
-                            </ul>
+                        <textarea name="note" class="mt-3" rows="3" placeholder="What would make this worth paying for? e.g. rush review, team template, broker-ready export, office rollout"></textarea>
+                        <div class="action-row mt-4">
+                            <button type="submit" class="packet-button primary">Request Team Setup</button>
                         </div>
-                        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100">
-                            <div class="text-xs font-bold text-indigo-600 uppercase tracking-widest mb-2">Month 4-8</div>
-                            <h4 class="font-bold text-slate-900 mb-2 whitespace-pre-line">System Efficiency</h4>
-                            <ul class="text-xs text-slate-600 space-y-2">
-                                <li>• Professional AC/Furnace service</li>
-                                <li>• Flush sediment from water heater</li>
-                                <li>• Inspect caulking around windows</li>
-                                <li>• Test GFCI outlets in kitchen/bath</li>
-                            </ul>
-                        </div>
-                        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100">
-                            <div class="text-xs font-bold text-indigo-600 uppercase tracking-widest mb-2">Month 9-12</div>
-                            <h4 class="font-bold text-slate-900 mb-2 whitespace-pre-line">Asset Preservation</h4>
-                            <ul class="text-xs text-slate-600 space-y-2">
-                                <li>• Foundation/Grade inspection</li>
-                                <li>• Prune trees away from roofline</li>
-                                <li>• Check fireplace & chimney cap</li>
-                                <li>• Annual home insurance audit</li>
-                            </ul>
-                        </div>
-                    </div>
+                    </form>
+                    <p class="agent-desk-note">This does not gate the free packet. It just identifies the highest-intent buyer-agent teams.</p>
+                    <div id="agent-desk-status" aria-live="polite"></div>
                 </div>
-                @endif
+            </section>
+        </div>
 
-                <!-- Share & Export (Moved to Unlock logic above for Buying mode, kept simple here for others) -->
-                @if(!"BUYING".equals(history.getPurpose()))
-                <div class="bg-slate-900 text-white p-8 rounded-[32px] shadow-xl flex flex-col md:flex-row items-center justify-between gap-8 mb-12 print:hidden">
-                    <div class="max-w-md">
-                        <h3 class="text-2xl font-bold mb-2">Share this analysis.</h3>
-                        <p class="text-slate-400 text-sm">Send this link to your partner or contractor for a quick overview.</p>
-                    </div>
-                    <div class="flex flex-wrap gap-4">
-                        <button onclick="navigator.clipboard.writeText(window.location.href); alert('Link copied!'); gtag('event', 'share', {'method': 'clipboard'});" class="px-6 py-3 bg-slate-800 text-white font-bold rounded-xl border border-slate-700 hover:bg-slate-700 transition flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
-                            Copy Sharable Link
-                        </button>
-                    </div>
-                </div>
-                @endif
+        <script>
+            (function () {
+                const verdictId = '${history.getId().toString()}';
+                const packetEntry = '${acquisitionEntry}';
+                const fullPacketText = '${fullPacketTextJs}';
+                const agentNegotiationScript = '${agentNegotiationScriptJs}';
+                const sellerCreditSummary = '${sellerCreditSummaryJs}';
 
-                <div class="mt-16 text-center">
-                     <p class="text-xs text-slate-400 mb-4">Calculations generated at ${new java.util.Date().toString()}</p>
-                     <a href="/" class="text-sm font-semibold text-blue-600 hover:text-black transition">Start Another Analysis &rarr;</a>
-                </div>
-            </div>
-        `
+                function setStatus(message) {
+                    const status = document.getElementById('packet-action-status');
+                    if (status) {
+                        status.textContent = message;
+                    }
+                }
+
+                function setAgentDeskStatus(message) {
+                    const status = document.getElementById('agent-desk-status');
+                    if (status) {
+                        status.textContent = message;
+                    }
+                }
+
+                function logPacketEvent(eventType, target) {
+                    const body = new URLSearchParams({
+                        verdictId: verdictId,
+                        eventType: eventType,
+                        target: 'entry=' + (packetEntry || 'direct') + '|action=' + (target || 'buying_packet')
+                    });
+                    fetch('/home-repair/api/event', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body
+                    }).catch(function () {});
+                }
+
+                async function copyText(text, eventType, target, message) {
+                    try {
+                        await navigator.clipboard.writeText(text);
+                    } catch (error) {
+                        const textarea = document.createElement('textarea');
+                        textarea.value = text;
+                        document.body.appendChild(textarea);
+                        textarea.select();
+                        document.execCommand('copy');
+                        textarea.remove();
+                    }
+                    logPacketEvent(eventType, target);
+                    setStatus(message);
+                }
+
+                window.copyNegotiationPacket = function () {
+                    copyText(fullPacketText, 'COPY_PACKET', 'full_packet', 'Copied full packet.');
+                };
+
+                window.copyAgentRequest = function () {
+                    copyText(agentNegotiationScript, 'COPY_AGENT_REQUEST', 'agent_request', 'Copied agent request.');
+                };
+
+                window.copyAskSummary = function () {
+                    copyText(sellerCreditSummary, 'COPY_ASK_SUMMARY', 'ask_summary', 'Copied ask summary.');
+                };
+
+                window.printNegotiationPacket = function () {
+                    logPacketEvent('PRINT_PACKET', 'print_packet');
+                    setStatus('Print dialog opened.');
+                    window.print();
+                };
+
+                window.saveValidationSignal = function (form) {
+                    logPacketEvent('SUBMIT_FEEDBACK', 'marked_useful');
+                    const email = form.querySelector("input[name='email']").value.trim();
+                    if (email) {
+                        const body = new URLSearchParams({ verdictId: verdictId, email: email, entry: packetEntry || 'direct' });
+                        fetch('/home-repair/api/lead', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            body
+                        }).catch(function () {});
+                    }
+                    setStatus('Marked useful.');
+                };
+
+                window.requestAgentDesk = function (form) {
+                    const formData = new FormData(form);
+                    const email = (formData.get('email') || '').toString().trim();
+                    if (!email) {
+                        setAgentDeskStatus('Work email is required.');
+                        return;
+                    }
+                    const body = new URLSearchParams({
+                        verdictId: verdictId,
+                        email: email,
+                        entry: packetEntry || 'direct',
+                        role: (formData.get('role') || '').toString(),
+                        teamSize: (formData.get('teamSize') || '').toString(),
+                        monthlyVolume: (formData.get('monthlyVolume') || '').toString(),
+                        note: (formData.get('note') || '').toString().trim()
+                    });
+
+                    fetch('/home-repair/api/agent-desk', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body
+                    }).then(async function (response) {
+                        const message = await response.text();
+                        if (!response.ok) {
+                            setAgentDeskStatus(message || 'Agent desk request failed.');
+                            return;
+                        }
+                        setAgentDeskStatus(message || 'Agent desk request saved.');
+                        form.reset();
+                    }).catch(function () {
+                        setAgentDeskStatus('Agent desk request failed.');
+                    });
+                };
+
+                window.recordWorkflowState = function (workflowAction) {
+                    const actor = (document.getElementById('workflow-actor') || {}).value || '';
+                    const note = (document.getElementById('workflow-note') || {}).value || '';
+                    const body = new URLSearchParams({
+                        verdictId: verdictId,
+                        workflowAction: workflowAction,
+                        actor: actor.trim(),
+                        note: note.trim()
+                    });
+
+                    fetch('/home-repair/api/workflow-state', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body
+                    }).then(async function (response) {
+                        const message = await response.text();
+                        if (!response.ok) {
+                            setStatus(message || 'Workflow update failed.');
+                            return;
+                        }
+                        setStatus(message || 'Workflow state recorded.');
+                        window.location.reload();
+                    }).catch(function () {
+                        setStatus('Workflow update failed.');
+                    });
+                };
+            })();
+        </script>
+    `
 )

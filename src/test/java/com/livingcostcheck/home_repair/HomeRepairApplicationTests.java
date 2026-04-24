@@ -7,6 +7,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.junit.jupiter.api.Test;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -31,8 +32,8 @@ class HomeRepairApplicationTests {
 	@Test
 	void testRootRedirect() throws Exception {
 		mockMvc.perform(get("/"))
-				.andExpect(status().isOk())
-				.andExpect(view().name("pages/hub"));
+				.andExpect(status().isMovedPermanently())
+				.andExpect(redirectedUrl("/inspection-response-letter"));
 	}
 
 }

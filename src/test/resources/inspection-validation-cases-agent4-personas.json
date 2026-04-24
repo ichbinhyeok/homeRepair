@@ -1,0 +1,2399 @@
+{
+  "meta": {
+    "created": "2026-04-24",
+    "basis": "100 synthetic persona/workflow validation cases derived from public internet research on inspection repair negotiations, Texas option-period workflow, Colorado inspection objection/resolution workflow, Florida AS IS inspection-period leverage, FHA/HUD and VA property standards, Fannie Mae seller-credit limits, condo/HOA responsibility boundaries, inspection report repair-request tooling, and inspector ethics boundaries.",
+    "warning": "These cases are synthetic research translations for product validation only. They are not customer interviews, legal advice, lending advice, or state-specific brokerage instructions.",
+    "sources": [
+      "https://www.trec.texas.gov/special-links/frequently-asked-questions/",
+      "https://trerc.tamu.edu/article/option-period-basics-2360/",
+      "https://dre.colorado.gov/sites/dre/files/documents/Inspection%20Objection%20Notice%20%28fillable%29_for%20use%20on%20or%20after%20January%201%2C%202026.pdf",
+      "https://hallandalebeachfl.gov/files/2015-09-21/Item%2011A/SUPP_DOCS/Documents/Doc4.pdf",
+      "https://www.hud.gov/hud-partners/single-family-handbook-4000-1",
+      "https://www.benefits.va.gov/warms/pam26_7.asp",
+      "https://www.benefits.va.gov/WARMS/docs/admin26/m26-07/Chapter_12.pdf",
+      "https://selling-guide.fanniemae.com/sel/b3-4.1-02/interested-party-contributions-ipcs",
+      "https://support.spectora.com/en/articles/2155740-spectora-s-repair-request-builder",
+      "https://www.trec.texas.gov/node/634",
+      "https://www.redfin.com/blog/the-condo-inspection-what-buyers-need-to-know/",
+      "https://www.rocketmortgage.com/learn/reasonable-requests-after-home-inspection",
+      "https://listwithclever.com/real-estate-blog/reasonable-requests-after-home-inspection/"
+    ]
+  },
+  "cases": [
+    {
+      "id": "P001",
+      "sourceBasis": "Repair-negotiation guidance: major safety, system, habitability, and structural defects deserve more focus than cosmetic or upgrade items.",
+      "persona": "Buyer agent triaging a long report for a move-up buyer",
+      "state": "GA",
+      "deal": "Conventional purchase with five inspection-contingency days remaining and seller already frustrated by earlier price renegotiation.",
+      "findings": [
+        "main panel has scorched bus bar",
+        "primary bathroom exhaust fan noisy",
+        "several bedroom doors rub frames",
+        "roof boot flashing leaking into attic"
+      ],
+      "expectedLeadScope": [
+        "electrical panel safety",
+        "active roof penetration leak"
+      ],
+      "expectedExclusions": [
+        "noisy exhaust fan unless safety-related",
+        "door adjustment items"
+      ],
+      "requiredGate": "agent must separate critical ask from maintenance list before drafting",
+      "riskIfWrong": "The seller receives a cluttered punch list and ignores the defects that most affect safety and closing."
+    },
+    {
+      "id": "P002",
+      "sourceBasis": "Repair-negotiation guidance: known age and buyer preferences should not be reframed as inspection defects without evidence of failure.",
+      "persona": "Buyer agent representing clients who want a discount after seeing an old kitchen",
+      "state": "OH",
+      "deal": "House was priced below updated comparables and buyers toured twice before inspection.",
+      "findings": [
+        "laminate counters are dated",
+        "range is older but all burners operate",
+        "garbage disposal leaks under load",
+        "cabinet hinges are worn"
+      ],
+      "expectedLeadScope": [
+        "active disposal leak"
+      ],
+      "expectedExclusions": [
+        "dated counters",
+        "older functioning range",
+        "cabinet hardware wear"
+      ],
+      "requiredGate": "upgrade-vs-defect coaching",
+      "riskIfWrong": "The product validates a cosmetic price grab and weakens an otherwise reasonable plumbing request."
+    },
+    {
+      "id": "P003",
+      "sourceBasis": "Repair-negotiation guidance: old-but-working systems require verification or quotes before replacement-level demands.",
+      "persona": "Buyer agent handling an HVAC age dispute",
+      "state": "NV",
+      "deal": "Conventional buyer wants a full HVAC replacement credit because the condenser is near expected service-life limits.",
+      "findings": [
+        "condenser is old but cooled at inspection",
+        "return plenum has open seam",
+        "thermostat is outdated",
+        "condensate line shows staining"
+      ],
+      "expectedLeadScope": [
+        "HVAC specialist evaluation",
+        "air leakage at plenum",
+        "condensate staining source"
+      ],
+      "expectedExclusions": [
+        "automatic full system replacement",
+        "thermostat upgrade preference"
+      ],
+      "requiredGate": "quote-needed label before dollar demand",
+      "riskIfWrong": "A replacement request unsupported by failure evidence gets rejected and makes the agent look unserious."
+    },
+    {
+      "id": "P004",
+      "sourceBasis": "Repair-negotiation guidance: active water intrusion usually outranks cosmetic surfaces and minor wear.",
+      "persona": "Buyer agent preparing a concise seller credit request",
+      "state": "SC",
+      "deal": "Coastal property inspection found multiple moisture clues but the buyer is fixated on faded finishes.",
+      "findings": [
+        "soft drywall below rear window",
+        "elevated moisture at sill",
+        "faded exterior shutters",
+        "loose towel bar"
+      ],
+      "expectedLeadScope": [
+        "window water intrusion",
+        "damaged drywall caused by moisture"
+      ],
+      "expectedExclusions": [
+        "faded shutters",
+        "loose towel bar"
+      ],
+      "requiredGate": "source-of-moisture investigation before repair wording",
+      "riskIfWrong": "The ask repairs visible damage without addressing the leak path that could continue after closing."
+    },
+    {
+      "id": "P005",
+      "sourceBasis": "Repair-negotiation guidance: structural movement should be escalated to specialist review rather than buried among minor finish defects.",
+      "persona": "Buyer agent with a cautious but nontechnical buyer",
+      "state": "MO",
+      "deal": "Older basement home with inspection contingency open and no engineer report yet.",
+      "findings": [
+        "horizontal basement wall crack with displacement",
+        "efflorescence along block wall",
+        "laundry room vinyl is torn",
+        "missing door stop"
+      ],
+      "expectedLeadScope": [
+        "foundation movement",
+        "water intrusion indicators"
+      ],
+      "expectedExclusions": [
+        "torn vinyl flooring",
+        "missing door stop"
+      ],
+      "requiredGate": "engineer or foundation contractor review",
+      "riskIfWrong": "A major structural decision is reduced to generic repair wording without evidence or walk-away framing."
+    },
+    {
+      "id": "P006",
+      "sourceBasis": "Repair-negotiation guidance: electrical safety items carry more negotiation weight than minor convenience issues.",
+      "persona": "Buyer agent coaching clients through safety-priority selection",
+      "state": "TN",
+      "deal": "Seller has signaled willingness to consider a short, safety-only amendment.",
+      "findings": [
+        "open splices in attic",
+        "kitchen GFCI protection absent",
+        "doorbell does not work",
+        "closet light pull chain is missing"
+      ],
+      "expectedLeadScope": [
+        "open attic splices",
+        "kitchen GFCI protection"
+      ],
+      "expectedExclusions": [
+        "doorbell repair",
+        "closet pull chain"
+      ],
+      "requiredGate": "safety-only scope confirmation",
+      "riskIfWrong": "The seller rejects a safety request because it is packaged with nuisance repairs."
+    },
+    {
+      "id": "P007",
+      "sourceBasis": "Repair-negotiation guidance: pest, moisture, and structural risks need documentation and often specialist quotes.",
+      "persona": "Buyer agent reviewing crawlspace findings with an out-of-state buyer",
+      "state": "NC",
+      "deal": "Crawlspace was not visible during showing; buyer is deciding whether to negotiate or terminate.",
+      "findings": [
+        "active termite tubes at sill plate",
+        "fungal growth on floor joists",
+        "fallen vapor barrier",
+        "dirty return grille"
+      ],
+      "expectedLeadScope": [
+        "wood-destroying insect activity",
+        "crawlspace microbial/moisture condition",
+        "vapor barrier correction"
+      ],
+      "expectedExclusions": [
+        "dirty return grille"
+      ],
+      "requiredGate": "pest/moisture specialist verification",
+      "riskIfWrong": "The buyer receives generic repair language instead of evidence needed to assess hidden structural exposure."
+    },
+    {
+      "id": "P008",
+      "sourceBasis": "Repair-negotiation guidance: lender-sensitive items can remain critical even if the buyer personally accepts the defect.",
+      "persona": "Buyer agent coordinating with buyer and lender on a safety condition",
+      "state": "PA",
+      "deal": "Buyer says they can fix a broken stair railing after close, but financing review is not complete.",
+      "findings": [
+        "loose stair rail at second-floor landing",
+        "cracked bedroom window pane",
+        "old wallpaper",
+        "scratched hardwood"
+      ],
+      "expectedLeadScope": [
+        "stair rail safety",
+        "broken window safety"
+      ],
+      "expectedExclusions": [
+        "wallpaper preference",
+        "scratched hardwood"
+      ],
+      "requiredGate": "lender visibility check before credit-only request",
+      "riskIfWrong": "The agent recommends a post-closing fix that may not satisfy appraisal or underwriting conditions."
+    },
+    {
+      "id": "P009",
+      "sourceBasis": "Repair-negotiation guidance: seller-market strategy favors narrow, high-evidence requests over broad lists.",
+      "persona": "Buyer agent in a multiple-backup-offer environment",
+      "state": "UT",
+      "deal": "Listing agent has said the seller will not entertain cosmetic requests and has backup interest.",
+      "findings": [
+        "water heater pan contains active leak",
+        "roof has three missing shingles",
+        "carpet is worn in hallway",
+        "garage shelves are crooked"
+      ],
+      "expectedLeadScope": [
+        "water heater leak",
+        "roof covering defect"
+      ],
+      "expectedExclusions": [
+        "worn carpet",
+        "garage shelves"
+      ],
+      "requiredGate": "minimal high-leverage ask with fallback",
+      "riskIfWrong": "The buyer loses seller cooperation by mixing real defects with visible wear."
+    },
+    {
+      "id": "P010",
+      "sourceBasis": "Repair-negotiation guidance: buyer-market leverage still needs scope discipline and evidence.",
+      "persona": "Buyer agent on a stale listing",
+      "state": "MI",
+      "deal": "Home has been on market 112 days, and buyer wants to ask for every inspection line.",
+      "findings": [
+        "furnace short cycles during test",
+        "main sewer line has root intrusion",
+        "front porch paint is chipped",
+        "bath fan cover is missing"
+      ],
+      "expectedLeadScope": [
+        "furnace function",
+        "sewer root intrusion"
+      ],
+      "expectedExclusions": [
+        "porch paint unless lender-sensitive",
+        "bath fan cover"
+      ],
+      "requiredGate": "market leverage bounded by material-defect filter",
+      "riskIfWrong": "The product mistakes leverage for permission to create a low-quality wishlist."
+    },
+    {
+      "id": "P011",
+      "sourceBasis": "Repair-negotiation guidance: team workflows need a review step that catches cosmetic over-asking before client-facing delivery.",
+      "persona": "Buyer-agent team lead reviewing a junior agent packet",
+      "state": "AZ",
+      "deal": "Junior agent drafted a 28-item repair addendum for a first-time buyer.",
+      "findings": [
+        "AC does not cool below 82 degrees",
+        "pool barrier gate does not self-latch",
+        "cabinet pulls are loose",
+        "paint touchups throughout"
+      ],
+      "expectedLeadScope": [
+        "AC performance failure",
+        "pool barrier safety"
+      ],
+      "expectedExclusions": [
+        "loose cabinet pulls",
+        "paint touchups"
+      ],
+      "requiredGate": "team lead QA before buyer approval",
+      "riskIfWrong": "The team standardizes overbroad asks and damages seller-agent relationships across future deals."
+    },
+    {
+      "id": "P012",
+      "sourceBasis": "Repair-negotiation guidance: teams need a repeatable distinction between report summary, client explanation, and sendable contract request.",
+      "persona": "Team lead building inspection response templates",
+      "state": "CO",
+      "deal": "High-volume team wants all agents to produce consistent inspection response packets.",
+      "findings": [
+        "inspection report has 63 observations",
+        "client summary mixes all severities",
+        "seller-facing request is not separated",
+        "deadline is two days away"
+      ],
+      "expectedLeadScope": [
+        "severity triage workflow",
+        "seller-facing material items",
+        "client explanation layer"
+      ],
+      "expectedExclusions": [
+        "forwarding entire report as request",
+        "agent-by-agent custom process"
+      ],
+      "requiredGate": "three-output workflow separation",
+      "riskIfWrong": "The product becomes a prettier report dump instead of an operationally useful team standard."
+    },
+    {
+      "id": "P013",
+      "sourceBasis": "Texas option-period guidance: inspection negotiation should be anchored to the option deadline and written amendment path.",
+      "persona": "Texas buyer team lead monitoring junior-agent deadline discipline",
+      "state": "TX",
+      "deal": "Option period expires at 5 p.m. local time today and seller has not responded.",
+      "findings": [
+        "foundation corner has differential movement",
+        "seller has not answered proposed credit",
+        "junior agent thinks email thread is enough",
+        "minor siding caulk gaps"
+      ],
+      "expectedLeadScope": [
+        "foundation risk",
+        "same-day option decision",
+        "signed amendment status"
+      ],
+      "expectedExclusions": [
+        "minor caulk gaps"
+      ],
+      "requiredGate": "live option-period and signed-amendment checkpoint",
+      "riskIfWrong": "The buyer relies on an unresolved negotiation after the strongest termination window closes."
+    },
+    {
+      "id": "P014",
+      "sourceBasis": "Repair-negotiation guidance: coaching scripts should calm clients while preserving material risk distinctions.",
+      "persona": "Team lead supporting an anxious buyer agent",
+      "state": "WA",
+      "deal": "Buyer panicked after reading a report summary and wants to cancel immediately.",
+      "findings": [
+        "double-tapped breaker",
+        "minor settlement cracks",
+        "water stain under kitchen sink from old repair",
+        "active leak not observed"
+      ],
+      "expectedLeadScope": [
+        "electrical panel review",
+        "water-stain verification"
+      ],
+      "expectedExclusions": [
+        "automatic cancellation advice",
+        "cosmetic crack alarmism"
+      ],
+      "requiredGate": "anxiety-safe client coaching plus evidence triage",
+      "riskIfWrong": "The tool either inflames fear or dismisses a real electrical issue."
+    },
+    {
+      "id": "P015",
+      "sourceBasis": "Fannie Mae seller-credit guidance: concession size and usability require lender review, not just negotiation success.",
+      "persona": "Team lead reviewing seller-credit strategy across files",
+      "state": "IL",
+      "deal": "Agent negotiated a large credit on a low-down-payment conventional file without lender confirmation.",
+      "findings": [
+        "seller offered 18000 closing credit",
+        "buyer closing costs are lower than credit",
+        "roof has active leak",
+        "buyer wants unused amount after closing"
+      ],
+      "expectedLeadScope": [
+        "roof leak",
+        "credit usability",
+        "concession limit review"
+      ],
+      "expectedExclusions": [
+        "cash-back expectation",
+        "unsupported post-closing side agreement"
+      ],
+      "requiredGate": "loan officer confirmation before final request",
+      "riskIfWrong": "The team celebrates a credit that cannot be used as negotiated and may disrupt underwriting."
+    },
+    {
+      "id": "P016",
+      "sourceBasis": "Spectora repair-request builder research: product value for teams must exceed basic defect-selection and PDF-generation features.",
+      "persona": "Team lead evaluating whether to add a new inspection-response tool",
+      "state": "US",
+      "deal": "Several inspectors already send reports with built-in repair request builders.",
+      "findings": [
+        "agents can already select report defects",
+        "team lacks strategy review",
+        "broker wants audit trail",
+        "buyers need plain-English explanations"
+      ],
+      "expectedLeadScope": [
+        "strategy review",
+        "audit trail",
+        "client-ready explanations"
+      ],
+      "expectedExclusions": [
+        "duplicating report defect picker",
+        "generic PDF builder"
+      ],
+      "requiredGate": "differentiation from inspection-report tooling",
+      "riskIfWrong": "The team rejects the product as redundant with tools already embedded in inspector reports."
+    },
+    {
+      "id": "P017",
+      "sourceBasis": "Repair-negotiation guidance: team operations should flag when a buyer request needs a specialist quote before numbers are shown.",
+      "persona": "Buyer-team lead enforcing quote discipline",
+      "state": "OR",
+      "deal": "Agent generated a credit amount for chimney repairs without a chimney contractor estimate.",
+      "findings": [
+        "cracked flue tile noted by inspector",
+        "fireplace marked unsafe to use",
+        "agent typed 7500 credit",
+        "decorative mantel is dated"
+      ],
+      "expectedLeadScope": [
+        "chimney safety",
+        "specialist quote requirement"
+      ],
+      "expectedExclusions": [
+        "decorative mantel update",
+        "invented credit amount"
+      ],
+      "requiredGate": "quote-needed blocker for high-variance specialty work",
+      "riskIfWrong": "The team sends numbers that appear fabricated and are easy for the listing side to attack."
+    },
+    {
+      "id": "P018",
+      "sourceBasis": "Repair-negotiation guidance: high-volume teams need escalation rules for items that may change the client's decision to buy.",
+      "persona": "Team lead routing severe reports to senior review",
+      "state": "AL",
+      "deal": "Junior agent is about to send a standard credit request on a house with possible major environmental risk.",
+      "findings": [
+        "friable material suspected near old boiler",
+        "active roof leak over electrical panel",
+        "minor cabinet scratches",
+        "uneven interior paint"
+      ],
+      "expectedLeadScope": [
+        "environmental specialist review",
+        "roof leak over electrical equipment",
+        "senior escalation"
+      ],
+      "expectedExclusions": [
+        "cabinet scratches",
+        "paint inconsistency"
+      ],
+      "requiredGate": "senior escalation before sendable request",
+      "riskIfWrong": "A deal-altering risk is handled like an ordinary credit negotiation."
+    },
+    {
+      "id": "P019",
+      "sourceBasis": "Colorado inspection objection workflow: unresolved objections require written resolution or timely withdrawal to avoid contract consequences.",
+      "persona": "Colorado transaction coordinator",
+      "state": "CO",
+      "deal": "Inspection Objection was submitted and the Inspection Resolution Deadline is tomorrow at noon.",
+      "findings": [
+        "seller verbally agreed to sewer credit",
+        "no written resolution signed",
+        "buyer has not decided whether to withdraw objection",
+        "minor drywall nail pops"
+      ],
+      "expectedLeadScope": [
+        "written resolution status",
+        "withdraw-or-terminate decision",
+        "sewer credit documentation"
+      ],
+      "expectedExclusions": [
+        "minor drywall nail pops",
+        "reliance on verbal agreement"
+      ],
+      "requiredGate": "Colorado resolution-deadline checkpoint",
+      "riskIfWrong": "The file drifts into unintended termination or dispute because the workflow treats verbal acceptance as enough."
+    },
+    {
+      "id": "P020",
+      "sourceBasis": "Florida AS IS inspection-period guidance: seller repair duty is limited, but buyer leverage exists before inspection period expiration.",
+      "persona": "Florida transaction coordinator",
+      "state": "FL",
+      "deal": "AS IS buyer wants a credit and the inspection period expires at midnight.",
+      "findings": [
+        "active supply line leak in guest bath",
+        "electrical outlets ungrounded in kitchen",
+        "screen enclosure has torn panel",
+        "seller says AS IS means no discussion"
+      ],
+      "expectedLeadScope": [
+        "active plumbing leak",
+        "electrical safety",
+        "inspection-period decision"
+      ],
+      "expectedExclusions": [
+        "screen panel tear unless negotiated as minor concession",
+        "claim that seller must repair"
+      ],
+      "requiredGate": "AS IS caveat plus deadline-aware request or cancellation path",
+      "riskIfWrong": "The coordinator sends language implying seller obligation and misses the buyer's live cancellation leverage."
+    },
+    {
+      "id": "P021",
+      "sourceBasis": "Texas option-period guidance: inspection findings outside a live option period do not create the same termination leverage.",
+      "persona": "Texas transaction coordinator",
+      "state": "TX",
+      "deal": "Agent asks for a repair amendment two days after option period expiration.",
+      "findings": [
+        "roof leak was known before deadline",
+        "buyer wants new credit today",
+        "seller never signed amendment",
+        "loose closet shelf"
+      ],
+      "expectedLeadScope": [
+        "deadline miss review",
+        "signed amendment absence",
+        "roof leak risk advisory"
+      ],
+      "expectedExclusions": [
+        "normal first-request packet",
+        "loose closet shelf"
+      ],
+      "requiredGate": "not-sendable-as-standard-request warning",
+      "riskIfWrong": "The product encourages a late demand without explaining lost leverage or required broker review."
+    },
+    {
+      "id": "P022",
+      "sourceBasis": "Fannie Mae seller-credit guidance: negotiated credits must be usable within lender limits and closing-cost constraints.",
+      "persona": "Transaction coordinator checking closing documents",
+      "state": "KS",
+      "deal": "Seller agreed to credit more than buyer's remaining closing costs after inspection.",
+      "findings": [
+        "HVAC compressor failed",
+        "seller credit exceeds available closing costs",
+        "agent wants extra paid directly after closing",
+        "buyer has conventional loan"
+      ],
+      "expectedLeadScope": [
+        "HVAC failure",
+        "credit usability",
+        "lender-approved structure"
+      ],
+      "expectedExclusions": [
+        "post-closing direct payment assumption",
+        "unreviewed side arrangement"
+      ],
+      "requiredGate": "loan officer and closing disclosure review",
+      "riskIfWrong": "A valid repair concession becomes a financing problem days before closing."
+    },
+    {
+      "id": "P023",
+      "sourceBasis": "Repair-negotiation guidance: repair completion should be documented and verified when the buyer relies on seller-performed work.",
+      "persona": "Transaction coordinator managing pre-closing repair receipts",
+      "state": "GA",
+      "deal": "Seller uploaded invoices the day before final walkthrough.",
+      "findings": [
+        "invoice says outlet repair completed",
+        "buyer photo still shows open junction box",
+        "roof patch receipt lacks warranty",
+        "bath mirror has small chip"
+      ],
+      "expectedLeadScope": [
+        "electrical repair verification",
+        "roof repair documentation",
+        "walkthrough or reinspection need"
+      ],
+      "expectedExclusions": [
+        "bath mirror chip",
+        "invoice-only acceptance"
+      ],
+      "requiredGate": "repair verification before close",
+      "riskIfWrong": "The buyer closes with unresolved safety work because paperwork was treated as proof of performance."
+    },
+    {
+      "id": "P024",
+      "sourceBasis": "Colorado inspection workflow: new issues after objection require careful status handling rather than silently adding demands.",
+      "persona": "Colorado transaction coordinator supporting a counterproposal",
+      "state": "CO",
+      "deal": "Objection listed electrical and roof items; sewer scope came back after seller countered.",
+      "findings": [
+        "seller countered roof credit",
+        "sewer scope shows severe belly",
+        "inspection objection already sent",
+        "buyer wants to add sewer demand by email"
+      ],
+      "expectedLeadScope": [
+        "counter comparison",
+        "sewer scope escalation",
+        "form/deadline status"
+      ],
+      "expectedExclusions": [
+        "informal new demand without review"
+      ],
+      "requiredGate": "broker/form review before adding new issue",
+      "riskIfWrong": "The coordinator mishandles the objection phase and creates confusion about what is actually pending."
+    },
+    {
+      "id": "P025",
+      "sourceBasis": "Florida AS IS contract research: buyer may inspect broadly during the inspection period, but repair negotiation remains optional for seller.",
+      "persona": "Transaction coordinator on a Florida condo AS IS deal",
+      "state": "FL",
+      "deal": "Buyer ordered general inspection, mold assessment, and association document review.",
+      "findings": [
+        "mold-like staining under air handler",
+        "association minutes mention roof litigation",
+        "seller refuses repairs",
+        "dated blinds"
+      ],
+      "expectedLeadScope": [
+        "air handler moisture/mold verification",
+        "association roof litigation review",
+        "inspection-period cancellation leverage"
+      ],
+      "expectedExclusions": [
+        "dated blinds",
+        "seller duty to repair claim"
+      ],
+      "requiredGate": "AS IS inspection-period and condo document review gate",
+      "riskIfWrong": "The buyer misses the chance to evaluate both unit condition and association risk before the deadline."
+    },
+    {
+      "id": "P026",
+      "sourceBasis": "Repair-negotiation guidance: communication should distinguish internal notes from buyer-approved seller-facing requests.",
+      "persona": "Transaction coordinator cleaning up an agent email thread",
+      "state": "VA",
+      "deal": "Agent forwarded the raw inspection report to listing side before buyer approved request terms.",
+      "findings": [
+        "report summary contains 41 observations",
+        "buyer only wants HVAC credit",
+        "listing agent asks if every line is a demand",
+        "minor faucet drip"
+      ],
+      "expectedLeadScope": [
+        "buyer-approved request scope",
+        "HVAC credit wording",
+        "clarification to listing side"
+      ],
+      "expectedExclusions": [
+        "all-report-lines-as-demands",
+        "minor faucet drip unless buyer approves"
+      ],
+      "requiredGate": "buyer approval before seller-facing scope",
+      "riskIfWrong": "The listing side treats exploratory notes as formal demands and negotiation starts from confusion."
+    },
+    {
+      "id": "P027",
+      "sourceBasis": "Repair-negotiation guidance: high-risk closing workflows need holdback, extension, or lender review when critical work is incomplete.",
+      "persona": "Transaction coordinator two days before closing",
+      "state": "MD",
+      "deal": "Seller says roof contractor cannot finish until the week after settlement.",
+      "findings": [
+        "roof leak repair incomplete",
+        "contractor proposal unsigned",
+        "seller suggests closing anyway",
+        "doorbell camera not included"
+      ],
+      "expectedLeadScope": [
+        "incomplete roof repair",
+        "extension/escrow/holdback review",
+        "lender and broker approval"
+      ],
+      "expectedExclusions": [
+        "doorbell camera dispute",
+        "trust-us-after-closing path"
+      ],
+      "requiredGate": "critical-work-not-complete closing blocker",
+      "riskIfWrong": "The buyer funds the purchase while the most material repair remains outside enforceable closing control."
+    },
+    {
+      "id": "P028",
+      "sourceBasis": "Brokerage risk workflow: product output should avoid legal conclusions and route state-form questions to broker or counsel.",
+      "persona": "Broker-owner reviewing agent-generated inspection language",
+      "state": "CA",
+      "deal": "Agent wants to send AI-generated language that references contract remedies and legal rights.",
+      "findings": [
+        "sewer lateral has offset joint",
+        "agent draft says seller is legally required to repair",
+        "buyer has not signed request",
+        "landscaping is overgrown"
+      ],
+      "expectedLeadScope": [
+        "sewer lateral defect",
+        "buyer approval",
+        "broker/form review"
+      ],
+      "expectedExclusions": [
+        "unsupported legal conclusion",
+        "overgrown landscaping"
+      ],
+      "requiredGate": "broker review of state-specific language",
+      "riskIfWrong": "The broker sees the product as an E&O risk rather than an operational aid."
+    },
+    {
+      "id": "P029",
+      "sourceBasis": "FHA/HUD research: lender-visible safety and habitability conditions require careful wording and lender coordination.",
+      "persona": "Broker-owner supervising FHA-heavy agents",
+      "state": "IN",
+      "deal": "FHA buyer wants seller credit instead of repairs for appraisal-sensitive defects.",
+      "findings": [
+        "exposed wiring in basement",
+        "broken stair tread",
+        "peeling exterior paint on pre-1978 home",
+        "buyer asks for credit only"
+      ],
+      "expectedLeadScope": [
+        "electrical safety",
+        "stair safety",
+        "defective paint lender sensitivity"
+      ],
+      "expectedExclusions": [
+        "credit-only assurance",
+        "cosmetic framing"
+      ],
+      "requiredGate": "lender/appraisal condition confirmation",
+      "riskIfWrong": "The brokerage advises a credit path that may fail to clear FHA closing conditions."
+    },
+    {
+      "id": "P030",
+      "sourceBasis": "TREC inspector ethics and Texas workflow research: brokerage tools should not blur agent, inspector, and repair-contractor roles.",
+      "persona": "Broker-owner with affiliated inspection partner",
+      "state": "TX",
+      "deal": "Brokerage has a preferred inspector and an affiliated handyman vendor.",
+      "findings": [
+        "inspector identified electrical defects",
+        "handyman affiliated with brokerage offers to repair",
+        "buyer has not consented to vendor relationship",
+        "inspection report includes repair list"
+      ],
+      "expectedLeadScope": [
+        "conflict disclosure workflow",
+        "independent repair estimate path",
+        "electrical defect triage"
+      ],
+      "expectedExclusions": [
+        "automatic assignment to affiliated vendor",
+        "inspector repair-work recommendation"
+      ],
+      "requiredGate": "conflict and role-boundary review",
+      "riskIfWrong": "The product amplifies affiliated-business risk and undermines trust in the inspection process."
+    },
+    {
+      "id": "P031",
+      "sourceBasis": "Repair-negotiation guidance: brokerage policy may require buyer approval and evidence references before seller-facing repair requests.",
+      "persona": "Broker-owner auditing transaction files",
+      "state": "NC",
+      "deal": "Audit finds several repair requests sent without buyer signoff or report references.",
+      "findings": [
+        "crawlspace joist fungal growth",
+        "seller request omitted report page references",
+        "buyer approval missing",
+        "agent included carpet replacement"
+      ],
+      "expectedLeadScope": [
+        "crawlspace condition",
+        "evidence-linked request",
+        "buyer approval trail"
+      ],
+      "expectedExclusions": [
+        "carpet replacement",
+        "unapproved send"
+      ],
+      "requiredGate": "audit-trail completion before send",
+      "riskIfWrong": "The brokerage cannot reconstruct who authorized a material negotiation position."
+    },
+    {
+      "id": "P032",
+      "sourceBasis": "Colorado inspection objection workflow: state-specific deadlines should drive product warnings for broker supervision.",
+      "persona": "Broker-owner supervising Colorado files",
+      "state": "CO",
+      "deal": "Agent believes seller silence after objection means buyer can keep negotiating indefinitely.",
+      "findings": [
+        "objection delivered for roof and radon",
+        "resolution deadline is tonight",
+        "seller has not signed resolution",
+        "buyer likes the house"
+      ],
+      "expectedLeadScope": [
+        "resolution deadline",
+        "written agreement status",
+        "withdraw objection decision"
+      ],
+      "expectedExclusions": [
+        "assumption that silence preserves contract",
+        "new cosmetic demands"
+      ],
+      "requiredGate": "broker escalation before resolution deadline",
+      "riskIfWrong": "The contract can terminate unexpectedly because the agent relied on a generic negotiation flow."
+    },
+    {
+      "id": "P033",
+      "sourceBasis": "Fannie Mae seller-credit guidance: broker workflows should catch credits that may exceed financing usefulness.",
+      "persona": "Broker-owner reviewing high-credit concessions",
+      "state": "AR",
+      "deal": "Small-price conventional purchase with seller willing to offer a large inspection credit.",
+      "findings": [
+        "septic line needs replacement",
+        "seller offered 12000 credit",
+        "buyer has only 6000 allowable closing costs",
+        "agent wants to keep full credit language"
+      ],
+      "expectedLeadScope": [
+        "septic repair risk",
+        "allowable credit review",
+        "alternate structure discussion"
+      ],
+      "expectedExclusions": [
+        "unusable excess credit",
+        "cash-back assumption"
+      ],
+      "requiredGate": "lender and broker approval of concession structure",
+      "riskIfWrong": "The file carries a concession that looks negotiated but must be reduced or reworked at closing."
+    },
+    {
+      "id": "P034",
+      "sourceBasis": "Repair-negotiation guidance: brokerage coaching should keep anxious-buyer messaging factual and non-alarming.",
+      "persona": "Broker-owner reviewing client-facing AI summaries",
+      "state": "MN",
+      "deal": "Agent generated a scary summary for a mostly normal old-house inspection.",
+      "findings": [
+        "knob-and-tube wiring found only in abandoned attic run",
+        "old boiler operates",
+        "minor plaster cracks",
+        "one active plumbing drip"
+      ],
+      "expectedLeadScope": [
+        "active plumbing drip",
+        "electrical verification if wiring is live"
+      ],
+      "expectedExclusions": [
+        "catastrophic language",
+        "old-house cosmetic cracking"
+      ],
+      "requiredGate": "tone and evidence review",
+      "riskIfWrong": "The buyer loses confidence in the agent because the product exaggerates risk instead of clarifying it."
+    },
+    {
+      "id": "P035",
+      "sourceBasis": "Inspection tooling research: broker adoption depends on role clarity, auditability, and avoiding duplicate report-builder functionality.",
+      "persona": "Broker-owner deciding whether to roll out the tool firmwide",
+      "state": "US",
+      "deal": "Brokerage uses multiple inspectors and CRMs; leadership wants fewer workflow exceptions.",
+      "findings": [
+        "reports arrive from different platforms",
+        "agents need consistent issue prioritization",
+        "compliance wants archive of buyer approvals",
+        "existing tools already make repair PDFs"
+      ],
+      "expectedLeadScope": [
+        "cross-platform intake",
+        "prioritization logic",
+        "approval archive"
+      ],
+      "expectedExclusions": [
+        "single-inspector platform dependency",
+        "basic PDF creation as primary value"
+      ],
+      "requiredGate": "brokerage workflow fit",
+      "riskIfWrong": "The product fails at firm adoption because it solves document formatting rather than supervision and consistency."
+    },
+    {
+      "id": "P036",
+      "sourceBasis": "Repair-negotiation guidance: listing agents should distinguish serious buyer asks from overbroad or cosmetic demands.",
+      "persona": "Listing agent evaluating a buyer repair request",
+      "state": "IL",
+      "deal": "Buyer sends a 35-line request on a well-maintained listing.",
+      "findings": [
+        "buyer requests whole-house repaint",
+        "water heater is leaking at valve",
+        "door hinges squeak",
+        "seller disclosed older roof before offer"
+      ],
+      "expectedLeadScope": [
+        "water heater leak",
+        "roof only if new defect evidence exists"
+      ],
+      "expectedExclusions": [
+        "whole-house repaint",
+        "squeaky hinges",
+        "known roof age without failure"
+      ],
+      "requiredGate": "seller counter strategy by materiality",
+      "riskIfWrong": "The listing agent either caves to a weak list or rejects a legitimate leak item."
+    },
+    {
+      "id": "P037",
+      "sourceBasis": "Florida AS IS inspection-period guidance: listing-side response should not confuse no automatic repair duty with no negotiation risk.",
+      "persona": "Florida listing agent under AS IS contract",
+      "state": "FL",
+      "deal": "Buyer threatens to cancel unless seller credits plumbing and electrical issues.",
+      "findings": [
+        "active kitchen drain leak",
+        "Federal Pacific panel noted by inspector",
+        "buyer also asks for new appliances",
+        "inspection period open"
+      ],
+      "expectedLeadScope": [
+        "plumbing leak",
+        "electrical panel risk",
+        "buyer cancellation leverage"
+      ],
+      "expectedExclusions": [
+        "new appliance upgrade",
+        "statement that buyer has no leverage"
+      ],
+      "requiredGate": "AS IS seller-duty caveat plus deal-preservation assessment",
+      "riskIfWrong": "The seller refuses everything on a false sense of safety and loses a qualified buyer."
+    },
+    {
+      "id": "P038",
+      "sourceBasis": "Repair-negotiation guidance: seller receipts and maintenance documentation can narrow buyer demands when defects are not active.",
+      "persona": "Listing agent countering a roof replacement demand",
+      "state": "OR",
+      "deal": "Buyer asks for full roof replacement after inspector notes age and prior patching.",
+      "findings": [
+        "roof is older but no active leak observed",
+        "seller has recent roof maintenance invoice",
+        "one boot flashing is cracked",
+        "buyer asks for full replacement credit"
+      ],
+      "expectedLeadScope": [
+        "boot flashing repair",
+        "roof documentation response",
+        "optional roofer quote"
+      ],
+      "expectedExclusions": [
+        "automatic full replacement",
+        "age-only concession"
+      ],
+      "requiredGate": "documentation-backed counter",
+      "riskIfWrong": "The seller overpays for a replacement-level demand unsupported by the inspection evidence."
+    },
+    {
+      "id": "P039",
+      "sourceBasis": "FHA/HUD research: listing agents must separate negotiable preferences from conditions that may affect buyer financing.",
+      "persona": "Listing agent with FHA buyer under contract",
+      "state": "KY",
+      "deal": "Seller wants to offer credit instead of repairing items likely visible to FHA appraisal.",
+      "findings": [
+        "missing stair handrail at basement stairs",
+        "peeling exterior trim paint",
+        "loose cabinet knob",
+        "buyer requests credit"
+      ],
+      "expectedLeadScope": [
+        "stair safety",
+        "defective exterior paint",
+        "lender/appraisal review"
+      ],
+      "expectedExclusions": [
+        "loose cabinet knob",
+        "credit-only assumption"
+      ],
+      "requiredGate": "financing-condition check before counter",
+      "riskIfWrong": "The seller proposes a concession that does not solve a financing blocker."
+    },
+    {
+      "id": "P040",
+      "sourceBasis": "Repair-negotiation guidance: listing-side counters should avoid admitting more than the evidence supports while addressing material risk.",
+      "persona": "Listing agent protecting seller disclosure posture",
+      "state": "NJ",
+      "deal": "Buyer report uses alarming mold language based only on staining near basement wall.",
+      "findings": [
+        "basement corner staining",
+        "no lab test or specialist report",
+        "downspout discharges at foundation",
+        "buyer demands full mold remediation"
+      ],
+      "expectedLeadScope": [
+        "moisture source evaluation",
+        "downspout correction",
+        "specialist verification before remediation"
+      ],
+      "expectedExclusions": [
+        "unverified mold admission",
+        "full remediation commitment without scope"
+      ],
+      "requiredGate": "evidence-bounded seller response",
+      "riskIfWrong": "The listing packet creates disclosure language and concession exposure beyond the current evidence."
+    },
+    {
+      "id": "P041",
+      "sourceBasis": "Colorado inspection objection workflow: listing agents need deadline-aware resolution handling after receiving objection.",
+      "persona": "Colorado listing agent managing seller counter",
+      "state": "CO",
+      "deal": "Seller wants to counter a buyer objection two hours before the resolution deadline.",
+      "findings": [
+        "buyer objected to sewer repair",
+        "seller offers home warranty",
+        "resolution deadline is near",
+        "minor paint touchups included by buyer"
+      ],
+      "expectedLeadScope": [
+        "sewer defect",
+        "written resolution timing",
+        "home warranty adequacy"
+      ],
+      "expectedExclusions": [
+        "minor paint touchups",
+        "late informal counter"
+      ],
+      "requiredGate": "written counter before resolution deadline",
+      "riskIfWrong": "The listing side thinks it countered, but the contract status remains unresolved."
+    },
+    {
+      "id": "P042",
+      "sourceBasis": "Repair-negotiation guidance: visible pre-offer conditions differ from hidden defects found during inspection.",
+      "persona": "Listing agent defending a seller against buyer remorse",
+      "state": "MA",
+      "deal": "Buyer requests credit for defects visible at showing plus one newly discovered system issue.",
+      "findings": [
+        "dated bathroom tile visible at showing",
+        "worn hardwood visible at showing",
+        "boiler relief valve leaks during test",
+        "buyer asks for bathroom remodel credit"
+      ],
+      "expectedLeadScope": [
+        "boiler relief valve leak"
+      ],
+      "expectedExclusions": [
+        "bathroom remodel credit",
+        "worn hardwood"
+      ],
+      "requiredGate": "known-condition vs hidden-defect distinction",
+      "riskIfWrong": "The seller either rejects everything or pays for upgrades that were priced into the offer."
+    },
+    {
+      "id": "P043",
+      "sourceBasis": "Repair-negotiation guidance: seller-side repair commitments need clear scope, qualified vendor, and verification plan.",
+      "persona": "Listing agent drafting seller repair response",
+      "state": "WI",
+      "deal": "Seller agrees to fix safety items but wants to use a friend for all repairs.",
+      "findings": [
+        "garage outlet lacks GFCI protection",
+        "deck guardrail is loose",
+        "seller's friend is not licensed for electrical work",
+        "buyer asks for receipts"
+      ],
+      "expectedLeadScope": [
+        "GFCI electrical repair by qualified party",
+        "deck guardrail safety",
+        "receipt and verification plan"
+      ],
+      "expectedExclusions": [
+        "unqualified electrical repair",
+        "ambiguous fix-it language"
+      ],
+      "requiredGate": "qualified-repair and proof terms",
+      "riskIfWrong": "The seller promises work that the buyer or lender may reject as incomplete or unsafe."
+    },
+    {
+      "id": "P044",
+      "sourceBasis": "Condo inspection research: listing agents should account for association responsibility before countering unit-level requests.",
+      "persona": "Listing agent for a condominium seller",
+      "state": "CA",
+      "deal": "Buyer asks seller to repair exterior balcony waterproofing and interior damage.",
+      "findings": [
+        "balcony membrane may be common-area responsibility",
+        "interior ceiling stain below balcony door",
+        "HOA maintenance matrix not reviewed",
+        "dated pendant light"
+      ],
+      "expectedLeadScope": [
+        "interior water damage",
+        "HOA maintenance responsibility",
+        "association document review"
+      ],
+      "expectedExclusions": [
+        "seller-only balcony membrane commitment without HOA review",
+        "dated pendant light"
+      ],
+      "requiredGate": "HOA responsibility check before response",
+      "riskIfWrong": "Seller agrees to work they may not control or refuses an interior issue they likely must address."
+    },
+    {
+      "id": "P045",
+      "sourceBasis": "Repair-negotiation guidance: first-time buyers often need coaching that not every report item is a seller obligation.",
+      "persona": "First-time buyer reading their first inspection report",
+      "state": "IA",
+      "deal": "Buyer is alarmed by a 52-page report on a functional 1970s house.",
+      "findings": [
+        "electrical panel lacks some labels",
+        "furnace filter is dirty",
+        "water heater flue has improper slope",
+        "paint scuffs in hallway"
+      ],
+      "expectedLeadScope": [
+        "water heater venting safety",
+        "panel labeling only as minor advisory"
+      ],
+      "expectedExclusions": [
+        "dirty filter as seller demand",
+        "paint scuffs"
+      ],
+      "requiredGate": "plain-English severity coaching",
+      "riskIfWrong": "The buyer either panics over routine maintenance or misses a combustion-safety item."
+    },
+    {
+      "id": "P046",
+      "sourceBasis": "Repair-negotiation guidance: cosmetic imperfections and routine maintenance should be framed separately from material defects.",
+      "persona": "First-time buyer who wants the seller to make the home perfect",
+      "state": "ID",
+      "deal": "Buyer is stretching financially and wants every small issue fixed before closing.",
+      "findings": [
+        "bath caulk is discolored",
+        "dishwasher drain hose leaks",
+        "closet door is off track",
+        "bedroom carpet has old stain"
+      ],
+      "expectedLeadScope": [
+        "dishwasher drain leak"
+      ],
+      "expectedExclusions": [
+        "discolored caulk",
+        "closet door adjustment",
+        "carpet stain"
+      ],
+      "requiredGate": "defect-priority coaching with budget sensitivity",
+      "riskIfWrong": "The buyer spends negotiation capital on minor items while ignoring the active plumbing defect."
+    },
+    {
+      "id": "P047",
+      "sourceBasis": "FHA/HUD research: first-time FHA buyers need distinction between personal tolerance and lender-required repair risk.",
+      "persona": "First-time FHA buyer",
+      "state": "MO",
+      "deal": "Buyer says they will fix peeling paint themselves after closing to avoid upsetting seller.",
+      "findings": [
+        "peeling paint on pre-1978 exterior trim",
+        "broken basement window",
+        "old but working refrigerator",
+        "loose towel hook"
+      ],
+      "expectedLeadScope": [
+        "defective paint lender sensitivity",
+        "broken window safety"
+      ],
+      "expectedExclusions": [
+        "working refrigerator age",
+        "loose towel hook"
+      ],
+      "requiredGate": "FHA/lender confirmation before post-closing plan",
+      "riskIfWrong": "The buyer believes a post-closing promise solves a condition that may need completion before funding."
+    },
+    {
+      "id": "P048",
+      "sourceBasis": "Repair-negotiation guidance: anxious buyers need a decision framework that separates walk-away risks from negotiable repairs.",
+      "persona": "Anxious first-time buyer with a high-alert inspection summary",
+      "state": "NH",
+      "deal": "Buyer is considering termination after seeing multiple red flags in the summary section.",
+      "findings": [
+        "radon test is above action threshold",
+        "main drain line has partial blockage",
+        "interior doors need trimming",
+        "water pressure is normal"
+      ],
+      "expectedLeadScope": [
+        "radon mitigation",
+        "drain line specialist review"
+      ],
+      "expectedExclusions": [
+        "door trimming",
+        "normal water pressure"
+      ],
+      "requiredGate": "walk-away vs negotiable-repair framing",
+      "riskIfWrong": "The buyer receives either false reassurance or an unnecessary cancellation push."
+    },
+    {
+      "id": "P049",
+      "sourceBasis": "Repair-negotiation guidance: reasonable repair requests are evidence-driven, not a way to reopen price negotiation for preferences.",
+      "persona": "First-time buyer trying to lower payment after rate lock shock",
+      "state": "NE",
+      "deal": "Buyer wants to use inspection to reduce price because their monthly payment increased.",
+      "findings": [
+        "roof has two missing shingles",
+        "HVAC operates normally",
+        "buyers dislike carpet color",
+        "toilet runs intermittently"
+      ],
+      "expectedLeadScope": [
+        "roof covering repair",
+        "running toilet as minor negotiable item"
+      ],
+      "expectedExclusions": [
+        "carpet color",
+        "payment-shock price cut without defect basis"
+      ],
+      "requiredGate": "defect-based negotiation boundary",
+      "riskIfWrong": "The buyer's financial anxiety is converted into a weak seller request that may backfire."
+    },
+    {
+      "id": "P050",
+      "sourceBasis": "Repair-negotiation guidance: buyer coaching should explain why some old systems are budget planning items, not necessarily seller demands.",
+      "persona": "First-time buyer worried about future costs",
+      "state": "VT",
+      "deal": "Inspection found no active failures, but several components are older.",
+      "findings": [
+        "water heater is near expected life but dry",
+        "roof is mid-life with no leaks",
+        "service panel is modern",
+        "dryer vent is disconnected in crawlspace"
+      ],
+      "expectedLeadScope": [
+        "dryer vent correction",
+        "future budget notes for water heater and roof"
+      ],
+      "expectedExclusions": [
+        "replacement demand for dry water heater",
+        "roof replacement demand without defect"
+      ],
+      "requiredGate": "budget-planning vs repair-request split",
+      "riskIfWrong": "The buyer either over-negotiates normal aging or underplans for real ownership costs."
+    },
+    {
+      "id": "P051",
+      "sourceBasis": "Repair-negotiation guidance: client-facing explanations should not bury serious defects in technical jargon.",
+      "persona": "First-time buyer needing plain-language translation",
+      "state": "OK",
+      "deal": "Buyer does not understand why the inspector flagged reverse polarity and missing anti-tip bracket.",
+      "findings": [
+        "several outlets have reverse polarity",
+        "range lacks anti-tip bracket",
+        "ceiling fan remote missing",
+        "baseboard trim gaps"
+      ],
+      "expectedLeadScope": [
+        "outlet wiring correction",
+        "range anti-tip safety"
+      ],
+      "expectedExclusions": [
+        "ceiling fan remote",
+        "trim gaps"
+      ],
+      "requiredGate": "plain-English safety explanation",
+      "riskIfWrong": "The buyer treats safety items as inspector nitpicks and fails to ask for reasonable corrections."
+    },
+    {
+      "id": "P052",
+      "sourceBasis": "Repair-negotiation guidance: first-time buyers need support choosing a narrow ask when seller pushback is likely.",
+      "persona": "First-time buyer in a competitive neighborhood",
+      "state": "CA",
+      "deal": "Seller has backup offers and buyer wants to remain under contract.",
+      "findings": [
+        "water heater is not strapped",
+        "subpanel has double-lugged neutral",
+        "kitchen backsplash has cracked tile",
+        "garage floor has oil stain"
+      ],
+      "expectedLeadScope": [
+        "water heater restraint",
+        "subpanel wiring defect"
+      ],
+      "expectedExclusions": [
+        "cracked backsplash tile",
+        "garage floor oil stain"
+      ],
+      "requiredGate": "narrow safety ask with buyer risk tolerance",
+      "riskIfWrong": "The buyer jeopardizes a wanted deal by pairing safety items with cosmetic grievances."
+    },
+    {
+      "id": "P053",
+      "sourceBasis": "Repair-negotiation guidance: seller credits can be useful but should not replace urgent safety repair decisions without review.",
+      "persona": "First-time buyer choosing between repair and credit",
+      "state": "LA",
+      "deal": "Seller offers a credit instead of completing electrical and plumbing repairs.",
+      "findings": [
+        "open electrical junction in attic",
+        "active leak at tub drain",
+        "seller offers 1500 credit",
+        "buyer does not have contractor quotes"
+      ],
+      "expectedLeadScope": [
+        "electrical safety",
+        "active tub drain leak",
+        "credit adequacy check"
+      ],
+      "expectedExclusions": [
+        "acceptance of arbitrary credit",
+        "unverified repair cost assumption"
+      ],
+      "requiredGate": "contractor quote or repair-cost uncertainty warning",
+      "riskIfWrong": "The buyer accepts a credit that is too small for immediate defects discovered after closing."
+    },
+    {
+      "id": "P054",
+      "sourceBasis": "Repair-negotiation guidance: buyers should not conflate home warranty offers with correction of known defects.",
+      "persona": "First-time buyer offered a home warranty instead of repairs",
+      "state": "NC",
+      "deal": "Seller counters HVAC repair request with a home warranty and no credit.",
+      "findings": [
+        "heat pump does not cool",
+        "seller offers one-year home warranty",
+        "inspector recommends HVAC contractor",
+        "buyers dislike wall color"
+      ],
+      "expectedLeadScope": [
+        "HVAC performance failure",
+        "warranty coverage comparison",
+        "contractor evaluation"
+      ],
+      "expectedExclusions": [
+        "wall color",
+        "warranty as automatic substitute"
+      ],
+      "requiredGate": "known-defect vs warranty coverage review",
+      "riskIfWrong": "The buyer accepts a product that may not cover a pre-existing HVAC failure."
+    },
+    {
+      "id": "P055",
+      "sourceBasis": "Repair-negotiation guidance: remote buyers need evidence references and specialist paths because they cannot inspect in person.",
+      "persona": "Remote relocation buyer agent",
+      "state": "TX",
+      "deal": "Buyer is moving from another state and must decide before option period expires.",
+      "findings": [
+        "foundation elevation variance noted",
+        "brick stair-step cracks photographed",
+        "seller says it is normal settling",
+        "guest bath faucet drips"
+      ],
+      "expectedLeadScope": [
+        "foundation evaluation",
+        "brick cracking evidence",
+        "option-period decision"
+      ],
+      "expectedExclusions": [
+        "guest bath drip unless bundled as minor",
+        "seller explanation without specialist support"
+      ],
+      "requiredGate": "remote evidence packet plus Texas deadline",
+      "riskIfWrong": "The remote buyer cannot distinguish seller reassurance from a material structural uncertainty."
+    },
+    {
+      "id": "P056",
+      "sourceBasis": "Repair-negotiation guidance: relocation buyers often need local code, climate, and insurance-sensitive defects translated into decision terms.",
+      "persona": "Remote relocation buyer moving to Florida",
+      "state": "FL",
+      "deal": "Buyer is unfamiliar with roof age and insurance constraints in the local market.",
+      "findings": [
+        "roof is older with brittle shingles",
+        "four-point inspector flags panel brand",
+        "seller offers cosmetic credit",
+        "inspection period has three days left"
+      ],
+      "expectedLeadScope": [
+        "roof insurability review",
+        "electrical panel insurance review",
+        "inspection-period decision"
+      ],
+      "expectedExclusions": [
+        "cosmetic credit as substitute",
+        "generic national advice"
+      ],
+      "requiredGate": "local insurance and AS IS deadline check",
+      "riskIfWrong": "The buyer negotiates the wrong item and later cannot bind acceptable insurance."
+    },
+    {
+      "id": "P057",
+      "sourceBasis": "Condo inspection research: remote condo buyers need HOA document and responsibility review in addition to unit condition.",
+      "persona": "Remote relocation condo buyer",
+      "state": "IL",
+      "deal": "Buyer has never lived in a high-rise and is reviewing inspection remotely.",
+      "findings": [
+        "fan coil unit leaks into pan",
+        "building reserves appear low",
+        "hallway carpet replacement planned by HOA",
+        "unit closet door sticks"
+      ],
+      "expectedLeadScope": [
+        "fan coil leak",
+        "HOA reserves and planned work",
+        "maintenance responsibility"
+      ],
+      "expectedExclusions": [
+        "hallway carpet as seller repair",
+        "closet door as lead item"
+      ],
+      "requiredGate": "HOA document review plus unit repair scope",
+      "riskIfWrong": "The buyer focuses on unit cosmetics while missing association-level financial exposure."
+    },
+    {
+      "id": "P058",
+      "sourceBasis": "Repair-negotiation guidance: remote buyers need photo/video proof and contractor access planning before relying on seller credits.",
+      "persona": "Remote relocation buyer agent coordinating contractors",
+      "state": "AZ",
+      "deal": "Buyer cannot attend follow-up inspections and seller restricts access windows.",
+      "findings": [
+        "AC fails temperature split test",
+        "roof underlayment age uncertain",
+        "pool heater does not ignite",
+        "seller allows one contractor visit"
+      ],
+      "expectedLeadScope": [
+        "AC contractor evaluation",
+        "roof underlayment review",
+        "pool heater function",
+        "access scheduling"
+      ],
+      "expectedExclusions": [
+        "unsupported credit amount",
+        "nonessential cosmetic pool deck items"
+      ],
+      "requiredGate": "contractor-access logistics before request finalization",
+      "riskIfWrong": "The buyer must decide remotely with no credible cost basis for high-variance systems."
+    },
+    {
+      "id": "P059",
+      "sourceBasis": "Repair-negotiation guidance: relocation buyers need timeline coordination when inspection, appraisal, and move logistics collide.",
+      "persona": "Remote relocation buyer with a fixed moving date",
+      "state": "WA",
+      "deal": "Buyer has movers scheduled and inspection finds a potentially lender-visible safety issue.",
+      "findings": [
+        "deck ledger is improperly attached",
+        "deck guardrail is loose",
+        "seller proposes post-closing repair",
+        "buyer cannot delay move easily"
+      ],
+      "expectedLeadScope": [
+        "deck structural/safety issue",
+        "pre-closing repair or credit decision",
+        "timeline impact"
+      ],
+      "expectedExclusions": [
+        "post-closing promise without enforceability",
+        "move-date pressure overriding safety review"
+      ],
+      "requiredGate": "timeline-risk and repair-verification plan",
+      "riskIfWrong": "The buyer accepts unsafe exterior access because move logistics dominate the repair decision."
+    },
+    {
+      "id": "P060",
+      "sourceBasis": "VA MPR research: rural VA purchases can involve septic, water, access, roof, paint, and other lender-sensitive property issues.",
+      "persona": "Remote relocation VA buyer agent",
+      "state": "ME",
+      "deal": "Military buyer is relocating to rural property and cannot attend septic inspection.",
+      "findings": [
+        "septic inspection indicates failed distribution box",
+        "private road maintenance agreement unclear",
+        "porch paint is peeling",
+        "kitchen cabinets are dated"
+      ],
+      "expectedLeadScope": [
+        "septic failure",
+        "access/road agreement review",
+        "paint MPR sensitivity"
+      ],
+      "expectedExclusions": [
+        "dated cabinets",
+        "credit-only treatment without lender check"
+      ],
+      "requiredGate": "VA lender and rural-property specialist review",
+      "riskIfWrong": "The buyer proceeds with unresolved MPR and access issues that can threaten loan approval."
+    },
+    {
+      "id": "P061",
+      "sourceBasis": "Repair-negotiation guidance: remote buyers need concise client-ready summaries that preserve uncertainty instead of overclaiming.",
+      "persona": "Remote relocation buyer agent writing a client summary",
+      "state": "CO",
+      "deal": "Buyer is traveling internationally and will approve request by email only.",
+      "findings": [
+        "radon result is high",
+        "garage firewall is breached around ducts",
+        "foundation crack needs monitoring",
+        "guest room paint color is disliked"
+      ],
+      "expectedLeadScope": [
+        "radon mitigation",
+        "garage fire-separation repair",
+        "foundation crack evaluation status"
+      ],
+      "expectedExclusions": [
+        "paint color",
+        "definitive foundation conclusion without specialist"
+      ],
+      "requiredGate": "remote buyer approval with evidence and uncertainty labels",
+      "riskIfWrong": "The buyer approves a request they do not understand or later feels the agent hid uncertainty."
+    },
+    {
+      "id": "P062",
+      "sourceBasis": "Repair-negotiation guidance: relocation workflows should account for final walkthrough delegation and repair verification.",
+      "persona": "Remote buyer agent planning post-repair verification",
+      "state": "VA",
+      "deal": "Buyer will not return before closing and seller agreed to repairs.",
+      "findings": [
+        "seller will repair crawlspace moisture barrier",
+        "electrician will correct open splices",
+        "buyer cannot attend walkthrough",
+        "minor blind cord missing"
+      ],
+      "expectedLeadScope": [
+        "crawlspace repair proof",
+        "electrical repair proof",
+        "delegated reinspection or walkthrough"
+      ],
+      "expectedExclusions": [
+        "minor blind cord",
+        "photo-only acceptance for hidden crawlspace work"
+      ],
+      "requiredGate": "remote verification plan before closing",
+      "riskIfWrong": "The buyer closes remotely with hidden repairs unverified."
+    },
+    {
+      "id": "P063",
+      "sourceBasis": "Repair-negotiation guidance: investor buyers may underwrite renovations, but seller requests should still separate defects from value-add upgrades.",
+      "persona": "Investor buyer agent",
+      "state": "GA",
+      "deal": "Investor wants credits for planned rental refresh plus inspection defects.",
+      "findings": [
+        "main sewer cleanout backs up during test",
+        "kitchen is dated for target rent",
+        "HVAC has failed capacitor",
+        "tenant left wall damage"
+      ],
+      "expectedLeadScope": [
+        "sewer blockage",
+        "HVAC repair"
+      ],
+      "expectedExclusions": [
+        "target-rent kitchen upgrade",
+        "tenant turnover wall damage unless newly concealed"
+      ],
+      "requiredGate": "defect-vs-rehab-underwriting separation",
+      "riskIfWrong": "The product becomes an investor rehab calculator instead of an inspection negotiation filter."
+    },
+    {
+      "id": "P064",
+      "sourceBasis": "Repair-negotiation guidance: investor buyers often need fast go/no-go triage when inspection reveals capex beyond pro forma.",
+      "persona": "Investor buyer evaluating a flip",
+      "state": "OH",
+      "deal": "Buyer planned cosmetic flip but inspection suggests major mechanical costs.",
+      "findings": [
+        "cast iron drain line is cracked",
+        "furnace heat exchanger suspected cracked",
+        "granite counters are out of style",
+        "garage door opener works intermittently"
+      ],
+      "expectedLeadScope": [
+        "drain line replacement risk",
+        "furnace safety evaluation"
+      ],
+      "expectedExclusions": [
+        "counter style",
+        "garage opener convenience"
+      ],
+      "requiredGate": "pro forma impact and specialist quote",
+      "riskIfWrong": "The investor prices cosmetic renovation while missing defects that change the deal economics."
+    },
+    {
+      "id": "P065",
+      "sourceBasis": "Repair-negotiation guidance: rental investors need tenant habitability and safety risks prioritized over owner-preference upgrades.",
+      "persona": "Long-term rental investor buyer",
+      "state": "MO",
+      "deal": "Investor plans to rent immediately after closing.",
+      "findings": [
+        "bedroom window does not open for egress",
+        "water heater lacks discharge pipe",
+        "kitchen cabinet finish is worn",
+        "laundry appliances are old but working"
+      ],
+      "expectedLeadScope": [
+        "bedroom egress function",
+        "water heater safety"
+      ],
+      "expectedExclusions": [
+        "cabinet finish",
+        "working laundry appliance age"
+      ],
+      "requiredGate": "rental-readiness safety triage",
+      "riskIfWrong": "The investor closes on tenant-safety issues while negotiating low-value cosmetic wear."
+    },
+    {
+      "id": "P066",
+      "sourceBasis": "Fannie Mae seller-credit guidance: investor financing and concession structures require lender review before relying on credits.",
+      "persona": "Investor buyer using conventional financing",
+      "state": "TX",
+      "deal": "Investor negotiates a credit for roof and electrical items on a non-owner-occupied loan.",
+      "findings": [
+        "roof has active leak at valley",
+        "subpanel has improper neutrals",
+        "seller credit requested near maximum concession tolerance",
+        "investor wants leftover credit for renovation"
+      ],
+      "expectedLeadScope": [
+        "roof leak",
+        "subpanel defect",
+        "credit limit and usability"
+      ],
+      "expectedExclusions": [
+        "renovation cash-out expectation",
+        "unsupported excess concession"
+      ],
+      "requiredGate": "lender concession review for investment property",
+      "riskIfWrong": "The negotiated inspection credit cannot be applied as expected and blows up the investor's numbers."
+    },
+    {
+      "id": "P067",
+      "sourceBasis": "Repair-negotiation guidance: investor buyers should not let aggressive discount strategy obscure lender or insurance blockers.",
+      "persona": "Investor buyer in a coastal market",
+      "state": "SC",
+      "deal": "Investor expects to self-insure risk through price reduction but lender requires property coverage.",
+      "findings": [
+        "roof covering is near end of life",
+        "electrical panel brand may affect insurance",
+        "seller offers price reduction instead of repairs",
+        "interior paint is worn"
+      ],
+      "expectedLeadScope": [
+        "roof insurability",
+        "electrical panel insurance concern",
+        "lender/insurance confirmation"
+      ],
+      "expectedExclusions": [
+        "interior paint",
+        "price reduction as automatic cure"
+      ],
+      "requiredGate": "insurance bindability before accepting concession",
+      "riskIfWrong": "The investor wins a discount but cannot close or insure the property on planned terms."
+    },
+    {
+      "id": "P068",
+      "sourceBasis": "Repair-negotiation guidance: multi-unit investors need unit-specific and common-system defects separated.",
+      "persona": "Small multifamily investor buyer",
+      "state": "PA",
+      "deal": "Duplex inspection found both unit-level issues and shared system concerns.",
+      "findings": [
+        "Unit A furnace fails ignition",
+        "main service entry cable sheathing is damaged",
+        "Unit B tenant reports sticky bedroom door",
+        "shared sewer scope shows offset"
+      ],
+      "expectedLeadScope": [
+        "Unit A furnace failure",
+        "service entry safety",
+        "shared sewer offset"
+      ],
+      "expectedExclusions": [
+        "sticky bedroom door"
+      ],
+      "requiredGate": "unit-vs-shared-system scope map",
+      "riskIfWrong": "The investor cannot evaluate capex exposure by system and unit, causing bad underwriting."
+    },
+    {
+      "id": "P069",
+      "sourceBasis": "Repair-negotiation guidance: investor buyers may accept defects intentionally, but the product should still identify what they are accepting.",
+      "persona": "Cash investor buyer waiving most seller repairs",
+      "state": "AL",
+      "deal": "Cash investor wants only a price reduction and will handle all work after closing.",
+      "findings": [
+        "active roof leak into attic",
+        "electrical knob-and-tube remains energized",
+        "kitchen is dated",
+        "landscaping is overgrown"
+      ],
+      "expectedLeadScope": [
+        "roof leak acceptance risk",
+        "energized obsolete wiring risk",
+        "price-reduction basis"
+      ],
+      "expectedExclusions": [
+        "kitchen update as repair item",
+        "landscaping"
+      ],
+      "requiredGate": "explicit risk-acceptance summary",
+      "riskIfWrong": "The investor's no-repair posture hides which defects are actually driving the discount."
+    },
+    {
+      "id": "P070",
+      "sourceBasis": "Repair-negotiation guidance: investor portfolio teams need standardized severity tagging, not narrative-only summaries.",
+      "persona": "Investor acquisitions manager",
+      "state": "US",
+      "deal": "Manager compares five pending inspections and needs consistent repair-risk tags.",
+      "findings": [
+        "one property has sewer replacement risk",
+        "one property has cosmetic-only report",
+        "one property has roof leak over panel",
+        "agents use inconsistent wording"
+      ],
+      "expectedLeadScope": [
+        "severity tags by property",
+        "material capex blockers",
+        "standardized comparison"
+      ],
+      "expectedExclusions": [
+        "freeform narrative only",
+        "cosmetic-only items as deal blockers"
+      ],
+      "requiredGate": "portfolio triage format",
+      "riskIfWrong": "The acquisitions team cannot compare inspection risk across deals and misallocates capital."
+    },
+    {
+      "id": "P071",
+      "sourceBasis": "Condo inspection research: buyers need clarity on what the unit owner controls versus HOA/common element responsibility.",
+      "persona": "Condo buyer agent",
+      "state": "FL",
+      "deal": "Inspection finds water damage in unit and possible building-envelope issue.",
+      "findings": [
+        "interior ceiling stain near exterior wall",
+        "association roof maintenance unclear",
+        "unit water heater is rusting at base",
+        "lobby carpet is worn"
+      ],
+      "expectedLeadScope": [
+        "unit ceiling damage",
+        "roof responsibility verification",
+        "water heater condition"
+      ],
+      "expectedExclusions": [
+        "lobby carpet as seller repair",
+        "seller-only roof demand without HOA documents"
+      ],
+      "requiredGate": "unit/common-element responsibility check",
+      "riskIfWrong": "The buyer asks the wrong party to fix common components and misses unit-level risk."
+    },
+    {
+      "id": "P072",
+      "sourceBasis": "Condo inspection research: association finances and planned repairs can matter as much as unit inspection findings.",
+      "persona": "Condo buyer reviewing HOA documents",
+      "state": "IL",
+      "deal": "Unit inspection is mostly clean but association documents mention elevator modernization.",
+      "findings": [
+        "unit electrical is acceptable",
+        "HOA minutes discuss special assessment",
+        "elevator modernization not funded",
+        "bath fan is noisy"
+      ],
+      "expectedLeadScope": [
+        "special assessment risk",
+        "elevator project funding",
+        "bath fan only as minor unit item"
+      ],
+      "expectedExclusions": [
+        "treating clean unit inspection as full clearance",
+        "bath fan as lead negotiation point"
+      ],
+      "requiredGate": "HOA financial/document review",
+      "riskIfWrong": "The buyer receives a green light from the unit report while missing association cost exposure."
+    },
+    {
+      "id": "P073",
+      "sourceBasis": "Condo inspection research: shared mechanical systems require responsibility and access review before repair requests.",
+      "persona": "Condo buyer agent in a converted building",
+      "state": "MA",
+      "deal": "Inspection flags hydronic heating issue but system serves multiple units.",
+      "findings": [
+        "radiator in unit does not heat",
+        "building boiler is common system",
+        "seller has no service records",
+        "unit paint is scuffed"
+      ],
+      "expectedLeadScope": [
+        "heat delivery to unit",
+        "common boiler responsibility",
+        "service records request"
+      ],
+      "expectedExclusions": [
+        "unit paint scuffs",
+        "seller-only boiler repair demand without responsibility check"
+      ],
+      "requiredGate": "common-system responsibility and access review",
+      "riskIfWrong": "The request targets the seller for a common-system condition without knowing who can authorize repairs."
+    },
+    {
+      "id": "P074",
+      "sourceBasis": "Condo inspection research: exterior components may be HOA-managed while interior damage remains negotiable with seller.",
+      "persona": "Condo buyer considering a balcony issue",
+      "state": "CA",
+      "deal": "Inspector reports balcony drainage and interior threshold damage.",
+      "findings": [
+        "balcony drain backs up",
+        "door threshold is water damaged",
+        "HOA handles exterior balcony membranes",
+        "seller installed decorative lights"
+      ],
+      "expectedLeadScope": [
+        "threshold water damage",
+        "balcony drain responsibility",
+        "HOA repair status"
+      ],
+      "expectedExclusions": [
+        "decorative lights",
+        "unqualified seller promise to repair HOA component"
+      ],
+      "requiredGate": "HOA authorization before exterior repair request",
+      "riskIfWrong": "Buyer accepts a seller promise for work outside the seller's control."
+    },
+    {
+      "id": "P075",
+      "sourceBasis": "Condo inspection research: buyers should inspect even when HOA covers many exterior items because unit systems still matter.",
+      "persona": "Condo buyer who thinks inspection is unnecessary",
+      "state": "WA",
+      "deal": "Buyer considered waiving inspection because the HOA handles exterior maintenance.",
+      "findings": [
+        "unit subpanel has double-tapped breaker",
+        "dishwasher leaks at supply line",
+        "exterior siding is HOA responsibility",
+        "parking garage gate is slow"
+      ],
+      "expectedLeadScope": [
+        "unit electrical panel defect",
+        "dishwasher supply leak"
+      ],
+      "expectedExclusions": [
+        "exterior siding as seller demand",
+        "parking gate speed unless document review issue"
+      ],
+      "requiredGate": "unit-scope inspection value explanation",
+      "riskIfWrong": "The buyer assumes HOA coverage means unit safety and plumbing risks do not need review."
+    },
+    {
+      "id": "P076",
+      "sourceBasis": "Fannie Mae and condo workflow research: seller credits for condo repairs still need loan and HOA compatibility checks.",
+      "persona": "Condo buyer using conventional financing",
+      "state": "NY",
+      "deal": "Seller offers a credit for HVAC fan coil replacement in a co-op-like workflow.",
+      "findings": [
+        "fan coil fails cooling",
+        "building requires approved contractor",
+        "seller credit may exceed closing costs",
+        "buyer wants cash after close"
+      ],
+      "expectedLeadScope": [
+        "fan coil failure",
+        "building contractor approval",
+        "credit usability"
+      ],
+      "expectedExclusions": [
+        "cash-after-close expectation",
+        "unapproved contractor assumption"
+      ],
+      "requiredGate": "lender and building approval review",
+      "riskIfWrong": "A negotiated credit does not solve the actual repair path or financing constraints."
+    },
+    {
+      "id": "P077",
+      "sourceBasis": "Condo inspection research: leak source allocation matters when damage could originate from another unit or common plumbing.",
+      "persona": "Condo buyer agent handling inter-unit leak risk",
+      "state": "NJ",
+      "deal": "Unit inspection finds ceiling stain below upstairs neighbor.",
+      "findings": [
+        "bathroom ceiling stain is active on moisture meter",
+        "upstairs unit plumbing is suspected source",
+        "seller repainted stain last month",
+        "kitchen cabinet hardware is loose"
+      ],
+      "expectedLeadScope": [
+        "active moisture at ceiling",
+        "source responsibility investigation",
+        "seller disclosure/repair history"
+      ],
+      "expectedExclusions": [
+        "loose cabinet hardware",
+        "seller-only repair without source access"
+      ],
+      "requiredGate": "source and responsible-party verification",
+      "riskIfWrong": "The buyer negotiates cosmetic stain repair while the active leak source remains unresolved."
+    },
+    {
+      "id": "P078",
+      "sourceBasis": "Condo inspection research: special assessments and reserve issues are workflow risks, not normal repair addendum line items.",
+      "persona": "Condo buyer agent summarizing inspection plus document review",
+      "state": "VA",
+      "deal": "Inspection report is acceptable but resale package reveals deferred facade work.",
+      "findings": [
+        "unit inspection only notes loose toilet",
+        "reserve study calls facade repair urgent",
+        "board has not approved funding",
+        "seller says assessment is speculative"
+      ],
+      "expectedLeadScope": [
+        "loose toilet as minor unit item",
+        "facade funding risk",
+        "association document escalation"
+      ],
+      "expectedExclusions": [
+        "treating facade work as seller repair request only",
+        "ignoring reserve study"
+      ],
+      "requiredGate": "association-risk decision separate from unit repair ask",
+      "riskIfWrong": "The buyer negotiates a small unit fix and misses a larger ownership-cost decision."
+    },
+    {
+      "id": "P079",
+      "sourceBasis": "Spectora repair-request builder research: inspector-partner product positioning should not duplicate existing request-list generation.",
+      "persona": "Inspector partner using report software with a repair request builder",
+      "state": "CO",
+      "deal": "Inspector wants to offer agents a premium workflow after report delivery.",
+      "findings": [
+        "report platform already lets agents select defects",
+        "agents still ask which items are worth requesting",
+        "buyers need plain-English summaries",
+        "inspector does not want to give negotiation advice"
+      ],
+      "expectedLeadScope": [
+        "agent-side prioritization layer",
+        "client summary",
+        "non-inspector negotiation handoff"
+      ],
+      "expectedExclusions": [
+        "duplicate defect picker",
+        "inspector-generated negotiation advice"
+      ],
+      "requiredGate": "inspector channel differentiation",
+      "riskIfWrong": "Inspector partners see the tool as redundant or outside their role."
+    },
+    {
+      "id": "P080",
+      "sourceBasis": "TREC inspector ethics research: inspector workflows must avoid repair-work conflicts on recently inspected properties.",
+      "persona": "Inspector partner asked to estimate repairs",
+      "state": "TX",
+      "deal": "Agent asks the inspector to quote the same defects the inspector reported.",
+      "findings": [
+        "inspector found water heater safety issue",
+        "agent asks inspector to bid repair",
+        "buyer wants exact negotiation amount",
+        "loose cabinet trim also noted"
+      ],
+      "expectedLeadScope": [
+        "water heater safety explanation",
+        "third-party repair estimate referral workflow",
+        "role-boundary warning"
+      ],
+      "expectedExclusions": [
+        "inspector repair bid",
+        "loose cabinet trim as lead item"
+      ],
+      "requiredGate": "inspector ethics boundary",
+      "riskIfWrong": "The product encourages a conflict-prone repair estimate from the inspecting party."
+    },
+    {
+      "id": "P081",
+      "sourceBasis": "Inspection tooling research: agent value is in workflow judgment and client communication after the technical report is delivered.",
+      "persona": "Inspector partner evaluating co-branded agent follow-up",
+      "state": "NC",
+      "deal": "Inspector company wants to help agents without becoming a negotiation advisor.",
+      "findings": [
+        "report includes severity tags",
+        "agents still forward entire PDF to clients",
+        "buyers panic over maintenance notes",
+        "broker wants clean handoff"
+      ],
+      "expectedLeadScope": [
+        "post-report client education handoff",
+        "agent-led negotiation triage",
+        "severity explanation"
+      ],
+      "expectedExclusions": [
+        "inspector opinion on what seller should pay",
+        "rewriting the inspection report"
+      ],
+      "requiredGate": "agent-led workflow boundary",
+      "riskIfWrong": "The inspector loses neutrality by appearing to coach repair demands."
+    },
+    {
+      "id": "P082",
+      "sourceBasis": "Repair-negotiation guidance: inspector partners should preserve technical findings while avoiding overstated dollar conclusions.",
+      "persona": "Inspector partner whose report was used for an inflated request",
+      "state": "AZ",
+      "deal": "Listing agent complains that buyer's request exaggerated the inspector's comments.",
+      "findings": [
+        "minor roof tile slip noted",
+        "buyer request says roof replacement required",
+        "inspector did not provide cost estimate",
+        "pool gate latch failed"
+      ],
+      "expectedLeadScope": [
+        "roof tile repair scope clarification",
+        "pool gate safety",
+        "avoid overclaiming inspector conclusion"
+      ],
+      "expectedExclusions": [
+        "roof replacement conclusion",
+        "invented repair cost"
+      ],
+      "requiredGate": "technical-finding fidelity",
+      "riskIfWrong": "The inspector's credibility is damaged because product language stretches the report beyond its findings."
+    },
+    {
+      "id": "P083",
+      "sourceBasis": "Inspection tooling research: repair request tools should support multiple reports without losing issue source and evidence trail.",
+      "persona": "Inspector partner delivering general, sewer, and termite reports",
+      "state": "GA",
+      "deal": "Buyer agent needs one negotiation packet from three separate inspection deliverables.",
+      "findings": [
+        "general report notes electrical open splices",
+        "sewer report shows root intrusion",
+        "termite letter notes active tubes",
+        "general report notes paint scuffs"
+      ],
+      "expectedLeadScope": [
+        "electrical open splices",
+        "sewer root intrusion",
+        "termite activity",
+        "source report labels"
+      ],
+      "expectedExclusions": [
+        "paint scuffs"
+      ],
+      "requiredGate": "multi-report source attribution",
+      "riskIfWrong": "The packet loses evidence lineage and agents cannot defend where each request came from."
+    },
+    {
+      "id": "P084",
+      "sourceBasis": "TREC and inspection ethics research: inspector-adjacent products should avoid implying the inspector guarantees future condition.",
+      "persona": "Inspector partner concerned about liability language",
+      "state": "TX",
+      "deal": "Agent wants the product to state that repaired systems will be good after closing.",
+      "findings": [
+        "AC cooled during inspection but is old",
+        "electrical defect requires correction",
+        "agent wants guarantee language",
+        "buyer asks about future life expectancy"
+      ],
+      "expectedLeadScope": [
+        "electrical correction",
+        "AC age as advisory",
+        "no-guarantee language"
+      ],
+      "expectedExclusions": [
+        "future performance guarantee",
+        "replacement demand based on age alone"
+      ],
+      "requiredGate": "inspection-scope limitation",
+      "riskIfWrong": "The inspector partner inherits expectations the inspection report cannot support."
+    },
+    {
+      "id": "P085",
+      "sourceBasis": "Inspection tooling research: inspector partner workflows must produce agent value without locking the product to one report platform.",
+      "persona": "Multi-inspector company operations manager",
+      "state": "US",
+      "deal": "Company uses different report systems across franchises and wants consistent agent handoff.",
+      "findings": [
+        "some reports have request builders",
+        "some reports are static PDFs",
+        "agents want one workflow",
+        "buyers need consistent summaries"
+      ],
+      "expectedLeadScope": [
+        "platform-agnostic intake",
+        "consistent agent handoff",
+        "buyer summary standard"
+      ],
+      "expectedExclusions": [
+        "single-platform dependency",
+        "report-authoring feature scope"
+      ],
+      "requiredGate": "platform-agnostic inspector partner fit",
+      "riskIfWrong": "The product cannot scale across inspector partners using different report software."
+    },
+    {
+      "id": "P086",
+      "sourceBasis": "FHA/HUD research: some inspection items may become appraisal conditions and require repair rather than credit.",
+      "persona": "Loan officer on an FHA buyer file",
+      "state": "PA",
+      "deal": "Buyer agent asks whether a credit is enough for safety and paint findings.",
+      "findings": [
+        "exposed exterior wiring",
+        "peeling paint on older detached garage",
+        "broken stair rail",
+        "buyer requests closing credit"
+      ],
+      "expectedLeadScope": [
+        "exposed wiring",
+        "defective paint review",
+        "stair rail safety"
+      ],
+      "expectedExclusions": [
+        "credit-only answer without appraisal review",
+        "cosmetic-only framing"
+      ],
+      "requiredGate": "loan officer/appraiser condition check",
+      "riskIfWrong": "The buyer negotiates a credit that does not satisfy FHA property eligibility requirements."
+    },
+    {
+      "id": "P087",
+      "sourceBasis": "VA MPR research: VA-financed purchases need lender confirmation for safety, access, roof, septic, pest, and paint-related findings.",
+      "persona": "Loan officer supporting a VA buyer agent",
+      "state": "VA",
+      "deal": "VA buyer wants to proceed with seller credit for a rural property.",
+      "findings": [
+        "well water test is pending",
+        "deck stairs lack stable rail",
+        "roof has active leak",
+        "seller offers 3000 credit"
+      ],
+      "expectedLeadScope": [
+        "well water result",
+        "deck stair safety",
+        "roof leak"
+      ],
+      "expectedExclusions": [
+        "credit-only assumption",
+        "non-lender-reviewed concession"
+      ],
+      "requiredGate": "VA MPR and lender review",
+      "riskIfWrong": "The deal is structured around a concession while unresolved MPR items may still block approval."
+    },
+    {
+      "id": "P088",
+      "sourceBasis": "Fannie Mae seller-credit guidance: lender credits, IPCs, and seller concessions must fit product rules and closing-cost usage.",
+      "persona": "Loan officer reviewing a conventional inspection credit",
+      "state": "AZ",
+      "deal": "Buyer agent asks for a large seller credit to offset roof, AC, and future upgrades.",
+      "findings": [
+        "AC compressor failed",
+        "roof underlayment quote pending",
+        "buyer wants credit for new flooring",
+        "seller concession may exceed closing costs"
+      ],
+      "expectedLeadScope": [
+        "AC failure",
+        "roof quote",
+        "seller-credit limit and usability"
+      ],
+      "expectedExclusions": [
+        "flooring upgrade credit",
+        "unused credit expectation"
+      ],
+      "requiredGate": "concession math before request finalization",
+      "riskIfWrong": "The buyer negotiates a credit that must be reduced, reclassified, or cannot be used."
+    },
+    {
+      "id": "P089",
+      "sourceBasis": "FHA/HUD research: utilities and untested systems can affect appraisal and repair workflow.",
+      "persona": "Loan officer reviewing an inspection with utilities off",
+      "state": "IN",
+      "deal": "FHA inspection occurred while gas service was not active.",
+      "findings": [
+        "gas utility was off",
+        "furnace could not be tested",
+        "water heater could not be fired",
+        "buyer asks seller to clean carpets"
+      ],
+      "expectedLeadScope": [
+        "gas utility activation",
+        "furnace test",
+        "water heater test"
+      ],
+      "expectedExclusions": [
+        "carpet cleaning",
+        "send-ready repair request before systems test"
+      ],
+      "requiredGate": "utility-on reinspection and lender check",
+      "riskIfWrong": "The buyer proceeds as if core systems passed when they were never evaluated."
+    },
+    {
+      "id": "P090",
+      "sourceBasis": "VA MPR research: pest, dry rot, and crawlspace conditions can be lender-sensitive on VA files.",
+      "persona": "Loan officer on a VA file with wood-destroying insect concerns",
+      "state": "NC",
+      "deal": "VA buyer's agent wants to convert termite and crawlspace findings into a simple credit.",
+      "findings": [
+        "termite activity found at sill",
+        "crawlspace joist has dry rot",
+        "moisture reading is elevated",
+        "seller offers small credit"
+      ],
+      "expectedLeadScope": [
+        "wood-destroying insect treatment",
+        "dry rot repair",
+        "crawlspace moisture source"
+      ],
+      "expectedExclusions": [
+        "small credit as automatic cure",
+        "cosmetic crawlspace cleanup only"
+      ],
+      "requiredGate": "VA lender and pest contractor documentation",
+      "riskIfWrong": "Known wood-destroying insect and rot issues remain unresolved for a loan that may require correction."
+    },
+    {
+      "id": "P091",
+      "sourceBasis": "Fannie Mae seller-credit guidance: seller-paid costs and repairs should be coordinated with closing disclosure timing.",
+      "persona": "Loan officer coordinating late inspection concession",
+      "state": "CO",
+      "deal": "Seller agrees to a last-minute credit after appraisal and closing disclosure have gone out.",
+      "findings": [
+        "sewer repair credit agreed late",
+        "closing disclosure already issued",
+        "buyer wants same closing date",
+        "minor paint scuffs remain"
+      ],
+      "expectedLeadScope": [
+        "sewer credit",
+        "closing disclosure timing",
+        "concession compliance"
+      ],
+      "expectedExclusions": [
+        "minor paint scuffs",
+        "assumption no lender rework is needed"
+      ],
+      "requiredGate": "lender timing and CD review",
+      "riskIfWrong": "A valid seller concession delays closing because financing workflow was not checked."
+    },
+    {
+      "id": "P092",
+      "sourceBasis": "Attorney-review market pattern: product should summarize inspection issues and negotiation posture without drafting legal notices.",
+      "persona": "Attorney liaison for buyer agent",
+      "state": "IL",
+      "deal": "Attorney asks agent for a prioritized inspection issue summary, not a legal demand letter.",
+      "findings": [
+        "furnace heat exchanger is suspect",
+        "foundation wall crack needs engineer",
+        "attorney will draft rider",
+        "buyer wants wallpaper removed"
+      ],
+      "expectedLeadScope": [
+        "furnace safety concern",
+        "foundation engineering need",
+        "attorney-ready factual summary"
+      ],
+      "expectedExclusions": [
+        "legal notice drafting",
+        "wallpaper removal"
+      ],
+      "requiredGate": "attorney handoff mode",
+      "riskIfWrong": "The agent sends legal-sounding AI text that conflicts with attorney workflow."
+    },
+    {
+      "id": "P093",
+      "sourceBasis": "Repair-negotiation guidance: report-sharing and seller disclosure implications can vary in attorney-led workflows.",
+      "persona": "Attorney liaison deciding whether to attach the full inspection report",
+      "state": "NJ",
+      "deal": "Buyer wants to preserve leverage but attorney asks for only material excerpts first.",
+      "findings": [
+        "underground oil tank sweep is inconclusive",
+        "service panel has safety defects",
+        "report includes many cosmetic notes",
+        "buyer asks attorney to send entire report"
+      ],
+      "expectedLeadScope": [
+        "oil tank uncertainty",
+        "electrical safety defects",
+        "attorney-controlled report-sharing decision"
+      ],
+      "expectedExclusions": [
+        "cosmetic notes",
+        "automatic full-report attachment"
+      ],
+      "requiredGate": "attorney review before disclosure packet",
+      "riskIfWrong": "The product pushes an evidence-sharing choice that the attorney intended to manage strategically."
+    },
+    {
+      "id": "P094",
+      "sourceBasis": "Colorado inspection objection workflow: legal/form consequences should be routed carefully when objection status affects contract survival.",
+      "persona": "Attorney liaison advising a Colorado buyer team",
+      "state": "CO",
+      "deal": "Buyer objected to structural findings and now wants to keep negotiating after seller refusal.",
+      "findings": [
+        "engineer recommends foundation pier design",
+        "seller refuses credit",
+        "inspection resolution deadline is today",
+        "buyer wants more time"
+      ],
+      "expectedLeadScope": [
+        "foundation engineering issue",
+        "resolution deadline",
+        "extension/withdraw/terminate options for counsel"
+      ],
+      "expectedExclusions": [
+        "generic keep-negotiating language",
+        "cosmetic add-ons"
+      ],
+      "requiredGate": "counsel/form deadline escalation",
+      "riskIfWrong": "The buyer loses contract control because the product treats a legal deadline like a normal follow-up task."
+    },
+    {
+      "id": "P095",
+      "sourceBasis": "Florida AS IS workflow: attorney or counsel review may be needed when buyer wants cancellation or credit near deadline.",
+      "persona": "Attorney liaison for Florida AS IS buyer",
+      "state": "FL",
+      "deal": "Inspection period expires in four hours and buyer is undecided between cancellation and credit request.",
+      "findings": [
+        "polybutylene piping throughout",
+        "active leak at laundry valve",
+        "seller offers no repair",
+        "buyer dislikes countertops"
+      ],
+      "expectedLeadScope": [
+        "plumbing system risk",
+        "active laundry leak",
+        "credit-or-cancel deadline"
+      ],
+      "expectedExclusions": [
+        "countertop preference",
+        "seller repair obligation claim"
+      ],
+      "requiredGate": "attorney/counsel deadline handoff",
+      "riskIfWrong": "The buyer misses the inspection-period decision window while debating nonmaterial upgrades."
+    },
+    {
+      "id": "P096",
+      "sourceBasis": "Repair-negotiation guidance: attorney liaison summaries should preserve factual uncertainty and avoid definitive causation statements.",
+      "persona": "Attorney liaison preparing factual issue memo",
+      "state": "NY",
+      "deal": "Older home inspection found basement water evidence but no invasive testing was performed.",
+      "findings": [
+        "basement wall staining",
+        "sump pump appears inactive",
+        "grading slopes toward foundation",
+        "agent draft says seller concealed flooding"
+      ],
+      "expectedLeadScope": [
+        "basement moisture evidence",
+        "sump pump function",
+        "grading concern"
+      ],
+      "expectedExclusions": [
+        "concealment accusation",
+        "definitive flood history conclusion"
+      ],
+      "requiredGate": "factual uncertainty and attorney review",
+      "riskIfWrong": "The product escalates a factual repair issue into an unsupported legal allegation."
+    },
+    {
+      "id": "P097",
+      "sourceBasis": "High-volume team workflow research: operations managers need repeatable QA, deadlines, approvals, and outcome tracking across agents.",
+      "persona": "Operations manager for a high-volume buyer team",
+      "state": "US",
+      "deal": "Team closes 40 buyer files per month and wants to reduce inspection-response variability.",
+      "findings": [
+        "agents use inconsistent severity labels",
+        "buyer approval sometimes missing",
+        "deadlines are tracked in a separate system",
+        "seller outcomes are not logged"
+      ],
+      "expectedLeadScope": [
+        "severity standardization",
+        "approval capture",
+        "deadline reminders",
+        "outcome logging"
+      ],
+      "expectedExclusions": [
+        "one-off packet generation only",
+        "untracked manual process"
+      ],
+      "requiredGate": "operations workflow integration",
+      "riskIfWrong": "The product helps a single agent once but fails the repeatability test for a high-volume team."
+    },
+    {
+      "id": "P098",
+      "sourceBasis": "Repair-negotiation guidance: anxious-buyer coaching needs safe tone, materiality ranking, and clear next steps.",
+      "persona": "Operations manager building anxious-buyer coaching SOP",
+      "state": "US",
+      "deal": "Team receives repeated buyer panic after inspectors publish reports late at night.",
+      "findings": [
+        "reports contain alarming all-caps warnings",
+        "buyers text agents after hours",
+        "material defects are mixed with maintenance",
+        "agents improvise reassurance"
+      ],
+      "expectedLeadScope": [
+        "after-hours client summary",
+        "materiality ranking",
+        "next-step checklist",
+        "tone control"
+      ],
+      "expectedExclusions": [
+        "blanket reassurance",
+        "alarmist summary",
+        "all report items as equal"
+      ],
+      "requiredGate": "buyer-coaching response mode",
+      "riskIfWrong": "The team either amplifies panic or dismisses real defects, increasing cancellations and complaints."
+    },
+    {
+      "id": "P099",
+      "sourceBasis": "High-volume team workflow research: review queues should route lender-sensitive and state-deadline cases to the right specialist.",
+      "persona": "Operations manager designing escalation rules",
+      "state": "US",
+      "deal": "Team handles FHA, VA, conventional, Texas, Florida, and Colorado transactions from one intake form.",
+      "findings": [
+        "Texas option deadline same day",
+        "FHA file has peeling paint",
+        "Florida AS IS period nearly expired",
+        "Colorado objection already submitted"
+      ],
+      "expectedLeadScope": [
+        "state deadline routing",
+        "loan type sensitivity",
+        "specialist escalation"
+      ],
+      "expectedExclusions": [
+        "single generic inspection template",
+        "first-in-first-out queue only"
+      ],
+      "requiredGate": "routing by deadline and financing risk",
+      "riskIfWrong": "The highest-risk files are handled too late because all inspection packets look operationally identical."
+    },
+    {
+      "id": "P100",
+      "sourceBasis": "Inspection tooling and repair-negotiation research: high-volume teams need measurable product outcomes beyond generating seller-facing prose.",
+      "persona": "High-volume team lead evaluating product ROI",
+      "state": "US",
+      "deal": "Team wants to know whether an inspection-response tool improves conversion, cycle time, and broker review quality.",
+      "findings": [
+        "current process takes agents two hours per report",
+        "broker rejects many drafts for overbroad asks",
+        "buyers ask repetitive explanation questions",
+        "existing report software already exports repair lists"
+      ],
+      "expectedLeadScope": [
+        "time-to-draft reduction",
+        "broker rejection reduction",
+        "buyer explanation quality",
+        "strategy layer beyond export"
+      ],
+      "expectedExclusions": [
+        "basic repair list export",
+        "vanity-only PDF formatting"
+      ],
+      "requiredGate": "team-level ROI validation",
+      "riskIfWrong": "The product is evaluated as a document formatter instead of a workflow system that reduces rework and risk."
+    }
+  ]
+}

@@ -35,7 +35,23 @@ public class EventLog {
     public enum EventType {
         CLICK_AD,
         CLICK_AFFILIATE,
-        SUBMIT_EMAIL
+        SUBMIT_EMAIL,
+        PACKET_GENERATED,
+        COPY_PACKET,
+        COPY_AGENT_REQUEST,
+        COPY_ASK_SUMMARY,
+        PRINT_PACKET,
+        SHARE_PACKET,
+        SAVE_PACKET,
+        SUBMIT_FEEDBACK,
+        REQUEST_AGENT_DESK,
+        REQUEST_REVIEW,
+        BUYER_APPROVED,
+        MARK_SENT,
+        COUNTER_RECEIVED,
+        RESOLUTION_SIGNED,
+        MARK_TERMINATED,
+        MARK_FILED
     }
 
     public EventLog(UUID verdictId, EventType eventType, String target) {
