@@ -2,6 +2,7 @@
 @param AcquisitionSurface surface = com.livingcostcheck.home_repair.web.AcquisitionSurface.LETTER
 @param java.util.List<AcquisitionSurface> relatedSurfaces = java.util.List.of()
 @param String canonicalUrl = "https://lifeverdict.com/inspection-response-letter"
+@param String softwareApplicationSchemaJson = "{}"
 
 @template.layout(
     title = surface.pageTitle(),
@@ -10,20 +11,7 @@
     headContent = @`
         <link rel="canonical" href="${canonicalUrl}">
         <script type="application/ld+json">
-        {
-          "@context": "https://schema.org",
-          "@type": "SoftwareApplication",
-          "name": "LifeVerdict ${surface.navLabel()} Tool",
-          "applicationCategory": "BusinessApplication",
-          "operatingSystem": "Web",
-          "url": "${canonicalUrl}",
-          "description": "${surface.pageDescription()}",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-          }
-        }
+        $unsafe{softwareApplicationSchemaJson}
         </script>
     `,
     content = @`

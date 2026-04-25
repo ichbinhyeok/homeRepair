@@ -1,7 +1,10 @@
 package com.livingcostcheck.home_repair.web;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.livingcostcheck.home_repair.service.AcquisitionTelemetryService;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -14,6 +17,7 @@ import org.springframework.web.servlet.view.RedirectView;
 public class RootController {
 
     private static final String BASE_URL = "https://lifeverdict.com";
+    private static final ObjectMapper JSON = new ObjectMapper();
 
     private final AcquisitionSurface defaultSurface;
     private final AcquisitionTelemetryService acquisitionTelemetryService;
@@ -162,7 +166,27 @@ public class RootController {
         model.addAttribute("surface", surface);
         model.addAttribute("relatedSurfaces", AcquisitionSurface.relatedSurfaces(surface));
         model.addAttribute("canonicalUrl", BASE_URL + surface.path());
+        model.addAttribute("softwareApplicationSchemaJson", softwareApplicationSchemaJson(surface));
         return "pages/hub";
+    }
+
+    static String softwareApplicationSchemaJson(AcquisitionSurface surface) {
+        try {
+            return JSON.writeValueAsString(Map.of(
+                    "@context", "https://schema.org",
+                    "@type", "SoftwareApplication",
+                    "name", "LifeVerdict " + surface.navLabel() + " Tool",
+                    "applicationCategory", "BusinessApplication",
+                    "operatingSystem", "Web",
+                    "url", BASE_URL + surface.path(),
+                    "description", surface.pageDescription(),
+                    "offers", Map.of(
+                            "@type", "Offer",
+                            "price", "0",
+                            "priceCurrency", "USD")));
+        } catch (JsonProcessingException e) {
+            throw new IllegalStateException("Unable to build software application schema JSON", e);
+        }
     }
 
     private RedirectView permanentRedirect(String location) {

@@ -1,5 +1,7 @@
 package com.livingcostcheck.home_repair.web;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
 import java.util.EnumSet;
@@ -12,6 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AcquisitionSurfaceTest {
+
+    private static final ObjectMapper JSON = new ObjectMapper();
 
     @Test
     void acquisitionPortfolioContainsFortyNarrowToolFirstSurfaces() {
@@ -68,6 +72,20 @@ class AcquisitionSurfaceTest {
         for (AcquisitionSurface surface : AcquisitionSurface.indexableSurfaces()) {
             assertTrue(AcquisitionSurface.relatedSurfaces(surface).contains(surface));
             assertTrue(AcquisitionSurface.relatedSurfaces(surface).size() <= 10);
+        }
+    }
+
+    @Test
+    void softwareApplicationSchemaJsonIsValidForEveryIndexableSurface() throws Exception {
+        for (AcquisitionSurface surface : AcquisitionSurface.indexableSurfaces()) {
+            String schemaJson = RootController.softwareApplicationSchemaJson(surface);
+
+            assertFalse(schemaJson.contains("\\-"), surface.code() + " schema must not use invalid JSON hyphen escapes");
+            JsonNode schema = JSON.readTree(schemaJson);
+            assertEquals("https://schema.org", schema.get("@context").asText());
+            assertEquals("SoftwareApplication", schema.get("@type").asText());
+            assertEquals("https://lifeverdict.com" + surface.path(), schema.get("url").asText());
+            assertEquals(surface.pageDescription(), schema.get("description").asText());
         }
     }
 }
