@@ -51,4 +51,18 @@ jobs:
             # 하이픈(-)을 뺀 docker compose 명령어로 수정
             docker compose pull
             docker compose up -d --force-recreate --build app
+            healthy=false
+            for i in {1..30}; do
+              if curl -fsS http://127.0.0.1:8084/home-repair >/dev/null; then
+                echo "home-repair health check passed"
+                healthy=true
+                break
+              fi
+              sleep 2
+            done
+            if [ "$healthy" != "true" ]; then
+              docker compose ps
+              docker logs --tail=120 home-repair-app
+              exit 1
+            fi
             docker image prune -f

@@ -4,6 +4,7 @@ services:
     # 💡 변수 대신 실제 도커허브 아이디를 직접 입력합니다.
     image: shinhyeok22/home-repair-verdict:latest
     container_name: home-repair-app
+    restart: unless-stopped
     ports:
       - "8084:8080"
     environment:
@@ -24,6 +25,7 @@ services:
   db:
     image: postgres:15-alpine
     container_name: home-repair-db
+    restart: unless-stopped
     environment:
       - POSTGRES_USER=myuser
       - POSTGRES_PASSWORD=mypassword
